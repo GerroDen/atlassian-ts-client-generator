@@ -66,10 +66,9 @@ export interface PartialUpdateProjectRoleRequest {
 export class ProjectRolesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new project role with no [default actors](#api-rest-api-3-resolution-get). You can use the [Add default actors to project role](#api-rest-api-3-role-id-actors-post) operation to add default actors to the project role after creating it.  *Note that although a new project role is available to all projects upon creation, any default actors that are associated with the project role are not added to projects that existed prior to the role being created.*<  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create project role
+     * Creates request options for createProjectRole without sending the request
      */
-    async createProjectRoleRaw(requestParameters: CreateProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+    async createProjectRoleRequestOpts(requestParameters: CreateProjectRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createUpdateRoleRequestBean'] == null) {
             throw new runtime.RequiredError(
                 'createUpdateRoleRequestBean',
@@ -94,13 +93,22 @@ export class ProjectRolesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/role`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createUpdateRoleRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new project role with no [default actors](#api-rest-api-3-resolution-get). You can use the [Add default actors to project role](#api-rest-api-3-role-id-actors-post) operation to add default actors to the project role after creating it.  *Note that although a new project role is available to all projects upon creation, any default actors that are associated with the project role are not added to projects that existed prior to the role being created.*<  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create project role
+     */
+    async createProjectRoleRaw(requestParameters: CreateProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+        const requestOptions = await this.createProjectRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -115,10 +123,9 @@ export class ProjectRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a project role. You must specify a replacement project role if you wish to delete a project role that is in use.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete project role
+     * Creates request options for deleteProjectRole without sending the request
      */
-    async deleteProjectRoleRaw(requestParameters: DeleteProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteProjectRoleRequestOpts(requestParameters: DeleteProjectRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -146,12 +153,21 @@ export class ProjectRolesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/role/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a project role. You must specify a replacement project role if you wish to delete a project role that is in use.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete project role
+     */
+    async deleteProjectRoleRaw(requestParameters: DeleteProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteProjectRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -165,10 +181,9 @@ export class ProjectRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the project role\'s name and description. You must include both a name and a description in the request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Fully update project role
+     * Creates request options for fullyUpdateProjectRole without sending the request
      */
-    async fullyUpdateProjectRoleRaw(requestParameters: FullyUpdateProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+    async fullyUpdateProjectRoleRequestOpts(requestParameters: FullyUpdateProjectRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -201,13 +216,22 @@ export class ProjectRolesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/role/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createUpdateRoleRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the project role\'s name and description. You must include both a name and a description in the request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Fully update project role
+     */
+    async fullyUpdateProjectRoleRaw(requestParameters: FullyUpdateProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+        const requestOptions = await this.fullyUpdateProjectRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -222,10 +246,9 @@ export class ProjectRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets a list of all project roles, complete with project role details and default actors.  ### About project roles ###  [Project roles](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-roles/) are a flexible way to to associate users and groups with projects. In Jira Cloud, the list of project roles is shared globally with all projects, but each project can have a different set of actors associated with it (unlike groups, which have the same membership throughout all Jira applications).  Project roles are used in [permission schemes](#api-rest-api-3-permissionscheme-get), [email notification schemes](#api-rest-api-3-notificationscheme-get), [issue security levels](#api-rest-api-3-issuesecurityschemes-get), [comment visibility](#api-rest-api-3-comment-list-post), and workflow conditions.  #### Members and actors ####  In the Jira REST API, a member of a project role is called an *actor*. An *actor* is a group or user associated with a project role.  Actors may be set as [default members](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-roles/#Specifying-\'default-members\'-for-a-project-role) of the project role or set at the project level:   *  Default actors: Users and groups that are assigned to the project role for all newly created projects. The default actors can be removed at the project level later if desired.  *  Actors: Users and groups that are associated with a project role for a project, which may differ from the default actors. This enables you to assign a user to different roles in different projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get all project roles
+     * Creates request options for getAllProjectRoles without sending the request
      */
-    async getAllProjectRolesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectRole>>> {
+    async getAllProjectRolesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -241,12 +264,21 @@ export class ProjectRolesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/role`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets a list of all project roles, complete with project role details and default actors.  ### About project roles ###  [Project roles](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-roles/) are a flexible way to to associate users and groups with projects. In Jira Cloud, the list of project roles is shared globally with all projects, but each project can have a different set of actors associated with it (unlike groups, which have the same membership throughout all Jira applications).  Project roles are used in [permission schemes](#api-rest-api-3-permissionscheme-get), [email notification schemes](#api-rest-api-3-notificationscheme-get), [issue security levels](#api-rest-api-3-issuesecurityschemes-get), [comment visibility](#api-rest-api-3-comment-list-post), and workflow conditions.  #### Members and actors ####  In the Jira REST API, a member of a project role is called an *actor*. An *actor* is a group or user associated with a project role.  Actors may be set as [default members](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-roles/#Specifying-\'default-members\'-for-a-project-role) of the project role or set at the project level:   *  Default actors: Users and groups that are assigned to the project role for all newly created projects. The default actors can be removed at the project level later if desired.  *  Actors: Users and groups that are associated with a project role for a project, which may differ from the default actors. This enables you to assign a user to different roles in different projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get all project roles
+     */
+    async getAllProjectRolesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectRole>>> {
+        const requestOptions = await this.getAllProjectRolesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -261,10 +293,9 @@ export class ProjectRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a project role\'s details and actors associated with the project. The list of actors is sorted by display name.  To check whether a user belongs to a role based on their group memberships, use [Get user](#api-rest-api-3-user-get) with the `groups` expand parameter selected. Then check whether the user keys and groups match with the actors returned for the project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get project role for project
+     * Creates request options for getProjectRole without sending the request
      */
-    async getProjectRoleRaw(requestParameters: GetProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+    async getProjectRoleRequestOpts(requestParameters: GetProjectRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -300,12 +331,21 @@ export class ProjectRolesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a project role\'s details and actors associated with the project. The list of actors is sorted by display name.  To check whether a user belongs to a role based on their group memberships, use [Get user](#api-rest-api-3-user-get) with the `groups` expand parameter selected. Then check whether the user keys and groups match with the actors returned for the project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get project role for project
+     */
+    async getProjectRoleRaw(requestParameters: GetProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+        const requestOptions = await this.getProjectRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -320,10 +360,9 @@ export class ProjectRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the project role details and the default actors associated with the role. The list of default actors is sorted by display name.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get project role by ID
+     * Creates request options for getProjectRoleById without sending the request
      */
-    async getProjectRoleByIdRaw(requestParameters: GetProjectRoleByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+    async getProjectRoleByIdRequestOpts(requestParameters: GetProjectRoleByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -347,12 +386,21 @@ export class ProjectRolesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/role/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the project role details and the default actors associated with the role. The list of default actors is sorted by display name.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get project role by ID
+     */
+    async getProjectRoleByIdRaw(requestParameters: GetProjectRoleByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+        const requestOptions = await this.getProjectRoleByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -367,10 +415,9 @@ export class ProjectRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all [project roles](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-roles/) and the details for each role. Note that the list of project roles is common to all projects.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
-     * Get project role details
+     * Creates request options for getProjectRoleDetails without sending the request
      */
-    async getProjectRoleDetailsRaw(requestParameters: GetProjectRoleDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectRoleDetails>>> {
+    async getProjectRoleDetailsRequestOpts(requestParameters: GetProjectRoleDetailsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -406,12 +453,21 @@ export class ProjectRolesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/roledetails`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all [project roles](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-roles/) and the details for each role. Note that the list of project roles is common to all projects.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
+     * Get project role details
+     */
+    async getProjectRoleDetailsRaw(requestParameters: GetProjectRoleDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectRoleDetails>>> {
+        const requestOptions = await this.getProjectRoleDetailsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -426,10 +482,9 @@ export class ProjectRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of [project roles](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-roles/) for the project returning the name and self URL for each role.  Note that all project roles are shared with all projects in Jira Cloud. See [Get all project roles](#api-rest-api-3-role-get) for more information.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for any project on the site or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get project roles for project
+     * Creates request options for getProjectRoles without sending the request
      */
-    async getProjectRolesRaw(requestParameters: GetProjectRolesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: string; }>> {
+    async getProjectRolesRequestOpts(requestParameters: GetProjectRolesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -453,12 +508,21 @@ export class ProjectRolesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/role`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of [project roles](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-roles/) for the project returning the name and self URL for each role.  Note that all project roles are shared with all projects in Jira Cloud. See [Get all project roles](#api-rest-api-3-role-get) for more information.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for any project on the site or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get project roles for project
+     */
+    async getProjectRolesRaw(requestParameters: GetProjectRolesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: string; }>> {
+        const requestOptions = await this.getProjectRolesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
     }
@@ -473,10 +537,9 @@ export class ProjectRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates either the project role\'s name or its description.  You cannot update both the name and description at the same time using this operation. If you send a request with a name and a description only the name is updated.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Partial update project role
+     * Creates request options for partialUpdateProjectRole without sending the request
      */
-    async partialUpdateProjectRoleRaw(requestParameters: PartialUpdateProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+    async partialUpdateProjectRoleRequestOpts(requestParameters: PartialUpdateProjectRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -509,13 +572,22 @@ export class ProjectRolesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/role/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createUpdateRoleRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates either the project role\'s name or its description.  You cannot update both the name and description at the same time using this operation. If you send a request with a name and a description only the name is updated.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Partial update project role
+     */
+    async partialUpdateProjectRoleRaw(requestParameters: PartialUpdateProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
+        const requestOptions = await this.partialUpdateProjectRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -46,10 +46,9 @@ export interface GetSecurityLevelsForProjectRequest {
 export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
 
     /**
-     * Assigns a permission scheme with a project. See [Managing project permissions](https://confluence.atlassian.com/x/yodKLg) for more information about permission schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg)
-     * Assign permission scheme
+     * Creates request options for assignPermissionScheme without sending the request
      */
-    async assignPermissionSchemeRaw(requestParameters: AssignPermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+    async assignPermissionSchemeRequestOpts(requestParameters: AssignPermissionSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKeyOrId'] == null) {
             throw new runtime.RequiredError(
                 'projectKeyOrId',
@@ -86,13 +85,22 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectKeyOrId}/permissionscheme`;
         urlPath = urlPath.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters['projectKeyOrId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['idBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Assigns a permission scheme with a project. See [Managing project permissions](https://confluence.atlassian.com/x/yodKLg) for more information about permission schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg)
+     * Assign permission scheme
+     */
+    async assignPermissionSchemeRaw(requestParameters: AssignPermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+        const requestOptions = await this.assignPermissionSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -107,10 +115,9 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the [permission scheme](https://confluence.atlassian.com/x/yodKLg) associated with the project.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
-     * Get assigned permission scheme
+     * Creates request options for getAssignedPermissionScheme without sending the request
      */
-    async getAssignedPermissionSchemeRaw(requestParameters: GetAssignedPermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+    async getAssignedPermissionSchemeRequestOpts(requestParameters: GetAssignedPermissionSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKeyOrId'] == null) {
             throw new runtime.RequiredError(
                 'projectKeyOrId',
@@ -138,12 +145,21 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectKeyOrId}/permissionscheme`;
         urlPath = urlPath.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters['projectKeyOrId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the [permission scheme](https://confluence.atlassian.com/x/yodKLg) associated with the project.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
+     * Get assigned permission scheme
+     */
+    async getAssignedPermissionSchemeRaw(requestParameters: GetAssignedPermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+        const requestOptions = await this.getAssignedPermissionSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -158,10 +174,9 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the [issue security scheme](https://confluence.atlassian.com/x/J4lKLg) associated with the project.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or the *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
-     * Get project issue security scheme
+     * Creates request options for getProjectIssueSecurityScheme without sending the request
      */
-    async getProjectIssueSecuritySchemeRaw(requestParameters: GetProjectIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityScheme>> {
+    async getProjectIssueSecuritySchemeRequestOpts(requestParameters: GetProjectIssueSecuritySchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKeyOrId'] == null) {
             throw new runtime.RequiredError(
                 'projectKeyOrId',
@@ -185,12 +200,21 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectKeyOrId}/issuesecuritylevelscheme`;
         urlPath = urlPath.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters['projectKeyOrId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the [issue security scheme](https://confluence.atlassian.com/x/J4lKLg) associated with the project.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or the *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
+     * Get project issue security scheme
+     */
+    async getProjectIssueSecuritySchemeRaw(requestParameters: GetProjectIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityScheme>> {
+        const requestOptions = await this.getProjectIssueSecuritySchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -205,10 +229,9 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all [issue security](https://confluence.atlassian.com/x/J4lKLg) levels for the project that the user has access to.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [global permission](https://confluence.atlassian.com/x/x4dKLg) for the project, however, issue security levels are only returned for authenticated user with *Set Issue Security* [global permission](https://confluence.atlassian.com/x/x4dKLg) for the project.
-     * Get project issue security levels
+     * Creates request options for getSecurityLevelsForProject without sending the request
      */
-    async getSecurityLevelsForProjectRaw(requestParameters: GetSecurityLevelsForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectIssueSecurityLevels>> {
+    async getSecurityLevelsForProjectRequestOpts(requestParameters: GetSecurityLevelsForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKeyOrId'] == null) {
             throw new runtime.RequiredError(
                 'projectKeyOrId',
@@ -232,12 +255,21 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectKeyOrId}/securitylevel`;
         urlPath = urlPath.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters['projectKeyOrId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all [issue security](https://confluence.atlassian.com/x/J4lKLg) levels for the project that the user has access to.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [global permission](https://confluence.atlassian.com/x/x4dKLg) for the project, however, issue security levels are only returned for authenticated user with *Set Issue Security* [global permission](https://confluence.atlassian.com/x/x4dKLg) for the project.
+     * Get project issue security levels
+     */
+    async getSecurityLevelsForProjectRaw(requestParameters: GetSecurityLevelsForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectIssueSecurityLevels>> {
+        const requestOptions = await this.getSecurityLevelsForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

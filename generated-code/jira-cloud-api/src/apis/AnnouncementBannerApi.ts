@@ -30,10 +30,9 @@ export interface SetBannerRequest {
 export class AnnouncementBannerApi extends runtime.BaseAPI {
 
     /**
-     * Returns the current announcement banner configuration.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get announcement banner configuration
+     * Creates request options for getBanner without sending the request
      */
-    async getBannerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnnouncementBannerConfiguration>> {
+    async getBannerRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -49,12 +48,21 @@ export class AnnouncementBannerApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/announcementBanner`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the current announcement banner configuration.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get announcement banner configuration
+     */
+    async getBannerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnnouncementBannerConfiguration>> {
+        const requestOptions = await this.getBannerRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -69,10 +77,9 @@ export class AnnouncementBannerApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the announcement banner configuration.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update announcement banner configuration
+     * Creates request options for setBanner without sending the request
      */
-    async setBannerRaw(requestParameters: SetBannerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setBannerRequestOpts(requestParameters: SetBannerRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['announcementBannerConfigurationUpdate'] == null) {
             throw new runtime.RequiredError(
                 'announcementBannerConfigurationUpdate',
@@ -97,13 +104,22 @@ export class AnnouncementBannerApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/announcementBanner`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['announcementBannerConfigurationUpdate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the announcement banner configuration.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update announcement banner configuration
+     */
+    async setBannerRaw(requestParameters: SetBannerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setBannerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

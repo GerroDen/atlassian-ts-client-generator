@@ -86,10 +86,9 @@ export interface RemoveUserFromGroupRequest {
 export class GroupsApi extends runtime.BaseAPI {
 
     /**
-     * Adds a user to a group.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
-     * Add user to group
+     * Creates request options for addUserToGroup without sending the request
      */
-    async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
+    async addUserToGroupRequestOpts(requestParameters: AddUserToGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['updateUserToGroupBean'] == null) {
             throw new runtime.RequiredError(
                 'updateUserToGroupBean',
@@ -122,13 +121,22 @@ export class GroupsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/group/user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateUserToGroupBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a user to a group.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
+     * Add user to group
+     */
+    async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
+        const requestOptions = await this.addUserToGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -143,10 +151,9 @@ export class GroupsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of groups.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Bulk get groups
+     * Creates request options for bulkGetGroups without sending the request
      */
-    async bulkGetGroupsRaw(requestParameters: BulkGetGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanGroupDetails>> {
+    async bulkGetGroupsRequestOpts(requestParameters: BulkGetGroupsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -186,12 +193,21 @@ export class GroupsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/group/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of groups.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Bulk get groups
+     */
+    async bulkGetGroupsRaw(requestParameters: BulkGetGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanGroupDetails>> {
+        const requestOptions = await this.bulkGetGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -206,10 +222,9 @@ export class GroupsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a group.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
-     * Create group
+     * Creates request options for createGroup without sending the request
      */
-    async createGroupRaw(requestParameters: CreateGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
+    async createGroupRequestOpts(requestParameters: CreateGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['addGroupBean'] == null) {
             throw new runtime.RequiredError(
                 'addGroupBean',
@@ -234,13 +249,22 @@ export class GroupsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/group`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['addGroupBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a group.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
+     * Create group
+     */
+    async createGroupRaw(requestParameters: CreateGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
+        const requestOptions = await this.createGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -255,10 +279,9 @@ export class GroupsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of groups whose names contain a query string. A list of group names can be provided to exclude groups from the results.  The primary use case for this resource is to populate a group picker suggestions list. To this end, the returned object includes the `html` field where the matched query term is highlighted in the group name with the HTML strong tag. Also, the groups list is wrapped in a response object that contains a header for use in the picker, specifically *Showing X of Y matching groups*.  The list returns with the groups sorted. If no groups match the list criteria, an empty list is returned.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg). Anonymous calls and calls by users without the required permission return an empty list.  *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg). Without this permission, calls where query is not an exact match to an existing group will return an empty list.
-     * Find groups
+     * Creates request options for findGroups without sending the request
      */
-    async findGroupsRaw(requestParameters: FindGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundGroups>> {
+    async findGroupsRequestOpts(requestParameters: FindGroupsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['accountId'] != null) {
@@ -302,12 +325,21 @@ export class GroupsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/groups/picker`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of groups whose names contain a query string. A list of group names can be provided to exclude groups from the results.  The primary use case for this resource is to populate a group picker suggestions list. To this end, the returned object includes the `html` field where the matched query term is highlighted in the group name with the HTML strong tag. Also, the groups list is wrapped in a response object that contains a header for use in the picker, specifically *Showing X of Y matching groups*.  The list returns with the groups sorted. If no groups match the list criteria, an empty list is returned.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg). Anonymous calls and calls by users without the required permission return an empty list.  *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg). Without this permission, calls where query is not an exact match to an existing group will return an empty list.
+     * Find groups
+     */
+    async findGroupsRaw(requestParameters: FindGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundGroups>> {
+        const requestOptions = await this.findGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -322,11 +354,10 @@ export class GroupsApi extends runtime.BaseAPI {
     }
 
     /**
-     * This operation is deprecated, use [`group/member`](#api-rest-api-3-group-member-get).  Returns all users in a group.  **[Permissions](#permissions) required:** either of:   *  *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get group
+     * Creates request options for getGroup without sending the request
      * @deprecated
      */
-    async getGroupRaw(requestParameters: GetGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
+    async getGroupRequestOpts(requestParameters: GetGroupRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['groupname'] != null) {
@@ -354,12 +385,22 @@ export class GroupsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/group`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This operation is deprecated, use [`group/member`](#api-rest-api-3-group-member-get).  Returns all users in a group.  **[Permissions](#permissions) required:** either of:   *  *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get group
+     * @deprecated
+     */
+    async getGroupRaw(requestParameters: GetGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
+        const requestOptions = await this.getGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -375,10 +416,9 @@ export class GroupsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of all users in a group.  Note that users are ordered by username, however the username is not returned in the results due to privacy reasons.  **[Permissions](#permissions) required:** either of:   *  *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get users from group
+     * Creates request options for getUsersFromGroup without sending the request
      */
-    async getUsersFromGroupRaw(requestParameters: GetUsersFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUserDetails>> {
+    async getUsersFromGroupRequestOpts(requestParameters: GetUsersFromGroupRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['groupname'] != null) {
@@ -414,12 +454,21 @@ export class GroupsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/group/member`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of all users in a group.  Note that users are ordered by username, however the username is not returned in the results due to privacy reasons.  **[Permissions](#permissions) required:** either of:   *  *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get users from group
+     */
+    async getUsersFromGroupRaw(requestParameters: GetUsersFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUserDetails>> {
+        const requestOptions = await this.getUsersFromGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -434,10 +483,9 @@ export class GroupsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a group.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* strategic [group](https://confluence.atlassian.com/x/24xjL)).
-     * Remove group
+     * Creates request options for removeGroup without sending the request
      */
-    async removeGroupRaw(requestParameters: RemoveGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeGroupRequestOpts(requestParameters: RemoveGroupRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['groupname'] != null) {
@@ -469,12 +517,21 @@ export class GroupsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/group`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a group.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* strategic [group](https://confluence.atlassian.com/x/24xjL)).
+     * Remove group
+     */
+    async removeGroupRaw(requestParameters: RemoveGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -488,10 +545,9 @@ export class GroupsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a user from a group.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
-     * Remove user from group
+     * Creates request options for removeUserFromGroup without sending the request
      */
-    async removeUserFromGroupRaw(requestParameters: RemoveUserFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeUserFromGroupRequestOpts(requestParameters: RemoveUserFromGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -530,12 +586,21 @@ export class GroupsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/group/user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a user from a group.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
+     * Remove user from group
+     */
+    async removeUserFromGroupRaw(requestParameters: RemoveUserFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeUserFromGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

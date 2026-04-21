@@ -28,10 +28,9 @@ export interface GetStatusCategoryRequest {
 export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
 
     /**
-     * Returns a list of all status categories.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get all status categories
+     * Creates request options for getStatusCategories without sending the request
      */
-    async getStatusCategoriesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StatusCategory>>> {
+    async getStatusCategoriesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -47,12 +46,21 @@ export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/statuscategory`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of all status categories.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get all status categories
+     */
+    async getStatusCategoriesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StatusCategory>>> {
+        const requestOptions = await this.getStatusCategoriesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -67,10 +75,9 @@ export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a status category. Status categories provided a mechanism for categorizing [statuses](#api-rest-api-3-status-idOrName-get).  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get status category
+     * Creates request options for getStatusCategory without sending the request
      */
-    async getStatusCategoryRaw(requestParameters: GetStatusCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusCategory>> {
+    async getStatusCategoryRequestOpts(requestParameters: GetStatusCategoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['idOrKey'] == null) {
             throw new runtime.RequiredError(
                 'idOrKey',
@@ -94,12 +101,21 @@ export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/statuscategory/{idOrKey}`;
         urlPath = urlPath.replace(`{${"idOrKey"}}`, encodeURIComponent(String(requestParameters['idOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a status category. Status categories provided a mechanism for categorizing [statuses](#api-rest-api-3-status-idOrName-get).  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get status category
+     */
+    async getStatusCategoryRaw(requestParameters: GetStatusCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusCategory>> {
+        const requestOptions = await this.getStatusCategoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

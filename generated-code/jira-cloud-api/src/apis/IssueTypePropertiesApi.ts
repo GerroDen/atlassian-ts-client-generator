@@ -45,10 +45,9 @@ export interface SetIssueTypePropertyRequest {
 export class IssueTypePropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Deletes the [issue type property](https://developer.atlassian.com/cloud/jira/platform/storing-data-without-a-database/#a-id-jira-entity-properties-a-jira-entity-properties).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete issue type property
+     * Creates request options for deleteIssueTypeProperty without sending the request
      */
-    async deleteIssueTypePropertyRaw(requestParameters: DeleteIssueTypePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteIssueTypePropertyRequestOpts(requestParameters: DeleteIssueTypePropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeId',
@@ -80,12 +79,21 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the [issue type property](https://developer.atlassian.com/cloud/jira/platform/storing-data-without-a-database/#a-id-jira-entity-properties-a-jira-entity-properties).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete issue type property
+     */
+    async deleteIssueTypePropertyRaw(requestParameters: DeleteIssueTypePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteIssueTypePropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -99,10 +107,9 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the key and value of the [issue type property](https://developer.atlassian.com/cloud/jira/platform/storing-data-without-a-database/#a-id-jira-entity-properties-a-jira-entity-properties).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) to get the details of any issue type.  *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) to get the details of any issue types associated with the projects the user has permission to browse.
-     * Get issue type property
+     * Creates request options for getIssueTypeProperty without sending the request
      */
-    async getIssueTypePropertyRaw(requestParameters: GetIssueTypePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+    async getIssueTypePropertyRequestOpts(requestParameters: GetIssueTypePropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeId',
@@ -134,12 +141,21 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the key and value of the [issue type property](https://developer.atlassian.com/cloud/jira/platform/storing-data-without-a-database/#a-id-jira-entity-properties-a-jira-entity-properties).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) to get the details of any issue type.  *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) to get the details of any issue types associated with the projects the user has permission to browse.
+     * Get issue type property
+     */
+    async getIssueTypePropertyRaw(requestParameters: GetIssueTypePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+        const requestOptions = await this.getIssueTypePropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -154,10 +170,9 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all the [issue type property](https://developer.atlassian.com/cloud/jira/platform/storing-data-without-a-database/#a-id-jira-entity-properties-a-jira-entity-properties) keys of the issue type.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) to get the property keys of any issue type.  *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) to get the property keys of any issue types associated with the projects the user has permission to browse.
-     * Get issue type property keys
+     * Creates request options for getIssueTypePropertyKeys without sending the request
      */
-    async getIssueTypePropertyKeysRaw(requestParameters: GetIssueTypePropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+    async getIssueTypePropertyKeysRequestOpts(requestParameters: GetIssueTypePropertyKeysRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeId',
@@ -181,12 +196,21 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetype/{issueTypeId}/properties`;
         urlPath = urlPath.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all the [issue type property](https://developer.atlassian.com/cloud/jira/platform/storing-data-without-a-database/#a-id-jira-entity-properties-a-jira-entity-properties) keys of the issue type.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) to get the property keys of any issue type.  *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) to get the property keys of any issue types associated with the projects the user has permission to browse.
+     * Get issue type property keys
+     */
+    async getIssueTypePropertyKeysRaw(requestParameters: GetIssueTypePropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+        const requestOptions = await this.getIssueTypePropertyKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -201,10 +225,9 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates or updates the value of the [issue type property](https://developer.atlassian.com/cloud/jira/platform/storing-data-without-a-database/#a-id-jira-entity-properties-a-jira-entity-properties). Use this resource to store and update data against an issue type.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Set issue type property
+     * Creates request options for setIssueTypeProperty without sending the request
      */
-    async setIssueTypePropertyRaw(requestParameters: SetIssueTypePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setIssueTypePropertyRequestOpts(requestParameters: SetIssueTypePropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeId',
@@ -245,13 +268,22 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates or updates the value of the [issue type property](https://developer.atlassian.com/cloud/jira/platform/storing-data-without-a-database/#a-id-jira-entity-properties-a-jira-entity-properties). Use this resource to store and update data against an issue type.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Set issue type property
+     */
+    async setIssueTypePropertyRaw(requestParameters: SetIssueTypePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setIssueTypePropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

@@ -53,10 +53,9 @@ export interface SetUserPropertyRequest {
 export class UserPropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Deletes a property from a user.  Note: This operation does not access the [user properties](https://confluence.atlassian.com/x/8YxjL) created and maintained in Jira.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to delete a property from any user.  *  Access to Jira, to delete a property from the calling user\'s record.
-     * Delete user property
+     * Creates request options for deleteUserProperty without sending the request
      */
-    async deleteUserPropertyRaw(requestParameters: DeleteUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteUserPropertyRequestOpts(requestParameters: DeleteUserPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['propertyKey'] == null) {
             throw new runtime.RequiredError(
                 'propertyKey',
@@ -92,12 +91,21 @@ export class UserPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/user/properties/{propertyKey}`;
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a property from a user.  Note: This operation does not access the [user properties](https://confluence.atlassian.com/x/8YxjL) created and maintained in Jira.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to delete a property from any user.  *  Access to Jira, to delete a property from the calling user\'s record.
+     * Delete user property
+     */
+    async deleteUserPropertyRaw(requestParameters: DeleteUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteUserPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -111,10 +119,9 @@ export class UserPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the value of a user\'s property. If no property key is provided [Get user property keys](#api-rest-api-3-user-properties-get) is called.  Note: This operation does not access the [user properties](https://confluence.atlassian.com/x/8YxjL) created and maintained in Jira.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to get a property from any user.  *  Access to Jira, to get a property from the calling user\'s record.
-     * Get user property
+     * Creates request options for getUserProperty without sending the request
      */
-    async getUserPropertyRaw(requestParameters: GetUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+    async getUserPropertyRequestOpts(requestParameters: GetUserPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['propertyKey'] == null) {
             throw new runtime.RequiredError(
                 'propertyKey',
@@ -150,12 +157,21 @@ export class UserPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/user/properties/{propertyKey}`;
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the value of a user\'s property. If no property key is provided [Get user property keys](#api-rest-api-3-user-properties-get) is called.  Note: This operation does not access the [user properties](https://confluence.atlassian.com/x/8YxjL) created and maintained in Jira.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to get a property from any user.  *  Access to Jira, to get a property from the calling user\'s record.
+     * Get user property
+     */
+    async getUserPropertyRaw(requestParameters: GetUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+        const requestOptions = await this.getUserPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -170,10 +186,9 @@ export class UserPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the keys of all properties for a user.  Note: This operation does not access the [user properties](https://confluence.atlassian.com/x/8YxjL) created and maintained in Jira.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to access the property keys on any user.  *  Access to Jira, to access the calling user\'s property keys.
-     * Get user property keys
+     * Creates request options for getUserPropertyKeys without sending the request
      */
-    async getUserPropertyKeysRaw(requestParameters: GetUserPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+    async getUserPropertyKeysRequestOpts(requestParameters: GetUserPropertyKeysRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['accountId'] != null) {
@@ -201,12 +216,21 @@ export class UserPropertiesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user/properties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the keys of all properties for a user.  Note: This operation does not access the [user properties](https://confluence.atlassian.com/x/8YxjL) created and maintained in Jira.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to access the property keys on any user.  *  Access to Jira, to access the calling user\'s property keys.
+     * Get user property keys
+     */
+    async getUserPropertyKeysRaw(requestParameters: GetUserPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+        const requestOptions = await this.getUserPropertyKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -221,10 +245,9 @@ export class UserPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the value of a user\'s property. Use this resource to store custom data against a user.  Note: This operation does not access the [user properties](https://confluence.atlassian.com/x/8YxjL) created and maintained in Jira.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to set a property on any user.  *  Access to Jira, to set a property on the calling user\'s record.
-     * Set user property
+     * Creates request options for setUserProperty without sending the request
      */
-    async setUserPropertyRaw(requestParameters: SetUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setUserPropertyRequestOpts(requestParameters: SetUserPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['propertyKey'] == null) {
             throw new runtime.RequiredError(
                 'propertyKey',
@@ -269,13 +292,22 @@ export class UserPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/user/properties/{propertyKey}`;
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the value of a user\'s property. Use this resource to store custom data against a user.  Note: This operation does not access the [user properties](https://confluence.atlassian.com/x/8YxjL) created and maintained in Jira.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to set a property on any user.  *  Access to Jira, to set a property on the calling user\'s record.
+     * Set user property
+     */
+    async setUserPropertyRaw(requestParameters: SetUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setUserPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

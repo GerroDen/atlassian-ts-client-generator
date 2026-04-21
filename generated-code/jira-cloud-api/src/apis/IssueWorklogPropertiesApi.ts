@@ -49,10 +49,9 @@ export interface SetWorklogPropertyRequest {
 export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Deletes a worklog property.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the worklog has visibility restrictions, belongs to the group or has the role visibility is restricted to.
-     * Delete worklog property
+     * Creates request options for deleteWorklogProperty without sending the request
      */
-    async deleteWorklogPropertyRaw(requestParameters: DeleteWorklogPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWorklogPropertyRequestOpts(requestParameters: DeleteWorklogPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -92,12 +91,21 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters['worklogId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a worklog property.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the worklog has visibility restrictions, belongs to the group or has the role visibility is restricted to.
+     * Delete worklog property
+     */
+    async deleteWorklogPropertyRaw(requestParameters: DeleteWorklogPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWorklogPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -111,10 +119,9 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the value of a worklog property.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the worklog has visibility restrictions, belongs to the group or has the role visibility is restricted to.
-     * Get worklog property
+     * Creates request options for getWorklogProperty without sending the request
      */
-    async getWorklogPropertyRaw(requestParameters: GetWorklogPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+    async getWorklogPropertyRequestOpts(requestParameters: GetWorklogPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -154,12 +161,21 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters['worklogId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the value of a worklog property.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the worklog has visibility restrictions, belongs to the group or has the role visibility is restricted to.
+     * Get worklog property
+     */
+    async getWorklogPropertyRaw(requestParameters: GetWorklogPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+        const requestOptions = await this.getWorklogPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -174,10 +190,9 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the keys of all properties for a worklog.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the worklog has visibility restrictions, belongs to the group or has the role visibility is restricted to.
-     * Get worklog property keys
+     * Creates request options for getWorklogPropertyKeys without sending the request
      */
-    async getWorklogPropertyKeysRaw(requestParameters: GetWorklogPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+    async getWorklogPropertyKeysRequestOpts(requestParameters: GetWorklogPropertyKeysRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -209,12 +224,21 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters['worklogId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the keys of all properties for a worklog.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the worklog has visibility restrictions, belongs to the group or has the role visibility is restricted to.
+     * Get worklog property keys
+     */
+    async getWorklogPropertyKeysRaw(requestParameters: GetWorklogPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+        const requestOptions = await this.getWorklogPropertyKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -229,10 +253,9 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the value of a worklog property. Use this operation to store custom data against the worklog.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  *Edit all worklogs*[ project permission](https://confluence.atlassian.com/x/yodKLg) to update any worklog or *Edit own worklogs* to update worklogs created by the user.  *  If the worklog has visibility restrictions, belongs to the group or has the role visibility is restricted to.
-     * Set worklog property
+     * Creates request options for setWorklogProperty without sending the request
      */
-    async setWorklogPropertyRaw(requestParameters: SetWorklogPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setWorklogPropertyRequestOpts(requestParameters: SetWorklogPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -281,13 +304,22 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters['worklogId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the value of a worklog property. Use this operation to store custom data against the worklog.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  *Edit all worklogs*[ project permission](https://confluence.atlassian.com/x/yodKLg) to update any worklog or *Edit own worklogs* to update worklogs created by the user.  *  If the worklog has visibility restrictions, belongs to the group or has the role visibility is restricted to.
+     * Set worklog property
+     */
+    async setWorklogPropertyRaw(requestParameters: SetWorklogPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setWorklogPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

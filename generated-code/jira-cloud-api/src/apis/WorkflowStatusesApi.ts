@@ -28,10 +28,9 @@ export interface GetStatusRequest {
 export class WorkflowStatusesApi extends runtime.BaseAPI {
 
     /**
-     * Returns a status. The status must be associated with an active workflow to be returned.  If a name is used on more than one status, only the status found first is returned. Therefore, identifying the status by its ID may be preferable.  This operation can be accessed anonymously.  [Permissions](#permissions) required: *Browse projects* [project permission](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-permissions/) for the project.
-     * Get status
+     * Creates request options for getStatus without sending the request
      */
-    async getStatusRaw(requestParameters: GetStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusDetails>> {
+    async getStatusRequestOpts(requestParameters: GetStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['idOrName'] == null) {
             throw new runtime.RequiredError(
                 'idOrName',
@@ -55,12 +54,21 @@ export class WorkflowStatusesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/status/{idOrName}`;
         urlPath = urlPath.replace(`{${"idOrName"}}`, encodeURIComponent(String(requestParameters['idOrName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a status. The status must be associated with an active workflow to be returned.  If a name is used on more than one status, only the status found first is returned. Therefore, identifying the status by its ID may be preferable.  This operation can be accessed anonymously.  [Permissions](#permissions) required: *Browse projects* [project permission](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-permissions/) for the project.
+     * Get status
+     */
+    async getStatusRaw(requestParameters: GetStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusDetails>> {
+        const requestOptions = await this.getStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -75,10 +83,9 @@ export class WorkflowStatusesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of all statuses associated with active workflows.  This operation can be accessed anonymously.  [Permissions](#permissions) required: *Browse projects* [project permission](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-permissions/) for the project.
-     * Get all statuses
+     * Creates request options for getStatuses without sending the request
      */
-    async getStatusesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StatusDetails>>> {
+    async getStatusesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -94,12 +101,21 @@ export class WorkflowStatusesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/status`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of all statuses associated with active workflows.  This operation can be accessed anonymously.  [Permissions](#permissions) required: *Browse projects* [project permission](https://support.atlassian.com/jira-cloud-administration/docs/manage-project-permissions/) for the project.
+     * Get all statuses
+     */
+    async getStatusesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StatusDetails>>> {
+        const requestOptions = await this.getStatusesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

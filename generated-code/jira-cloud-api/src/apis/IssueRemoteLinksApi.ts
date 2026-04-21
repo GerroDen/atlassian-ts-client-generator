@@ -58,10 +58,9 @@ export interface UpdateRemoteIssueLinkRequest {
 export class IssueRemoteLinksApi extends runtime.BaseAPI {
 
     /**
-     * Creates or updates a remote issue link for an issue.  If a `globalId` is provided and a remote issue link with that global ID is found it is updated. Any fields without values in the request are set to null. Otherwise, the remote issue link is created.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* and *Link issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Create or update remote issue link
+     * Creates request options for createOrUpdateRemoteIssueLink without sending the request
      */
-    async createOrUpdateRemoteIssueLinkRaw(requestParameters: CreateOrUpdateRemoteIssueLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteIssueLinkIdentifies>> {
+    async createOrUpdateRemoteIssueLinkRequestOpts(requestParameters: CreateOrUpdateRemoteIssueLinkRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -94,13 +93,22 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issue/{issueIdOrKey}/remotelink`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['remoteIssueLinkRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates or updates a remote issue link for an issue.  If a `globalId` is provided and a remote issue link with that global ID is found it is updated. Any fields without values in the request are set to null. Otherwise, the remote issue link is created.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* and *Link issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Create or update remote issue link
+     */
+    async createOrUpdateRemoteIssueLinkRaw(requestParameters: CreateOrUpdateRemoteIssueLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteIssueLinkIdentifies>> {
+        const requestOptions = await this.createOrUpdateRemoteIssueLinkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -115,10 +123,9 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the remote issue link from the issue using the link\'s global ID. Where the global ID includes reserved URL characters these must be escaped in the request. For example, pass `system=http://www.mycompany.com/support&id=1` as `system%3Dhttp%3A%2F%2Fwww.mycompany.com%2Fsupport%26id%3D1`.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* and *Link issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is implemented, issue-level security permission to view the issue.
-     * Delete remote issue link by global ID
+     * Creates request options for deleteRemoteIssueLinkByGlobalId without sending the request
      */
-    async deleteRemoteIssueLinkByGlobalIdRaw(requestParameters: DeleteRemoteIssueLinkByGlobalIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRemoteIssueLinkByGlobalIdRequestOpts(requestParameters: DeleteRemoteIssueLinkByGlobalIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -153,12 +160,21 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issue/{issueIdOrKey}/remotelink`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the remote issue link from the issue using the link\'s global ID. Where the global ID includes reserved URL characters these must be escaped in the request. For example, pass `system=http://www.mycompany.com/support&id=1` as `system%3Dhttp%3A%2F%2Fwww.mycompany.com%2Fsupport%26id%3D1`.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* and *Link issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is implemented, issue-level security permission to view the issue.
+     * Delete remote issue link by global ID
+     */
+    async deleteRemoteIssueLinkByGlobalIdRaw(requestParameters: DeleteRemoteIssueLinkByGlobalIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRemoteIssueLinkByGlobalIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -172,10 +188,9 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a remote issue link from an issue.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects*, *Edit issues*, and *Link issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Delete remote issue link by ID
+     * Creates request options for deleteRemoteIssueLinkById without sending the request
      */
-    async deleteRemoteIssueLinkByIdRaw(requestParameters: DeleteRemoteIssueLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRemoteIssueLinkByIdRequestOpts(requestParameters: DeleteRemoteIssueLinkByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -207,12 +222,21 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters['linkId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a remote issue link from an issue.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects*, *Edit issues*, and *Link issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Delete remote issue link by ID
+     */
+    async deleteRemoteIssueLinkByIdRaw(requestParameters: DeleteRemoteIssueLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRemoteIssueLinkByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -226,10 +250,9 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a remote issue link for an issue.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Get remote issue link by ID
+     * Creates request options for getRemoteIssueLinkById without sending the request
      */
-    async getRemoteIssueLinkByIdRaw(requestParameters: GetRemoteIssueLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteIssueLink>> {
+    async getRemoteIssueLinkByIdRequestOpts(requestParameters: GetRemoteIssueLinkByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -261,12 +284,21 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters['linkId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a remote issue link for an issue.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Get remote issue link by ID
+     */
+    async getRemoteIssueLinkByIdRaw(requestParameters: GetRemoteIssueLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteIssueLink>> {
+        const requestOptions = await this.getRemoteIssueLinkByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -281,10 +313,9 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the remote issue links for an issue. When a remote issue link global ID is provided the record with that global ID is returned, otherwise all remote issue links are returned. Where a global ID includes reserved URL characters these must be escaped in the request. For example, pass `system=http://www.mycompany.com/support&id=1` as `system%3Dhttp%3A%2F%2Fwww.mycompany.com%2Fsupport%26id%3D1`.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Get remote issue links
+     * Creates request options for getRemoteIssueLinks without sending the request
      */
-    async getRemoteIssueLinksRaw(requestParameters: GetRemoteIssueLinksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRemoteIssueLinks200Response>> {
+    async getRemoteIssueLinksRequestOpts(requestParameters: GetRemoteIssueLinksRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -312,12 +343,21 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issue/{issueIdOrKey}/remotelink`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the remote issue links for an issue. When a remote issue link global ID is provided the record with that global ID is returned, otherwise all remote issue links are returned. Where a global ID includes reserved URL characters these must be escaped in the request. For example, pass `system=http://www.mycompany.com/support&id=1` as `system%3Dhttp%3A%2F%2Fwww.mycompany.com%2Fsupport%26id%3D1`.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Get remote issue links
+     */
+    async getRemoteIssueLinksRaw(requestParameters: GetRemoteIssueLinksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRemoteIssueLinks200Response>> {
+        const requestOptions = await this.getRemoteIssueLinksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -332,10 +372,9 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a remote issue link for an issue.  Note: Fields without values in the request are set to null.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* and *Link issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Update remote issue link by ID
+     * Creates request options for updateRemoteIssueLink without sending the request
      */
-    async updateRemoteIssueLinkRaw(requestParameters: UpdateRemoteIssueLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateRemoteIssueLinkRequestOpts(requestParameters: UpdateRemoteIssueLinkRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -376,13 +415,22 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters['linkId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['remoteIssueLinkRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a remote issue link for an issue.  Note: Fields without values in the request are set to null.  This operation requires [issue linking to be active](https://confluence.atlassian.com/x/yoXKM).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* and *Link issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Update remote issue link by ID
+     */
+    async updateRemoteIssueLinkRaw(requestParameters: UpdateRemoteIssueLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateRemoteIssueLinkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

@@ -81,10 +81,9 @@ export interface SearchForIssuesUsingJqlPostRequest {
 export class IssueSearchApi extends runtime.BaseAPI {
 
     /**
-     * Provide an estimated count of the issues that match the [JQL](https://confluence.atlassian.com/x/egORLQ). Recent updates might not be immediately visible in the returned output. This endpoint requires JQL to be bounded.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Count issues using JQL
+     * Creates request options for countIssues without sending the request
      */
-    async countIssuesRaw(requestParameters: CountIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JQLCountResultsBean>> {
+    async countIssuesRequestOpts(requestParameters: CountIssuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jQLCountRequestBean'] == null) {
             throw new runtime.RequiredError(
                 'jQLCountRequestBean',
@@ -109,13 +108,22 @@ export class IssueSearchApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/search/approximate-count`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['jQLCountRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide an estimated count of the issues that match the [JQL](https://confluence.atlassian.com/x/egORLQ). Recent updates might not be immediately visible in the returned output. This endpoint requires JQL to be bounded.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Count issues using JQL
+     */
+    async countIssuesRaw(requestParameters: CountIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JQLCountResultsBean>> {
+        const requestOptions = await this.countIssuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -130,10 +138,9 @@ export class IssueSearchApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns lists of issues matching a query string. Use this resource to provide auto-completion suggestions when the user is looking for an issue using a word or string.  This operation returns two lists:   *  `History Search` which includes issues from the user\'s history of created, edited, or viewed issues that contain the string in the `query` parameter.  *  `Current Search` which includes issues that match the JQL expression in `currentJQL` and contain the string in the `query` parameter.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get issue picker suggestions
+     * Creates request options for getIssuePickerResource without sending the request
      */
-    async getIssuePickerResourceRaw(requestParameters: GetIssuePickerResourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssuePickerSuggestions>> {
+    async getIssuePickerResourceRequestOpts(requestParameters: GetIssuePickerResourceRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['query'] != null) {
@@ -173,12 +180,21 @@ export class IssueSearchApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issue/picker`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns lists of issues matching a query string. Use this resource to provide auto-completion suggestions when the user is looking for an issue using a word or string.  This operation returns two lists:   *  `History Search` which includes issues from the user\'s history of created, edited, or viewed issues that contain the string in the `query` parameter.  *  `Current Search` which includes issues that match the JQL expression in `currentJQL` and contain the string in the `query` parameter.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get issue picker suggestions
+     */
+    async getIssuePickerResourceRaw(requestParameters: GetIssuePickerResourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssuePickerSuggestions>> {
+        const requestOptions = await this.getIssuePickerResourceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -193,10 +209,9 @@ export class IssueSearchApi extends runtime.BaseAPI {
     }
 
     /**
-     * Checks whether one or more issues would be returned by one or more JQL queries.  **[Permissions](#permissions) required:** None, however, issues are only matched against JQL queries where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Check issues against JQL
+     * Creates request options for matchIssues without sending the request
      */
-    async matchIssuesRaw(requestParameters: MatchIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueMatches>> {
+    async matchIssuesRequestOpts(requestParameters: MatchIssuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issuesAndJQLQueries'] == null) {
             throw new runtime.RequiredError(
                 'issuesAndJQLQueries',
@@ -221,13 +236,22 @@ export class IssueSearchApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/match`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issuesAndJQLQueries'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Checks whether one or more issues would be returned by one or more JQL queries.  **[Permissions](#permissions) required:** None, however, issues are only matched against JQL queries where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Check issues against JQL
+     */
+    async matchIssuesRaw(requestParameters: MatchIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueMatches>> {
+        const requestOptions = await this.matchIssuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -242,10 +266,9 @@ export class IssueSearchApi extends runtime.BaseAPI {
     }
 
     /**
-     * Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ). Recent updates might not be immediately visible in the returned search results. If you need [read-after-write](https://developer.atlassian.com/cloud/jira/platform/search-and-reconcile/) consistency, you can utilize the `reconcileIssues` parameter to ensure stronger consistency assurances. This operation can be accessed anonymously.  If the JQL query expression is too large to be encoded as a query parameter, use the [POST](#api-rest-api-3-search-post) version of this resource.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Search for issues using JQL enhanced search (GET)
+     * Creates request options for searchAndReconsileIssuesUsingJql without sending the request
      */
-    async searchAndReconsileIssuesUsingJqlRaw(requestParameters: SearchAndReconsileIssuesUsingJqlRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchAndReconcileResults>> {
+    async searchAndReconsileIssuesUsingJqlRequestOpts(requestParameters: SearchAndReconsileIssuesUsingJqlRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['jql'] != null) {
@@ -297,12 +320,21 @@ export class IssueSearchApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/search/jql`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ). Recent updates might not be immediately visible in the returned search results. If you need [read-after-write](https://developer.atlassian.com/cloud/jira/platform/search-and-reconcile/) consistency, you can utilize the `reconcileIssues` parameter to ensure stronger consistency assurances. This operation can be accessed anonymously.  If the JQL query expression is too large to be encoded as a query parameter, use the [POST](#api-rest-api-3-search-post) version of this resource.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Search for issues using JQL enhanced search (GET)
+     */
+    async searchAndReconsileIssuesUsingJqlRaw(requestParameters: SearchAndReconsileIssuesUsingJqlRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchAndReconcileResults>> {
+        const requestOptions = await this.searchAndReconsileIssuesUsingJqlRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -317,10 +349,9 @@ export class IssueSearchApi extends runtime.BaseAPI {
     }
 
     /**
-     * Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ). Recent updates might not be immediately visible in the returned search results. If you need [read-after-write](https://developer.atlassian.com/cloud/jira/platform/search-and-reconcile/) consistency, you can utilize the `reconcileIssues` parameter to ensure stronger consistency assurances. This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Search for issues using JQL enhanced search (POST)
+     * Creates request options for searchAndReconsileIssuesUsingJqlPost without sending the request
      */
-    async searchAndReconsileIssuesUsingJqlPostRaw(requestParameters: SearchAndReconsileIssuesUsingJqlPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchAndReconcileResults>> {
+    async searchAndReconsileIssuesUsingJqlPostRequestOpts(requestParameters: SearchAndReconsileIssuesUsingJqlPostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['searchAndReconcileRequestBean'] == null) {
             throw new runtime.RequiredError(
                 'searchAndReconcileRequestBean',
@@ -345,13 +376,22 @@ export class IssueSearchApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/search/jql`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['searchAndReconcileRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ). Recent updates might not be immediately visible in the returned search results. If you need [read-after-write](https://developer.atlassian.com/cloud/jira/platform/search-and-reconcile/) consistency, you can utilize the `reconcileIssues` parameter to ensure stronger consistency assurances. This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Search for issues using JQL enhanced search (POST)
+     */
+    async searchAndReconsileIssuesUsingJqlPostRaw(requestParameters: SearchAndReconsileIssuesUsingJqlPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchAndReconcileResults>> {
+        const requestOptions = await this.searchAndReconsileIssuesUsingJqlPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -366,11 +406,10 @@ export class IssueSearchApi extends runtime.BaseAPI {
     }
 
     /**
-     * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ).  If the JQL query expression is too large to be encoded as a query parameter, use the [POST](#api-rest-api-3-search-post) version of this resource.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Currently being removed. Search for issues using JQL (GET)
+     * Creates request options for searchForIssuesUsingJql without sending the request
      * @deprecated
      */
-    async searchForIssuesUsingJqlRaw(requestParameters: SearchForIssuesUsingJqlRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
+    async searchForIssuesUsingJqlRequestOpts(requestParameters: SearchForIssuesUsingJqlRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['jql'] != null) {
@@ -422,12 +461,22 @@ export class IssueSearchApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ).  If the JQL query expression is too large to be encoded as a query parameter, use the [POST](#api-rest-api-3-search-post) version of this resource.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Currently being removed. Search for issues using JQL (GET)
+     * @deprecated
+     */
+    async searchForIssuesUsingJqlRaw(requestParameters: SearchForIssuesUsingJqlRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
+        const requestOptions = await this.searchForIssuesUsingJqlRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -443,11 +492,10 @@ export class IssueSearchApi extends runtime.BaseAPI {
     }
 
     /**
-     * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ).  There is a [GET](#api-rest-api-3-search-get) version of this resource that can be used for smaller JQL query expressions.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Currently being removed. Search for issues using JQL (POST)
+     * Creates request options for searchForIssuesUsingJqlPost without sending the request
      * @deprecated
      */
-    async searchForIssuesUsingJqlPostRaw(requestParameters: SearchForIssuesUsingJqlPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
+    async searchForIssuesUsingJqlPostRequestOpts(requestParameters: SearchForIssuesUsingJqlPostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['searchRequestBean'] == null) {
             throw new runtime.RequiredError(
                 'searchRequestBean',
@@ -472,13 +520,23 @@ export class IssueSearchApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['searchRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ).  There is a [GET](#api-rest-api-3-search-get) version of this resource that can be used for smaller JQL query expressions.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Currently being removed. Search for issues using JQL (POST)
+     * @deprecated
+     */
+    async searchForIssuesUsingJqlPostRaw(requestParameters: SearchForIssuesUsingJqlPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
+        const requestOptions = await this.searchForIssuesUsingJqlPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

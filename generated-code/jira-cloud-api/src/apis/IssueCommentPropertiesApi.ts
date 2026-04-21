@@ -45,10 +45,9 @@ export interface SetCommentPropertyRequest {
 export class IssueCommentPropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Deletes a comment property.  **[Permissions](#permissions) required:** either of:   *  *Edit All Comments* [project permission](https://confluence.atlassian.com/x/yodKLg) to delete a property from any comment.  *  *Edit Own Comments* [project permission](https://confluence.atlassian.com/x/yodKLg) to delete a property from a comment created by the user.
-     * Delete comment property
+     * Creates request options for deleteCommentProperty without sending the request
      */
-    async deleteCommentPropertyRaw(requestParameters: DeleteCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteCommentPropertyRequestOpts(requestParameters: DeleteCommentPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -80,12 +79,21 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a comment property.  **[Permissions](#permissions) required:** either of:   *  *Edit All Comments* [project permission](https://confluence.atlassian.com/x/yodKLg) to delete a property from any comment.  *  *Edit Own Comments* [project permission](https://confluence.atlassian.com/x/yodKLg) to delete a property from a comment created by the user.
+     * Delete comment property
+     */
+    async deleteCommentPropertyRaw(requestParameters: DeleteCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteCommentPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -99,10 +107,9 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the value of a comment property.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the comment has visibility restrictions, belongs to the group or has the role visibility is restricted to.
-     * Get comment property
+     * Creates request options for getCommentProperty without sending the request
      */
-    async getCommentPropertyRaw(requestParameters: GetCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+    async getCommentPropertyRequestOpts(requestParameters: GetCommentPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -134,12 +141,21 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the value of a comment property.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the comment has visibility restrictions, belongs to the group or has the role visibility is restricted to.
+     * Get comment property
+     */
+    async getCommentPropertyRaw(requestParameters: GetCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+        const requestOptions = await this.getCommentPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -154,10 +170,9 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the keys of all the properties of a comment.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the comment has visibility restrictions, belongs to the group or has the role visibility is restricted to.
-     * Get comment property keys
+     * Creates request options for getCommentPropertyKeys without sending the request
      */
-    async getCommentPropertyKeysRaw(requestParameters: GetCommentPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+    async getCommentPropertyKeysRequestOpts(requestParameters: GetCommentPropertyKeysRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -181,12 +196,21 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/comment/{commentId}/properties`;
         urlPath = urlPath.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the keys of all the properties of a comment.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.  *  If the comment has visibility restrictions, belongs to the group or has the role visibility is restricted to.
+     * Get comment property keys
+     */
+    async getCommentPropertyKeysRaw(requestParameters: GetCommentPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+        const requestOptions = await this.getCommentPropertyKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -201,10 +225,9 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates or updates the value of a property for a comment. Use this resource to store custom data against a comment.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** either of:   *  *Edit All Comments* [project permission](https://confluence.atlassian.com/x/yodKLg) to create or update the value of a property on any comment.  *  *Edit Own Comments* [project permission](https://confluence.atlassian.com/x/yodKLg) to create or update the value of a property on a comment created by the user.
-     * Set comment property
+     * Creates request options for setCommentProperty without sending the request
      */
-    async setCommentPropertyRaw(requestParameters: SetCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setCommentPropertyRequestOpts(requestParameters: SetCommentPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -245,13 +268,22 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates or updates the value of a property for a comment. Use this resource to store custom data against a comment.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** either of:   *  *Edit All Comments* [project permission](https://confluence.atlassian.com/x/yodKLg) to create or update the value of a property on any comment.  *  *Edit Own Comments* [project permission](https://confluence.atlassian.com/x/yodKLg) to create or update the value of a property on a comment created by the user.
+     * Set comment property
+     */
+    async setCommentPropertyRaw(requestParameters: SetCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setCommentPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

@@ -33,10 +33,9 @@ export interface DynamicModulesResourceRemoveModulesDeleteRequest {
 export class DynamicModulesApi extends runtime.BaseAPI {
 
     /**
-     * Returns all modules registered dynamically by the calling app.  **[Permissions](#permissions) required:** Only Connect apps can make this request.
-     * Get modules
+     * Creates request options for dynamicModulesResourceGetModulesGet without sending the request
      */
-    async dynamicModulesResourceGetModulesGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ConnectModules>> {
+    async dynamicModulesResourceGetModulesGetRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -44,12 +43,21 @@ export class DynamicModulesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/atlassian-connect/1/app/module/dynamic`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all modules registered dynamically by the calling app.  **[Permissions](#permissions) required:** Only Connect apps can make this request.
+     * Get modules
+     */
+    async dynamicModulesResourceGetModulesGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ConnectModules>> {
+        const requestOptions = await this.dynamicModulesResourceGetModulesGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -64,10 +72,9 @@ export class DynamicModulesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Registers a list of modules.  **[Permissions](#permissions) required:** Only Connect apps can make this request.
-     * Register modules
+     * Creates request options for dynamicModulesResourceRegisterModulesPost without sending the request
      */
-    async dynamicModulesResourceRegisterModulesPostRaw(requestParameters: DynamicModulesResourceRegisterModulesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async dynamicModulesResourceRegisterModulesPostRequestOpts(requestParameters: DynamicModulesResourceRegisterModulesPostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['connectModules'] == null) {
             throw new runtime.RequiredError(
                 'connectModules',
@@ -84,13 +91,22 @@ export class DynamicModulesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/atlassian-connect/1/app/module/dynamic`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['connectModules'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Registers a list of modules.  **[Permissions](#permissions) required:** Only Connect apps can make this request.
+     * Register modules
+     */
+    async dynamicModulesResourceRegisterModulesPostRaw(requestParameters: DynamicModulesResourceRegisterModulesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.dynamicModulesResourceRegisterModulesPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -104,10 +120,9 @@ export class DynamicModulesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove all or a list of modules registered by the calling app.  **[Permissions](#permissions) required:** Only Connect apps can make this request.
-     * Remove modules
+     * Creates request options for dynamicModulesResourceRemoveModulesDelete without sending the request
      */
-    async dynamicModulesResourceRemoveModulesDeleteRaw(requestParameters: DynamicModulesResourceRemoveModulesDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async dynamicModulesResourceRemoveModulesDeleteRequestOpts(requestParameters: DynamicModulesResourceRemoveModulesDeleteRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['moduleKey'] != null) {
@@ -119,12 +134,21 @@ export class DynamicModulesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/atlassian-connect/1/app/module/dynamic`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove all or a list of modules registered by the calling app.  **[Permissions](#permissions) required:** Only Connect apps can make this request.
+     * Remove modules
+     */
+    async dynamicModulesResourceRemoveModulesDeleteRaw(requestParameters: DynamicModulesResourceRemoveModulesDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.dynamicModulesResourceRemoveModulesDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

@@ -66,10 +66,9 @@ export interface UpdateScreenRequest {
 export class ScreensApi extends runtime.BaseAPI {
 
     /**
-     * Adds a field to the default tab of the default screen.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Add field to default screen
+     * Creates request options for addFieldToDefaultScreen without sending the request
      */
-    async addFieldToDefaultScreenRaw(requestParameters: AddFieldToDefaultScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async addFieldToDefaultScreenRequestOpts(requestParameters: AddFieldToDefaultScreenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -93,12 +92,21 @@ export class ScreensApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/screens/addToDefault/{fieldId}`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a field to the default tab of the default screen.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add field to default screen
+     */
+    async addFieldToDefaultScreenRaw(requestParameters: AddFieldToDefaultScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.addFieldToDefaultScreenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -117,10 +125,9 @@ export class ScreensApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a screen with a default field tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create screen
+     * Creates request options for createScreen without sending the request
      */
-    async createScreenRaw(requestParameters: CreateScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Screen>> {
+    async createScreenRequestOpts(requestParameters: CreateScreenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenDetails'] == null) {
             throw new runtime.RequiredError(
                 'screenDetails',
@@ -145,13 +152,22 @@ export class ScreensApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/screens`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['screenDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a screen with a default field tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create screen
+     */
+    async createScreenRaw(requestParameters: CreateScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Screen>> {
+        const requestOptions = await this.createScreenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -166,10 +182,9 @@ export class ScreensApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a screen. A screen cannot be deleted if it is used in a screen scheme, workflow, or workflow draft.  Only screens used in classic projects can be deleted.
-     * Delete screen
+     * Creates request options for deleteScreen without sending the request
      */
-    async deleteScreenRaw(requestParameters: DeleteScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteScreenRequestOpts(requestParameters: DeleteScreenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -193,12 +208,21 @@ export class ScreensApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/screens/{screenId}`;
         urlPath = urlPath.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a screen. A screen cannot be deleted if it is used in a screen scheme, workflow, or workflow draft.  Only screens used in classic projects can be deleted.
+     * Delete screen
+     */
+    async deleteScreenRaw(requestParameters: DeleteScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteScreenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -212,10 +236,9 @@ export class ScreensApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the fields that can be added to a tab on a screen.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get available screen fields
+     * Creates request options for getAvailableScreenFields without sending the request
      */
-    async getAvailableScreenFieldsRaw(requestParameters: GetAvailableScreenFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ScreenableField>>> {
+    async getAvailableScreenFieldsRequestOpts(requestParameters: GetAvailableScreenFieldsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -239,12 +262,21 @@ export class ScreensApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/screens/{screenId}/availableFields`;
         urlPath = urlPath.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the fields that can be added to a tab on a screen.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get available screen fields
+     */
+    async getAvailableScreenFieldsRaw(requestParameters: GetAvailableScreenFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ScreenableField>>> {
+        const requestOptions = await this.getAvailableScreenFieldsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -259,10 +291,9 @@ export class ScreensApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of all screens or those specified by one or more screen IDs.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get screens
+     * Creates request options for getScreens without sending the request
      */
-    async getScreensRaw(requestParameters: GetScreensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanScreen>> {
+    async getScreensRequestOpts(requestParameters: GetScreensRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -302,12 +333,21 @@ export class ScreensApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/screens`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of all screens or those specified by one or more screen IDs.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get screens
+     */
+    async getScreensRaw(requestParameters: GetScreensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanScreen>> {
+        const requestOptions = await this.getScreensRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -322,10 +362,9 @@ export class ScreensApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of the screens a field is used in.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get screens for a field
+     * Creates request options for getScreensForField without sending the request
      */
-    async getScreensForFieldRaw(requestParameters: GetScreensForFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanScreenWithTab>> {
+    async getScreensForFieldRequestOpts(requestParameters: GetScreensForFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -361,12 +400,21 @@ export class ScreensApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}/screens`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of the screens a field is used in.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get screens for a field
+     */
+    async getScreensForFieldRaw(requestParameters: GetScreensForFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanScreenWithTab>> {
+        const requestOptions = await this.getScreensForFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -381,10 +429,9 @@ export class ScreensApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a screen. Only screens used in classic projects can be updated.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update screen
+     * Creates request options for updateScreen without sending the request
      */
-    async updateScreenRaw(requestParameters: UpdateScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Screen>> {
+    async updateScreenRequestOpts(requestParameters: UpdateScreenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -417,13 +464,22 @@ export class ScreensApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/screens/{screenId}`;
         urlPath = urlPath.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateScreenDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a screen. Only screens used in classic projects can be updated.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update screen
+     */
+    async updateScreenRaw(requestParameters: UpdateScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Screen>> {
+        const requestOptions = await this.updateScreenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -107,10 +107,9 @@ export interface UpdateVersionRequest {
 export class ProjectVersionsApi extends runtime.BaseAPI {
 
     /**
-     * Creates a related work for the given version. You can only create a generic link type of related works via this API. relatedWorkId will be auto-generated UUID, that does not need to be provided.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
-     * Create related work
+     * Creates request options for createRelatedWork without sending the request
      */
-    async createRelatedWorkRaw(requestParameters: CreateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionRelatedWork>> {
+    async createRelatedWorkRequestOpts(requestParameters: CreateRelatedWorkRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -143,13 +142,22 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}/relatedwork`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['versionRelatedWork'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a related work for the given version. You can only create a generic link type of related works via this API. relatedWorkId will be auto-generated UUID, that does not need to be provided.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
+     * Create related work
+     */
+    async createRelatedWorkRaw(requestParameters: CreateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionRelatedWork>> {
+        const requestOptions = await this.createRelatedWorkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -164,10 +172,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a project version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project the version is added to.
-     * Create version
+     * Creates request options for createVersion without sending the request
      */
-    async createVersionRaw(requestParameters: CreateVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+    async createVersionRequestOpts(requestParameters: CreateVersionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['version'] == null) {
             throw new runtime.RequiredError(
                 'version',
@@ -192,13 +199,22 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/version`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['version'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a project version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project the version is added to.
+     * Create version
+     */
+    async createVersionRaw(requestParameters: CreateVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+        const requestOptions = await this.createVersionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -213,10 +229,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a project version.  Alternative versions can be provided to update issues that use the deleted version in `fixVersion`, `affectedVersion`, or any version picker custom fields. If alternatives are not provided, occurrences of `fixVersion`, `affectedVersion`, and any version picker custom field, that contain the deleted version, are cleared. Any replacement version must be in the same project as the version being deleted and cannot be the version being deleted.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
-     * Delete and replace version
+     * Creates request options for deleteAndReplaceVersion without sending the request
      */
-    async deleteAndReplaceVersionRaw(requestParameters: DeleteAndReplaceVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteAndReplaceVersionRequestOpts(requestParameters: DeleteAndReplaceVersionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -249,13 +264,22 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}/removeAndSwap`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['deleteAndReplaceVersionBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a project version.  Alternative versions can be provided to update issues that use the deleted version in `fixVersion`, `affectedVersion`, or any version picker custom fields. If alternatives are not provided, occurrences of `fixVersion`, `affectedVersion`, and any version picker custom field, that contain the deleted version, are cleared. Any replacement version must be in the same project as the version being deleted and cannot be the version being deleted.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
+     * Delete and replace version
+     */
+    async deleteAndReplaceVersionRaw(requestParameters: DeleteAndReplaceVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteAndReplaceVersionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -274,10 +298,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the given related work for the given version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
-     * Delete related work
+     * Creates request options for deleteRelatedWork without sending the request
      */
-    async deleteRelatedWorkRaw(requestParameters: DeleteRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRelatedWorkRequestOpts(requestParameters: DeleteRelatedWorkRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['versionId'] == null) {
             throw new runtime.RequiredError(
                 'versionId',
@@ -309,12 +332,21 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"versionId"}}`, encodeURIComponent(String(requestParameters['versionId'])));
         urlPath = urlPath.replace(`{${"relatedWorkId"}}`, encodeURIComponent(String(requestParameters['relatedWorkId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the given related work for the given version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
+     * Delete related work
+     */
+    async deleteRelatedWorkRaw(requestParameters: DeleteRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRelatedWorkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -328,11 +360,10 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a project version.  Deprecated, use [ Delete and replace version](#api-rest-api-3-version-id-removeAndSwap-post) that supports swapping version values in custom fields, in addition to the swapping for `fixVersion` and `affectedVersion` provided in this resource.  Alternative versions can be provided to update issues that use the deleted version in `fixVersion` or `affectedVersion`. If alternatives are not provided, occurrences of `fixVersion` and `affectedVersion` that contain the deleted version are cleared.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
-     * Delete version
+     * Creates request options for deleteVersion without sending the request
      * @deprecated
      */
-    async deleteVersionRaw(requestParameters: DeleteVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteVersionRequestOpts(requestParameters: DeleteVersionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -364,12 +395,22 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a project version.  Deprecated, use [ Delete and replace version](#api-rest-api-3-version-id-removeAndSwap-post) that supports swapping version values in custom fields, in addition to the swapping for `fixVersion` and `affectedVersion` provided in this resource.  Alternative versions can be provided to update issues that use the deleted version in `fixVersion` or `affectedVersion`. If alternatives are not provided, occurrences of `fixVersion` and `affectedVersion` that contain the deleted version are cleared.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
+     * Delete version
+     * @deprecated
+     */
+    async deleteVersionRaw(requestParameters: DeleteVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteVersionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -384,10 +425,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all versions in a project. The response is not paginated. Use [Get project versions paginated](#api-rest-api-3-project-projectIdOrKey-version-get) if you want to get the versions in a project with pagination.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
-     * Get project versions
+     * Creates request options for getProjectVersions without sending the request
      */
-    async getProjectVersionsRaw(requestParameters: GetProjectVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Version>>> {
+    async getProjectVersionsRequestOpts(requestParameters: GetProjectVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -415,12 +455,21 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/versions`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all versions in a project. The response is not paginated. Use [Get project versions paginated](#api-rest-api-3-project-projectIdOrKey-version-get) if you want to get the versions in a project with pagination.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
+     * Get project versions
+     */
+    async getProjectVersionsRaw(requestParameters: GetProjectVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Version>>> {
+        const requestOptions = await this.getProjectVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -435,10 +484,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of all versions in a project. See the [Get project versions](#api-rest-api-3-project-projectIdOrKey-versions-get) resource if you want to get a full list of versions without pagination.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
-     * Get project versions paginated
+     * Creates request options for getProjectVersionsPaginated without sending the request
      */
-    async getProjectVersionsPaginatedRaw(requestParameters: GetProjectVersionsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanVersion>> {
+    async getProjectVersionsPaginatedRequestOpts(requestParameters: GetProjectVersionsPaginatedRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -486,12 +534,21 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/version`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of all versions in a project. See the [Get project versions](#api-rest-api-3-project-projectIdOrKey-versions-get) resource if you want to get a full list of versions without pagination.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
+     * Get project versions paginated
+     */
+    async getProjectVersionsPaginatedRaw(requestParameters: GetProjectVersionsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanVersion>> {
+        const requestOptions = await this.getProjectVersionsPaginatedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -506,10 +563,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns related work items for the given version id.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the version.
-     * Get related work
+     * Creates request options for getRelatedWork without sending the request
      */
-    async getRelatedWorkRaw(requestParameters: GetRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VersionRelatedWork>>> {
+    async getRelatedWorkRequestOpts(requestParameters: GetRelatedWorkRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -533,12 +589,21 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}/relatedwork`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns related work items for the given version id.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the version.
+     * Get related work
+     */
+    async getRelatedWorkRaw(requestParameters: GetRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VersionRelatedWork>>> {
+        const requestOptions = await this.getRelatedWorkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -553,10 +618,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a project version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the version.
-     * Get version
+     * Creates request options for getVersion without sending the request
      */
-    async getVersionRaw(requestParameters: GetVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+    async getVersionRequestOpts(requestParameters: GetVersionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -584,12 +648,21 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a project version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the version.
+     * Get version
+     */
+    async getVersionRaw(requestParameters: GetVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+        const requestOptions = await this.getVersionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -604,10 +677,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the following counts for a version:   *  Number of issues where the `fixVersion` is set to the version.  *  Number of issues where the `affectedVersion` is set to the version.  *  Number of issues where a version custom field is set to the version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* project permission for the project that contains the version.
-     * Get version\'s related issues count
+     * Creates request options for getVersionRelatedIssues without sending the request
      */
-    async getVersionRelatedIssuesRaw(requestParameters: GetVersionRelatedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionIssueCounts>> {
+    async getVersionRelatedIssuesRequestOpts(requestParameters: GetVersionRelatedIssuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -631,12 +703,21 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}/relatedIssueCounts`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the following counts for a version:   *  Number of issues where the `fixVersion` is set to the version.  *  Number of issues where the `affectedVersion` is set to the version.  *  Number of issues where a version custom field is set to the version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* project permission for the project that contains the version.
+     * Get version\'s related issues count
+     */
+    async getVersionRelatedIssuesRaw(requestParameters: GetVersionRelatedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionIssueCounts>> {
+        const requestOptions = await this.getVersionRelatedIssuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -651,10 +732,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns counts of the issues and unresolved issues for the project version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* project permission for the project that contains the version.
-     * Get version\'s unresolved issues count
+     * Creates request options for getVersionUnresolvedIssues without sending the request
      */
-    async getVersionUnresolvedIssuesRaw(requestParameters: GetVersionUnresolvedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionUnresolvedIssuesCount>> {
+    async getVersionUnresolvedIssuesRequestOpts(requestParameters: GetVersionUnresolvedIssuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -678,12 +758,21 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}/unresolvedIssueCount`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns counts of the issues and unresolved issues for the project version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* project permission for the project that contains the version.
+     * Get version\'s unresolved issues count
+     */
+    async getVersionUnresolvedIssuesRaw(requestParameters: GetVersionUnresolvedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionUnresolvedIssuesCount>> {
+        const requestOptions = await this.getVersionUnresolvedIssuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -698,10 +787,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Merges two project versions. The merge is completed by deleting the version specified in `id` and replacing any occurrences of its ID in `fixVersion` with the version ID specified in `moveIssuesTo`.  Consider using [ Delete and replace version](#api-rest-api-3-version-id-removeAndSwap-post) instead. This resource supports swapping version values in `fixVersion`, `affectedVersion`, and custom fields.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
-     * Merge versions
+     * Creates request options for mergeVersions without sending the request
      */
-    async mergeVersionsRaw(requestParameters: MergeVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async mergeVersionsRequestOpts(requestParameters: MergeVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -733,12 +821,21 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"moveIssuesTo"}}`, encodeURIComponent(String(requestParameters['moveIssuesTo'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Merges two project versions. The merge is completed by deleting the version specified in `id` and replacing any occurrences of its ID in `fixVersion` with the version ID specified in `moveIssuesTo`.  Consider using [ Delete and replace version](#api-rest-api-3-version-id-removeAndSwap-post) instead. This resource supports swapping version values in `fixVersion`, `affectedVersion`, and custom fields.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
+     * Merge versions
+     */
+    async mergeVersionsRaw(requestParameters: MergeVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.mergeVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -757,10 +854,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Modifies the version\'s sequence within the project, which affects the display order of the versions in Jira.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* project permission for the project that contains the version.
-     * Move version
+     * Creates request options for moveVersion without sending the request
      */
-    async moveVersionRaw(requestParameters: MoveVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+    async moveVersionRequestOpts(requestParameters: MoveVersionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -793,13 +889,22 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}/move`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['versionMoveBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Modifies the version\'s sequence within the project, which affects the display order of the versions in Jira.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* project permission for the project that contains the version.
+     * Move version
+     */
+    async moveVersionRaw(requestParameters: MoveVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+        const requestOptions = await this.moveVersionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -814,10 +919,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the given related work. You can only update generic link related works via Rest APIs. Any archived version related works can\'t be edited.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
-     * Update related work
+     * Creates request options for updateRelatedWork without sending the request
      */
-    async updateRelatedWorkRaw(requestParameters: UpdateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionRelatedWork>> {
+    async updateRelatedWorkRequestOpts(requestParameters: UpdateRelatedWorkRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -850,13 +954,22 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}/relatedwork`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['versionRelatedWork'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the given related work. You can only update generic link related works via Rest APIs. Any archived version related works can\'t be edited.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
+     * Update related work
+     */
+    async updateRelatedWorkRaw(requestParameters: UpdateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionRelatedWork>> {
+        const requestOptions = await this.updateRelatedWorkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -871,10 +984,9 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a project version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
-     * Update version
+     * Creates request options for updateVersion without sending the request
      */
-    async updateVersionRaw(requestParameters: UpdateVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+    async updateVersionRequestOpts(requestParameters: UpdateVersionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -907,13 +1019,22 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/version/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['version'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a project version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
+     * Update version
+     */
+    async updateVersionRaw(requestParameters: UpdateVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+        const requestOptions = await this.updateVersionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

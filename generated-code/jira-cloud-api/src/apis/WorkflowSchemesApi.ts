@@ -132,10 +132,9 @@ export interface UpdateWorkflowSchemeRequest {
 export class WorkflowSchemesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a workflow scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create workflow scheme
+     * Creates request options for createWorkflowScheme without sending the request
      */
-    async createWorkflowSchemeRaw(requestParameters: CreateWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+    async createWorkflowSchemeRequestOpts(requestParameters: CreateWorkflowSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['workflowScheme'] == null) {
             throw new runtime.RequiredError(
                 'workflowScheme',
@@ -160,13 +159,22 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/workflowscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowScheme'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a workflow scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create workflow scheme
+     */
+    async createWorkflowSchemeRaw(requestParameters: CreateWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+        const requestOptions = await this.createWorkflowSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -181,10 +189,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resets the default workflow for a workflow scheme. That is, the default workflow is set to Jira\'s system workflow (the *jira* workflow).  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` and a draft workflow scheme is created or updated with the default workflow reset. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete default workflow
+     * Creates request options for deleteDefaultWorkflow without sending the request
      */
-    async deleteDefaultWorkflowRaw(requestParameters: DeleteDefaultWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+    async deleteDefaultWorkflowRequestOpts(requestParameters: DeleteDefaultWorkflowRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -212,12 +219,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{id}/default`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resets the default workflow for a workflow scheme. That is, the default workflow is set to Jira\'s system workflow (the *jira* workflow).  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` and a draft workflow scheme is created or updated with the default workflow reset. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete default workflow
+     */
+    async deleteDefaultWorkflowRaw(requestParameters: DeleteDefaultWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+        const requestOptions = await this.deleteDefaultWorkflowRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -232,10 +248,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the workflow-issue type mapping for a workflow in a workflow scheme.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` and a draft workflow scheme is created or updated with the workflow-issue type mapping deleted. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete issue types for workflow in workflow scheme
+     * Creates request options for deleteWorkflowMapping without sending the request
      */
-    async deleteWorkflowMappingRaw(requestParameters: DeleteWorkflowMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWorkflowMappingRequestOpts(requestParameters: DeleteWorkflowMappingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -274,12 +289,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{id}/workflow`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the workflow-issue type mapping for a workflow in a workflow scheme.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` and a draft workflow scheme is created or updated with the workflow-issue type mapping deleted. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete issue types for workflow in workflow scheme
+     */
+    async deleteWorkflowMappingRaw(requestParameters: DeleteWorkflowMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWorkflowMappingRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -293,10 +317,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a workflow scheme. Note that a workflow scheme cannot be deleted if it is active (that is, being used by at least one project).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete workflow scheme
+     * Creates request options for deleteWorkflowScheme without sending the request
      */
-    async deleteWorkflowSchemeRaw(requestParameters: DeleteWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteWorkflowSchemeRequestOpts(requestParameters: DeleteWorkflowSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -320,12 +343,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a workflow scheme. Note that a workflow scheme cannot be deleted if it is active (that is, being used by at least one project).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete workflow scheme
+     */
+    async deleteWorkflowSchemeRaw(requestParameters: DeleteWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteWorkflowSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -344,10 +376,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the issue type-workflow mapping for an issue type in a workflow scheme.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` and a draft workflow scheme is created or updated with the issue type-workflow mapping deleted. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete workflow for issue type in workflow scheme
+     * Creates request options for deleteWorkflowSchemeIssueType without sending the request
      */
-    async deleteWorkflowSchemeIssueTypeRaw(requestParameters: DeleteWorkflowSchemeIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+    async deleteWorkflowSchemeIssueTypeRequestOpts(requestParameters: DeleteWorkflowSchemeIssueTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -383,12 +414,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"issueType"}}`, encodeURIComponent(String(requestParameters['issueType'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the issue type-workflow mapping for an issue type in a workflow scheme.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` and a draft workflow scheme is created or updated with the issue type-workflow mapping deleted. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete workflow for issue type in workflow scheme
+     */
+    async deleteWorkflowSchemeIssueTypeRaw(requestParameters: DeleteWorkflowSchemeIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+        const requestOptions = await this.deleteWorkflowSchemeIssueTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -403,10 +443,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of all workflow schemes, not including draft workflow schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get all workflow schemes
+     * Creates request options for getAllWorkflowSchemes without sending the request
      */
-    async getAllWorkflowSchemesRaw(requestParameters: GetAllWorkflowSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanWorkflowScheme>> {
+    async getAllWorkflowSchemesRequestOpts(requestParameters: GetAllWorkflowSchemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -430,12 +469,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/workflowscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of all workflow schemes, not including draft workflow schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get all workflow schemes
+     */
+    async getAllWorkflowSchemesRaw(requestParameters: GetAllWorkflowSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanWorkflowScheme>> {
+        const requestOptions = await this.getAllWorkflowSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -450,10 +498,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the default workflow for a workflow scheme. The default workflow is the workflow that is assigned any issue types that have not been mapped to any other workflow. The default workflow has *All Unassigned Issue Types* listed in its issue types for the workflow scheme in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get default workflow
+     * Creates request options for getDefaultWorkflow without sending the request
      */
-    async getDefaultWorkflowRaw(requestParameters: GetDefaultWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DefaultWorkflow>> {
+    async getDefaultWorkflowRequestOpts(requestParameters: GetDefaultWorkflowRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -481,12 +528,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{id}/default`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the default workflow for a workflow scheme. The default workflow is the workflow that is assigned any issue types that have not been mapped to any other workflow. The default workflow has *All Unassigned Issue Types* listed in its issue types for the workflow scheme in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get default workflow
+     */
+    async getDefaultWorkflowRaw(requestParameters: GetDefaultWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DefaultWorkflow>> {
+        const requestOptions = await this.getDefaultWorkflowRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -501,10 +557,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of projects using a given workflow scheme.
-     * Get projects which are using a given workflow scheme
+     * Creates request options for getProjectUsagesForWorkflowScheme without sending the request
      */
-    async getProjectUsagesForWorkflowSchemeRaw(requestParameters: GetProjectUsagesForWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowSchemeProjectUsageDTO>> {
+    async getProjectUsagesForWorkflowSchemeRequestOpts(requestParameters: GetProjectUsagesForWorkflowSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['workflowSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'workflowSchemeId',
@@ -536,12 +591,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{workflowSchemeId}/projectUsages`;
         urlPath = urlPath.replace(`{${"workflowSchemeId"}}`, encodeURIComponent(String(requestParameters['workflowSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of projects using a given workflow scheme.
+     * Get projects which are using a given workflow scheme
+     */
+    async getProjectUsagesForWorkflowSchemeRaw(requestParameters: GetProjectUsagesForWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowSchemeProjectUsageDTO>> {
+        const requestOptions = await this.getProjectUsagesForWorkflowSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -556,10 +620,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the required status mappings for the desired changes to a workflow scheme. The results are provided per issue type and workflow. When updating a workflow scheme, status mappings can be provided per issue type, per workflow, or both.  **[Permissions](#permissions) required:**   *  *Administer Jira* permission to update all, including global-scoped, workflow schemes.  *  *Administer projects* project permission to update project-scoped workflow schemes.
-     * Get required status mappings for workflow scheme update
+     * Creates request options for getRequiredWorkflowSchemeMappings without sending the request
      */
-    async getRequiredWorkflowSchemeMappingsRaw(requestParameters: GetRequiredWorkflowSchemeMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowSchemeUpdateRequiredMappingsResponse>> {
+    async getRequiredWorkflowSchemeMappingsRequestOpts(requestParameters: GetRequiredWorkflowSchemeMappingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['workflowSchemeUpdateRequiredMappingsRequest'] == null) {
             throw new runtime.RequiredError(
                 'workflowSchemeUpdateRequiredMappingsRequest',
@@ -584,13 +647,22 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/workflowscheme/update/mappings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowSchemeUpdateRequiredMappingsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the required status mappings for the desired changes to a workflow scheme. The results are provided per issue type and workflow. When updating a workflow scheme, status mappings can be provided per issue type, per workflow, or both.  **[Permissions](#permissions) required:**   *  *Administer Jira* permission to update all, including global-scoped, workflow schemes.  *  *Administer projects* project permission to update project-scoped workflow schemes.
+     * Get required status mappings for workflow scheme update
+     */
+    async getRequiredWorkflowSchemeMappingsRaw(requestParameters: GetRequiredWorkflowSchemeMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowSchemeUpdateRequiredMappingsResponse>> {
+        const requestOptions = await this.getRequiredWorkflowSchemeMappingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -605,10 +677,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the workflow-issue type mappings for a workflow scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue types for workflows in workflow scheme
+     * Creates request options for getWorkflow without sending the request
      */
-    async getWorkflowRaw(requestParameters: GetWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypesWorkflowMapping>> {
+    async getWorkflowRequestOpts(requestParameters: GetWorkflowRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -640,12 +711,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{id}/workflow`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the workflow-issue type mappings for a workflow scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue types for workflows in workflow scheme
+     */
+    async getWorkflowRaw(requestParameters: GetWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypesWorkflowMapping>> {
+        const requestOptions = await this.getWorkflowRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -660,10 +740,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a workflow scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get workflow scheme
+     * Creates request options for getWorkflowScheme without sending the request
      */
-    async getWorkflowSchemeRaw(requestParameters: GetWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+    async getWorkflowSchemeRequestOpts(requestParameters: GetWorkflowSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -691,12 +770,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a workflow scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get workflow scheme
+     */
+    async getWorkflowSchemeRaw(requestParameters: GetWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+        const requestOptions = await this.getWorkflowSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -711,10 +799,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the issue type-workflow mapping for an issue type in a workflow scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get workflow for issue type in workflow scheme
+     * Creates request options for getWorkflowSchemeIssueType without sending the request
      */
-    async getWorkflowSchemeIssueTypeRaw(requestParameters: GetWorkflowSchemeIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeWorkflowMapping>> {
+    async getWorkflowSchemeIssueTypeRequestOpts(requestParameters: GetWorkflowSchemeIssueTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -750,12 +837,21 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"issueType"}}`, encodeURIComponent(String(requestParameters['issueType'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the issue type-workflow mapping for an issue type in a workflow scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get workflow for issue type in workflow scheme
+     */
+    async getWorkflowSchemeIssueTypeRaw(requestParameters: GetWorkflowSchemeIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeWorkflowMapping>> {
+        const requestOptions = await this.getWorkflowSchemeIssueTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -770,10 +866,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of workflow schemes by providing workflow scheme IDs or project IDs.  **[Permissions](#permissions) required:**   *  *Administer Jira* global permission to access all, including project-scoped, workflow schemes  *  *Administer projects* project permissions to access project-scoped workflow schemes
-     * Bulk get workflow schemes
+     * Creates request options for readWorkflowSchemes without sending the request
      */
-    async readWorkflowSchemesRaw(requestParameters: ReadWorkflowSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<WorkflowSchemeReadResponse>>> {
+    async readWorkflowSchemesRequestOpts(requestParameters: ReadWorkflowSchemesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['workflowSchemeReadRequest'] == null) {
             throw new runtime.RequiredError(
                 'workflowSchemeReadRequest',
@@ -798,13 +893,22 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/workflowscheme/read`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowSchemeReadRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of workflow schemes by providing workflow scheme IDs or project IDs.  **[Permissions](#permissions) required:**   *  *Administer Jira* global permission to access all, including project-scoped, workflow schemes  *  *Administer projects* project permissions to access project-scoped workflow schemes
+     * Bulk get workflow schemes
+     */
+    async readWorkflowSchemesRaw(requestParameters: ReadWorkflowSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<WorkflowSchemeReadResponse>>> {
+        const requestOptions = await this.readWorkflowSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -819,10 +923,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the workflow for an issue type in a workflow scheme.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` in the request body and a draft workflow scheme is created or updated with the new issue type-workflow mapping. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Set workflow for issue type in workflow scheme
+     * Creates request options for setWorkflowSchemeIssueType without sending the request
      */
-    async setWorkflowSchemeIssueTypeRaw(requestParameters: SetWorkflowSchemeIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+    async setWorkflowSchemeIssueTypeRequestOpts(requestParameters: SetWorkflowSchemeIssueTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -863,13 +966,22 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"issueType"}}`, encodeURIComponent(String(requestParameters['issueType'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeWorkflowMapping'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the workflow for an issue type in a workflow scheme.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` in the request body and a draft workflow scheme is created or updated with the new issue type-workflow mapping. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Set workflow for issue type in workflow scheme
+     */
+    async setWorkflowSchemeIssueTypeRaw(requestParameters: SetWorkflowSchemeIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+        const requestOptions = await this.setWorkflowSchemeIssueTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -884,10 +996,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Switches a workflow scheme for a project.  Workflow schemes can only be assigned to classic projects.  **Calculating required mappings:** If statuses from the current workflow scheme won\'t exist in the target workflow scheme, you must provide `mappingsByIssueTypeOverride` to specify how issues with those statuses should be migrated. Use [the required workflow scheme mappings API](#api-rest-api-3-workflowscheme-update-mappings-post) to determine which statuses and issue types require mappings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Switch workflow scheme for project
+     * Creates request options for switchWorkflowSchemeForProject without sending the request
      */
-    async switchWorkflowSchemeForProjectRaw(requestParameters: SwitchWorkflowSchemeForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async switchWorkflowSchemeForProjectRequestOpts(requestParameters: SwitchWorkflowSchemeForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['workflowSchemeProjectSwitchBean'] == null) {
             throw new runtime.RequiredError(
                 'workflowSchemeProjectSwitchBean',
@@ -912,13 +1023,22 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/workflowscheme/project/switch`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowSchemeProjectSwitchBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Switches a workflow scheme for a project.  Workflow schemes can only be assigned to classic projects.  **Calculating required mappings:** If statuses from the current workflow scheme won\'t exist in the target workflow scheme, you must provide `mappingsByIssueTypeOverride` to specify how issues with those statuses should be migrated. Use [the required workflow scheme mappings API](#api-rest-api-3-workflowscheme-update-mappings-post) to determine which statuses and issue types require mappings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Switch workflow scheme for project
+     */
+    async switchWorkflowSchemeForProjectRaw(requestParameters: SwitchWorkflowSchemeForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.switchWorkflowSchemeForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -932,10 +1052,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the default workflow for a workflow scheme.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` in the request object and a draft workflow scheme is created or updated with the new default workflow. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update default workflow
+     * Creates request options for updateDefaultWorkflow without sending the request
      */
-    async updateDefaultWorkflowRaw(requestParameters: UpdateDefaultWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+    async updateDefaultWorkflowRequestOpts(requestParameters: UpdateDefaultWorkflowRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -968,13 +1087,22 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{id}/default`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['defaultWorkflow'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the default workflow for a workflow scheme.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` in the request object and a draft workflow scheme is created or updated with the new default workflow. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update default workflow
+     */
+    async updateDefaultWorkflowRaw(requestParameters: UpdateDefaultWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+        const requestOptions = await this.updateDefaultWorkflowRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -989,10 +1117,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates company-managed and team-managed project workflow schemes. This API doesn\'t have a concept of draft, so any changes made to a workflow scheme are immediately available. When changing the available statuses for issue types, an [asynchronous task](#async) migrates the issues as defined in the provided mappings.  **[Permissions](#permissions) required:**   *  *Administer Jira* project permission to update all, including global-scoped, workflow schemes.  *  *Administer projects* project permission to update project-scoped workflow schemes.
-     * Update workflow scheme
+     * Creates request options for updateSchemes without sending the request
      */
-    async updateSchemesRaw(requestParameters: UpdateSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateSchemesRequestOpts(requestParameters: UpdateSchemesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['workflowSchemeUpdateRequest'] == null) {
             throw new runtime.RequiredError(
                 'workflowSchemeUpdateRequest',
@@ -1017,13 +1144,22 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/workflowscheme/update`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowSchemeUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates company-managed and team-managed project workflow schemes. This API doesn\'t have a concept of draft, so any changes made to a workflow scheme are immediately available. When changing the available statuses for issue types, an [asynchronous task](#async) migrates the issues as defined in the provided mappings.  **[Permissions](#permissions) required:**   *  *Administer Jira* project permission to update all, including global-scoped, workflow schemes.  *  *Administer projects* project permission to update project-scoped workflow schemes.
+     * Update workflow scheme
+     */
+    async updateSchemesRaw(requestParameters: UpdateSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -1042,10 +1178,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the issue types for a workflow in a workflow scheme. The workflow can also be set as the default workflow for the workflow scheme. Unmapped issues types are mapped to the default workflow.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` in the request body and a draft workflow scheme is created or updated with the new workflow-issue types mappings. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Set issue types for workflow in workflow scheme
+     * Creates request options for updateWorkflowMapping without sending the request
      */
-    async updateWorkflowMappingRaw(requestParameters: UpdateWorkflowMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+    async updateWorkflowMappingRequestOpts(requestParameters: UpdateWorkflowMappingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1089,13 +1224,22 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{id}/workflow`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypesWorkflowMapping'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the issue types for a workflow in a workflow scheme. The workflow can also be set as the default workflow for the workflow scheme. Unmapped issues types are mapped to the default workflow.  Note that active workflow schemes cannot be edited. If the workflow scheme is active, set `updateDraftIfNeeded` to `true` in the request body and a draft workflow scheme is created or updated with the new workflow-issue types mappings. The draft workflow scheme can be published in Jira.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Set issue types for workflow in workflow scheme
+     */
+    async updateWorkflowMappingRaw(requestParameters: UpdateWorkflowMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+        const requestOptions = await this.updateWorkflowMappingRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1110,10 +1254,9 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a company-manged project workflow scheme, including the name, default workflow, issue type to project mappings, and more. If the workflow scheme is active (that is, being used by at least one project), then a draft workflow scheme is created or updated instead, provided that `updateDraftIfNeeded` is set to `true`.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Classic update workflow scheme
+     * Creates request options for updateWorkflowScheme without sending the request
      */
-    async updateWorkflowSchemeRaw(requestParameters: UpdateWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+    async updateWorkflowSchemeRequestOpts(requestParameters: UpdateWorkflowSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1146,13 +1289,22 @@ export class WorkflowSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflowscheme/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowScheme'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a company-manged project workflow scheme, including the name, default workflow, issue type to project mappings, and more. If the workflow scheme is active (that is, being used by at least one project), then a draft workflow scheme is created or updated instead, provided that `updateDraftIfNeeded` is set to `true`.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Classic update workflow scheme
+     */
+    async updateWorkflowSchemeRaw(requestParameters: UpdateWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
+        const requestOptions = await this.updateWorkflowSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -73,10 +73,9 @@ export interface UpdatePermissionSchemeRequest {
 export class PermissionSchemesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a permission grant in a permission scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create permission grant
+     * Creates request options for createPermissionGrant without sending the request
      */
-    async createPermissionGrantRaw(requestParameters: CreatePermissionGrantRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionGrant>> {
+    async createPermissionGrantRequestOpts(requestParameters: CreatePermissionGrantRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -113,13 +112,22 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/permissionscheme/{schemeId}/permission`;
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['permissionGrant'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a permission grant in a permission scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create permission grant
+     */
+    async createPermissionGrantRaw(requestParameters: CreatePermissionGrantRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionGrant>> {
+        const requestOptions = await this.createPermissionGrantRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -134,10 +142,9 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new permission scheme. You can create a permission scheme with or without defining a set of permission grants.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create permission scheme
+     * Creates request options for createPermissionScheme without sending the request
      */
-    async createPermissionSchemeRaw(requestParameters: CreatePermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+    async createPermissionSchemeRequestOpts(requestParameters: CreatePermissionSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['permissionScheme'] == null) {
             throw new runtime.RequiredError(
                 'permissionScheme',
@@ -166,13 +173,22 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/permissionscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['permissionScheme'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new permission scheme. You can create a permission scheme with or without defining a set of permission grants.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create permission scheme
+     */
+    async createPermissionSchemeRaw(requestParameters: CreatePermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+        const requestOptions = await this.createPermissionSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -187,10 +203,9 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a permission scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete permission scheme
+     * Creates request options for deletePermissionScheme without sending the request
      */
-    async deletePermissionSchemeRaw(requestParameters: DeletePermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePermissionSchemeRequestOpts(requestParameters: DeletePermissionSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -214,12 +229,21 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/permissionscheme/{schemeId}`;
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a permission scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete permission scheme
+     */
+    async deletePermissionSchemeRaw(requestParameters: DeletePermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePermissionSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -233,10 +257,9 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a permission grant from a permission scheme. See [About permission schemes and grants](../api-group-permission-schemes/#about-permission-schemes-and-grants) for more details.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete permission scheme grant
+     * Creates request options for deletePermissionSchemeEntity without sending the request
      */
-    async deletePermissionSchemeEntityRaw(requestParameters: DeletePermissionSchemeEntityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePermissionSchemeEntityRequestOpts(requestParameters: DeletePermissionSchemeEntityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -268,12 +291,21 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
         urlPath = urlPath.replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters['permissionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a permission grant from a permission scheme. See [About permission schemes and grants](../api-group-permission-schemes/#about-permission-schemes-and-grants) for more details.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete permission scheme grant
+     */
+    async deletePermissionSchemeEntityRaw(requestParameters: DeletePermissionSchemeEntityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePermissionSchemeEntityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -287,10 +319,9 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all permission schemes.  ### About permission schemes and grants ###  A permission scheme is a collection of permission grants. A permission grant consists of a `holder` and a `permission`.  #### Holder object ####  The `holder` object contains information about the user or group being granted the permission. For example, the *Administer projects* permission is granted to a group named *Teams in space administrators*. In this case, the type is `\"type\": \"group\"`, and the parameter is the group name, `\"parameter\": \"Teams in space administrators\"` and the value is group ID, `\"value\": \"ca85fac0-d974-40ca-a615-7af99c48d24f\"`.  The `holder` object is defined by the following properties:   *  `type` Identifies the user or group (see the list of types below).  *  `parameter` As a group\'s name can change, use of `value` is recommended. The value of this property depends on the `type`. For example, if the `type` is a group, then you need to specify the group name.  *  `value` The value of this property depends on the `type`. If the `type` is a group, then you need to specify the group ID. For other `type` it has the same value as `parameter`  The following `types` are available. The expected values for `parameter` and `value` are given in parentheses (some types may not have a `parameter` or `value`):   *  `anyone` Grant for anonymous users.  *  `applicationRole` Grant for users with access to the specified application (application name, application name). See [Update product access settings](https://confluence.atlassian.com/x/3YxjL) for more information.  *  `assignee` Grant for the user currently assigned to an issue.  *  `group` Grant for the specified group (`parameter` : group name, `value` : group ID).  *  `groupCustomField` Grant for a user in the group selected in the specified custom field (`parameter` : custom field ID, `value` : custom field ID).  *  `projectLead` Grant for a project lead.  *  `projectRole` Grant for the specified project role (`parameter` :project role ID, `value` : project role ID).  *  `reporter` Grant for the user who reported the issue.  *  `sd.customer.portal.only` Jira Service Desk only. Grants customers permission to access the customer portal but not Jira. See [Customizing Jira Service Desk permissions](https://confluence.atlassian.com/x/24dKLg) for more information.  *  `user` Grant for the specified user (`parameter` : user ID - historically this was the userkey but that is deprecated and the account ID should be used, `value` : user ID).  *  `userCustomField` Grant for a user selected in the specified custom field (`parameter` : custom field ID, `value` : custom field ID).  #### Built-in permissions ####  The [built-in Jira permissions](https://confluence.atlassian.com/x/yodKLg) are listed below. Apps can also define custom permissions. See the [project permission](https://developer.atlassian.com/cloud/jira/platform/modules/project-permission/) and [global permission](https://developer.atlassian.com/cloud/jira/platform/modules/global-permission/) module documentation for more information.  **Administration permissions**   *  `ADMINISTER_PROJECTS`  *  `EDIT_WORKFLOW`  *  `EDIT_ISSUE_LAYOUT`  **Project permissions**   *  `BROWSE_PROJECTS`  *  `MANAGE_SPRINTS_PERMISSION` (Jira Software only)  *  `SERVICEDESK_AGENT` (Jira Service Desk only)  *  `VIEW_DEV_TOOLS` (Jira Software only)  *  `VIEW_READONLY_WORKFLOW`  **Issue permissions**   *  `ASSIGNABLE_USER`  *  `ASSIGN_ISSUES`  *  `CLOSE_ISSUES`  *  `CREATE_ISSUES`  *  `DELETE_ISSUES`  *  `EDIT_ISSUES`  *  `LINK_ISSUES`  *  `MODIFY_REPORTER`  *  `MOVE_ISSUES`  *  `RESOLVE_ISSUES`  *  `SCHEDULE_ISSUES`  *  `SET_ISSUE_SECURITY`  *  `TRANSITION_ISSUES`  **Voters and watchers permissions**   *  `MANAGE_WATCHERS`  *  `VIEW_VOTERS_AND_WATCHERS`  **Comments permissions**   *  `ADD_COMMENTS`  *  `DELETE_ALL_COMMENTS`  *  `DELETE_OWN_COMMENTS`  *  `EDIT_ALL_COMMENTS`  *  `EDIT_OWN_COMMENTS`  **Attachments permissions**   *  `CREATE_ATTACHMENTS`  *  `DELETE_ALL_ATTACHMENTS`  *  `DELETE_OWN_ATTACHMENTS`  **Time tracking permissions**   *  `DELETE_ALL_WORKLOGS`  *  `DELETE_OWN_WORKLOGS`  *  `EDIT_ALL_WORKLOGS`  *  `EDIT_OWN_WORKLOGS`  *  `WORK_ON_ISSUES`  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get all permission schemes
+     * Creates request options for getAllPermissionSchemes without sending the request
      */
-    async getAllPermissionSchemesRaw(requestParameters: GetAllPermissionSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionSchemes>> {
+    async getAllPermissionSchemesRequestOpts(requestParameters: GetAllPermissionSchemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['expand'] != null) {
@@ -310,12 +341,21 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/permissionscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all permission schemes.  ### About permission schemes and grants ###  A permission scheme is a collection of permission grants. A permission grant consists of a `holder` and a `permission`.  #### Holder object ####  The `holder` object contains information about the user or group being granted the permission. For example, the *Administer projects* permission is granted to a group named *Teams in space administrators*. In this case, the type is `\"type\": \"group\"`, and the parameter is the group name, `\"parameter\": \"Teams in space administrators\"` and the value is group ID, `\"value\": \"ca85fac0-d974-40ca-a615-7af99c48d24f\"`.  The `holder` object is defined by the following properties:   *  `type` Identifies the user or group (see the list of types below).  *  `parameter` As a group\'s name can change, use of `value` is recommended. The value of this property depends on the `type`. For example, if the `type` is a group, then you need to specify the group name.  *  `value` The value of this property depends on the `type`. If the `type` is a group, then you need to specify the group ID. For other `type` it has the same value as `parameter`  The following `types` are available. The expected values for `parameter` and `value` are given in parentheses (some types may not have a `parameter` or `value`):   *  `anyone` Grant for anonymous users.  *  `applicationRole` Grant for users with access to the specified application (application name, application name). See [Update product access settings](https://confluence.atlassian.com/x/3YxjL) for more information.  *  `assignee` Grant for the user currently assigned to an issue.  *  `group` Grant for the specified group (`parameter` : group name, `value` : group ID).  *  `groupCustomField` Grant for a user in the group selected in the specified custom field (`parameter` : custom field ID, `value` : custom field ID).  *  `projectLead` Grant for a project lead.  *  `projectRole` Grant for the specified project role (`parameter` :project role ID, `value` : project role ID).  *  `reporter` Grant for the user who reported the issue.  *  `sd.customer.portal.only` Jira Service Desk only. Grants customers permission to access the customer portal but not Jira. See [Customizing Jira Service Desk permissions](https://confluence.atlassian.com/x/24dKLg) for more information.  *  `user` Grant for the specified user (`parameter` : user ID - historically this was the userkey but that is deprecated and the account ID should be used, `value` : user ID).  *  `userCustomField` Grant for a user selected in the specified custom field (`parameter` : custom field ID, `value` : custom field ID).  #### Built-in permissions ####  The [built-in Jira permissions](https://confluence.atlassian.com/x/yodKLg) are listed below. Apps can also define custom permissions. See the [project permission](https://developer.atlassian.com/cloud/jira/platform/modules/project-permission/) and [global permission](https://developer.atlassian.com/cloud/jira/platform/modules/global-permission/) module documentation for more information.  **Administration permissions**   *  `ADMINISTER_PROJECTS`  *  `EDIT_WORKFLOW`  *  `EDIT_ISSUE_LAYOUT`  **Project permissions**   *  `BROWSE_PROJECTS`  *  `MANAGE_SPRINTS_PERMISSION` (Jira Software only)  *  `SERVICEDESK_AGENT` (Jira Service Desk only)  *  `VIEW_DEV_TOOLS` (Jira Software only)  *  `VIEW_READONLY_WORKFLOW`  **Issue permissions**   *  `ASSIGNABLE_USER`  *  `ASSIGN_ISSUES`  *  `CLOSE_ISSUES`  *  `CREATE_ISSUES`  *  `DELETE_ISSUES`  *  `EDIT_ISSUES`  *  `LINK_ISSUES`  *  `MODIFY_REPORTER`  *  `MOVE_ISSUES`  *  `RESOLVE_ISSUES`  *  `SCHEDULE_ISSUES`  *  `SET_ISSUE_SECURITY`  *  `TRANSITION_ISSUES`  **Voters and watchers permissions**   *  `MANAGE_WATCHERS`  *  `VIEW_VOTERS_AND_WATCHERS`  **Comments permissions**   *  `ADD_COMMENTS`  *  `DELETE_ALL_COMMENTS`  *  `DELETE_OWN_COMMENTS`  *  `EDIT_ALL_COMMENTS`  *  `EDIT_OWN_COMMENTS`  **Attachments permissions**   *  `CREATE_ATTACHMENTS`  *  `DELETE_ALL_ATTACHMENTS`  *  `DELETE_OWN_ATTACHMENTS`  **Time tracking permissions**   *  `DELETE_ALL_WORKLOGS`  *  `DELETE_OWN_WORKLOGS`  *  `EDIT_ALL_WORKLOGS`  *  `EDIT_OWN_WORKLOGS`  *  `WORK_ON_ISSUES`  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get all permission schemes
+     */
+    async getAllPermissionSchemesRaw(requestParameters: GetAllPermissionSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionSchemes>> {
+        const requestOptions = await this.getAllPermissionSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -330,10 +370,9 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a permission scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get permission scheme
+     * Creates request options for getPermissionScheme without sending the request
      */
-    async getPermissionSchemeRaw(requestParameters: GetPermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+    async getPermissionSchemeRequestOpts(requestParameters: GetPermissionSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -361,12 +400,21 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/permissionscheme/{schemeId}`;
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a permission scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get permission scheme
+     */
+    async getPermissionSchemeRaw(requestParameters: GetPermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+        const requestOptions = await this.getPermissionSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -381,10 +429,9 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a permission grant.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get permission scheme grant
+     * Creates request options for getPermissionSchemeGrant without sending the request
      */
-    async getPermissionSchemeGrantRaw(requestParameters: GetPermissionSchemeGrantRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionGrant>> {
+    async getPermissionSchemeGrantRequestOpts(requestParameters: GetPermissionSchemeGrantRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -420,12 +467,21 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
         urlPath = urlPath.replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters['permissionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a permission grant.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get permission scheme grant
+     */
+    async getPermissionSchemeGrantRaw(requestParameters: GetPermissionSchemeGrantRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionGrant>> {
+        const requestOptions = await this.getPermissionSchemeGrantRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -440,10 +496,9 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all permission grants for a permission scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get permission scheme grants
+     * Creates request options for getPermissionSchemeGrants without sending the request
      */
-    async getPermissionSchemeGrantsRaw(requestParameters: GetPermissionSchemeGrantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionGrants>> {
+    async getPermissionSchemeGrantsRequestOpts(requestParameters: GetPermissionSchemeGrantsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -471,12 +526,21 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/permissionscheme/{schemeId}/permission`;
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all permission grants for a permission scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get permission scheme grants
+     */
+    async getPermissionSchemeGrantsRaw(requestParameters: GetPermissionSchemeGrantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionGrants>> {
+        const requestOptions = await this.getPermissionSchemeGrantsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -491,10 +555,9 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a permission scheme. Below are some important things to note when using this resource:   *  If a permissions list is present in the request, then it is set in the permission scheme, overwriting *all existing* grants.  *  If you want to update only the name and description, then do not send a permissions list in the request.  *  Sending an empty list will remove all permission grants from the permission scheme.  If you want to add or delete a permission grant instead of updating the whole list, see [Create permission grant](#api-rest-api-3-permissionscheme-schemeId-permission-post) or [Delete permission scheme entity](#api-rest-api-3-permissionscheme-schemeId-permission-permissionId-delete).  See [About permission schemes and grants](../api-group-permission-schemes/#about-permission-schemes-and-grants) for more details.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update permission scheme
+     * Creates request options for updatePermissionScheme without sending the request
      */
-    async updatePermissionSchemeRaw(requestParameters: UpdatePermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+    async updatePermissionSchemeRequestOpts(requestParameters: UpdatePermissionSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -531,13 +594,22 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/permissionscheme/{schemeId}`;
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['permissionScheme'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a permission scheme. Below are some important things to note when using this resource:   *  If a permissions list is present in the request, then it is set in the permission scheme, overwriting *all existing* grants.  *  If you want to update only the name and description, then do not send a permissions list in the request.  *  Sending an empty list will remove all permission grants from the permission scheme.  If you want to add or delete a permission grant instead of updating the whole list, see [Create permission grant](#api-rest-api-3-permissionscheme-schemeId-permission-post) or [Delete permission scheme entity](#api-rest-api-3-permissionscheme-schemeId-permission-permissionId-delete).  See [About permission schemes and grants](../api-group-permission-schemes/#about-permission-schemes-and-grants) for more details.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update permission scheme
+     */
+    async updatePermissionSchemeRaw(requestParameters: UpdatePermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
+        const requestOptions = await this.updatePermissionSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

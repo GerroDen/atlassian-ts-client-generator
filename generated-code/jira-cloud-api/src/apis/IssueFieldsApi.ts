@@ -86,10 +86,9 @@ export interface UpdateCustomFieldRequest {
 export class IssueFieldsApi extends runtime.BaseAPI {
 
     /**
-     * Creates a custom field.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create custom field
+     * Creates request options for createCustomField without sending the request
      */
-    async createCustomFieldRaw(requestParameters: ICreateCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldDetails>> {
+    async createCustomFieldRequestOpts(requestParameters: ICreateCustomFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['customFieldDefinitionJsonBean'] == null) {
             throw new runtime.RequiredError(
                 'customFieldDefinitionJsonBean',
@@ -114,13 +113,22 @@ export class IssueFieldsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/field`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['customFieldDefinitionJsonBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a custom field.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create custom field
+     */
+    async createCustomFieldRaw(requestParameters: ICreateCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldDetails>> {
+        const requestOptions = await this.createCustomFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -135,10 +143,9 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a custom field. The custom field is deleted whether it is in the trash or not. See [Edit or delete a custom field](https://confluence.atlassian.com/x/Z44fOw) for more information on trashing and deleting custom fields.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete custom field
+     * Creates request options for deleteCustomField without sending the request
      */
-    async deleteCustomFieldRaw(requestParameters: DeleteCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteCustomFieldRequestOpts(requestParameters: DeleteCustomFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -162,12 +169,21 @@ export class IssueFieldsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a custom field. The custom field is deleted whether it is in the trash or not. See [Edit or delete a custom field](https://confluence.atlassian.com/x/Z44fOw) for more information on trashing and deleting custom fields.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete custom field
+     */
+    async deleteCustomFieldRaw(requestParameters: DeleteCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteCustomFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -181,11 +197,10 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of the contexts a field is used in. Deprecated, use [ Get custom field contexts](#api-rest-api-3-field-fieldId-context-get).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get contexts for a field
+     * Creates request options for getContextsForFieldDeprecated without sending the request
      * @deprecated
      */
-    async getContextsForFieldDeprecatedRaw(requestParameters: GetContextsForFieldDeprecatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanContext>> {
+    async getContextsForFieldDeprecatedRequestOpts(requestParameters: GetContextsForFieldDeprecatedRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -217,12 +232,22 @@ export class IssueFieldsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}/contexts`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of the contexts a field is used in. Deprecated, use [ Get custom field contexts](#api-rest-api-3-field-fieldId-context-get).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get contexts for a field
+     * @deprecated
+     */
+    async getContextsForFieldDeprecatedRaw(requestParameters: GetContextsForFieldDeprecatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanContext>> {
+        const requestOptions = await this.getContextsForFieldDeprecatedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -238,10 +263,9 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns system and custom issue fields according to the following rules:   *  Fields that cannot be added to the issue navigator are always returned.  *  Fields that cannot be placed on an issue screen are always returned.  *  Fields that depend on global Jira settings are only returned if the setting is enabled. That is, timetracking fields, subtasks, votes, and watches.  *  For all other fields, this operation only returns the fields that the user has permission to view (that is, the field is used in at least one project that the user has *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.)  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get fields
+     * Creates request options for getFields without sending the request
      */
-    async getFieldsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<FieldDetails>>> {
+    async getFieldsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -257,12 +281,21 @@ export class IssueFieldsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/field`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns system and custom issue fields according to the following rules:   *  Fields that cannot be added to the issue navigator are always returned.  *  Fields that cannot be placed on an issue screen are always returned.  *  Fields that depend on global Jira settings are only returned if the setting is enabled. That is, timetracking fields, subtasks, votes, and watches.  *  For all other fields, this operation only returns the fields that the user has permission to view (that is, the field is used in at least one project that the user has *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.)  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get fields
+     */
+    async getFieldsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<FieldDetails>>> {
+        const requestOptions = await this.getFieldsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -277,10 +310,9 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of fields for Classic Jira projects. The list can include:   *  all fields  *  specific fields, by defining `id`  *  fields that contain a string in the field name or description, by defining `query`  *  specific fields that contain a string in the field name or description, by defining `id` and `query`  Use `type` must be set to `custom` to show custom fields only.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get fields paginated
+     * Creates request options for getFieldsPaginated without sending the request
      */
-    async getFieldsPaginatedRaw(requestParameters: GetFieldsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanField>> {
+    async getFieldsPaginatedRequestOpts(requestParameters: GetFieldsPaginatedRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -328,12 +360,21 @@ export class IssueFieldsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/field/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of fields for Classic Jira projects. The list can include:   *  all fields  *  specific fields, by defining `id`  *  fields that contain a string in the field name or description, by defining `query`  *  specific fields that contain a string in the field name or description, by defining `id` and `query`  Use `type` must be set to `custom` to show custom fields only.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get fields paginated
+     */
+    async getFieldsPaginatedRaw(requestParameters: GetFieldsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanField>> {
+        const requestOptions = await this.getFieldsPaginatedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -348,10 +389,9 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of fields for the requested projects and work types.  Only fields that are available for the specified combination of projects and work types are returned. This endpoint allows filtering to specific fields if field IDs are provided.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get fields for projects
+     * Creates request options for getProjectFields without sending the request
      */
-    async getProjectFieldsRaw(requestParameters: GetProjectFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2ProjectFieldBean>> {
+    async getProjectFieldsRequestOpts(requestParameters: GetProjectFieldsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -401,12 +441,21 @@ export class IssueFieldsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/projects/fields`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of fields for the requested projects and work types.  Only fields that are available for the specified combination of projects and work types are returned. This endpoint allows filtering to specific fields if field IDs are provided.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get fields for projects
+     */
+    async getProjectFieldsRaw(requestParameters: GetProjectFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2ProjectFieldBean>> {
+        const requestOptions = await this.getProjectFieldsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -421,10 +470,9 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of fields in the trash. The list may be restricted to fields whose field name or description partially match a string.  Only custom fields can be queried, `type` must be set to `custom`.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get fields in trash paginated
+     * Creates request options for getTrashedFieldsPaginated without sending the request
      */
-    async getTrashedFieldsPaginatedRaw(requestParameters: GetTrashedFieldsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanField>> {
+    async getTrashedFieldsPaginatedRequestOpts(requestParameters: GetTrashedFieldsPaginatedRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -464,12 +512,21 @@ export class IssueFieldsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/field/search/trashed`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of fields in the trash. The list may be restricted to fields whose field name or description partially match a string.  Only custom fields can be queried, `type` must be set to `custom`.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get fields in trash paginated
+     */
+    async getTrashedFieldsPaginatedRaw(requestParameters: GetTrashedFieldsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanField>> {
+        const requestOptions = await this.getTrashedFieldsPaginatedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -484,10 +541,9 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Restores a custom field from trash. See [Edit or delete a custom field](https://confluence.atlassian.com/x/Z44fOw) for more information on trashing and deleting custom fields.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Restore custom field from trash
+     * Creates request options for restoreCustomField without sending the request
      */
-    async restoreCustomFieldRaw(requestParameters: RestoreCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async restoreCustomFieldRequestOpts(requestParameters: RestoreCustomFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -511,12 +567,21 @@ export class IssueFieldsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{id}/restore`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Restores a custom field from trash. See [Edit or delete a custom field](https://confluence.atlassian.com/x/Z44fOw) for more information on trashing and deleting custom fields.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Restore custom field from trash
+     */
+    async restoreCustomFieldRaw(requestParameters: RestoreCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.restoreCustomFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -535,10 +600,9 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves a custom field to trash. See [Edit or delete a custom field](https://confluence.atlassian.com/x/Z44fOw) for more information on trashing and deleting custom fields.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Move custom field to trash
+     * Creates request options for trashCustomField without sending the request
      */
-    async trashCustomFieldRaw(requestParameters: TrashCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async trashCustomFieldRequestOpts(requestParameters: TrashCustomFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -562,12 +626,21 @@ export class IssueFieldsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{id}/trash`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Moves a custom field to trash. See [Edit or delete a custom field](https://confluence.atlassian.com/x/Z44fOw) for more information on trashing and deleting custom fields.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Move custom field to trash
+     */
+    async trashCustomFieldRaw(requestParameters: TrashCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.trashCustomFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -586,10 +659,9 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a custom field.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update custom field
+     * Creates request options for updateCustomField without sending the request
      */
-    async updateCustomFieldRaw(requestParameters: UpdateCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateCustomFieldRequestOpts(requestParameters: UpdateCustomFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -622,13 +694,22 @@ export class IssueFieldsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateCustomFieldDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a custom field.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update custom field
+     */
+    async updateCustomFieldRaw(requestParameters: UpdateCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateCustomFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

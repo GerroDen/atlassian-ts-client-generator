@@ -42,10 +42,9 @@ export interface UpdateIssueLinkTypeRequest {
 export class IssueLinkTypesApi extends runtime.BaseAPI {
 
     /**
-     * Creates an issue link type. Use this operation to create descriptions of the reasons why issues are linked. The issue link type consists of a name and descriptions for a link\'s inward and outward relationships.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create issue link type
+     * Creates request options for createIssueLinkType without sending the request
      */
-    async createIssueLinkTypeRaw(requestParameters: CreateIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkType>> {
+    async createIssueLinkTypeRequestOpts(requestParameters: CreateIssueLinkTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueLinkType'] == null) {
             throw new runtime.RequiredError(
                 'issueLinkType',
@@ -70,13 +69,22 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issueLinkType`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueLinkType'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates an issue link type. Use this operation to create descriptions of the reasons why issues are linked. The issue link type consists of a name and descriptions for a link\'s inward and outward relationships.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create issue link type
+     */
+    async createIssueLinkTypeRaw(requestParameters: CreateIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkType>> {
+        const requestOptions = await this.createIssueLinkTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -91,10 +99,9 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes an issue link type.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete issue link type
+     * Creates request options for deleteIssueLinkType without sending the request
      */
-    async deleteIssueLinkTypeRaw(requestParameters: DeleteIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteIssueLinkTypeRequestOpts(requestParameters: DeleteIssueLinkTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueLinkTypeId'] == null) {
             throw new runtime.RequiredError(
                 'issueLinkTypeId',
@@ -118,12 +125,21 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issueLinkType/{issueLinkTypeId}`;
         urlPath = urlPath.replace(`{${"issueLinkTypeId"}}`, encodeURIComponent(String(requestParameters['issueLinkTypeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes an issue link type.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete issue link type
+     */
+    async deleteIssueLinkTypeRaw(requestParameters: DeleteIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteIssueLinkTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -137,10 +153,9 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an issue link type.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for a project in the site.
-     * Get issue link type
+     * Creates request options for getIssueLinkType without sending the request
      */
-    async getIssueLinkTypeRaw(requestParameters: GetIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkType>> {
+    async getIssueLinkTypeRequestOpts(requestParameters: GetIssueLinkTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueLinkTypeId'] == null) {
             throw new runtime.RequiredError(
                 'issueLinkTypeId',
@@ -164,12 +179,21 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issueLinkType/{issueLinkTypeId}`;
         urlPath = urlPath.replace(`{${"issueLinkTypeId"}}`, encodeURIComponent(String(requestParameters['issueLinkTypeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns an issue link type.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for a project in the site.
+     * Get issue link type
+     */
+    async getIssueLinkTypeRaw(requestParameters: GetIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkType>> {
+        const requestOptions = await this.getIssueLinkTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -184,10 +208,9 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of all issue link types.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for a project in the site.
-     * Get issue link types
+     * Creates request options for getIssueLinkTypes without sending the request
      */
-    async getIssueLinkTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkTypes>> {
+    async getIssueLinkTypesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -203,12 +226,21 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issueLinkType`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of all issue link types.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for a project in the site.
+     * Get issue link types
+     */
+    async getIssueLinkTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkTypes>> {
+        const requestOptions = await this.getIssueLinkTypesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -223,10 +255,9 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates an issue link type.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update issue link type
+     * Creates request options for updateIssueLinkType without sending the request
      */
-    async updateIssueLinkTypeRaw(requestParameters: UpdateIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkType>> {
+    async updateIssueLinkTypeRequestOpts(requestParameters: UpdateIssueLinkTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueLinkTypeId'] == null) {
             throw new runtime.RequiredError(
                 'issueLinkTypeId',
@@ -259,13 +290,22 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issueLinkType/{issueLinkTypeId}`;
         urlPath = urlPath.replace(`{${"issueLinkTypeId"}}`, encodeURIComponent(String(requestParameters['issueLinkTypeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueLinkType'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates an issue link type.  To use this operation, the site must have [issue linking](https://confluence.atlassian.com/x/yoXKM) enabled.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update issue link type
+     */
+    async updateIssueLinkTypeRaw(requestParameters: UpdateIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkType>> {
+        const requestOptions = await this.updateIssueLinkTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -114,10 +114,9 @@ export interface UpdateFieldConfigurationSchemeRequest {
 export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
 
     /**
-     * Assigns a field configuration scheme to a project. If the field configuration scheme ID is `null`, the operation assigns the default field configuration scheme.  Field configuration schemes can only be assigned to classic projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Assign field configuration scheme to project
+     * Creates request options for assignFieldConfigurationSchemeToProject without sending the request
      */
-    async assignFieldConfigurationSchemeToProjectRaw(requestParameters: AssignFieldConfigurationSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async assignFieldConfigurationSchemeToProjectRequestOpts(requestParameters: AssignFieldConfigurationSchemeToProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldConfigurationSchemeProjectAssociation'] == null) {
             throw new runtime.RequiredError(
                 'fieldConfigurationSchemeProjectAssociation',
@@ -142,13 +141,22 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/fieldconfigurationscheme/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['fieldConfigurationSchemeProjectAssociation'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Assigns a field configuration scheme to a project. If the field configuration scheme ID is `null`, the operation assigns the default field configuration scheme.  Field configuration schemes can only be assigned to classic projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Assign field configuration scheme to project
+     */
+    async assignFieldConfigurationSchemeToProjectRaw(requestParameters: AssignFieldConfigurationSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.assignFieldConfigurationSchemeToProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -167,11 +175,10 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Creates a field configuration. The field configuration is created with the same field properties as the default configuration, with all the fields being optional.  This operation can only create configurations for use in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create field configuration
+     * Creates request options for createFieldConfiguration without sending the request
      * @deprecated
      */
-    async createFieldConfigurationRaw(requestParameters: CreateFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldConfiguration>> {
+    async createFieldConfigurationRequestOpts(requestParameters: CreateFieldConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldConfigurationDetails'] == null) {
             throw new runtime.RequiredError(
                 'fieldConfigurationDetails',
@@ -196,13 +203,23 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/fieldconfiguration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['fieldConfigurationDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Creates a field configuration. The field configuration is created with the same field properties as the default configuration, with all the fields being optional.  This operation can only create configurations for use in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create field configuration
+     * @deprecated
+     */
+    async createFieldConfigurationRaw(requestParameters: CreateFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldConfiguration>> {
+        const requestOptions = await this.createFieldConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -218,10 +235,9 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a field configuration scheme.  This operation can only create field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create field configuration scheme
+     * Creates request options for createFieldConfigurationScheme without sending the request
      */
-    async createFieldConfigurationSchemeRaw(requestParameters: CreateFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldConfigurationScheme>> {
+    async createFieldConfigurationSchemeRequestOpts(requestParameters: CreateFieldConfigurationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['updateFieldConfigurationSchemeDetails'] == null) {
             throw new runtime.RequiredError(
                 'updateFieldConfigurationSchemeDetails',
@@ -246,13 +262,22 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/fieldconfigurationscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateFieldConfigurationSchemeDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a field configuration scheme.  This operation can only create field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create field configuration scheme
+     */
+    async createFieldConfigurationSchemeRaw(requestParameters: CreateFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldConfigurationScheme>> {
+        const requestOptions = await this.createFieldConfigurationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -267,11 +292,10 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Deletes a field configuration.  This operation can only delete configurations used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete field configuration
+     * Creates request options for deleteFieldConfiguration without sending the request
      * @deprecated
      */
-    async deleteFieldConfigurationRaw(requestParameters: DeleteFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteFieldConfigurationRequestOpts(requestParameters: DeleteFieldConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -295,12 +319,22 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/fieldconfiguration/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Deletes a field configuration.  This operation can only delete configurations used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete field configuration
+     * @deprecated
+     */
+    async deleteFieldConfigurationRaw(requestParameters: DeleteFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteFieldConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -320,10 +354,9 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a field configuration scheme.  This operation can only delete field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete field configuration scheme
+     * Creates request options for deleteFieldConfigurationScheme without sending the request
      */
-    async deleteFieldConfigurationSchemeRaw(requestParameters: DeleteFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteFieldConfigurationSchemeRequestOpts(requestParameters: DeleteFieldConfigurationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -347,12 +380,21 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/fieldconfigurationscheme/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a field configuration scheme.  This operation can only delete field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete field configuration scheme
+     */
+    async deleteFieldConfigurationSchemeRaw(requestParameters: DeleteFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteFieldConfigurationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -371,10 +413,9 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of field configuration schemes.  Only field configuration schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get all field configuration schemes
+     * Creates request options for getAllFieldConfigurationSchemes without sending the request
      */
-    async getAllFieldConfigurationSchemesRaw(requestParameters: GetAllFieldConfigurationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationScheme>> {
+    async getAllFieldConfigurationSchemesRequestOpts(requestParameters: GetAllFieldConfigurationSchemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -402,12 +443,21 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/fieldconfigurationscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of field configuration schemes.  Only field configuration schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get all field configuration schemes
+     */
+    async getAllFieldConfigurationSchemesRaw(requestParameters: GetAllFieldConfigurationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationScheme>> {
+        const requestOptions = await this.getAllFieldConfigurationSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -422,11 +472,10 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Returns a [paginated](#pagination) list of field configurations. The list can be for all field configurations or a subset determined by any combination of these criteria:   *  a list of field configuration item IDs.  *  whether the field configuration is a default.  *  whether the field configuration name or description contains a query string.  Only field configurations used in company-managed (classic) projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get all field configurations
+     * Creates request options for getAllFieldConfigurations without sending the request
      * @deprecated
      */
-    async getAllFieldConfigurationsRaw(requestParameters: GetAllFieldConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationDetails>> {
+    async getAllFieldConfigurationsRequestOpts(requestParameters: GetAllFieldConfigurationsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -462,12 +511,22 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/fieldconfiguration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Returns a [paginated](#pagination) list of field configurations. The list can be for all field configurations or a subset determined by any combination of these criteria:   *  a list of field configuration item IDs.  *  whether the field configuration is a default.  *  whether the field configuration name or description contains a query string.  Only field configurations used in company-managed (classic) projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get all field configurations
+     * @deprecated
+     */
+    async getAllFieldConfigurationsRaw(requestParameters: GetAllFieldConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationDetails>> {
+        const requestOptions = await this.getAllFieldConfigurationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -483,11 +542,10 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Returns a [paginated](#pagination) list of all fields for a configuration.  Only the fields from configurations used in company-managed (classic) projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get field configuration items
+     * Creates request options for getFieldConfigurationItems without sending the request
      * @deprecated
      */
-    async getFieldConfigurationItemsRaw(requestParameters: GetFieldConfigurationItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationItem>> {
+    async getFieldConfigurationItemsRequestOpts(requestParameters: GetFieldConfigurationItemsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -519,12 +577,22 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/fieldconfiguration/{id}/fields`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Returns a [paginated](#pagination) list of all fields for a configuration.  Only the fields from configurations used in company-managed (classic) projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get field configuration items
+     * @deprecated
+     */
+    async getFieldConfigurationItemsRaw(requestParameters: GetFieldConfigurationItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationItem>> {
+        const requestOptions = await this.getFieldConfigurationItemsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -540,10 +608,9 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of field configuration issue type items.  Only items used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get field configuration issue type items
+     * Creates request options for getFieldConfigurationSchemeMappings without sending the request
      */
-    async getFieldConfigurationSchemeMappingsRaw(requestParameters: GetFieldConfigurationSchemeMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationIssueTypeItem>> {
+    async getFieldConfigurationSchemeMappingsRequestOpts(requestParameters: GetFieldConfigurationSchemeMappingsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -571,12 +638,21 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/fieldconfigurationscheme/mapping`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of field configuration issue type items.  Only items used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get field configuration issue type items
+     */
+    async getFieldConfigurationSchemeMappingsRaw(requestParameters: GetFieldConfigurationSchemeMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationIssueTypeItem>> {
+        const requestOptions = await this.getFieldConfigurationSchemeMappingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -591,10 +667,9 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of field configuration schemes and, for each scheme, a list of the projects that use it.  The list is sorted by field configuration scheme ID. The first item contains the list of project IDs assigned to the default field configuration scheme.  Only field configuration schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get field configuration schemes for projects
+     * Creates request options for getFieldConfigurationSchemeProjectMapping without sending the request
      */
-    async getFieldConfigurationSchemeProjectMappingRaw(requestParameters: GetFieldConfigurationSchemeProjectMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationSchemeProjects>> {
+    async getFieldConfigurationSchemeProjectMappingRequestOpts(requestParameters: GetFieldConfigurationSchemeProjectMappingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -629,12 +704,21 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/fieldconfigurationscheme/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of field configuration schemes and, for each scheme, a list of the projects that use it.  The list is sorted by field configuration scheme ID. The first item contains the list of project IDs assigned to the default field configuration scheme.  Only field configuration schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get field configuration schemes for projects
+     */
+    async getFieldConfigurationSchemeProjectMappingRaw(requestParameters: GetFieldConfigurationSchemeProjectMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationSchemeProjects>> {
+        const requestOptions = await this.getFieldConfigurationSchemeProjectMappingRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -649,10 +733,9 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes issue types from the field configuration scheme.  This operation can only modify field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove issue types from field configuration scheme
+     * Creates request options for removeIssueTypesFromGlobalFieldConfigurationScheme without sending the request
      */
-    async removeIssueTypesFromGlobalFieldConfigurationSchemeRaw(requestParameters: RemoveIssueTypesFromGlobalFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async removeIssueTypesFromGlobalFieldConfigurationSchemeRequestOpts(requestParameters: RemoveIssueTypesFromGlobalFieldConfigurationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -685,13 +768,22 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/fieldconfigurationscheme/{id}/mapping/delete`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeIdsToRemove'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes issue types from the field configuration scheme.  This operation can only modify field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove issue types from field configuration scheme
+     */
+    async removeIssueTypesFromGlobalFieldConfigurationSchemeRaw(requestParameters: RemoveIssueTypesFromGlobalFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeIssueTypesFromGlobalFieldConfigurationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -710,10 +802,9 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Assigns issue types to field configurations on field configuration scheme.  This operation can only modify field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Assign issue types to field configurations
+     * Creates request options for setFieldConfigurationSchemeMapping without sending the request
      */
-    async setFieldConfigurationSchemeMappingRaw(requestParameters: SetFieldConfigurationSchemeMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setFieldConfigurationSchemeMappingRequestOpts(requestParameters: SetFieldConfigurationSchemeMappingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -746,13 +837,22 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/fieldconfigurationscheme/{id}/mapping`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['associateFieldConfigurationsWithIssueTypesRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Assigns issue types to field configurations on field configuration scheme.  This operation can only modify field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Assign issue types to field configurations
+     */
+    async setFieldConfigurationSchemeMappingRaw(requestParameters: SetFieldConfigurationSchemeMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setFieldConfigurationSchemeMappingRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -771,11 +871,10 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Updates a field configuration. The name and the description provided in the request override the existing values.  This operation can only update configurations used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update field configuration
+     * Creates request options for updateFieldConfiguration without sending the request
      * @deprecated
      */
-    async updateFieldConfigurationRaw(requestParameters: UpdateFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateFieldConfigurationRequestOpts(requestParameters: UpdateFieldConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -808,13 +907,23 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/fieldconfiguration/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['fieldConfigurationDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Updates a field configuration. The name and the description provided in the request override the existing values.  This operation can only update configurations used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update field configuration
+     * @deprecated
+     */
+    async updateFieldConfigurationRaw(requestParameters: UpdateFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateFieldConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -834,11 +943,10 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Updates fields in a field configuration. The properties of the field configuration fields provided override the existing values.  This operation can only update field configurations used in company-managed (classic) projects.  The operation can set the renderer for text fields to the default text renderer (`text-renderer`) or wiki style renderer (`wiki-renderer`). However, the renderer cannot be updated for fields using the autocomplete renderer (`autocomplete-renderer`).  Hiding a field deletes it from the field configuration - deleting the required, description and renderer type values as well. As a result, hiding and unhiding will not restore the other values but use their default values.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update field configuration items
+     * Creates request options for updateFieldConfigurationItems without sending the request
      * @deprecated
      */
-    async updateFieldConfigurationItemsRaw(requestParameters: UpdateFieldConfigurationItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateFieldConfigurationItemsRequestOpts(requestParameters: UpdateFieldConfigurationItemsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -871,13 +979,23 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/fieldconfiguration/{id}/fields`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['fieldConfigurationItemsDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deprecated, use [Field schemes](#api-group-field-schemes) which supports field association schemes.  Updates fields in a field configuration. The properties of the field configuration fields provided override the existing values.  This operation can only update field configurations used in company-managed (classic) projects.  The operation can set the renderer for text fields to the default text renderer (`text-renderer`) or wiki style renderer (`wiki-renderer`). However, the renderer cannot be updated for fields using the autocomplete renderer (`autocomplete-renderer`).  Hiding a field deletes it from the field configuration - deleting the required, description and renderer type values as well. As a result, hiding and unhiding will not restore the other values but use their default values.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update field configuration items
+     * @deprecated
+     */
+    async updateFieldConfigurationItemsRaw(requestParameters: UpdateFieldConfigurationItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateFieldConfigurationItemsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -897,10 +1015,9 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a field configuration scheme.  This operation can only update field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update field configuration scheme
+     * Creates request options for updateFieldConfigurationScheme without sending the request
      */
-    async updateFieldConfigurationSchemeRaw(requestParameters: UpdateFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateFieldConfigurationSchemeRequestOpts(requestParameters: UpdateFieldConfigurationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -933,13 +1050,22 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/fieldconfigurationscheme/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateFieldConfigurationSchemeDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a field configuration scheme.  This operation can only update field configuration schemes used in company-managed (classic) projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update field configuration scheme
+     */
+    async updateFieldConfigurationSchemeRaw(requestParameters: UpdateFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateFieldConfigurationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

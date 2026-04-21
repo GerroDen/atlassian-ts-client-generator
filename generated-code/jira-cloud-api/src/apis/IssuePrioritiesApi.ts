@@ -67,11 +67,10 @@ export interface UpdatePriorityRequest {
 export class IssuePrioritiesApi extends runtime.BaseAPI {
 
     /**
-     * Creates an issue priority.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create priority
+     * Creates request options for createPriority without sending the request
      * @deprecated
      */
-    async createPriorityRaw(requestParameters: CreatePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PriorityId>> {
+    async createPriorityRequestOpts(requestParameters: CreatePriorityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createPriorityDetails'] == null) {
             throw new runtime.RequiredError(
                 'createPriorityDetails',
@@ -96,13 +95,23 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/priority`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createPriorityDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates an issue priority.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create priority
+     * @deprecated
+     */
+    async createPriorityRaw(requestParameters: CreatePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PriorityId>> {
+        const requestOptions = await this.createPriorityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -118,10 +127,9 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes an issue priority.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete priority
+     * Creates request options for deletePriority without sending the request
      */
-    async deletePriorityRaw(requestParameters: DeletePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePriorityRequestOpts(requestParameters: DeletePriorityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -145,12 +153,21 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/priority/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes an issue priority.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete priority
+     */
+    async deletePriorityRaw(requestParameters: DeletePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePriorityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -164,11 +181,10 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the list of all issue priorities.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get priorities
+     * Creates request options for getPriorities without sending the request
      * @deprecated
      */
-    async getPrioritiesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Priority>>> {
+    async getPrioritiesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -184,12 +200,22 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/priority`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the list of all issue priorities.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get priorities
+     * @deprecated
+     */
+    async getPrioritiesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Priority>>> {
+        const requestOptions = await this.getPrioritiesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -205,10 +231,9 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an issue priority.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get priority
+     * Creates request options for getPriority without sending the request
      */
-    async getPriorityRaw(requestParameters: GetPriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Priority>> {
+    async getPriorityRequestOpts(requestParameters: GetPriorityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -232,12 +257,21 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/priority/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns an issue priority.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get priority
+     */
+    async getPriorityRaw(requestParameters: GetPriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Priority>> {
+        const requestOptions = await this.getPriorityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -252,10 +286,9 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Changes the order of issue priorities.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Move priorities
+     * Creates request options for movePriorities without sending the request
      */
-    async movePrioritiesRaw(requestParameters: MovePrioritiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async movePrioritiesRequestOpts(requestParameters: MovePrioritiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['reorderIssuePriorities'] == null) {
             throw new runtime.RequiredError(
                 'reorderIssuePriorities',
@@ -280,13 +313,22 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/priority/move`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['reorderIssuePriorities'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Changes the order of issue priorities.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Move priorities
+     */
+    async movePrioritiesRaw(requestParameters: MovePrioritiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.movePrioritiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -305,11 +347,10 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of priorities. The list can contain all priorities or a subset determined by any combination of these criteria:   *  a list of priority IDs. Any invalid priority IDs are ignored.  *  a list of project IDs. Only priorities that are available in these projects will be returned. Any invalid project IDs are ignored.  *  whether the field configuration is a default. This returns priorities from company-managed (classic) projects only, as there is no concept of default priorities in team-managed projects.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Search priorities
+     * Creates request options for searchPriorities without sending the request
      * @deprecated
      */
-    async searchPrioritiesRaw(requestParameters: SearchPrioritiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriority>> {
+    async searchPrioritiesRequestOpts(requestParameters: SearchPrioritiesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -353,12 +394,22 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/priority/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of priorities. The list can contain all priorities or a subset determined by any combination of these criteria:   *  a list of priority IDs. Any invalid priority IDs are ignored.  *  a list of project IDs. Only priorities that are available in these projects will be returned. Any invalid project IDs are ignored.  *  whether the field configuration is a default. This returns priorities from company-managed (classic) projects only, as there is no concept of default priorities in team-managed projects.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Search priorities
+     * @deprecated
+     */
+    async searchPrioritiesRaw(requestParameters: SearchPrioritiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriority>> {
+        const requestOptions = await this.searchPrioritiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -374,10 +425,9 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets default issue priority.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Set default priority
+     * Creates request options for setDefaultPriority without sending the request
      */
-    async setDefaultPriorityRaw(requestParameters: SetDefaultPriorityOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setDefaultPriorityRequestOpts(requestParameters: SetDefaultPriorityOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['setDefaultPriorityRequest'] == null) {
             throw new runtime.RequiredError(
                 'setDefaultPriorityRequest',
@@ -402,13 +452,22 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/priority/default`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['setDefaultPriorityRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets default issue priority.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Set default priority
+     */
+    async setDefaultPriorityRaw(requestParameters: SetDefaultPriorityOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setDefaultPriorityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -427,11 +486,10 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates an issue priority.  At least one request body parameter must be defined.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update priority
+     * Creates request options for updatePriority without sending the request
      * @deprecated
      */
-    async updatePriorityRaw(requestParameters: UpdatePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updatePriorityRequestOpts(requestParameters: UpdatePriorityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -464,13 +522,23 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/priority/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updatePriorityDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates an issue priority.  At least one request body parameter must be defined.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update priority
+     * @deprecated
+     */
+    async updatePriorityRaw(requestParameters: UpdatePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updatePriorityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

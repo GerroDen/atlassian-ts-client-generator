@@ -42,10 +42,9 @@ export interface UpdateProjectCategoryRequest {
 export class ProjectCategoriesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a project category.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create project category
+     * Creates request options for createProjectCategory without sending the request
      */
-    async createProjectCategoryRaw(requestParameters: CreateProjectCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectCategory>> {
+    async createProjectCategoryRequestOpts(requestParameters: CreateProjectCategoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectCategory'] == null) {
             throw new runtime.RequiredError(
                 'projectCategory',
@@ -70,13 +69,22 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/projectCategory`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectCategory'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a project category.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create project category
+     */
+    async createProjectCategoryRaw(requestParameters: CreateProjectCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectCategory>> {
+        const requestOptions = await this.createProjectCategoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -91,10 +99,9 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all project categories.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get all project categories
+     * Creates request options for getAllProjectCategories without sending the request
      */
-    async getAllProjectCategoriesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectCategory>>> {
+    async getAllProjectCategoriesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -110,12 +117,21 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/projectCategory`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all project categories.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get all project categories
+     */
+    async getAllProjectCategoriesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectCategory>>> {
+        const requestOptions = await this.getAllProjectCategoriesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -130,10 +146,9 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a project category.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get project category by ID
+     * Creates request options for getProjectCategoryById without sending the request
      */
-    async getProjectCategoryByIdRaw(requestParameters: GetProjectCategoryByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectCategory>> {
+    async getProjectCategoryByIdRequestOpts(requestParameters: GetProjectCategoryByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -157,12 +172,21 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/projectCategory/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a project category.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get project category by ID
+     */
+    async getProjectCategoryByIdRaw(requestParameters: GetProjectCategoryByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectCategory>> {
+        const requestOptions = await this.getProjectCategoryByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -177,10 +201,9 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a project category.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete project category
+     * Creates request options for removeProjectCategory without sending the request
      */
-    async removeProjectCategoryRaw(requestParameters: RemoveProjectCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeProjectCategoryRequestOpts(requestParameters: RemoveProjectCategoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -204,12 +227,21 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/projectCategory/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a project category.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete project category
+     */
+    async removeProjectCategoryRaw(requestParameters: RemoveProjectCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeProjectCategoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -223,10 +255,9 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a project category.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update project category
+     * Creates request options for updateProjectCategory without sending the request
      */
-    async updateProjectCategoryRaw(requestParameters: UpdateProjectCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdatedProjectCategory>> {
+    async updateProjectCategoryRequestOpts(requestParameters: UpdateProjectCategoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -259,13 +290,22 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/projectCategory/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectCategory'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a project category.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update project category
+     */
+    async updateProjectCategoryRaw(requestParameters: UpdateProjectCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdatedProjectCategory>> {
+        const requestOptions = await this.updateProjectCategoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

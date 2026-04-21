@@ -34,10 +34,9 @@ export interface RedactRequest {
 export class IssueRedactionApi extends runtime.BaseAPI {
 
     /**
-     * Retrieves the current status of a redaction job ID.  The jobStatus will be one of the following:   *  IN\\_PROGRESS - The redaction job is currently in progress  *  COMPLETED - The redaction job has completed successfully.  *  PENDING - The redaction job has not started yet
-     * Get redaction status
+     * Creates request options for getRedactionStatus without sending the request
      */
-    async getRedactionStatusRaw(requestParameters: GetRedactionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RedactionJobStatusResponse>> {
+    async getRedactionStatusRequestOpts(requestParameters: GetRedactionStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -56,12 +55,21 @@ export class IssueRedactionApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/redact/status/{jobId}`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the current status of a redaction job ID.  The jobStatus will be one of the following:   *  IN\\_PROGRESS - The redaction job is currently in progress  *  COMPLETED - The redaction job has completed successfully.  *  PENDING - The redaction job has not started yet
+     * Get redaction status
+     */
+    async getRedactionStatusRaw(requestParameters: GetRedactionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RedactionJobStatusResponse>> {
+        const requestOptions = await this.getRedactionStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -76,10 +84,9 @@ export class IssueRedactionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Submit a job to redact issue field data. This will trigger the redaction of the data in the specified fields asynchronously.  The redaction status can be polled using the job id.
-     * Redact
+     * Creates request options for redact without sending the request
      */
-    async redactRaw(requestParameters: RedactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async redactRequestOpts(requestParameters: RedactRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['bulkRedactionRequest'] == null) {
             throw new runtime.RequiredError(
                 'bulkRedactionRequest',
@@ -99,13 +106,22 @@ export class IssueRedactionApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/redact`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['bulkRedactionRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Submit a job to redact issue field data. This will trigger the redaction of the data in the specified fields asynchronously.  The redaction status can be polled using the job id.
+     * Redact
+     */
+    async redactRaw(requestParameters: RedactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        const requestOptions = await this.redactRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<string>(response);

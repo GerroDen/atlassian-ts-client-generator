@@ -77,10 +77,9 @@ export interface UpdatePlanOnlyTeamRequest {
 export class TeamsInPlanApi extends runtime.BaseAPI {
 
     /**
-     * Adds an existing Atlassian team to a plan and configures their plannning settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Add Atlassian team to plan
+     * Creates request options for addAtlassianTeam without sending the request
      */
-    async addAtlassianTeamRaw(requestParameters: AddAtlassianTeamOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async addAtlassianTeamRequestOpts(requestParameters: AddAtlassianTeamOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -113,13 +112,22 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/plans/plan/{planId}/team/atlassian`;
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['addAtlassianTeamRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds an existing Atlassian team to a plan and configures their plannning settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add Atlassian team to plan
+     */
+    async addAtlassianTeamRaw(requestParameters: AddAtlassianTeamOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.addAtlassianTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -138,10 +146,9 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a plan-only team and configures their planning settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create plan-only team
+     * Creates request options for createPlanOnlyTeam without sending the request
      */
-    async createPlanOnlyTeamRaw(requestParameters: CreatePlanOnlyTeamOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+    async createPlanOnlyTeamRequestOpts(requestParameters: CreatePlanOnlyTeamOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -174,13 +181,22 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/plans/plan/{planId}/team/planonly`;
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createPlanOnlyTeamRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a plan-only team and configures their planning settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create plan-only team
+     */
+    async createPlanOnlyTeamRaw(requestParameters: CreatePlanOnlyTeamOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+        const requestOptions = await this.createPlanOnlyTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<number>(response);
@@ -199,10 +215,9 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a plan-only team and their planning settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete plan-only team
+     * Creates request options for deletePlanOnlyTeam without sending the request
      */
-    async deletePlanOnlyTeamRaw(requestParameters: DeletePlanOnlyTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deletePlanOnlyTeamRequestOpts(requestParameters: DeletePlanOnlyTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -234,12 +249,21 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
         urlPath = urlPath.replace(`{${"planOnlyTeamId"}}`, encodeURIComponent(String(requestParameters['planOnlyTeamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a plan-only team and their planning settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete plan-only team
+     */
+    async deletePlanOnlyTeamRaw(requestParameters: DeletePlanOnlyTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deletePlanOnlyTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -258,10 +282,9 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns planning settings for an Atlassian team in a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get Atlassian team in plan
+     * Creates request options for getAtlassianTeam without sending the request
      */
-    async getAtlassianTeamRaw(requestParameters: GetAtlassianTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAtlassianTeamResponse>> {
+    async getAtlassianTeamRequestOpts(requestParameters: GetAtlassianTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -293,12 +316,21 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
         urlPath = urlPath.replace(`{${"atlassianTeamId"}}`, encodeURIComponent(String(requestParameters['atlassianTeamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns planning settings for an Atlassian team in a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get Atlassian team in plan
+     */
+    async getAtlassianTeamRaw(requestParameters: GetAtlassianTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAtlassianTeamResponse>> {
+        const requestOptions = await this.getAtlassianTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -313,10 +345,9 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns planning settings for a plan-only team.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get plan-only team
+     * Creates request options for getPlanOnlyTeam without sending the request
      */
-    async getPlanOnlyTeamRaw(requestParameters: GetPlanOnlyTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPlanOnlyTeamResponse>> {
+    async getPlanOnlyTeamRequestOpts(requestParameters: GetPlanOnlyTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -348,12 +379,21 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
         urlPath = urlPath.replace(`{${"planOnlyTeamId"}}`, encodeURIComponent(String(requestParameters['planOnlyTeamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns planning settings for a plan-only team.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get plan-only team
+     */
+    async getPlanOnlyTeamRaw(requestParameters: GetPlanOnlyTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPlanOnlyTeamResponse>> {
+        const requestOptions = await this.getPlanOnlyTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -368,10 +408,9 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of plan-only and Atlassian teams in a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get teams in plan paginated
+     * Creates request options for getTeams without sending the request
      */
-    async getTeamsRaw(requestParameters: GetTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageWithCursorGetTeamResponseForPage>> {
+    async getTeamsRequestOpts(requestParameters: GetTeamsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -403,12 +442,21 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/plans/plan/{planId}/team`;
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of plan-only and Atlassian teams in a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get teams in plan paginated
+     */
+    async getTeamsRaw(requestParameters: GetTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageWithCursorGetTeamResponseForPage>> {
+        const requestOptions = await this.getTeamsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -423,10 +471,9 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes an Atlassian team from a plan and deletes their planning settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove Atlassian team from plan
+     * Creates request options for removeAtlassianTeam without sending the request
      */
-    async removeAtlassianTeamRaw(requestParameters: RemoveAtlassianTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async removeAtlassianTeamRequestOpts(requestParameters: RemoveAtlassianTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -458,12 +505,21 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
         urlPath = urlPath.replace(`{${"atlassianTeamId"}}`, encodeURIComponent(String(requestParameters['atlassianTeamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes an Atlassian team from a plan and deletes their planning settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove Atlassian team from plan
+     */
+    async removeAtlassianTeamRaw(requestParameters: RemoveAtlassianTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeAtlassianTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -482,10 +538,9 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates any of the following planning settings of an Atlassian team in a plan using [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902).   *  planningStyle  *  issueSourceId  *  sprintLength  *  capacity  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *Note that \"add\" operations do not respect array indexes in target locations. Call the \"Get Atlassian team in plan\" endpoint to find out the order of array elements.*
-     * Update Atlassian team in plan
+     * Creates request options for updateAtlassianTeam without sending the request
      */
-    async updateAtlassianTeamRaw(requestParameters: UpdateAtlassianTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateAtlassianTeamRequestOpts(requestParameters: UpdateAtlassianTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -526,13 +581,22 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
         urlPath = urlPath.replace(`{${"atlassianTeamId"}}`, encodeURIComponent(String(requestParameters['atlassianTeamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates any of the following planning settings of an Atlassian team in a plan using [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902).   *  planningStyle  *  issueSourceId  *  sprintLength  *  capacity  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *Note that \"add\" operations do not respect array indexes in target locations. Call the \"Get Atlassian team in plan\" endpoint to find out the order of array elements.*
+     * Update Atlassian team in plan
+     */
+    async updateAtlassianTeamRaw(requestParameters: UpdateAtlassianTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateAtlassianTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -551,10 +615,9 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates any of the following planning settings of a plan-only team using [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902).   *  name  *  planningStyle  *  issueSourceId  *  sprintLength  *  capacity  *  memberAccountIds  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *Note that \"add\" operations do not respect array indexes in target locations. Call the \"Get plan-only team\" endpoint to find out the order of array elements.*
-     * Update plan-only team
+     * Creates request options for updatePlanOnlyTeam without sending the request
      */
-    async updatePlanOnlyTeamRaw(requestParameters: UpdatePlanOnlyTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updatePlanOnlyTeamRequestOpts(requestParameters: UpdatePlanOnlyTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -595,13 +658,22 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
         urlPath = urlPath.replace(`{${"planOnlyTeamId"}}`, encodeURIComponent(String(requestParameters['planOnlyTeamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates any of the following planning settings of a plan-only team using [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902).   *  name  *  planningStyle  *  issueSourceId  *  sprintLength  *  capacity  *  memberAccountIds  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *Note that \"add\" operations do not respect array indexes in target locations. Call the \"Get plan-only team\" endpoint to find out the order of array elements.*
+     * Update plan-only team
+     */
+    async updatePlanOnlyTeamRaw(requestParameters: UpdatePlanOnlyTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updatePlanOnlyTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

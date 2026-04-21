@@ -33,10 +33,9 @@ export interface SetSharedTimeTrackingConfigurationRequest {
 export class TimeTrackingApi extends runtime.BaseAPI {
 
     /**
-     * Returns all time tracking providers. By default, Jira only has one time tracking provider: *JIRA provided time tracking*. However, you can install other time tracking providers via apps from the Atlassian Marketplace. For more information on time tracking providers, see the documentation for the [ Time Tracking Provider](https://developer.atlassian.com/cloud/jira/platform/modules/time-tracking-provider/) module.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get all time tracking providers
+     * Creates request options for getAvailableTimeTrackingImplementations without sending the request
      */
-    async getAvailableTimeTrackingImplementationsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TimeTrackingProvider>>> {
+    async getAvailableTimeTrackingImplementationsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -52,12 +51,21 @@ export class TimeTrackingApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/configuration/timetracking/list`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all time tracking providers. By default, Jira only has one time tracking provider: *JIRA provided time tracking*. However, you can install other time tracking providers via apps from the Atlassian Marketplace. For more information on time tracking providers, see the documentation for the [ Time Tracking Provider](https://developer.atlassian.com/cloud/jira/platform/modules/time-tracking-provider/) module.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get all time tracking providers
+     */
+    async getAvailableTimeTrackingImplementationsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TimeTrackingProvider>>> {
+        const requestOptions = await this.getAvailableTimeTrackingImplementationsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -72,10 +80,9 @@ export class TimeTrackingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the time tracking provider that is currently selected. Note that if time tracking is disabled, then a successful but empty response is returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get selected time tracking provider
+     * Creates request options for getSelectedTimeTrackingImplementation without sending the request
      */
-    async getSelectedTimeTrackingImplementationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimeTrackingProvider>> {
+    async getSelectedTimeTrackingImplementationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -91,12 +98,21 @@ export class TimeTrackingApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/configuration/timetracking`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the time tracking provider that is currently selected. Note that if time tracking is disabled, then a successful but empty response is returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get selected time tracking provider
+     */
+    async getSelectedTimeTrackingImplementationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimeTrackingProvider>> {
+        const requestOptions = await this.getSelectedTimeTrackingImplementationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -111,10 +127,9 @@ export class TimeTrackingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the time tracking settings. This includes settings such as the time format, default time unit, and others. For more information, see [Configuring time tracking](https://confluence.atlassian.com/x/qoXKM).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get time tracking settings
+     * Creates request options for getSharedTimeTrackingConfiguration without sending the request
      */
-    async getSharedTimeTrackingConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimeTrackingConfiguration>> {
+    async getSharedTimeTrackingConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -130,12 +145,21 @@ export class TimeTrackingApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/configuration/timetracking/options`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the time tracking settings. This includes settings such as the time format, default time unit, and others. For more information, see [Configuring time tracking](https://confluence.atlassian.com/x/qoXKM).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get time tracking settings
+     */
+    async getSharedTimeTrackingConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimeTrackingConfiguration>> {
+        const requestOptions = await this.getSharedTimeTrackingConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -150,10 +174,9 @@ export class TimeTrackingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Selects a time tracking provider.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Select time tracking provider
+     * Creates request options for selectTimeTrackingImplementation without sending the request
      */
-    async selectTimeTrackingImplementationRaw(requestParameters: SelectTimeTrackingImplementationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async selectTimeTrackingImplementationRequestOpts(requestParameters: SelectTimeTrackingImplementationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['timeTrackingProvider'] == null) {
             throw new runtime.RequiredError(
                 'timeTrackingProvider',
@@ -178,13 +201,22 @@ export class TimeTrackingApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/configuration/timetracking`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['timeTrackingProvider'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Selects a time tracking provider.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Select time tracking provider
+     */
+    async selectTimeTrackingImplementationRaw(requestParameters: SelectTimeTrackingImplementationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.selectTimeTrackingImplementationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -203,10 +235,9 @@ export class TimeTrackingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the time tracking settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Set time tracking settings
+     * Creates request options for setSharedTimeTrackingConfiguration without sending the request
      */
-    async setSharedTimeTrackingConfigurationRaw(requestParameters: SetSharedTimeTrackingConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimeTrackingConfiguration>> {
+    async setSharedTimeTrackingConfigurationRequestOpts(requestParameters: SetSharedTimeTrackingConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['timeTrackingConfiguration'] == null) {
             throw new runtime.RequiredError(
                 'timeTrackingConfiguration',
@@ -231,13 +262,22 @@ export class TimeTrackingApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/configuration/timetracking/options`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['timeTrackingConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the time tracking settings.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Set time tracking settings
+     */
+    async setSharedTimeTrackingConfigurationRaw(requestParameters: SetSharedTimeTrackingConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimeTrackingConfiguration>> {
+        const requestOptions = await this.setSharedTimeTrackingConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -49,10 +49,9 @@ export interface SaveTemplateOperationRequest {
 export class ProjectTemplatesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a project based on a custom template provided in the request.  The request body should contain the project details and the capabilities that comprise the project:   *  `details` \\- represents the project details settings  *  `template` \\- represents a list of capabilities responsible for creating specific parts of a project  A capability is defined as a unit of configuration for the project you want to create.  This operation is:   *  [asynchronous](#async). Follow the `Location` link in the response header to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  ***Note: This API is only supported for Jira Enterprise edition.***
-     * Create custom project
+     * Creates request options for createProjectWithCustomTemplate without sending the request
      */
-    async createProjectWithCustomTemplateRaw(requestParameters: CreateProjectWithCustomTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createProjectWithCustomTemplateRequestOpts(requestParameters: CreateProjectWithCustomTemplateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectCustomTemplateCreateRequestDTO'] == null) {
             throw new runtime.RequiredError(
                 'projectCustomTemplateCreateRequestDTO',
@@ -77,13 +76,22 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/project-template`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectCustomTemplateCreateRequestDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a project based on a custom template provided in the request.  The request body should contain the project details and the capabilities that comprise the project:   *  `details` \\- represents the project details settings  *  `template` \\- represents a list of capabilities responsible for creating specific parts of a project  A capability is defined as a unit of configuration for the project you want to create.  This operation is:   *  [asynchronous](#async). Follow the `Location` link in the response header to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  ***Note: This API is only supported for Jira Enterprise edition.***
+     * Create custom project
+     */
+    async createProjectWithCustomTemplateRaw(requestParameters: CreateProjectWithCustomTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createProjectWithCustomTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -97,10 +105,9 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Edit custom template  This API endpoint allows you to edit an existing customised template.  ***Note: Custom Templates are only supported for Jira Enterprise edition.***
-     * Edit a custom project template
+     * Creates request options for editTemplate without sending the request
      */
-    async editTemplateRaw(requestParameters: EditTemplateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async editTemplateRequestOpts(requestParameters: EditTemplateOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['editTemplateRequest'] == null) {
             throw new runtime.RequiredError(
                 'editTemplateRequest',
@@ -125,13 +132,22 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/project-template/edit-template`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['editTemplateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Edit custom template  This API endpoint allows you to edit an existing customised template.  ***Note: Custom Templates are only supported for Jira Enterprise edition.***
+     * Edit a custom project template
+     */
+    async editTemplateRaw(requestParameters: EditTemplateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.editTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -150,10 +166,9 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get custom template  This API endpoint allows you to get a live custom project template details by either templateKey or projectId  ***Note: Custom Templates are only supported for Jira Enterprise edition.***
-     * Gets a custom project template
+     * Creates request options for liveTemplate without sending the request
      */
-    async liveTemplateRaw(requestParameters: LiveTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectTemplateModel>> {
+    async liveTemplateRequestOpts(requestParameters: LiveTemplateRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['projectId'] != null) {
@@ -177,12 +192,21 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/project-template/live-template`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get custom template  This API endpoint allows you to get a live custom project template details by either templateKey or projectId  ***Note: Custom Templates are only supported for Jira Enterprise edition.***
+     * Gets a custom project template
+     */
+    async liveTemplateRaw(requestParameters: LiveTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectTemplateModel>> {
+        const requestOptions = await this.liveTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -197,10 +221,9 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove custom template  This API endpoint allows you to remove a specified customised template  ***Note: Custom Templates are only supported for Jira Enterprise edition.***
-     * Deletes a custom project template
+     * Creates request options for removeTemplate without sending the request
      */
-    async removeTemplateRaw(requestParameters: RemoveTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async removeTemplateRequestOpts(requestParameters: RemoveTemplateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['templateKey'] == null) {
             throw new runtime.RequiredError(
                 'templateKey',
@@ -227,12 +250,21 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/project-template/remove-template`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove custom template  This API endpoint allows you to remove a specified customised template  ***Note: Custom Templates are only supported for Jira Enterprise edition.***
+     * Deletes a custom project template
+     */
+    async removeTemplateRaw(requestParameters: RemoveTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -251,10 +283,9 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Save custom template  This API endpoint allows you to save a customised template  ***Note: Custom Templates are only supported for Jira Enterprise edition.***
-     * Save a custom project template
+     * Creates request options for saveTemplate without sending the request
      */
-    async saveTemplateRaw(requestParameters: SaveTemplateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SaveTemplateResponse>> {
+    async saveTemplateRequestOpts(requestParameters: SaveTemplateOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['saveTemplateRequest'] == null) {
             throw new runtime.RequiredError(
                 'saveTemplateRequest',
@@ -279,13 +310,22 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/project-template/save-template`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['saveTemplateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Save custom template  This API endpoint allows you to save a customised template  ***Note: Custom Templates are only supported for Jira Enterprise edition.***
+     * Save a custom project template
+     */
+    async saveTemplateRaw(requestParameters: SaveTemplateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SaveTemplateResponse>> {
+        const requestOptions = await this.saveTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

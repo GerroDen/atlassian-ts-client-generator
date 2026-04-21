@@ -35,10 +35,9 @@ export interface ToggleFeatureForProjectRequest {
 export class ProjectFeaturesApi extends runtime.BaseAPI {
 
     /**
-     * Returns the list of features for a project.
-     * Get project features
+     * Creates request options for getFeaturesForProject without sending the request
      */
-    async getFeaturesForProjectRaw(requestParameters: GetFeaturesForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerForProjectFeatures>> {
+    async getFeaturesForProjectRequestOpts(requestParameters: GetFeaturesForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -62,12 +61,21 @@ export class ProjectFeaturesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/features`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the list of features for a project.
+     * Get project features
+     */
+    async getFeaturesForProjectRaw(requestParameters: GetFeaturesForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerForProjectFeatures>> {
+        const requestOptions = await this.getFeaturesForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -82,10 +90,9 @@ export class ProjectFeaturesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the state of a project feature.
-     * Set project feature state
+     * Creates request options for toggleFeatureForProject without sending the request
      */
-    async toggleFeatureForProjectRaw(requestParameters: ToggleFeatureForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerForProjectFeatures>> {
+    async toggleFeatureForProjectRequestOpts(requestParameters: ToggleFeatureForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -126,13 +133,22 @@ export class ProjectFeaturesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
         urlPath = urlPath.replace(`{${"featureKey"}}`, encodeURIComponent(String(requestParameters['featureKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectFeatureState'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the state of a project feature.
+     * Set project feature state
+     */
+    async toggleFeatureForProjectRaw(requestParameters: ToggleFeatureForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerForProjectFeatures>> {
+        const requestOptions = await this.toggleFeatureForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

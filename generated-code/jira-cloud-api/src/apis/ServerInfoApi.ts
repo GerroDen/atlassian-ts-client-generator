@@ -24,10 +24,9 @@ import type {
 export class ServerInfoApi extends runtime.BaseAPI {
 
     /**
-     * Returns information about the Jira instance.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get Jira instance info
+     * Creates request options for getServerInfo without sending the request
      */
-    async getServerInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ServerInformation>> {
+    async getServerInfoRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -43,12 +42,21 @@ export class ServerInfoApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/serverInfo`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns information about the Jira instance.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get Jira instance info
+     */
+    async getServerInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ServerInformation>> {
+        const requestOptions = await this.getServerInfoRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

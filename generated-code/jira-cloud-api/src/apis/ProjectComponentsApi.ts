@@ -71,10 +71,9 @@ export interface UpdateComponentRequest {
 export class ProjectComponentsApi extends runtime.BaseAPI {
 
     /**
-     * Creates a component. Use components to provide containers for issues within a project. Use components to provide containers for issues within a project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project in which the component is created or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create component
+     * Creates request options for createComponent without sending the request
      */
-    async createComponentRaw(requestParameters: CreateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
+    async createComponentRequestOpts(requestParameters: CreateComponentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectComponent'] == null) {
             throw new runtime.RequiredError(
                 'projectComponent',
@@ -99,13 +98,22 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/component`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectComponent'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a component. Use components to provide containers for issues within a project. Use components to provide containers for issues within a project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project in which the component is created or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create component
+     */
+    async createComponentRaw(requestParameters: CreateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
+        const requestOptions = await this.createComponentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -120,10 +128,9 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a component.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the component or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete component
+     * Creates request options for deleteComponent without sending the request
      */
-    async deleteComponentRaw(requestParameters: DeleteComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteComponentRequestOpts(requestParameters: DeleteComponentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -151,12 +158,21 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/component/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a component.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the component or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete component
+     */
+    async deleteComponentRaw(requestParameters: DeleteComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteComponentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -170,10 +186,9 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of all components in a project, including global (Compass) components when applicable.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
-     * Find components for projects
+     * Creates request options for findComponentsForProjects without sending the request
      */
-    async findComponentsForProjectsRaw(requestParameters: FindComponentsForProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2ComponentJsonBean>> {
+    async findComponentsForProjectsRequestOpts(requestParameters: FindComponentsForProjectsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['projectIdsOrKeys'] != null) {
@@ -209,12 +224,21 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/component`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of all components in a project, including global (Compass) components when applicable.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
+     * Find components for projects
+     */
+    async findComponentsForProjectsRaw(requestParameters: FindComponentsForProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2ComponentJsonBean>> {
+        const requestOptions = await this.findComponentsForProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -229,10 +253,9 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a component.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for project containing the component.
-     * Get component
+     * Creates request options for getComponent without sending the request
      */
-    async getComponentRaw(requestParameters: GetComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
+    async getComponentRequestOpts(requestParameters: GetComponentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -256,12 +279,21 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/component/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a component.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for project containing the component.
+     * Get component
+     */
+    async getComponentRaw(requestParameters: GetComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
+        const requestOptions = await this.getComponentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -276,10 +308,9 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the counts of issues assigned to the component.  This operation can be accessed anonymously.  **Deprecation notice:** The required OAuth 2.0 scopes will be updated on June 15, 2024.   *  **Classic**: `read:jira-work`  *  **Granular**: `read:field:jira`, `read:project.component:jira`  **[Permissions](#permissions) required:** None.
-     * Get component issues count
+     * Creates request options for getComponentRelatedIssues without sending the request
      */
-    async getComponentRelatedIssuesRaw(requestParameters: GetComponentRelatedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ComponentIssuesCount>> {
+    async getComponentRelatedIssuesRequestOpts(requestParameters: GetComponentRelatedIssuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -303,12 +334,21 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/component/{id}/relatedIssueCounts`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the counts of issues assigned to the component.  This operation can be accessed anonymously.  **Deprecation notice:** The required OAuth 2.0 scopes will be updated on June 15, 2024.   *  **Classic**: `read:jira-work`  *  **Granular**: `read:field:jira`, `read:project.component:jira`  **[Permissions](#permissions) required:** None.
+     * Get component issues count
+     */
+    async getComponentRelatedIssuesRaw(requestParameters: GetComponentRelatedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ComponentIssuesCount>> {
+        const requestOptions = await this.getComponentRelatedIssuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -323,10 +363,9 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all components in a project. See the [Get project components paginated](#api-rest-api-3-project-projectIdOrKey-component-get) resource if you want to get a full list of components with pagination.  If your project uses Compass components, this API will return a paginated list of Compass components that are linked to issues in that project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
-     * Get project components
+     * Creates request options for getProjectComponents without sending the request
      */
-    async getProjectComponentsRaw(requestParameters: GetProjectComponentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectComponent>>> {
+    async getProjectComponentsRequestOpts(requestParameters: GetProjectComponentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -354,12 +393,21 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/components`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all components in a project. See the [Get project components paginated](#api-rest-api-3-project-projectIdOrKey-component-get) resource if you want to get a full list of components with pagination.  If your project uses Compass components, this API will return a paginated list of Compass components that are linked to issues in that project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
+     * Get project components
+     */
+    async getProjectComponentsRaw(requestParameters: GetProjectComponentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectComponent>>> {
+        const requestOptions = await this.getProjectComponentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -374,10 +422,9 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of all components in a project. See the [Get project components](#api-rest-api-3-project-projectIdOrKey-components-get) resource if you want to get a full list of versions without pagination.  If your project uses Compass components, this API will return a list of Compass components that are linked to issues in that project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
-     * Get project components paginated
+     * Creates request options for getProjectComponentsPaginated without sending the request
      */
-    async getProjectComponentsPaginatedRaw(requestParameters: GetProjectComponentsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanComponentWithIssueCount>> {
+    async getProjectComponentsPaginatedRequestOpts(requestParameters: GetProjectComponentsPaginatedRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -421,12 +468,21 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/component`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of all components in a project. See the [Get project components](#api-rest-api-3-project-projectIdOrKey-components-get) resource if you want to get a full list of versions without pagination.  If your project uses Compass components, this API will return a list of Compass components that are linked to issues in that project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
+     * Get project components paginated
+     */
+    async getProjectComponentsPaginatedRaw(requestParameters: GetProjectComponentsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanComponentWithIssueCount>> {
+        const requestOptions = await this.getProjectComponentsPaginatedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -441,10 +497,9 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a component. Any fields included in the request are overwritten. If `leadAccountId` is an empty string (\"\") the component lead is removed.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the component or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update component
+     * Creates request options for updateComponent without sending the request
      */
-    async updateComponentRaw(requestParameters: UpdateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
+    async updateComponentRequestOpts(requestParameters: UpdateComponentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -477,13 +532,22 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/component/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectComponent'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a component. Any fields included in the request are overwritten. If `leadAccountId` is an empty string (\"\") the component lead is removed.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the component or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update component
+     */
+    async updateComponentRaw(requestParameters: UpdateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
+        const requestOptions = await this.updateComponentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

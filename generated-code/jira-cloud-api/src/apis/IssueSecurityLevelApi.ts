@@ -37,10 +37,9 @@ export interface GetIssueSecurityLevelMembersRequest {
 export class IssueSecurityLevelApi extends runtime.BaseAPI {
 
     /**
-     * Returns details of an issue security level.  Use [Get issue security scheme](#api-rest-api-3-issuesecurityschemes-id-get) to obtain the IDs of issue security levels associated with the issue security scheme.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get issue security level
+     * Creates request options for getIssueSecurityLevel without sending the request
      */
-    async getIssueSecurityLevelRaw(requestParameters: GetIssueSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityLevel>> {
+    async getIssueSecurityLevelRequestOpts(requestParameters: GetIssueSecurityLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -64,12 +63,21 @@ export class IssueSecurityLevelApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/securitylevel/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns details of an issue security level.  Use [Get issue security scheme](#api-rest-api-3-issuesecurityschemes-id-get) to obtain the IDs of issue security levels associated with the issue security scheme.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get issue security level
+     */
+    async getIssueSecurityLevelRaw(requestParameters: GetIssueSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityLevel>> {
+        const requestOptions = await this.getIssueSecurityLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -84,10 +92,9 @@ export class IssueSecurityLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns issue security level members.  Only issue security level members in context of classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue security level members by issue security scheme
+     * Creates request options for getIssueSecurityLevelMembers without sending the request
      */
-    async getIssueSecurityLevelMembersRaw(requestParameters: GetIssueSecurityLevelMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueSecurityLevelMember>> {
+    async getIssueSecurityLevelMembersRequestOpts(requestParameters: GetIssueSecurityLevelMembersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueSecuritySchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueSecuritySchemeId',
@@ -127,12 +134,21 @@ export class IssueSecurityLevelApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuesecurityschemes/{issueSecuritySchemeId}/members`;
         urlPath = urlPath.replace(`{${"issueSecuritySchemeId"}}`, encodeURIComponent(String(requestParameters['issueSecuritySchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns issue security level members.  Only issue security level members in context of classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue security level members by issue security scheme
+     */
+    async getIssueSecurityLevelMembersRaw(requestParameters: GetIssueSecurityLevelMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueSecurityLevelMember>> {
+        const requestOptions = await this.getIssueSecurityLevelMembersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

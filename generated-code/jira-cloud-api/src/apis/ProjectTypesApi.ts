@@ -32,10 +32,9 @@ export interface GetProjectTypeByKeyRequest {
 export class ProjectTypesApi extends runtime.BaseAPI {
 
     /**
-     * Returns a [project type](https://confluence.atlassian.com/x/Var1Nw) if it is accessible to the user.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get accessible project type by key
+     * Creates request options for getAccessibleProjectTypeByKey without sending the request
      */
-    async getAccessibleProjectTypeByKeyRaw(requestParameters: GetAccessibleProjectTypeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectType>> {
+    async getAccessibleProjectTypeByKeyRequestOpts(requestParameters: GetAccessibleProjectTypeByKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectTypeKey'] == null) {
             throw new runtime.RequiredError(
                 'projectTypeKey',
@@ -59,12 +58,21 @@ export class ProjectTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/type/{projectTypeKey}/accessible`;
         urlPath = urlPath.replace(`{${"projectTypeKey"}}`, encodeURIComponent(String(requestParameters['projectTypeKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [project type](https://confluence.atlassian.com/x/Var1Nw) if it is accessible to the user.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get accessible project type by key
+     */
+    async getAccessibleProjectTypeByKeyRaw(requestParameters: GetAccessibleProjectTypeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectType>> {
+        const requestOptions = await this.getAccessibleProjectTypeByKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -79,10 +87,9 @@ export class ProjectTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all [project types](https://confluence.atlassian.com/x/Var1Nw) with a valid license.
-     * Get licensed project types
+     * Creates request options for getAllAccessibleProjectTypes without sending the request
      */
-    async getAllAccessibleProjectTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectType>>> {
+    async getAllAccessibleProjectTypesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -98,12 +105,21 @@ export class ProjectTypesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/project/type/accessible`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all [project types](https://confluence.atlassian.com/x/Var1Nw) with a valid license.
+     * Get licensed project types
+     */
+    async getAllAccessibleProjectTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectType>>> {
+        const requestOptions = await this.getAllAccessibleProjectTypesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -118,10 +134,9 @@ export class ProjectTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all [project types](https://confluence.atlassian.com/x/Var1Nw), whether or not the instance has a valid license for each type.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get all project types
+     * Creates request options for getAllProjectTypes without sending the request
      */
-    async getAllProjectTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectType>>> {
+    async getAllProjectTypesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -137,12 +152,21 @@ export class ProjectTypesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/project/type`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all [project types](https://confluence.atlassian.com/x/Var1Nw), whether or not the instance has a valid license for each type.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get all project types
+     */
+    async getAllProjectTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectType>>> {
+        const requestOptions = await this.getAllProjectTypesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -157,10 +181,9 @@ export class ProjectTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [project type](https://confluence.atlassian.com/x/Var1Nw).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get project type by key
+     * Creates request options for getProjectTypeByKey without sending the request
      */
-    async getProjectTypeByKeyRaw(requestParameters: GetProjectTypeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectType>> {
+    async getProjectTypeByKeyRequestOpts(requestParameters: GetProjectTypeByKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectTypeKey'] == null) {
             throw new runtime.RequiredError(
                 'projectTypeKey',
@@ -184,12 +207,21 @@ export class ProjectTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/type/{projectTypeKey}`;
         urlPath = urlPath.replace(`{${"projectTypeKey"}}`, encodeURIComponent(String(requestParameters['projectTypeKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [project type](https://confluence.atlassian.com/x/Var1Nw).  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get project type by key
+     */
+    async getProjectTypeByKeyRaw(requestParameters: GetProjectTypeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectType>> {
+        const requestOptions = await this.getProjectTypeByKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

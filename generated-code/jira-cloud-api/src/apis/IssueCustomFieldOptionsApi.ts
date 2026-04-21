@@ -76,10 +76,9 @@ export interface UpdateCustomFieldOptionRequest {
 export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
 
     /**
-     * Creates options and, where the custom select field is of the type Select List (cascading), cascading options for a custom select field. The options are added to a context of the field.  The maximum number of options that can be created per request is 1000 and each field can have a maximum of 10000 options.  This operation works for custom field options created in Jira or the operations from this resource. **To work with issue field select list options created for Connect apps use the [Issue custom field options (apps)](#api-group-issue-custom-field-options--apps-) operations.**  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create custom field options (context)
+     * Creates request options for createCustomFieldOption without sending the request
      */
-    async createCustomFieldOptionRaw(requestParameters: CreateCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomFieldCreatedContextOptionsList>> {
+    async createCustomFieldOptionRequestOpts(requestParameters: CreateCustomFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -120,13 +119,22 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['bulkCustomFieldOptionCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates options and, where the custom select field is of the type Select List (cascading), cascading options for a custom select field. The options are added to a context of the field.  The maximum number of options that can be created per request is 1000 and each field can have a maximum of 10000 options.  This operation works for custom field options created in Jira or the operations from this resource. **To work with issue field select list options created for Connect apps use the [Issue custom field options (apps)](#api-group-issue-custom-field-options--apps-) operations.**  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create custom field options (context)
+     */
+    async createCustomFieldOptionRaw(requestParameters: CreateCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomFieldCreatedContextOptionsList>> {
+        const requestOptions = await this.createCustomFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -141,10 +149,9 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a custom field option.  Options with cascading options cannot be deleted without deleting the cascading options first.  This operation works for custom field options created in Jira or the operations from this resource. **To work with issue field select list options created for Connect apps use the [Issue custom field options (apps)](#api-group-issue-custom-field-options--apps-) operations.**  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete custom field options (context)
+     * Creates request options for deleteCustomFieldOption without sending the request
      */
-    async deleteCustomFieldOptionRaw(requestParameters: DeleteCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteCustomFieldOptionRequestOpts(requestParameters: DeleteCustomFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -184,12 +191,21 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
         urlPath = urlPath.replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a custom field option.  Options with cascading options cannot be deleted without deleting the cascading options first.  This operation works for custom field options created in Jira or the operations from this resource. **To work with issue field select list options created for Connect apps use the [Issue custom field options (apps)](#api-group-issue-custom-field-options--apps-) operations.**  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete custom field options (context)
+     */
+    async deleteCustomFieldOptionRaw(requestParameters: DeleteCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteCustomFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -203,10 +219,9 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a custom field option. For example, an option in a select list.  Note that this operation **only works for issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource**, it cannot be used with issue field select list options created by Connect apps.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The custom field option is returned as follows:   *  if the user has the *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  if the user has the *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for at least one project the custom field is used in, and the field is visible in at least one layout the user has permission to view.
-     * Get custom field option
+     * Creates request options for getCustomFieldOption without sending the request
      */
-    async getCustomFieldOptionRaw(requestParameters: GetCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomFieldOption>> {
+    async getCustomFieldOptionRequestOpts(requestParameters: GetCustomFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -230,12 +245,21 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/customFieldOption/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a custom field option. For example, an option in a select list.  Note that this operation **only works for issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource**, it cannot be used with issue field select list options created by Connect apps.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The custom field option is returned as follows:   *  if the user has the *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  if the user has the *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for at least one project the custom field is used in, and the field is visible in at least one layout the user has permission to view.
+     * Get custom field option
+     */
+    async getCustomFieldOptionRaw(requestParameters: GetCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomFieldOption>> {
+        const requestOptions = await this.getCustomFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -250,10 +274,9 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of all custom field option for a context. Options are returned first then cascading options, in the order they display in Jira.  This operation works for custom field options created in Jira or the operations from this resource. **To work with issue field select list options created for Connect apps use the [Issue custom field options (apps)](#api-group-issue-custom-field-options--apps-) operations.**  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). *Edit Workflow* [edit workflow permission](https://support.atlassian.com/jira-cloud-administration/docs/permissions-for-company-managed-projects/#Edit-Workflows)
-     * Get custom field options (context)
+     * Creates request options for getOptionsForContext without sending the request
      */
-    async getOptionsForContextRaw(requestParameters: GetOptionsForContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContextOption>> {
+    async getOptionsForContextRequestOpts(requestParameters: GetOptionsForContextRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -301,12 +324,21 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of all custom field option for a context. Options are returned first then cascading options, in the order they display in Jira.  This operation works for custom field options created in Jira or the operations from this resource. **To work with issue field select list options created for Connect apps use the [Issue custom field options (apps)](#api-group-issue-custom-field-options--apps-) operations.**  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). *Edit Workflow* [edit workflow permission](https://support.atlassian.com/jira-cloud-administration/docs/permissions-for-company-managed-projects/#Edit-Workflows)
+     * Get custom field options (context)
+     */
+    async getOptionsForContextRaw(requestParameters: GetOptionsForContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContextOption>> {
+        const requestOptions = await this.getOptionsForContextRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -321,10 +353,9 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Changes the order of custom field options or cascading options in a context.  This operation works for custom field options created in Jira or the operations from this resource. **To work with issue field select list options created for Connect apps use the [Issue custom field options (apps)](#api-group-issue-custom-field-options--apps-) operations.**  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Reorder custom field options (context)
+     * Creates request options for reorderCustomFieldOptions without sending the request
      */
-    async reorderCustomFieldOptionsRaw(requestParameters: ReorderCustomFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async reorderCustomFieldOptionsRequestOpts(requestParameters: ReorderCustomFieldOptionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -365,13 +396,22 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['orderOfCustomFieldOptions'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Changes the order of custom field options or cascading options in a context.  This operation works for custom field options created in Jira or the operations from this resource. **To work with issue field select list options created for Connect apps use the [Issue custom field options (apps)](#api-group-issue-custom-field-options--apps-) operations.**  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Reorder custom field options (context)
+     */
+    async reorderCustomFieldOptionsRaw(requestParameters: ReorderCustomFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.reorderCustomFieldOptionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -390,10 +430,9 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Replaces the options of a custom field.  Note that this operation **only works for issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource**, it cannot be used with issue field select list options created by Connect or Forge apps.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Replace custom field options
+     * Creates request options for replaceCustomFieldOption without sending the request
      */
-    async replaceCustomFieldOptionRaw(requestParameters: ReplaceCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async replaceCustomFieldOptionRequestOpts(requestParameters: ReplaceCustomFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -441,12 +480,21 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Replaces the options of a custom field.  Note that this operation **only works for issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource**, it cannot be used with issue field select list options created by Connect or Forge apps.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Replace custom field options
+     */
+    async replaceCustomFieldOptionRaw(requestParameters: ReplaceCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.replaceCustomFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -460,10 +508,9 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the options of a custom field.  If any of the options are not found, no options are updated. Options where the values in the request match the current values aren\'t updated and aren\'t reported in the response.  Note that this operation **only works for issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource**, it cannot be used with issue field select list options created by Connect apps.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update custom field options (context)
+     * Creates request options for updateCustomFieldOption without sending the request
      */
-    async updateCustomFieldOptionRaw(requestParameters: UpdateCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomFieldUpdatedContextOptionsList>> {
+    async updateCustomFieldOptionRequestOpts(requestParameters: UpdateCustomFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -504,13 +551,22 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['bulkCustomFieldOptionUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the options of a custom field.  If any of the options are not found, no options are updated. Options where the values in the request match the current values aren\'t updated and aren\'t reported in the response.  Note that this operation **only works for issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource**, it cannot be used with issue field select list options created by Connect apps.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update custom field options (context)
+     */
+    async updateCustomFieldOptionRaw(requestParameters: UpdateCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomFieldUpdatedContextOptionsList>> {
+        const requestOptions = await this.updateCustomFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

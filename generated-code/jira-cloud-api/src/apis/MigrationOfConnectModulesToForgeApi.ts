@@ -30,10 +30,9 @@ export interface ConnectToForgeMigrationFetchTaskResourceFetchMigrationTaskGetRe
 export class MigrationOfConnectModulesToForgeApi extends runtime.BaseAPI {
 
     /**
-     * Returns the details of a Connect issue field\'s migration to Forge.  When migrating a Connect app to Forge, [Issue Field](https://developer.atlassian.com/cloud/jira/software/modules/issue-field/) modules must be converted to [Custom field](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/). When the Forge version of the app is installed, Forge creates a [background task](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-tasks/#api-group-tasks) to track the migration of field data across. This endpoint returns the status and other details of that background task.  For more details, see [Jira modules > Jira Custom Fields](https://developer.atlassian.com/platform/adopting-forge-from-connect/migrate-jira-custom-fields/).  **[Permissions](#permissions) required:** Only Connect and Forge apps can make this request.
-     * Get Connect issue field migration task
+     * Creates request options for connectToForgeMigrationFetchTaskResourceFetchMigrationTaskGet without sending the request
      */
-    async connectToForgeMigrationFetchTaskResourceFetchMigrationTaskGetRaw(requestParameters: ConnectToForgeMigrationFetchTaskResourceFetchMigrationTaskGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TaskProgress>> {
+    async connectToForgeMigrationFetchTaskResourceFetchMigrationTaskGetRequestOpts(requestParameters: ConnectToForgeMigrationFetchTaskResourceFetchMigrationTaskGetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['connectKey'] == null) {
             throw new runtime.RequiredError(
                 'connectKey',
@@ -65,12 +64,21 @@ export class MigrationOfConnectModulesToForgeApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"connectKey"}}`, encodeURIComponent(String(requestParameters['connectKey'])));
         urlPath = urlPath.replace(`{${"jiraIssueFieldsKey"}}`, encodeURIComponent(String(requestParameters['jiraIssueFieldsKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the details of a Connect issue field\'s migration to Forge.  When migrating a Connect app to Forge, [Issue Field](https://developer.atlassian.com/cloud/jira/software/modules/issue-field/) modules must be converted to [Custom field](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/). When the Forge version of the app is installed, Forge creates a [background task](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-tasks/#api-group-tasks) to track the migration of field data across. This endpoint returns the status and other details of that background task.  For more details, see [Jira modules > Jira Custom Fields](https://developer.atlassian.com/platform/adopting-forge-from-connect/migrate-jira-custom-fields/).  **[Permissions](#permissions) required:** Only Connect and Forge apps can make this request.
+     * Get Connect issue field migration task
+     */
+    async connectToForgeMigrationFetchTaskResourceFetchMigrationTaskGetRaw(requestParameters: ConnectToForgeMigrationFetchTaskResourceFetchMigrationTaskGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TaskProgress>> {
+        const requestOptions = await this.connectToForgeMigrationFetchTaskResourceFetchMigrationTaskGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

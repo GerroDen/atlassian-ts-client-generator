@@ -49,10 +49,9 @@ export interface SetDefaultShareScopeRequest {
 export class FilterSharingApi extends runtime.BaseAPI {
 
     /**
-     * Add a share permissions to a filter. If you add a global share permission (one for all logged-in users or the public) it will overwrite all share permissions for the filter.  Be aware that this operation uses different objects for updating share permissions compared to [Update filter](#api-rest-api-3-filter-id-put).  **[Permissions](#permissions) required:** *Share dashboards and filters* [global permission](https://confluence.atlassian.com/x/x4dKLg) and the user must own the filter.
-     * Add share permission
+     * Creates request options for addSharePermission without sending the request
      */
-    async addSharePermissionRaw(requestParameters: AddSharePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SharePermission>>> {
+    async addSharePermissionRequestOpts(requestParameters: AddSharePermissionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -85,13 +84,22 @@ export class FilterSharingApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}/permission`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['sharePermissionInputBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a share permissions to a filter. If you add a global share permission (one for all logged-in users or the public) it will overwrite all share permissions for the filter.  Be aware that this operation uses different objects for updating share permissions compared to [Update filter](#api-rest-api-3-filter-id-put).  **[Permissions](#permissions) required:** *Share dashboards and filters* [global permission](https://confluence.atlassian.com/x/x4dKLg) and the user must own the filter.
+     * Add share permission
+     */
+    async addSharePermissionRaw(requestParameters: AddSharePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SharePermission>>> {
+        const requestOptions = await this.addSharePermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -106,10 +114,9 @@ export class FilterSharingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a share permission from a filter.  **[Permissions](#permissions) required:** Permission to access Jira and the user must own the filter.
-     * Delete share permission
+     * Creates request options for deleteSharePermission without sending the request
      */
-    async deleteSharePermissionRaw(requestParameters: DeleteSharePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteSharePermissionRequestOpts(requestParameters: DeleteSharePermissionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -141,12 +148,21 @@ export class FilterSharingApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters['permissionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a share permission from a filter.  **[Permissions](#permissions) required:** Permission to access Jira and the user must own the filter.
+     * Delete share permission
+     */
+    async deleteSharePermissionRaw(requestParameters: DeleteSharePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteSharePermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -160,10 +176,9 @@ export class FilterSharingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the default sharing settings for new filters and dashboards for a user.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get default share scope
+     * Creates request options for getDefaultShareScope without sending the request
      */
-    async getDefaultShareScopeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DefaultShareScope>> {
+    async getDefaultShareScopeRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -179,12 +194,21 @@ export class FilterSharingApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/filter/defaultShareScope`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the default sharing settings for new filters and dashboards for a user.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get default share scope
+     */
+    async getDefaultShareScopeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DefaultShareScope>> {
+        const requestOptions = await this.getDefaultShareScopeRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -199,10 +223,9 @@ export class FilterSharingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a share permission for a filter. A filter can be shared with groups, projects, all logged-in users, or the public. Sharing with all logged-in users or the public is known as a global share permission.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, a share permission is only returned for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
-     * Get share permission
+     * Creates request options for getSharePermission without sending the request
      */
-    async getSharePermissionRaw(requestParameters: GetSharePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SharePermission>> {
+    async getSharePermissionRequestOpts(requestParameters: GetSharePermissionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -234,12 +257,21 @@ export class FilterSharingApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters['permissionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a share permission for a filter. A filter can be shared with groups, projects, all logged-in users, or the public. Sharing with all logged-in users or the public is known as a global share permission.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, a share permission is only returned for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
+     * Get share permission
+     */
+    async getSharePermissionRaw(requestParameters: GetSharePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SharePermission>> {
+        const requestOptions = await this.getSharePermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -254,10 +286,9 @@ export class FilterSharingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the share permissions for a filter. A filter can be shared with groups, projects, all logged-in users, or the public. Sharing with all logged-in users or the public is known as a global share permission.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, share permissions are only returned for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
-     * Get share permissions
+     * Creates request options for getSharePermissions without sending the request
      */
-    async getSharePermissionsRaw(requestParameters: GetSharePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SharePermission>>> {
+    async getSharePermissionsRequestOpts(requestParameters: GetSharePermissionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -281,12 +312,21 @@ export class FilterSharingApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}/permission`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the share permissions for a filter. A filter can be shared with groups, projects, all logged-in users, or the public. Sharing with all logged-in users or the public is known as a global share permission.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, share permissions are only returned for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
+     * Get share permissions
+     */
+    async getSharePermissionsRaw(requestParameters: GetSharePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SharePermission>>> {
+        const requestOptions = await this.getSharePermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -301,10 +341,9 @@ export class FilterSharingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the default sharing for new filters and dashboards for a user.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Set default share scope
+     * Creates request options for setDefaultShareScope without sending the request
      */
-    async setDefaultShareScopeRaw(requestParameters: SetDefaultShareScopeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DefaultShareScope>> {
+    async setDefaultShareScopeRequestOpts(requestParameters: SetDefaultShareScopeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['defaultShareScope'] == null) {
             throw new runtime.RequiredError(
                 'defaultShareScope',
@@ -329,13 +368,22 @@ export class FilterSharingApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/filter/defaultShareScope`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['defaultShareScope'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the default sharing for new filters and dashboards for a user.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Set default share scope
+     */
+    async setDefaultShareScopeRaw(requestParameters: SetDefaultShareScopeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DefaultShareScope>> {
+        const requestOptions = await this.setDefaultShareScopeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

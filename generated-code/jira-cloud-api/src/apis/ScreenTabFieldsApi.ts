@@ -51,10 +51,9 @@ export interface RemoveScreenTabFieldRequest {
 export class ScreenTabFieldsApi extends runtime.BaseAPI {
 
     /**
-     * Adds a field to a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Add screen tab field
+     * Creates request options for addScreenTabField without sending the request
      */
-    async addScreenTabFieldRaw(requestParameters: AddScreenTabFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenableField>> {
+    async addScreenTabFieldRequestOpts(requestParameters: AddScreenTabFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -95,13 +94,22 @@ export class ScreenTabFieldsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId'])));
         urlPath = urlPath.replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['addFieldBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a field to a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add screen tab field
+     */
+    async addScreenTabFieldRaw(requestParameters: AddScreenTabFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenableField>> {
+        const requestOptions = await this.addScreenTabFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -116,10 +124,9 @@ export class ScreenTabFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all fields for a screen tab.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) when the project key is specified, providing that the screen is associated with the project through a Screen Scheme and Issue Type Screen Scheme.
-     * Get all screen tab fields
+     * Creates request options for getAllScreenTabFields without sending the request
      */
-    async getAllScreenTabFieldsRaw(requestParameters: GetAllScreenTabFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ScreenableField>>> {
+    async getAllScreenTabFieldsRequestOpts(requestParameters: GetAllScreenTabFieldsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -155,12 +162,21 @@ export class ScreenTabFieldsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId'])));
         urlPath = urlPath.replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all fields for a screen tab.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) when the project key is specified, providing that the screen is associated with the project through a Screen Scheme and Issue Type Screen Scheme.
+     * Get all screen tab fields
+     */
+    async getAllScreenTabFieldsRaw(requestParameters: GetAllScreenTabFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ScreenableField>>> {
+        const requestOptions = await this.getAllScreenTabFieldsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -175,10 +191,9 @@ export class ScreenTabFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves a screen tab field.  If `after` and `position` are provided in the request, `position` is ignored.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Move screen tab field
+     * Creates request options for moveScreenTabField without sending the request
      */
-    async moveScreenTabFieldRaw(requestParameters: MoveScreenTabFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async moveScreenTabFieldRequestOpts(requestParameters: MoveScreenTabFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -227,13 +242,22 @@ export class ScreenTabFieldsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['moveFieldBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Moves a screen tab field.  If `after` and `position` are provided in the request, `position` is ignored.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Move screen tab field
+     */
+    async moveScreenTabFieldRaw(requestParameters: MoveScreenTabFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.moveScreenTabFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -252,10 +276,9 @@ export class ScreenTabFieldsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a field from a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove screen tab field
+     * Creates request options for removeScreenTabField without sending the request
      */
-    async removeScreenTabFieldRaw(requestParameters: RemoveScreenTabFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeScreenTabFieldRequestOpts(requestParameters: RemoveScreenTabFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -295,12 +318,21 @@ export class ScreenTabFieldsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a field from a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove screen tab field
+     */
+    async removeScreenTabFieldRaw(requestParameters: RemoveScreenTabFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeScreenTabFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

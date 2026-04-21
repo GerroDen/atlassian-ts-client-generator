@@ -29,10 +29,9 @@ export interface GetAllUserDataClassificationLevelsRequest {
 export class ClassificationLevelsApi extends runtime.BaseAPI {
 
     /**
-     * Returns all classification levels.  **[Permissions](#permissions) required:** None.
-     * Get all classification levels
+     * Creates request options for getAllUserDataClassificationLevels without sending the request
      */
-    async getAllUserDataClassificationLevelsRaw(requestParameters: GetAllUserDataClassificationLevelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DataClassificationLevelsBean>> {
+    async getAllUserDataClassificationLevelsRequestOpts(requestParameters: GetAllUserDataClassificationLevelsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['status'] != null) {
@@ -56,12 +55,21 @@ export class ClassificationLevelsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/classification-levels`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all classification levels.  **[Permissions](#permissions) required:** None.
+     * Get all classification levels
+     */
+    async getAllUserDataClassificationLevelsRaw(requestParameters: GetAllUserDataClassificationLevelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DataClassificationLevelsBean>> {
+        const requestOptions = await this.getAllUserDataClassificationLevelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -61,10 +61,9 @@ export interface PutForgeAppPropertyRequest {
 export class AppPropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Deletes an app\'s property.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps can access Connect app properties (stored against the same `app.connect.key`).
-     * Delete app property
+     * Creates request options for addonPropertiesResourceDeleteAddonPropertyDelete without sending the request
      */
-    async addonPropertiesResourceDeleteAddonPropertyDeleteRaw(requestParameters: AddonPropertiesResourceDeleteAddonPropertyDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addonPropertiesResourceDeleteAddonPropertyDeleteRequestOpts(requestParameters: AddonPropertiesResourceDeleteAddonPropertyDeleteRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['addonKey'] == null) {
             throw new runtime.RequiredError(
                 'addonKey',
@@ -96,12 +95,21 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters['addonKey'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes an app\'s property.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps can access Connect app properties (stored against the same `app.connect.key`).
+     * Delete app property
+     */
+    async addonPropertiesResourceDeleteAddonPropertyDeleteRaw(requestParameters: AddonPropertiesResourceDeleteAddonPropertyDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addonPropertiesResourceDeleteAddonPropertyDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -115,10 +123,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets all the properties of an app.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps can access Connect app properties (stored against the same `app.connect.key`).
-     * Get app properties
+     * Creates request options for addonPropertiesResourceGetAddonPropertiesGet without sending the request
      */
-    async addonPropertiesResourceGetAddonPropertiesGetRaw(requestParameters: AddonPropertiesResourceGetAddonPropertiesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+    async addonPropertiesResourceGetAddonPropertiesGetRequestOpts(requestParameters: AddonPropertiesResourceGetAddonPropertiesGetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['addonKey'] == null) {
             throw new runtime.RequiredError(
                 'addonKey',
@@ -142,12 +149,21 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/atlassian-connect/1/addons/{addonKey}/properties`;
         urlPath = urlPath.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters['addonKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets all the properties of an app.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps can access Connect app properties (stored against the same `app.connect.key`).
+     * Get app properties
+     */
+    async addonPropertiesResourceGetAddonPropertiesGetRaw(requestParameters: AddonPropertiesResourceGetAddonPropertiesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+        const requestOptions = await this.addonPropertiesResourceGetAddonPropertiesGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -162,10 +178,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the key and value of an app\'s property.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps can access Connect app properties (stored against the same `app.connect.key`).
-     * Get app property
+     * Creates request options for addonPropertiesResourceGetAddonPropertyGet without sending the request
      */
-    async addonPropertiesResourceGetAddonPropertyGetRaw(requestParameters: AddonPropertiesResourceGetAddonPropertyGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+    async addonPropertiesResourceGetAddonPropertyGetRequestOpts(requestParameters: AddonPropertiesResourceGetAddonPropertyGetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['addonKey'] == null) {
             throw new runtime.RequiredError(
                 'addonKey',
@@ -197,12 +212,21 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters['addonKey'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the key and value of an app\'s property.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps can access Connect app properties (stored against the same `app.connect.key`).
+     * Get app property
+     */
+    async addonPropertiesResourceGetAddonPropertyGetRaw(requestParameters: AddonPropertiesResourceGetAddonPropertyGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+        const requestOptions = await this.addonPropertiesResourceGetAddonPropertyGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -217,10 +241,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the value of an app\'s property. Use this resource to store custom data for your app.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps can access Connect app properties (stored against the same `app.connect.key`).
-     * Set app property
+     * Creates request options for addonPropertiesResourcePutAddonPropertyPut without sending the request
      */
-    async addonPropertiesResourcePutAddonPropertyPutRaw(requestParameters: AddonPropertiesResourcePutAddonPropertyPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OperationMessage>> {
+    async addonPropertiesResourcePutAddonPropertyPutRequestOpts(requestParameters: AddonPropertiesResourcePutAddonPropertyPutRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['addonKey'] == null) {
             throw new runtime.RequiredError(
                 'addonKey',
@@ -261,13 +284,22 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters['addonKey'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the value of an app\'s property. Use this resource to store custom data for your app.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps can access Connect app properties (stored against the same `app.connect.key`).
+     * Set app property
+     */
+    async addonPropertiesResourcePutAddonPropertyPutRaw(requestParameters: AddonPropertiesResourcePutAddonPropertyPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OperationMessage>> {
+        const requestOptions = await this.addonPropertiesResourcePutAddonPropertyPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -282,10 +314,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a Forge app\'s property.  **[Permissions](#permissions) required:** Only Forge apps can make this request. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestjira/#method-signature)** requests from Forge.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Delete app property (Forge)
+     * Creates request options for deleteForgeAppProperty without sending the request
      */
-    async deleteForgeAppPropertyRaw(requestParameters: DeleteForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteForgeAppPropertyRequestOpts(requestParameters: DeleteForgeAppPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['propertyKey'] == null) {
             throw new runtime.RequiredError(
                 'propertyKey',
@@ -309,12 +340,21 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/forge/1/app/properties/{propertyKey}`;
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a Forge app\'s property.  **[Permissions](#permissions) required:** Only Forge apps can make this request. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestjira/#method-signature)** requests from Forge.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Delete app property (Forge)
+     */
+    async deleteForgeAppPropertyRaw(requestParameters: DeleteForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteForgeAppPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -328,10 +368,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the value of a Forge app\'s property.  **[Permissions](#permissions) required:** Only Forge apps can make this request. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestjira/#method-signature)** requests from Forge.
-     * Get app property (Forge)
+     * Creates request options for getForgeAppProperty without sending the request
      */
-    async getForgeAppPropertyRaw(requestParameters: GetForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForgeAppProperty200Response>> {
+    async getForgeAppPropertyRequestOpts(requestParameters: GetForgeAppPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['propertyKey'] == null) {
             throw new runtime.RequiredError(
                 'propertyKey',
@@ -355,12 +394,21 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/forge/1/app/properties/{propertyKey}`;
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the value of a Forge app\'s property.  **[Permissions](#permissions) required:** Only Forge apps can make this request. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestjira/#method-signature)** requests from Forge.
+     * Get app property (Forge)
+     */
+    async getForgeAppPropertyRaw(requestParameters: GetForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForgeAppProperty200Response>> {
+        const requestOptions = await this.getForgeAppPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -375,10 +423,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all property keys for the Forge app.  **[Permissions](#permissions) required:** Only Forge apps can make this request. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestjira/#method-signature)** requests from Forge.
-     * Get app property keys (Forge)
+     * Creates request options for getForgeAppPropertyKeys without sending the request
      */
-    async getForgeAppPropertyKeysRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForgeAppPropertyKeys200Response>> {
+    async getForgeAppPropertyKeysRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -394,12 +441,21 @@ export class AppPropertiesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/forge/1/app/properties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all property keys for the Forge app.  **[Permissions](#permissions) required:** Only Forge apps can make this request. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestjira/#method-signature)** requests from Forge.
+     * Get app property keys (Forge)
+     */
+    async getForgeAppPropertyKeysRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForgeAppPropertyKeys200Response>> {
+        const requestOptions = await this.getForgeAppPropertyKeysRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -414,10 +470,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the value of a Forge app\'s property. These values can be retrieved in [Jira expressions](/cloud/jira/platform/jira-expressions/) through the `app` [context variable](/cloud/jira/platform/jira-expressions/#context-variables). They are also available in [entity property display conditions](/platform/forge/manifest-reference/display-conditions/entity-property-conditions/).  For other use cases, use the [Storage API](/platform/forge/runtime-reference/storage-api/).  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** Only Forge apps can make this request. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestjira/#method-signature)** requests from Forge.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Set app property (Forge)
+     * Creates request options for putForgeAppProperty without sending the request
      */
-    async putForgeAppPropertyRaw(requestParameters: PutForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OperationMessage>> {
+    async putForgeAppPropertyRequestOpts(requestParameters: PutForgeAppPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['propertyKey'] == null) {
             throw new runtime.RequiredError(
                 'propertyKey',
@@ -450,13 +505,22 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/forge/1/app/properties/{propertyKey}`;
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the value of a Forge app\'s property. These values can be retrieved in [Jira expressions](/cloud/jira/platform/jira-expressions/) through the `app` [context variable](/cloud/jira/platform/jira-expressions/#context-variables). They are also available in [entity property display conditions](/platform/forge/manifest-reference/display-conditions/entity-property-conditions/).  For other use cases, use the [Storage API](/platform/forge/runtime-reference/storage-api/).  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** Only Forge apps can make this request. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestjira/#method-signature)** requests from Forge.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Set app property (Forge)
+     */
+    async putForgeAppPropertyRaw(requestParameters: PutForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OperationMessage>> {
+        const requestOptions = await this.putForgeAppPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

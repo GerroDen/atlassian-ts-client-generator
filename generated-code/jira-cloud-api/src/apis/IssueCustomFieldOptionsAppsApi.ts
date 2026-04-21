@@ -77,10 +77,9 @@ export interface UpdateIssueFieldOptionRequest {
 export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
 
     /**
-     * Creates an option for a select list issue field.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  Each field can have a maximum of 10000 options, and each option can have a maximum of 10000 scopes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
-     * Create issue field option
+     * Creates request options for createIssueFieldOption without sending the request
      */
-    async createIssueFieldOptionRaw(requestParameters: CreateIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueFieldOption>> {
+    async createIssueFieldOptionRequestOpts(requestParameters: CreateIssueFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldKey',
@@ -113,13 +112,22 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldKey}/option`;
         urlPath = urlPath.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueFieldOptionCreateBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates an option for a select list issue field.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  Each field can have a maximum of 10000 options, and each option can have a maximum of 10000 scopes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
+     * Create issue field option
+     */
+    async createIssueFieldOptionRaw(requestParameters: CreateIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueFieldOption>> {
+        const requestOptions = await this.createIssueFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -134,10 +142,9 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes an option from a select list issue field.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
-     * Delete issue field option
+     * Creates request options for deleteIssueFieldOption without sending the request
      */
-    async deleteIssueFieldOptionRaw(requestParameters: DeleteIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteIssueFieldOptionRequestOpts(requestParameters: DeleteIssueFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldKey',
@@ -169,12 +176,21 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey'])));
         urlPath = urlPath.replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes an option from a select list issue field.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
+     * Delete issue field option
+     */
+    async deleteIssueFieldOptionRaw(requestParameters: DeleteIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteIssueFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -193,10 +209,9 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of all the options of a select list issue field. A select list issue field is a type of [issue field](https://developer.atlassian.com/cloud/jira/platform/modules/issue-field/) that enables a user to select a value from a list of options.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
-     * Get all issue field options
+     * Creates request options for getAllIssueFieldOptions without sending the request
      */
-    async getAllIssueFieldOptionsRaw(requestParameters: GetAllIssueFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueFieldOption>> {
+    async getAllIssueFieldOptionsRequestOpts(requestParameters: GetAllIssueFieldOptionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldKey',
@@ -228,12 +243,21 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldKey}/option`;
         urlPath = urlPath.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of all the options of a select list issue field. A select list issue field is a type of [issue field](https://developer.atlassian.com/cloud/jira/platform/modules/issue-field/) that enables a user to select a value from a list of options.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
+     * Get all issue field options
+     */
+    async getAllIssueFieldOptionsRaw(requestParameters: GetAllIssueFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueFieldOption>> {
+        const requestOptions = await this.getAllIssueFieldOptionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -248,10 +272,9 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an option from a select list issue field.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
-     * Get issue field option
+     * Creates request options for getIssueFieldOption without sending the request
      */
-    async getIssueFieldOptionRaw(requestParameters: GetIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueFieldOption>> {
+    async getIssueFieldOptionRequestOpts(requestParameters: GetIssueFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldKey',
@@ -283,12 +306,21 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey'])));
         urlPath = urlPath.replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns an option from a select list issue field.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
+     * Get issue field option
+     */
+    async getIssueFieldOptionRaw(requestParameters: GetIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueFieldOption>> {
+        const requestOptions = await this.getIssueFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -303,10 +335,9 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of options for a select list issue field that can be viewed and selected by the user.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get selectable issue field options
+     * Creates request options for getSelectableIssueFieldOptions without sending the request
      */
-    async getSelectableIssueFieldOptionsRaw(requestParameters: GetSelectableIssueFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueFieldOption>> {
+    async getSelectableIssueFieldOptionsRequestOpts(requestParameters: GetSelectableIssueFieldOptionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldKey',
@@ -342,12 +373,21 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldKey}/option/suggestions/edit`;
         urlPath = urlPath.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of options for a select list issue field that can be viewed and selected by the user.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get selectable issue field options
+     */
+    async getSelectableIssueFieldOptionsRaw(requestParameters: GetSelectableIssueFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueFieldOption>> {
+        const requestOptions = await this.getSelectableIssueFieldOptionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -362,10 +402,9 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of options for a select list issue field that can be viewed by the user.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get visible issue field options
+     * Creates request options for getVisibleIssueFieldOptions without sending the request
      */
-    async getVisibleIssueFieldOptionsRaw(requestParameters: GetVisibleIssueFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueFieldOption>> {
+    async getVisibleIssueFieldOptionsRequestOpts(requestParameters: GetVisibleIssueFieldOptionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldKey',
@@ -401,12 +440,21 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldKey}/option/suggestions/search`;
         urlPath = urlPath.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of options for a select list issue field that can be viewed by the user.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get visible issue field options
+     */
+    async getVisibleIssueFieldOptionsRaw(requestParameters: GetVisibleIssueFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueFieldOption>> {
+        const requestOptions = await this.getVisibleIssueFieldOptionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -421,10 +469,9 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deselects an issue-field select-list option from all issues where it is selected. A different option can be selected to replace the deselected option. The update can also be limited to a smaller set of issues by using a JQL query.  Connect and Forge app users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) can override the screen security configuration using `overrideScreenSecurity` and `overrideEditableFlag`.  This is an [asynchronous operation](#async). The response object contains a link to the long-running task.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
-     * Replace issue field option
+     * Creates request options for replaceIssueFieldOption without sending the request
      */
-    async replaceIssueFieldOptionRaw(requestParameters: ReplaceIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async replaceIssueFieldOptionRequestOpts(requestParameters: ReplaceIssueFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldKey',
@@ -472,12 +519,21 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey'])));
         urlPath = urlPath.replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deselects an issue-field select-list option from all issues where it is selected. A different option can be selected to replace the deselected option. The update can also be limited to a smaller set of issues by using a JQL query.  Connect and Forge app users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) can override the screen security configuration using `overrideScreenSecurity` and `overrideEditableFlag`.  This is an [asynchronous operation](#async). The response object contains a link to the long-running task.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
+     * Replace issue field option
+     */
+    async replaceIssueFieldOptionRaw(requestParameters: ReplaceIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.replaceIssueFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -491,10 +547,9 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates or creates an option for a select list issue field. This operation requires that the option ID is provided when creating an option, therefore, the option ID needs to be specified as a path and body parameter. The option ID provided in the path and body must be identical.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
-     * Update issue field option
+     * Creates request options for updateIssueFieldOption without sending the request
      */
-    async updateIssueFieldOptionRaw(requestParameters: UpdateIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueFieldOption>> {
+    async updateIssueFieldOptionRequestOpts(requestParameters: UpdateIssueFieldOptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldKey',
@@ -535,13 +590,22 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey'])));
         urlPath = urlPath.replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueFieldOption'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates or creates an option for a select list issue field. This operation requires that the option ID is provided when creating an option, therefore, the option ID needs to be specified as a path and body parameter. The option ID provided in the path and body must be identical.  Note that this operation **only works for issue field select list options added by Connect apps**, it cannot be used with issue field select list options created in Jira or using operations from the [Issue custom field options](#api-group-Issue-custom-field-options) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the app providing the field.
+     * Update issue field option
+     */
+    async updateIssueFieldOptionRaw(requestParameters: UpdateIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueFieldOption>> {
+        const requestOptions = await this.updateIssueFieldOptionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

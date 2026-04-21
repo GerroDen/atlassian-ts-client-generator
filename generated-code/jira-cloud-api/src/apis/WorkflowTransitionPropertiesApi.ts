@@ -55,11 +55,10 @@ export interface UpdateWorkflowTransitionPropertyRequest {
 export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
 
     /**
-     * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); add transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Adds a property to a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create workflow transition property
+     * Creates request options for createWorkflowTransitionProperty without sending the request
      * @deprecated
      */
-    async createWorkflowTransitionPropertyRaw(requestParameters: CreateWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionProperty>> {
+    async createWorkflowTransitionPropertyRequestOpts(requestParameters: CreateWorkflowTransitionPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['transitionId'] == null) {
             throw new runtime.RequiredError(
                 'transitionId',
@@ -118,13 +117,23 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflow/transitions/{transitionId}/properties`;
         urlPath = urlPath.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters['transitionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowTransitionProperty'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); add transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Adds a property to a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create workflow transition property
+     * @deprecated
+     */
+    async createWorkflowTransitionPropertyRaw(requestParameters: CreateWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionProperty>> {
+        const requestOptions = await this.createWorkflowTransitionPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -140,11 +149,10 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); delete transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Deletes a property from a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete workflow transition property
+     * Creates request options for deleteWorkflowTransitionProperty without sending the request
      * @deprecated
      */
-    async deleteWorkflowTransitionPropertyRaw(requestParameters: DeleteWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWorkflowTransitionPropertyRequestOpts(requestParameters: DeleteWorkflowTransitionPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['transitionId'] == null) {
             throw new runtime.RequiredError(
                 'transitionId',
@@ -194,12 +202,22 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflow/transitions/{transitionId}/properties`;
         urlPath = urlPath.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters['transitionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); delete transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Deletes a property from a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete workflow transition property
+     * @deprecated
+     */
+    async deleteWorkflowTransitionPropertyRaw(requestParameters: DeleteWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWorkflowTransitionPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -214,11 +232,10 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); fetch transition properties from [Bulk get workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-post) instead.  Returns the properties on a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get workflow transition properties
+     * Creates request options for getWorkflowTransitionProperties without sending the request
      * @deprecated
      */
-    async getWorkflowTransitionPropertiesRaw(requestParameters: GetWorkflowTransitionPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionProperty>> {
+    async getWorkflowTransitionPropertiesRequestOpts(requestParameters: GetWorkflowTransitionPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['transitionId'] == null) {
             throw new runtime.RequiredError(
                 'transitionId',
@@ -265,12 +282,22 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflow/transitions/{transitionId}/properties`;
         urlPath = urlPath.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters['transitionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); fetch transition properties from [Bulk get workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-post) instead.  Returns the properties on a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get workflow transition properties
+     * @deprecated
+     */
+    async getWorkflowTransitionPropertiesRaw(requestParameters: GetWorkflowTransitionPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionProperty>> {
+        const requestOptions = await this.getWorkflowTransitionPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -286,11 +313,10 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); update transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Updates a workflow transition by changing the property value. Trying to update a property that does not exist results in a new property being added to the transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update workflow transition property
+     * Creates request options for updateWorkflowTransitionProperty without sending the request
      * @deprecated
      */
-    async updateWorkflowTransitionPropertyRaw(requestParameters: UpdateWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionProperty>> {
+    async updateWorkflowTransitionPropertyRequestOpts(requestParameters: UpdateWorkflowTransitionPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['transitionId'] == null) {
             throw new runtime.RequiredError(
                 'transitionId',
@@ -349,13 +375,23 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/workflow/transitions/{transitionId}/properties`;
         urlPath = urlPath.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters['transitionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowTransitionProperty'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); update transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Updates a workflow transition by changing the property value. Trying to update a property that does not exist results in a new property being added to the transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update workflow transition property
+     * @deprecated
+     */
+    async updateWorkflowTransitionPropertyRaw(requestParameters: UpdateWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionProperty>> {
+        const requestOptions = await this.updateWorkflowTransitionPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

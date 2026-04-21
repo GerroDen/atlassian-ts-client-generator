@@ -64,10 +64,9 @@ export interface UpdatePlanRequest {
 export class PlansApi extends runtime.BaseAPI {
 
     /**
-     * Archives a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Archive plan
+     * Creates request options for archivePlan without sending the request
      */
-    async archivePlanRaw(requestParameters: ArchivePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async archivePlanRequestOpts(requestParameters: ArchivePlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -91,12 +90,21 @@ export class PlansApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/plans/plan/{planId}/archive`;
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Archives a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Archive plan
+     */
+    async archivePlanRaw(requestParameters: ArchivePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.archivePlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -115,10 +123,9 @@ export class PlansApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create plan
+     * Creates request options for createPlan without sending the request
      */
-    async createPlanRaw(requestParameters: CreatePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+    async createPlanRequestOpts(requestParameters: CreatePlanOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createPlanRequest'] == null) {
             throw new runtime.RequiredError(
                 'createPlanRequest',
@@ -147,13 +154,22 @@ export class PlansApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/plans/plan`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createPlanRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create plan
+     */
+    async createPlanRaw(requestParameters: CreatePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+        const requestOptions = await this.createPlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<number>(response);
@@ -172,10 +188,9 @@ export class PlansApi extends runtime.BaseAPI {
     }
 
     /**
-     * Duplicates a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Duplicate plan
+     * Creates request options for duplicatePlan without sending the request
      */
-    async duplicatePlanRaw(requestParameters: DuplicatePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+    async duplicatePlanRequestOpts(requestParameters: DuplicatePlanOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -208,13 +223,22 @@ export class PlansApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/plans/plan/{planId}/duplicate`;
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['duplicatePlanRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Duplicates a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Duplicate plan
+     */
+    async duplicatePlanRaw(requestParameters: DuplicatePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+        const requestOptions = await this.duplicatePlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<number>(response);
@@ -233,10 +257,9 @@ export class PlansApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get plan
+     * Creates request options for getPlan without sending the request
      */
-    async getPlanRaw(requestParameters: GetPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPlanResponse>> {
+    async getPlanRequestOpts(requestParameters: GetPlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -264,12 +287,21 @@ export class PlansApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/plans/plan/{planId}`;
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a plan.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get plan
+     */
+    async getPlanRaw(requestParameters: GetPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPlanResponse>> {
+        const requestOptions = await this.getPlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -284,10 +316,9 @@ export class PlansApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of plans.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get plans paginated
+     * Creates request options for getPlans without sending the request
      */
-    async getPlansRaw(requestParameters: GetPlansRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageWithCursorGetPlanResponseForPage>> {
+    async getPlansRequestOpts(requestParameters: GetPlansRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['includeTrashed'] != null) {
@@ -319,12 +350,21 @@ export class PlansApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/plans/plan`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of plans.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get plans paginated
+     */
+    async getPlansRaw(requestParameters: GetPlansRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageWithCursorGetPlanResponseForPage>> {
+        const requestOptions = await this.getPlansRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -339,10 +379,9 @@ export class PlansApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves a plan to trash.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Trash plan
+     * Creates request options for trashPlan without sending the request
      */
-    async trashPlanRaw(requestParameters: TrashPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async trashPlanRequestOpts(requestParameters: TrashPlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -366,12 +405,21 @@ export class PlansApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/plans/plan/{planId}/trash`;
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Moves a plan to trash.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Trash plan
+     */
+    async trashPlanRaw(requestParameters: TrashPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.trashPlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -390,10 +438,9 @@ export class PlansApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates any of the following details of a plan using [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902).   *  name  *  leadAccountId  *  scheduling           *  estimation with StoryPoints, Days or Hours as possible values      *  startDate                   *  type with DueDate, TargetStartDate, TargetEndDate or DateCustomField as possible values          *  dateCustomFieldId      *  endDate                   *  type with DueDate, TargetStartDate, TargetEndDate or DateCustomField as possible values          *  dateCustomFieldId      *  inferredDates with None, SprintDates or ReleaseDates as possible values      *  dependencies with Sequential or Concurrent as possible values  *  issueSources           *  type with Board, Project or Filter as possible values      *  value  *  exclusionRules           *  numberOfDaysToShowCompletedIssues      *  issueIds      *  workStatusIds      *  workStatusCategoryIds      *  issueTypeIds      *  releaseIds  *  crossProjectReleases           *  name      *  releaseIds  *  customFields           *  customFieldId      *  filter  *  permissions           *  type with View or Edit as possible values      *  holder                   *  type with Group or AccountId as possible values          *  value  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *Note that \"add\" operations do not respect array indexes in target locations. Call the \"Get plan\" endpoint to find out the order of array elements.*
-     * Update plan
+     * Creates request options for updatePlan without sending the request
      */
-    async updatePlanRaw(requestParameters: UpdatePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updatePlanRequestOpts(requestParameters: UpdatePlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planId'] == null) {
             throw new runtime.RequiredError(
                 'planId',
@@ -430,13 +477,22 @@ export class PlansApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/plans/plan/{planId}`;
         urlPath = urlPath.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates any of the following details of a plan using [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902).   *  name  *  leadAccountId  *  scheduling           *  estimation with StoryPoints, Days or Hours as possible values      *  startDate                   *  type with DueDate, TargetStartDate, TargetEndDate or DateCustomField as possible values          *  dateCustomFieldId      *  endDate                   *  type with DueDate, TargetStartDate, TargetEndDate or DateCustomField as possible values          *  dateCustomFieldId      *  inferredDates with None, SprintDates or ReleaseDates as possible values      *  dependencies with Sequential or Concurrent as possible values  *  issueSources           *  type with Board, Project or Filter as possible values      *  value  *  exclusionRules           *  numberOfDaysToShowCompletedIssues      *  issueIds      *  workStatusIds      *  workStatusCategoryIds      *  issueTypeIds      *  releaseIds  *  crossProjectReleases           *  name      *  releaseIds  *  customFields           *  customFieldId      *  filter  *  permissions           *  type with View or Edit as possible values      *  holder                   *  type with Group or AccountId as possible values          *  value  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *Note that \"add\" operations do not respect array indexes in target locations. Call the \"Get plan\" endpoint to find out the order of array elements.*
+     * Update plan
+     */
+    async updatePlanRaw(requestParameters: UpdatePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updatePlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

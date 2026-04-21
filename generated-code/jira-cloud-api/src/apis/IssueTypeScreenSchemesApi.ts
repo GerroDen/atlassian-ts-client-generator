@@ -94,10 +94,9 @@ export interface UpdateIssueTypeScreenSchemeRequest {
 export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
 
     /**
-     * Appends issue type to screen scheme mappings to an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Append mappings to issue type screen scheme
+     * Creates request options for appendMappingsForIssueTypeScreenScheme without sending the request
      */
-    async appendMappingsForIssueTypeScreenSchemeRaw(requestParameters: AppendMappingsForIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async appendMappingsForIssueTypeScreenSchemeRequestOpts(requestParameters: AppendMappingsForIssueTypeScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeScreenSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeScreenSchemeId',
@@ -130,13 +129,22 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescreenscheme/{issueTypeScreenSchemeId}/mapping`;
         urlPath = urlPath.replace(`{${"issueTypeScreenSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeScreenSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeScreenSchemeMappingDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Appends issue type to screen scheme mappings to an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Append mappings to issue type screen scheme
+     */
+    async appendMappingsForIssueTypeScreenSchemeRaw(requestParameters: AppendMappingsForIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.appendMappingsForIssueTypeScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -155,10 +163,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Assigns an issue type screen scheme to a project.  Issue type screen schemes can only be assigned to classic projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Assign issue type screen scheme to project
+     * Creates request options for assignIssueTypeScreenSchemeToProject without sending the request
      */
-    async assignIssueTypeScreenSchemeToProjectRaw(requestParameters: AssignIssueTypeScreenSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async assignIssueTypeScreenSchemeToProjectRequestOpts(requestParameters: AssignIssueTypeScreenSchemeToProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeScreenSchemeProjectAssociation'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeScreenSchemeProjectAssociation',
@@ -183,13 +190,22 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescreenscheme/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeScreenSchemeProjectAssociation'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Assigns an issue type screen scheme to a project.  Issue type screen schemes can only be assigned to classic projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Assign issue type screen scheme to project
+     */
+    async assignIssueTypeScreenSchemeToProjectRaw(requestParameters: AssignIssueTypeScreenSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.assignIssueTypeScreenSchemeToProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -208,10 +224,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create issue type screen scheme
+     * Creates request options for createIssueTypeScreenScheme without sending the request
      */
-    async createIssueTypeScreenSchemeRaw(requestParameters: CreateIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeScreenSchemeId>> {
+    async createIssueTypeScreenSchemeRequestOpts(requestParameters: CreateIssueTypeScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeScreenSchemeDetails'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeScreenSchemeDetails',
@@ -236,13 +251,22 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescreenscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeScreenSchemeDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create issue type screen scheme
+     */
+    async createIssueTypeScreenSchemeRaw(requestParameters: CreateIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeScreenSchemeId>> {
+        const requestOptions = await this.createIssueTypeScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -257,10 +281,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete issue type screen scheme
+     * Creates request options for deleteIssueTypeScreenScheme without sending the request
      */
-    async deleteIssueTypeScreenSchemeRaw(requestParameters: DeleteIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteIssueTypeScreenSchemeRequestOpts(requestParameters: DeleteIssueTypeScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeScreenSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeScreenSchemeId',
@@ -284,12 +307,21 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescreenscheme/{issueTypeScreenSchemeId}`;
         urlPath = urlPath.replace(`{${"issueTypeScreenSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeScreenSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete issue type screen scheme
+     */
+    async deleteIssueTypeScreenSchemeRaw(requestParameters: DeleteIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteIssueTypeScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -308,10 +340,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of issue type screen scheme items.  Only issue type screen schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue type screen scheme items
+     * Creates request options for getIssueTypeScreenSchemeMappings without sending the request
      */
-    async getIssueTypeScreenSchemeMappingsRaw(requestParameters: GetIssueTypeScreenSchemeMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeScreenSchemeItem>> {
+    async getIssueTypeScreenSchemeMappingsRequestOpts(requestParameters: GetIssueTypeScreenSchemeMappingsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -339,12 +370,21 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescreenscheme/mapping`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue type screen scheme items.  Only issue type screen schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue type screen scheme items
+     */
+    async getIssueTypeScreenSchemeMappingsRaw(requestParameters: GetIssueTypeScreenSchemeMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeScreenSchemeItem>> {
+        const requestOptions = await this.getIssueTypeScreenSchemeMappingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -359,10 +399,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of issue type screen schemes and, for each issue type screen scheme, a list of the projects that use it.  Only issue type screen schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue type screen schemes for projects
+     * Creates request options for getIssueTypeScreenSchemeProjectAssociations without sending the request
      */
-    async getIssueTypeScreenSchemeProjectAssociationsRaw(requestParameters: GetIssueTypeScreenSchemeProjectAssociationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeScreenSchemesProjects>> {
+    async getIssueTypeScreenSchemeProjectAssociationsRequestOpts(requestParameters: GetIssueTypeScreenSchemeProjectAssociationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -397,12 +436,21 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescreenscheme/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue type screen schemes and, for each issue type screen scheme, a list of the projects that use it.  Only issue type screen schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue type screen schemes for projects
+     */
+    async getIssueTypeScreenSchemeProjectAssociationsRaw(requestParameters: GetIssueTypeScreenSchemeProjectAssociationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeScreenSchemesProjects>> {
+        const requestOptions = await this.getIssueTypeScreenSchemeProjectAssociationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -417,10 +465,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of issue type screen schemes.  Only issue type screen schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue type screen schemes
+     * Creates request options for getIssueTypeScreenSchemes without sending the request
      */
-    async getIssueTypeScreenSchemesRaw(requestParameters: GetIssueTypeScreenSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeScreenScheme>> {
+    async getIssueTypeScreenSchemesRequestOpts(requestParameters: GetIssueTypeScreenSchemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -460,12 +507,21 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescreenscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue type screen schemes.  Only issue type screen schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue type screen schemes
+     */
+    async getIssueTypeScreenSchemesRaw(requestParameters: GetIssueTypeScreenSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeScreenScheme>> {
+        const requestOptions = await this.getIssueTypeScreenSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -480,10 +536,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of projects associated with an issue type screen scheme.  Only company-managed projects associated with an issue type screen scheme are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue type screen scheme projects
+     * Creates request options for getProjectsForIssueTypeScreenScheme without sending the request
      */
-    async getProjectsForIssueTypeScreenSchemeRaw(requestParameters: GetProjectsForIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanProjectDetails>> {
+    async getProjectsForIssueTypeScreenSchemeRequestOpts(requestParameters: GetProjectsForIssueTypeScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeScreenSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeScreenSchemeId',
@@ -519,12 +574,21 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescreenscheme/{issueTypeScreenSchemeId}/project`;
         urlPath = urlPath.replace(`{${"issueTypeScreenSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeScreenSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of projects associated with an issue type screen scheme.  Only company-managed projects associated with an issue type screen scheme are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue type screen scheme projects
+     */
+    async getProjectsForIssueTypeScreenSchemeRaw(requestParameters: GetProjectsForIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanProjectDetails>> {
+        const requestOptions = await this.getProjectsForIssueTypeScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -539,10 +603,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes issue type to screen scheme mappings from an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove mappings from issue type screen scheme
+     * Creates request options for removeMappingsFromIssueTypeScreenScheme without sending the request
      */
-    async removeMappingsFromIssueTypeScreenSchemeRaw(requestParameters: RemoveMappingsFromIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async removeMappingsFromIssueTypeScreenSchemeRequestOpts(requestParameters: RemoveMappingsFromIssueTypeScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeScreenSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeScreenSchemeId',
@@ -575,13 +638,22 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescreenscheme/{issueTypeScreenSchemeId}/mapping/remove`;
         urlPath = urlPath.replace(`{${"issueTypeScreenSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeScreenSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeIds'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes issue type to screen scheme mappings from an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove mappings from issue type screen scheme
+     */
+    async removeMappingsFromIssueTypeScreenSchemeRaw(requestParameters: RemoveMappingsFromIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeMappingsFromIssueTypeScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -600,10 +672,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the default screen scheme of an issue type screen scheme. The default screen scheme is used for all unmapped issue types.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update issue type screen scheme default screen scheme
+     * Creates request options for updateDefaultScreenScheme without sending the request
      */
-    async updateDefaultScreenSchemeRaw(requestParameters: UpdateDefaultScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateDefaultScreenSchemeRequestOpts(requestParameters: UpdateDefaultScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeScreenSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeScreenSchemeId',
@@ -636,13 +707,22 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescreenscheme/{issueTypeScreenSchemeId}/mapping/default`;
         urlPath = urlPath.replace(`{${"issueTypeScreenSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeScreenSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateDefaultScreenScheme'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the default screen scheme of an issue type screen scheme. The default screen scheme is used for all unmapped issue types.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update issue type screen scheme default screen scheme
+     */
+    async updateDefaultScreenSchemeRaw(requestParameters: UpdateDefaultScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateDefaultScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -661,10 +741,9 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update issue type screen scheme
+     * Creates request options for updateIssueTypeScreenScheme without sending the request
      */
-    async updateIssueTypeScreenSchemeRaw(requestParameters: UpdateIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateIssueTypeScreenSchemeRequestOpts(requestParameters: UpdateIssueTypeScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeScreenSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeScreenSchemeId',
@@ -697,13 +776,22 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescreenscheme/{issueTypeScreenSchemeId}`;
         urlPath = urlPath.replace(`{${"issueTypeScreenSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeScreenSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeScreenSchemeUpdateDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates an issue type screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update issue type screen scheme
+     */
+    async updateIssueTypeScreenSchemeRaw(requestParameters: UpdateIssueTypeScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateIssueTypeScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

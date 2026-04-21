@@ -28,10 +28,9 @@ export interface GetApplicationRoleRequest {
 export class ApplicationRolesApi extends runtime.BaseAPI {
 
     /**
-     * Returns all application roles. In Jira, application roles are managed using the [Application access configuration](https://confluence.atlassian.com/x/3YxjL) page.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get all application roles
+     * Creates request options for getAllApplicationRoles without sending the request
      */
-    async getAllApplicationRolesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApplicationRole>>> {
+    async getAllApplicationRolesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -47,12 +46,21 @@ export class ApplicationRolesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/applicationrole`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all application roles. In Jira, application roles are managed using the [Application access configuration](https://confluence.atlassian.com/x/3YxjL) page.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get all application roles
+     */
+    async getAllApplicationRolesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApplicationRole>>> {
+        const requestOptions = await this.getAllApplicationRolesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -67,10 +75,9 @@ export class ApplicationRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an application role.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get application role
+     * Creates request options for getApplicationRole without sending the request
      */
-    async getApplicationRoleRaw(requestParameters: GetApplicationRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApplicationRole>> {
+    async getApplicationRoleRequestOpts(requestParameters: GetApplicationRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -94,12 +101,21 @@ export class ApplicationRolesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/applicationrole/{key}`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns an application role.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get application role
+     */
+    async getApplicationRoleRaw(requestParameters: GetApplicationRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApplicationRole>> {
+        const requestOptions = await this.getApplicationRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

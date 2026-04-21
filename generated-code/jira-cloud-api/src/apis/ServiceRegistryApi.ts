@@ -28,10 +28,9 @@ export interface ServiceRegistryResourceServicesGetRequest {
 export class ServiceRegistryApi extends runtime.BaseAPI {
 
     /**
-     * Retrieve the attributes of given service registries.  **[Permissions](#permissions) required:** Only Connect apps can make this request and the servicesIds belong to the tenant you are requesting
-     * Retrieve the attributes of service registries
+     * Creates request options for serviceRegistryResourceServicesGet without sending the request
      */
-    async serviceRegistryResourceServicesGetRaw(requestParameters: ServiceRegistryResourceServicesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ServiceRegistry>>> {
+    async serviceRegistryResourceServicesGetRequestOpts(requestParameters: ServiceRegistryResourceServicesGetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceIds'] == null) {
             throw new runtime.RequiredError(
                 'serviceIds',
@@ -50,12 +49,21 @@ export class ServiceRegistryApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/atlassian-connect/1/service-registry`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the attributes of given service registries.  **[Permissions](#permissions) required:** Only Connect apps can make this request and the servicesIds belong to the tenant you are requesting
+     * Retrieve the attributes of service registries
+     */
+    async serviceRegistryResourceServicesGetRaw(requestParameters: ServiceRegistryResourceServicesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ServiceRegistry>>> {
+        const requestOptions = await this.serviceRegistryResourceServicesGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

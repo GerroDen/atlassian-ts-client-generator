@@ -54,10 +54,9 @@ export interface UpdateCustomFieldConfigurationRequest {
 export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
 
     /**
-     * Returns a [paginated](#pagination) list of configurations for a custom field of a [type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) created by a [Forge app](https://developer.atlassian.com/platform/forge/).  The result can be filtered by one of these criteria:   *  `id`.  *  `fieldContextId`.  *  `issueId`.  *  `projectKeyOrId` and `issueTypeId`.  Otherwise, all configurations are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the Forge app that provided the custom field type.
-     * Get custom field configurations
+     * Creates request options for getCustomFieldConfiguration without sending the request
      */
-    async getCustomFieldConfigurationRaw(requestParameters: GetCustomFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanContextualConfiguration>> {
+    async getCustomFieldConfigurationRequestOpts(requestParameters: GetCustomFieldConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldIdOrKey',
@@ -109,12 +108,21 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/app/field/{fieldIdOrKey}/context/configuration`;
         urlPath = urlPath.replace(`{${"fieldIdOrKey"}}`, encodeURIComponent(String(requestParameters['fieldIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of configurations for a custom field of a [type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) created by a [Forge app](https://developer.atlassian.com/platform/forge/).  The result can be filtered by one of these criteria:   *  `id`.  *  `fieldContextId`.  *  `issueId`.  *  `projectKeyOrId` and `issueTypeId`.  Otherwise, all configurations are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the Forge app that provided the custom field type.
+     * Get custom field configurations
+     */
+    async getCustomFieldConfigurationRaw(requestParameters: GetCustomFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanContextualConfiguration>> {
+        const requestOptions = await this.getCustomFieldConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -129,10 +137,9 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of configurations for list of custom fields of a [type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) created by a [Forge app](https://developer.atlassian.com/platform/forge/).  The result can be filtered by one of these criteria:   *  `id`.  *  `fieldContextId`.  *  `issueId`.  *  `projectKeyOrId` and `issueTypeId`.  Otherwise, all configurations for the provided list of custom fields are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the Forge app that provided the custom field type.
-     * Bulk get custom field configurations
+     * Creates request options for getCustomFieldsConfigurations without sending the request
      */
-    async getCustomFieldsConfigurationsRaw(requestParameters: GetCustomFieldsConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanBulkContextualConfiguration>> {
+    async getCustomFieldsConfigurationsRequestOpts(requestParameters: GetCustomFieldsConfigurationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationsListParameters'] == null) {
             throw new runtime.RequiredError(
                 'configurationsListParameters',
@@ -185,13 +192,22 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/app/field/context/configuration/list`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['configurationsListParameters'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of configurations for list of custom fields of a [type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) created by a [Forge app](https://developer.atlassian.com/platform/forge/).  The result can be filtered by one of these criteria:   *  `id`.  *  `fieldContextId`.  *  `issueId`.  *  `projectKeyOrId` and `issueTypeId`.  Otherwise, all configurations for the provided list of custom fields are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the Forge app that provided the custom field type.
+     * Bulk get custom field configurations
+     */
+    async getCustomFieldsConfigurationsRaw(requestParameters: GetCustomFieldsConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanBulkContextualConfiguration>> {
+        const requestOptions = await this.getCustomFieldsConfigurationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -206,10 +222,9 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the configuration for contexts of a custom field of a [type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) created by a [Forge app](https://developer.atlassian.com/platform/forge/).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the Forge app that created the custom field type.
-     * Update custom field configurations
+     * Creates request options for updateCustomFieldConfiguration without sending the request
      */
-    async updateCustomFieldConfigurationRaw(requestParameters: UpdateCustomFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateCustomFieldConfigurationRequestOpts(requestParameters: UpdateCustomFieldConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldIdOrKey',
@@ -242,13 +257,22 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/app/field/{fieldIdOrKey}/context/configuration`;
         urlPath = urlPath.replace(`{${"fieldIdOrKey"}}`, encodeURIComponent(String(requestParameters['fieldIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['customFieldConfigurations'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the configuration for contexts of a custom field of a [type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) created by a [Forge app](https://developer.atlassian.com/platform/forge/).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). Jira permissions are not required for the Forge app that created the custom field type.
+     * Update custom field configurations
+     */
+    async updateCustomFieldConfigurationRaw(requestParameters: UpdateCustomFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateCustomFieldConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

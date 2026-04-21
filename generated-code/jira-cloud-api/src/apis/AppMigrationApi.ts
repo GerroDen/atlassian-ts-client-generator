@@ -43,10 +43,9 @@ export interface MigrationResourceWorkflowRuleSearchPostRequest {
 export class AppMigrationApi extends runtime.BaseAPI {
 
     /**
-     * Updates the value of a custom field added by Connect apps on one or more issues. The values of up to 200 custom fields can be updated.  **[Permissions](#permissions) required:** Only Connect apps can make this request
-     * Bulk update custom field value
+     * Creates request options for appIssueFieldValueUpdateResourceUpdateIssueFieldsPut without sending the request
      */
-    async appIssueFieldValueUpdateResourceUpdateIssueFieldsPutRaw(requestParameters: AppIssueFieldValueUpdateResourceUpdateIssueFieldsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async appIssueFieldValueUpdateResourceUpdateIssueFieldsPutRequestOpts(requestParameters: AppIssueFieldValueUpdateResourceUpdateIssueFieldsPutRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['atlassianTransferId'] == null) {
             throw new runtime.RequiredError(
                 'atlassianTransferId',
@@ -74,13 +73,22 @@ export class AppMigrationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/atlassian-connect/1/migration/field`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['connectCustomFieldValues'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the value of a custom field added by Connect apps on one or more issues. The values of up to 200 custom fields can be updated.  **[Permissions](#permissions) required:** Only Connect apps can make this request
+     * Bulk update custom field value
+     */
+    async appIssueFieldValueUpdateResourceUpdateIssueFieldsPutRaw(requestParameters: AppIssueFieldValueUpdateResourceUpdateIssueFieldsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.appIssueFieldValueUpdateResourceUpdateIssueFieldsPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -99,10 +107,9 @@ export class AppMigrationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the values of multiple entity properties for an object, up to 50 updates per request. This operation is for use by Connect apps during app migration.
-     * Bulk update entity properties
+     * Creates request options for migrationResourceUpdateEntityPropertiesValuePut without sending the request
      */
-    async migrationResourceUpdateEntityPropertiesValuePutRaw(requestParameters: MigrationResourceUpdateEntityPropertiesValuePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async migrationResourceUpdateEntityPropertiesValuePutRequestOpts(requestParameters: MigrationResourceUpdateEntityPropertiesValuePutRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['atlassianTransferId'] == null) {
             throw new runtime.RequiredError(
                 'atlassianTransferId',
@@ -138,13 +145,22 @@ export class AppMigrationApi extends runtime.BaseAPI {
         let urlPath = `/rest/atlassian-connect/1/migration/properties/{entityType}`;
         urlPath = urlPath.replace(`{${"entityType"}}`, encodeURIComponent(String(requestParameters['entityType'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['entityPropertyDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the values of multiple entity properties for an object, up to 50 updates per request. This operation is for use by Connect apps during app migration.
+     * Bulk update entity properties
+     */
+    async migrationResourceUpdateEntityPropertiesValuePutRaw(requestParameters: MigrationResourceUpdateEntityPropertiesValuePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.migrationResourceUpdateEntityPropertiesValuePutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -158,10 +174,9 @@ export class AppMigrationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns configurations for workflow transition rules migrated from server to cloud and owned by the calling Connect app.
-     * Get workflow transition rule configurations
+     * Creates request options for migrationResourceWorkflowRuleSearchPost without sending the request
      */
-    async migrationResourceWorkflowRuleSearchPostRaw(requestParameters: MigrationResourceWorkflowRuleSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowRulesSearchDetails>> {
+    async migrationResourceWorkflowRuleSearchPostRequestOpts(requestParameters: MigrationResourceWorkflowRuleSearchPostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['atlassianTransferId'] == null) {
             throw new runtime.RequiredError(
                 'atlassianTransferId',
@@ -189,13 +204,22 @@ export class AppMigrationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/atlassian-connect/1/migration/workflow/rule/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowRulesSearch'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns configurations for workflow transition rules migrated from server to cloud and owned by the calling Connect app.
+     * Get workflow transition rule configurations
+     */
+    async migrationResourceWorkflowRuleSearchPostRaw(requestParameters: MigrationResourceWorkflowRuleSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowRulesSearchDetails>> {
+        const requestOptions = await this.migrationResourceWorkflowRuleSearchPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

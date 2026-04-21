@@ -47,10 +47,9 @@ export interface UpdateUiModificationRequest {
 export class UIModificationsAppsApi extends runtime.BaseAPI {
 
     /**
-     * Creates a UI modification. UI modification can only be created by Forge apps.  Each app can define up to 3000 UI modifications. Each UI modification can define up to 1000 contexts. The same context can be assigned to maximum 100 UI modifications.  **Context types:**   *  **Jira contexts:** For Jira view types, use `projectId` and `issueTypeId`. One field can act as a wildcard. Supported Jira views:           *  `GIC` \\- Jira global issue create      *  `IssueView` \\- Jira issue view      *  `IssueTransition` \\- Jira issue transition  *  **Jira Service Management contexts:** For Jira Service Management view types, use `portalId` and `requestTypeId`. Wildcards are not supported. Supported JSM views:           *  `JSMRequestCreate` \\- Jira Service Management request create portal view  **[Permissions](#permissions) required:**   *  *None* if the UI modification is created without contexts.  *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for one or more projects, if the UI modification is created with contexts.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Create UI modification
+     * Creates request options for createUiModification without sending the request
      */
-    async createUiModificationRaw(requestParameters: CreateUiModificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UiModificationIdentifiers>> {
+    async createUiModificationRequestOpts(requestParameters: CreateUiModificationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createUiModificationDetails'] == null) {
             throw new runtime.RequiredError(
                 'createUiModificationDetails',
@@ -75,13 +74,22 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/uiModifications`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createUiModificationDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a UI modification. UI modification can only be created by Forge apps.  Each app can define up to 3000 UI modifications. Each UI modification can define up to 1000 contexts. The same context can be assigned to maximum 100 UI modifications.  **Context types:**   *  **Jira contexts:** For Jira view types, use `projectId` and `issueTypeId`. One field can act as a wildcard. Supported Jira views:           *  `GIC` \\- Jira global issue create      *  `IssueView` \\- Jira issue view      *  `IssueTransition` \\- Jira issue transition  *  **Jira Service Management contexts:** For Jira Service Management view types, use `portalId` and `requestTypeId`. Wildcards are not supported. Supported JSM views:           *  `JSMRequestCreate` \\- Jira Service Management request create portal view  **[Permissions](#permissions) required:**   *  *None* if the UI modification is created without contexts.  *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for one or more projects, if the UI modification is created with contexts.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Create UI modification
+     */
+    async createUiModificationRaw(requestParameters: CreateUiModificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UiModificationIdentifiers>> {
+        const requestOptions = await this.createUiModificationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -96,10 +104,9 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a UI modification. All the contexts that belong to the UI modification are deleted too. UI modification can only be deleted by Forge apps.  **[Permissions](#permissions) required:** None.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Delete UI modification
+     * Creates request options for deleteUiModification without sending the request
      */
-    async deleteUiModificationRaw(requestParameters: DeleteUiModificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteUiModificationRequestOpts(requestParameters: DeleteUiModificationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['uiModificationId'] == null) {
             throw new runtime.RequiredError(
                 'uiModificationId',
@@ -123,12 +130,21 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/uiModifications/{uiModificationId}`;
         urlPath = urlPath.replace(`{${"uiModificationId"}}`, encodeURIComponent(String(requestParameters['uiModificationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a UI modification. All the contexts that belong to the UI modification are deleted too. UI modification can only be deleted by Forge apps.  **[Permissions](#permissions) required:** None.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Delete UI modification
+     */
+    async deleteUiModificationRaw(requestParameters: DeleteUiModificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteUiModificationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -147,10 +163,9 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets UI modifications. UI modifications can only be retrieved by Forge apps.  **[Permissions](#permissions) required:** None.  The new `read:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Get UI modifications
+     * Creates request options for getUiModifications without sending the request
      */
-    async getUiModificationsRaw(requestParameters: GetUiModificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUiModificationDetails>> {
+    async getUiModificationsRequestOpts(requestParameters: GetUiModificationsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -178,12 +193,21 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/uiModifications`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets UI modifications. UI modifications can only be retrieved by Forge apps.  **[Permissions](#permissions) required:** None.  The new `read:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Get UI modifications
+     */
+    async getUiModificationsRaw(requestParameters: GetUiModificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUiModificationDetails>> {
+        const requestOptions = await this.getUiModificationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -198,10 +222,9 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a UI modification. UI modification can only be updated by Forge apps.  Each UI modification can define up to 1000 contexts. The same context can be assigned to maximum 100 UI modifications.  **Context types:**   *  **Jira contexts:** For Jira view types, use `projectId` and `issueTypeId`. One field can act as a wildcard. Supported Jira views:           *  `GIC` \\- Jira global issue create      *  `IssueView` \\- Jira issue view      *  `IssueTransition` \\- Jira issue transition  *  **Jira Service Management contexts:** For Jira Service Management view types, use `portalId` and `requestTypeId`. Wildcards are not supported. Supported JSM views:           *  `JSMRequestCreate` \\- Jira Service Management request create portal view  **[Permissions](#permissions) required:**   *  *None* if the UI modification is created without contexts.  *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for one or more projects, if the UI modification is created with contexts.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Update UI modification
+     * Creates request options for updateUiModification without sending the request
      */
-    async updateUiModificationRaw(requestParameters: UpdateUiModificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateUiModificationRequestOpts(requestParameters: UpdateUiModificationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['uiModificationId'] == null) {
             throw new runtime.RequiredError(
                 'uiModificationId',
@@ -234,13 +257,22 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/uiModifications/{uiModificationId}`;
         urlPath = urlPath.replace(`{${"uiModificationId"}}`, encodeURIComponent(String(requestParameters['uiModificationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateUiModificationDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a UI modification. UI modification can only be updated by Forge apps.  Each UI modification can define up to 1000 contexts. The same context can be assigned to maximum 100 UI modifications.  **Context types:**   *  **Jira contexts:** For Jira view types, use `projectId` and `issueTypeId`. One field can act as a wildcard. Supported Jira views:           *  `GIC` \\- Jira global issue create      *  `IssueView` \\- Jira issue view      *  `IssueTransition` \\- Jira issue transition  *  **Jira Service Management contexts:** For Jira Service Management view types, use `portalId` and `requestTypeId`. Wildcards are not supported. Supported JSM views:           *  `JSMRequestCreate` \\- Jira Service Management request create portal view  **[Permissions](#permissions) required:**   *  *None* if the UI modification is created without contexts.  *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for one or more projects, if the UI modification is created with contexts.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Update UI modification
+     */
+    async updateUiModificationRaw(requestParameters: UpdateUiModificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateUiModificationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

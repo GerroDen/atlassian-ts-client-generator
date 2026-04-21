@@ -30,10 +30,9 @@ export interface GetPoliciesRequest {
 export class AppDataPoliciesApi extends runtime.BaseAPI {
 
     /**
-     * Returns data policies for the projects specified in the request.
-     * Get data policy for projects
+     * Creates request options for getPolicies without sending the request
      */
-    async getPoliciesRaw(requestParameters: GetPoliciesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDataPolicies>> {
+    async getPoliciesRequestOpts(requestParameters: GetPoliciesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['ids'] != null) {
@@ -53,12 +52,21 @@ export class AppDataPoliciesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/data-policy/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns data policies for the projects specified in the request.
+     * Get data policy for projects
+     */
+    async getPoliciesRaw(requestParameters: GetPoliciesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDataPolicies>> {
+        const requestOptions = await this.getPoliciesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -73,10 +81,9 @@ export class AppDataPoliciesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns data policy for the workspace.
-     * Get data policy for the workspace
+     * Creates request options for getPolicy without sending the request
      */
-    async getPolicyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkspaceDataPolicy>> {
+    async getPolicyRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -92,12 +99,21 @@ export class AppDataPoliciesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/data-policy`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns data policy for the workspace.
+     * Get data policy for the workspace
+     */
+    async getPolicyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkspaceDataPolicy>> {
+        const requestOptions = await this.getPolicyRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

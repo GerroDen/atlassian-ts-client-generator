@@ -36,10 +36,9 @@ export interface UpdateMultipleCustomFieldValuesRequest {
 export class IssueCustomFieldValuesAppsApi extends runtime.BaseAPI {
 
     /**
-     * Updates the value of a custom field on one or more issues.  Apps can only perform this operation on [custom fields](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/) and [custom field types](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) declared in their own manifests.  **[Permissions](#permissions) required:** Only the app that owns the custom field or custom field type can update its values with this operation.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Update custom field value
+     * Creates request options for updateCustomFieldValue without sending the request
      */
-    async updateCustomFieldValueRaw(requestParameters: UpdateCustomFieldValueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateCustomFieldValueRequestOpts(requestParameters: UpdateCustomFieldValueRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'fieldIdOrKey',
@@ -76,13 +75,22 @@ export class IssueCustomFieldValuesAppsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/app/field/{fieldIdOrKey}/value`;
         urlPath = urlPath.replace(`{${"fieldIdOrKey"}}`, encodeURIComponent(String(requestParameters['fieldIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['customFieldValueUpdateDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the value of a custom field on one or more issues.  Apps can only perform this operation on [custom fields](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/) and [custom field types](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) declared in their own manifests.  **[Permissions](#permissions) required:** Only the app that owns the custom field or custom field type can update its values with this operation.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Update custom field value
+     */
+    async updateCustomFieldValueRaw(requestParameters: UpdateCustomFieldValueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateCustomFieldValueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -101,10 +109,9 @@ export class IssueCustomFieldValuesAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the value of one or more custom fields on one or more issues. Combinations of custom field and issue should be unique within the request.  Apps can only perform this operation on [custom fields](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/) and [custom field types](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) declared in their own manifests.  **[Permissions](#permissions) required:** Only the app that owns the custom field or custom field type can update its values with this operation.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Update custom fields
+     * Creates request options for updateMultipleCustomFieldValues without sending the request
      */
-    async updateMultipleCustomFieldValuesRaw(requestParameters: UpdateMultipleCustomFieldValuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateMultipleCustomFieldValuesRequestOpts(requestParameters: UpdateMultipleCustomFieldValuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['multipleCustomFieldValuesUpdateDetails'] == null) {
             throw new runtime.RequiredError(
                 'multipleCustomFieldValuesUpdateDetails',
@@ -133,13 +140,22 @@ export class IssueCustomFieldValuesAppsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/app/field/value`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['multipleCustomFieldValuesUpdateDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the value of one or more custom fields on one or more issues. Combinations of custom field and issue should be unique within the request.  Apps can only perform this operation on [custom fields](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/) and [custom field types](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/) declared in their own manifests.  **[Permissions](#permissions) required:** Only the app that owns the custom field or custom field type can update its values with this operation.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Update custom fields
+     */
+    async updateMultipleCustomFieldValuesRaw(requestParameters: UpdateMultipleCustomFieldValuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateMultipleCustomFieldValuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

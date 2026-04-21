@@ -102,10 +102,9 @@ export interface SetUserColumnsRequest {
 export class UsersApi extends runtime.BaseAPI {
 
     /**
-     * Returns a [paginated](#pagination) list of the users specified by one or more account IDs.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Bulk get users
+     * Creates request options for bulkGetUsers without sending the request
      */
-    async bulkGetUsersRaw(requestParameters: BulkGetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUser>> {
+    async bulkGetUsersRequestOpts(requestParameters: BulkGetUsersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -148,12 +147,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of the users specified by one or more account IDs.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Bulk get users
+     */
+    async bulkGetUsersRaw(requestParameters: BulkGetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUser>> {
+        const requestOptions = await this.bulkGetUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -168,10 +176,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account IDs for the users specified in the `key` or `username` parameters. Note that multiple `key` or `username` parameters can be specified.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get account IDs for users
+     * Creates request options for bulkGetUsersMigration without sending the request
      */
-    async bulkGetUsersMigrationRaw(requestParameters: BulkGetUsersMigrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UserMigrationBean>>> {
+    async bulkGetUsersMigrationRequestOpts(requestParameters: BulkGetUsersMigrationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -203,12 +210,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user/bulk/migration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the account IDs for the users specified in the `key` or `username` parameters. Note that multiple `key` or `username` parameters can be specified.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get account IDs for users
+     */
+    async bulkGetUsersMigrationRaw(requestParameters: BulkGetUsersMigrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UserMigrationBean>>> {
+        const requestOptions = await this.bulkGetUsersMigrationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -223,10 +239,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a user. This resource is retained for legacy compatibility. As soon as a more suitable alternative is available this resource will be deprecated.  **Note:** This API does not support Forge apps.  If the user exists and has access to Jira, the operation returns a 201 status. If the user exists but does not have access to Jira, the operation returns a 400 status.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). The caller has to be an **organization admin**.
-     * Create user
+     * Creates request options for createUser without sending the request
      */
-    async createUserRaw(requestParameters: CreateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+    async createUserRequestOpts(requestParameters: CreateUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['newUserDetails'] == null) {
             throw new runtime.RequiredError(
                 'newUserDetails',
@@ -251,13 +266,22 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['newUserDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a user. This resource is retained for legacy compatibility. As soon as a more suitable alternative is available this resource will be deprecated.  **Note:** This API does not support Forge apps.  If the user exists and has access to Jira, the operation returns a 201 status. If the user exists but does not have access to Jira, the operation returns a 400 status.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). The caller has to be an **organization admin**.
+     * Create user
+     */
+    async createUserRaw(requestParameters: CreateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+        const requestOptions = await this.createUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -272,10 +296,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of all users, including active users, inactive users and previously deleted users that have an Atlassian account.  Privacy controls are applied to the response based on the users\' preferences. This could mean, for example, that the user\'s email address is hidden. See the [Profile visibility overview](https://developer.atlassian.com/cloud/jira/platform/profile-visibility/) for more details.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get all users
+     * Creates request options for getAllUsers without sending the request
      */
-    async getAllUsersRaw(requestParameters: GetAllUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
+    async getAllUsersRequestOpts(requestParameters: GetAllUsersRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -299,12 +322,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/users/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of all users, including active users, inactive users and previously deleted users that have an Atlassian account.  Privacy controls are applied to the response based on the users\' preferences. This could mean, for example, that the user\'s email address is hidden. See the [Profile visibility overview](https://developer.atlassian.com/cloud/jira/platform/profile-visibility/) for more details.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get all users
+     */
+    async getAllUsersRaw(requestParameters: GetAllUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
+        const requestOptions = await this.getAllUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -319,10 +351,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of all users, including active users, inactive users and previously deleted users that have an Atlassian account.  Privacy controls are applied to the response based on the users\' preferences. This could mean, for example, that the user\'s email address is hidden. See the [Profile visibility overview](https://developer.atlassian.com/cloud/jira/platform/profile-visibility/) for more details.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get all users default
+     * Creates request options for getAllUsersDefault without sending the request
      */
-    async getAllUsersDefaultRaw(requestParameters: GetAllUsersDefaultRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
+    async getAllUsersDefaultRequestOpts(requestParameters: GetAllUsersDefaultRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -346,12 +377,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of all users, including active users, inactive users and previously deleted users that have an Atlassian account.  Privacy controls are applied to the response based on the users\' preferences. This could mean, for example, that the user\'s email address is hidden. See the [Profile visibility overview](https://developer.atlassian.com/cloud/jira/platform/profile-visibility/) for more details.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get all users default
+     */
+    async getAllUsersDefaultRaw(requestParameters: GetAllUsersDefaultRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
+        const requestOptions = await this.getAllUsersDefaultRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -366,10 +406,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a user.  Privacy controls are applied to the response based on the user\'s preferences. This could mean, for example, that the user\'s email address is hidden. See the [Profile visibility overview](https://developer.atlassian.com/cloud/jira/platform/profile-visibility/) for more details.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get user
+     * Creates request options for getUser without sending the request
      */
-    async getUserRaw(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+    async getUserRequestOpts(requestParameters: GetUserRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['accountId'] != null) {
@@ -401,12 +440,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a user.  Privacy controls are applied to the response based on the user\'s preferences. This could mean, for example, that the user\'s email address is hidden. See the [Profile visibility overview](https://developer.atlassian.com/cloud/jira/platform/profile-visibility/) for more details.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get user
+     */
+    async getUserRaw(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+        const requestOptions = await this.getUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -421,10 +469,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the default [issue table columns](https://confluence.atlassian.com/x/XYdKLg) for the user. If `accountId` is not passed in the request, the calling user\'s details are returned.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLgl), to get the column details for any user.  *  Permission to access Jira, to get the calling user\'s column details.
-     * Get user default columns
+     * Creates request options for getUserDefaultColumns without sending the request
      */
-    async getUserDefaultColumnsRaw(requestParameters: GetUserDefaultColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ColumnItem>>> {
+    async getUserDefaultColumnsRequestOpts(requestParameters: GetUserDefaultColumnsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['accountId'] != null) {
@@ -448,12 +495,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user/columns`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the default [issue table columns](https://confluence.atlassian.com/x/XYdKLg) for the user. If `accountId` is not passed in the request, the calling user\'s details are returned.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLgl), to get the column details for any user.  *  Permission to access Jira, to get the calling user\'s column details.
+     * Get user default columns
+     */
+    async getUserDefaultColumnsRaw(requestParameters: GetUserDefaultColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ColumnItem>>> {
+        const requestOptions = await this.getUserDefaultColumnsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -468,10 +524,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a user\'s email address regardless of the user\'s profile visibility settings. For Connect apps, this API is only available to apps approved by Atlassian, according to these [guidelines](https://community.developer.atlassian.com/t/guidelines-for-requesting-access-to-email-address/27603). For Forge apps, this API only supports access via asApp() requests.
-     * Get user email
+     * Creates request options for getUserEmail without sending the request
      */
-    async getUserEmailRaw(requestParameters: GetUserEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UnrestrictedUserEmail>> {
+    async getUserEmailRequestOpts(requestParameters: GetUserEmailRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -493,12 +548,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user/email`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a user\'s email address regardless of the user\'s profile visibility settings. For Connect apps, this API is only available to apps approved by Atlassian, according to these [guidelines](https://community.developer.atlassian.com/t/guidelines-for-requesting-access-to-email-address/27603). For Forge apps, this API only supports access via asApp() requests.
+     * Get user email
+     */
+    async getUserEmailRaw(requestParameters: GetUserEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UnrestrictedUserEmail>> {
+        const requestOptions = await this.getUserEmailRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -513,10 +577,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a user\'s email address regardless of the user\'s profile visibility settings. For Connect apps, this API is only available to apps approved by Atlassian, according to these [guidelines](https://community.developer.atlassian.com/t/guidelines-for-requesting-access-to-email-address/27603). For Forge apps, this API only supports access via asApp() requests.
-     * Get user email bulk
+     * Creates request options for getUserEmailBulk without sending the request
      */
-    async getUserEmailBulkRaw(requestParameters: GetUserEmailBulkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UnrestrictedUserEmail>> {
+    async getUserEmailBulkRequestOpts(requestParameters: GetUserEmailBulkRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -538,12 +601,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user/email/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a user\'s email address regardless of the user\'s profile visibility settings. For Connect apps, this API is only available to apps approved by Atlassian, according to these [guidelines](https://community.developer.atlassian.com/t/guidelines-for-requesting-access-to-email-address/27603). For Forge apps, this API only supports access via asApp() requests.
+     * Get user email bulk
+     */
+    async getUserEmailBulkRaw(requestParameters: GetUserEmailBulkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UnrestrictedUserEmail>> {
+        const requestOptions = await this.getUserEmailBulkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -558,10 +630,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the groups to which a user belongs.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get user groups
+     * Creates request options for getUserGroups without sending the request
      */
-    async getUserGroupsRaw(requestParameters: GetUserGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<GroupName>>> {
+    async getUserGroupsRequestOpts(requestParameters: GetUserGroupsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -596,12 +667,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the groups to which a user belongs.  **[Permissions](#permissions) required:** *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get user groups
+     */
+    async getUserGroupsRaw(requestParameters: GetUserGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<GroupName>>> {
+        const requestOptions = await this.getUserGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -616,10 +696,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a user. If the operation completes successfully then the user is removed from Jira\'s user base. This operation does not delete the user\'s Atlassian account.  **[Permissions](#permissions) required:** Site administration (that is, membership of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
-     * Delete user
+     * Creates request options for removeUser without sending the request
      */
-    async removeUserRaw(requestParameters: RemoveUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeUserRequestOpts(requestParameters: RemoveUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -654,12 +733,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a user. If the operation completes successfully then the user is removed from Jira\'s user base. This operation does not delete the user\'s Atlassian account.  **[Permissions](#permissions) required:** Site administration (that is, membership of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
+     * Delete user
+     */
+    async removeUserRaw(requestParameters: RemoveUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -673,10 +761,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resets the default [ issue table columns](https://confluence.atlassian.com/x/XYdKLg) for the user to the system default. If `accountId` is not passed, the calling user\'s default columns are reset.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to set the columns on any user.  *  Permission to access Jira, to set the calling user\'s columns.
-     * Reset user default columns
+     * Creates request options for resetUserColumns without sending the request
      */
-    async resetUserColumnsRaw(requestParameters: ResetUserColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async resetUserColumnsRequestOpts(requestParameters: ResetUserColumnsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['accountId'] != null) {
@@ -700,12 +787,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user/columns`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resets the default [ issue table columns](https://confluence.atlassian.com/x/XYdKLg) for the user to the system default. If `accountId` is not passed, the calling user\'s default columns are reset.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to set the columns on any user.  *  Permission to access Jira, to set the calling user\'s columns.
+     * Reset user default columns
+     */
+    async resetUserColumnsRaw(requestParameters: ResetUserColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.resetUserColumnsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -719,10 +815,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the default [ issue table columns](https://confluence.atlassian.com/x/XYdKLg) for the user. If an account ID is not passed, the calling user\'s default columns are set. If no column details are sent, then all default columns are removed.  The parameters for this resource are expressed as HTML form data. For example, in curl:  `curl -X PUT -d columns=summary -d columns=description https://your-domain.atlassian.net/rest/api/3/user/columns?accountId=5b10ac8d82e05b22cc7d4ef5\'`  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to set the columns on any user.  *  Permission to access Jira, to set the calling user\'s columns.
-     * Set user default columns
+     * Creates request options for setUserColumns without sending the request
      */
-    async setUserColumnsRaw(requestParameters: SetUserColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setUserColumnsRequestOpts(requestParameters: SetUserColumnsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['userColumnRequestBody'] == null) {
             throw new runtime.RequiredError(
                 'userColumnRequestBody',
@@ -751,13 +846,22 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/user/columns`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userColumnRequestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the default [ issue table columns](https://confluence.atlassian.com/x/XYdKLg) for the user. If an account ID is not passed, the calling user\'s default columns are set. If no column details are sent, then all default columns are removed.  The parameters for this resource are expressed as HTML form data. For example, in curl:  `curl -X PUT -d columns=summary -d columns=description https://your-domain.atlassian.net/rest/api/3/user/columns?accountId=5b10ac8d82e05b22cc7d4ef5\'`  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), to set the columns on any user.  *  Permission to access Jira, to set the calling user\'s columns.
+     * Set user default columns
+     */
+    async setUserColumnsRaw(requestParameters: SetUserColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setUserColumnsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

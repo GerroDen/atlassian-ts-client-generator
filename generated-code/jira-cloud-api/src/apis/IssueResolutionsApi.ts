@@ -65,10 +65,9 @@ export interface UpdateResolutionRequest {
 export class IssueResolutionsApi extends runtime.BaseAPI {
 
     /**
-     * Creates an issue resolution.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create resolution
+     * Creates request options for createResolution without sending the request
      */
-    async createResolutionRaw(requestParameters: CreateResolutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResolutionId>> {
+    async createResolutionRequestOpts(requestParameters: CreateResolutionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createResolutionDetails'] == null) {
             throw new runtime.RequiredError(
                 'createResolutionDetails',
@@ -93,13 +92,22 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/resolution`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createResolutionDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates an issue resolution.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create resolution
+     */
+    async createResolutionRaw(requestParameters: CreateResolutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResolutionId>> {
+        const requestOptions = await this.createResolutionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -114,10 +122,9 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes an issue resolution.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete resolution
+     * Creates request options for deleteResolution without sending the request
      */
-    async deleteResolutionRaw(requestParameters: DeleteResolutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteResolutionRequestOpts(requestParameters: DeleteResolutionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -152,12 +159,21 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/resolution/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes an issue resolution.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete resolution
+     */
+    async deleteResolutionRaw(requestParameters: DeleteResolutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteResolutionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -171,10 +187,9 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an issue resolution value.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get resolution
+     * Creates request options for getResolution without sending the request
      */
-    async getResolutionRaw(requestParameters: GetResolutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Resolution>> {
+    async getResolutionRequestOpts(requestParameters: GetResolutionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -198,12 +213,21 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/resolution/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns an issue resolution value.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get resolution
+     */
+    async getResolutionRaw(requestParameters: GetResolutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Resolution>> {
+        const requestOptions = await this.getResolutionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -218,11 +242,10 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of all issue resolution values.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get resolutions
+     * Creates request options for getResolutions without sending the request
      * @deprecated
      */
-    async getResolutionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Resolution>>> {
+    async getResolutionsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -238,12 +261,22 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/resolution`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of all issue resolution values.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get resolutions
+     * @deprecated
+     */
+    async getResolutionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Resolution>>> {
+        const requestOptions = await this.getResolutionsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -259,10 +292,9 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Changes the order of issue resolutions.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Move resolutions
+     * Creates request options for moveResolutions without sending the request
      */
-    async moveResolutionsRaw(requestParameters: MoveResolutionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async moveResolutionsRequestOpts(requestParameters: MoveResolutionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['reorderIssueResolutionsRequest'] == null) {
             throw new runtime.RequiredError(
                 'reorderIssueResolutionsRequest',
@@ -287,13 +319,22 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/resolution/move`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['reorderIssueResolutionsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Changes the order of issue resolutions.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Move resolutions
+     */
+    async moveResolutionsRaw(requestParameters: MoveResolutionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.moveResolutionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -312,10 +353,9 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of resolutions. The list can contain all resolutions or a subset determined by any combination of these criteria:   *  a list of resolutions IDs.  *  whether the field configuration is a default. This returns resolutions from company-managed (classic) projects only, as there is no concept of default resolutions in team-managed projects.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Search resolutions
+     * Creates request options for searchResolutions without sending the request
      */
-    async searchResolutionsRaw(requestParameters: SearchResolutionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanResolutionJsonBean>> {
+    async searchResolutionsRequestOpts(requestParameters: SearchResolutionsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -347,12 +387,21 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/resolution/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of resolutions. The list can contain all resolutions or a subset determined by any combination of these criteria:   *  a list of resolutions IDs.  *  whether the field configuration is a default. This returns resolutions from company-managed (classic) projects only, as there is no concept of default resolutions in team-managed projects.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Search resolutions
+     */
+    async searchResolutionsRaw(requestParameters: SearchResolutionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanResolutionJsonBean>> {
+        const requestOptions = await this.searchResolutionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -367,10 +416,9 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets default issue resolution.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Set default resolution
+     * Creates request options for setDefaultResolution without sending the request
      */
-    async setDefaultResolutionRaw(requestParameters: SetDefaultResolutionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setDefaultResolutionRequestOpts(requestParameters: SetDefaultResolutionOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['setDefaultResolutionRequest'] == null) {
             throw new runtime.RequiredError(
                 'setDefaultResolutionRequest',
@@ -395,13 +443,22 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/resolution/default`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['setDefaultResolutionRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets default issue resolution.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Set default resolution
+     */
+    async setDefaultResolutionRaw(requestParameters: SetDefaultResolutionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setDefaultResolutionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -420,10 +477,9 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates an issue resolution.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update resolution
+     * Creates request options for updateResolution without sending the request
      */
-    async updateResolutionRaw(requestParameters: UpdateResolutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateResolutionRequestOpts(requestParameters: UpdateResolutionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -456,13 +512,22 @@ export class IssueResolutionsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/resolution/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateResolutionDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates an issue resolution.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update resolution
+     */
+    async updateResolutionRaw(requestParameters: UpdateResolutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateResolutionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

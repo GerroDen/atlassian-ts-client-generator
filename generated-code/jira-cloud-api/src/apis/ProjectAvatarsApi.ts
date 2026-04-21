@@ -47,10 +47,9 @@ export interface UpdateProjectAvatarRequest {
 export class ProjectAvatarsApi extends runtime.BaseAPI {
 
     /**
-     * Loads an avatar for a project.  Specify the avatar\'s local file location in the body of the request. Also, include the following headers:   *  `X-Atlassian-Token: no-check` To prevent XSRF protection blocking the request, for more information see [Special Headers](#special-request-headers).  *  `Content-Type: image/image type` Valid image types are JPEG, GIF, or PNG.  For example:   `curl --request POST `  `--user email@example.com:<api_token> `  `--header \'X-Atlassian-Token: no-check\' `  `--header \'Content-Type: image/< image_type>\' `  `--data-binary \"<@/path/to/file/with/your/avatar>\" `  `--url \'https://your-domain.atlassian.net/rest/api/3/project/{projectIdOrKey}/avatar2\'`  The avatar is cropped to a square. If no crop parameters are specified, the square originates at the top left of the image. The length of the square\'s sides is set to the smaller of the height or width of the image.  The cropped image is then used to create avatars of 16x16, 24x24, 32x32, and 48x48 in size.  After creating the avatar use [Set project avatar](#api-rest-api-3-project-projectIdOrKey-avatar-put) to set it as the project\'s displayed avatar.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
-     * Load project avatar
+     * Creates request options for createProjectAvatar without sending the request
      */
-    async createProjectAvatarRaw(requestParameters: CreateProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Avatar>> {
+    async createProjectAvatarRequestOpts(requestParameters: CreateProjectAvatarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -95,13 +94,22 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/avatar2`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Loads an avatar for a project.  Specify the avatar\'s local file location in the body of the request. Also, include the following headers:   *  `X-Atlassian-Token: no-check` To prevent XSRF protection blocking the request, for more information see [Special Headers](#special-request-headers).  *  `Content-Type: image/image type` Valid image types are JPEG, GIF, or PNG.  For example:   `curl --request POST `  `--user email@example.com:<api_token> `  `--header \'X-Atlassian-Token: no-check\' `  `--header \'Content-Type: image/< image_type>\' `  `--data-binary \"<@/path/to/file/with/your/avatar>\" `  `--url \'https://your-domain.atlassian.net/rest/api/3/project/{projectIdOrKey}/avatar2\'`  The avatar is cropped to a square. If no crop parameters are specified, the square originates at the top left of the image. The length of the square\'s sides is set to the smaller of the height or width of the image.  The cropped image is then used to create avatars of 16x16, 24x24, 32x32, and 48x48 in size.  After creating the avatar use [Set project avatar](#api-rest-api-3-project-projectIdOrKey-avatar-put) to set it as the project\'s displayed avatar.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
+     * Load project avatar
+     */
+    async createProjectAvatarRaw(requestParameters: CreateProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Avatar>> {
+        const requestOptions = await this.createProjectAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -116,10 +124,9 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a custom avatar from a project. Note that system avatars cannot be deleted.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
-     * Delete project avatar
+     * Creates request options for deleteProjectAvatar without sending the request
      */
-    async deleteProjectAvatarRaw(requestParameters: DeleteProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteProjectAvatarRequestOpts(requestParameters: DeleteProjectAvatarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -151,12 +158,21 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a custom avatar from a project. Note that system avatars cannot be deleted.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
+     * Delete project avatar
+     */
+    async deleteProjectAvatarRaw(requestParameters: DeleteProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteProjectAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -170,10 +186,9 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all project avatars, grouped by system and custom avatars.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
-     * Get all project avatars
+     * Creates request options for getAllProjectAvatars without sending the request
      */
-    async getAllProjectAvatarsRaw(requestParameters: GetAllProjectAvatarsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectAvatars>> {
+    async getAllProjectAvatarsRequestOpts(requestParameters: GetAllProjectAvatarsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -197,12 +212,21 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/avatars`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all project avatars, grouped by system and custom avatars.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
+     * Get all project avatars
+     */
+    async getAllProjectAvatarsRaw(requestParameters: GetAllProjectAvatarsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectAvatars>> {
+        const requestOptions = await this.getAllProjectAvatarsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -217,10 +241,9 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the avatar displayed for a project.  Use [Load project avatar](#api-rest-api-3-project-projectIdOrKey-avatar2-post) to store avatars against the project, before using this operation to set the displayed avatar.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
-     * Set project avatar
+     * Creates request options for updateProjectAvatar without sending the request
      */
-    async updateProjectAvatarRaw(requestParameters: UpdateProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateProjectAvatarRequestOpts(requestParameters: UpdateProjectAvatarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'projectIdOrKey',
@@ -253,13 +276,22 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectIdOrKey}/avatar`;
         urlPath = urlPath.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['avatar'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the avatar displayed for a project.  Use [Load project avatar](#api-rest-api-3-project-projectIdOrKey-avatar2-post) to store avatars against the project, before using this operation to set the displayed avatar.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg).
+     * Set project avatar
+     */
+    async updateProjectAvatarRaw(requestParameters: UpdateProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateProjectAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

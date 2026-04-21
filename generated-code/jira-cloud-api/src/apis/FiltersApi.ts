@@ -105,10 +105,9 @@ export interface UpdateFilterRequest {
 export class FiltersApi extends runtime.BaseAPI {
 
     /**
-     * Changes the owner of the filter.  **[Permissions](#permissions) required:** Permission to access Jira. However, the user must own the filter or have the *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Change filter owner
+     * Creates request options for changeFilterOwner without sending the request
      */
-    async changeFilterOwnerRaw(requestParameters: ChangeFilterOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async changeFilterOwnerRequestOpts(requestParameters: ChangeFilterOwnerRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -141,13 +140,22 @@ export class FiltersApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}/owner`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['changeFilterOwner'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Changes the owner of the filter.  **[Permissions](#permissions) required:** Permission to access Jira. However, the user must own the filter or have the *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Change filter owner
+     */
+    async changeFilterOwnerRaw(requestParameters: ChangeFilterOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.changeFilterOwnerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -166,10 +174,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a filter. The filter is shared according to the [default share scope](#api-rest-api-3-filter-post). The filter is not selected as a favorite.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Create filter
+     * Creates request options for createFilter without sending the request
      */
-    async createFilterRaw(requestParameters: CreateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+    async createFilterRequestOpts(requestParameters: CreateFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['filter'] == null) {
             throw new runtime.RequiredError(
                 'filter',
@@ -202,13 +209,22 @@ export class FiltersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/filter`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['filter'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a filter. The filter is shared according to the [default share scope](#api-rest-api-3-filter-post). The filter is not selected as a favorite.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Create filter
+     */
+    async createFilterRaw(requestParameters: CreateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+        const requestOptions = await this.createFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -223,10 +239,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a filter as a favorite for the user. Note that this operation only removes filters visible to the user from the user\'s favorites list. For example, if the user favorites a public filter that is subsequently made private (and is therefore no longer visible on their favorites list) they cannot remove it from their favorites list.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Remove filter as favorite
+     * Creates request options for deleteFavouriteForFilter without sending the request
      */
-    async deleteFavouriteForFilterRaw(requestParameters: DeleteFavouriteForFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+    async deleteFavouriteForFilterRequestOpts(requestParameters: DeleteFavouriteForFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -254,12 +269,21 @@ export class FiltersApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}/favourite`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a filter as a favorite for the user. Note that this operation only removes filters visible to the user from the user\'s favorites list. For example, if the user favorites a public filter that is subsequently made private (and is therefore no longer visible on their favorites list) they cannot remove it from their favorites list.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Remove filter as favorite
+     */
+    async deleteFavouriteForFilterRaw(requestParameters: DeleteFavouriteForFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+        const requestOptions = await this.deleteFavouriteForFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -274,10 +298,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a filter.  **[Permissions](#permissions) required:** Permission to access Jira, however filters can only be deleted by the creator of the filter or a user with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete filter
+     * Creates request options for deleteFilter without sending the request
      */
-    async deleteFilterRaw(requestParameters: DeleteFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteFilterRequestOpts(requestParameters: DeleteFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -301,12 +324,21 @@ export class FiltersApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a filter.  **[Permissions](#permissions) required:** Permission to access Jira, however filters can only be deleted by the creator of the filter or a user with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete filter
+     */
+    async deleteFilterRaw(requestParameters: DeleteFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -320,10 +352,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the columns configured for a filter. The column configuration is used when the filter\'s results are viewed in *List View* with the *Columns* set to *Filter*.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, column details are only returned for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
-     * Get columns
+     * Creates request options for getColumns without sending the request
      */
-    async getColumnsRaw(requestParameters: GetColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ColumnItem>>> {
+    async getColumnsRequestOpts(requestParameters: GetColumnsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -347,12 +378,21 @@ export class FiltersApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}/columns`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the columns configured for a filter. The column configuration is used when the filter\'s results are viewed in *List View* with the *Columns* set to *Filter*.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, column details are only returned for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
+     * Get columns
+     */
+    async getColumnsRaw(requestParameters: GetColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ColumnItem>>> {
+        const requestOptions = await this.getColumnsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -367,10 +407,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the visible favorite filters of the user.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** A favorite filter is only visible to the user where the filter is:   *  owned by the user.  *  shared with a group that the user is a member of.  *  shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  shared with a public project.  *  shared with the public.  For example, if the user favorites a public filter that is subsequently made private that filter is not returned by this operation.
-     * Get favorite filters
+     * Creates request options for getFavouriteFilters without sending the request
      */
-    async getFavouriteFiltersRaw(requestParameters: GetFavouriteFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Filter>>> {
+    async getFavouriteFiltersRequestOpts(requestParameters: GetFavouriteFiltersRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['expand'] != null) {
@@ -390,12 +429,21 @@ export class FiltersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/filter/favourite`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the visible favorite filters of the user.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** A favorite filter is only visible to the user where the filter is:   *  owned by the user.  *  shared with a group that the user is a member of.  *  shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  shared with a public project.  *  shared with the public.  For example, if the user favorites a public filter that is subsequently made private that filter is not returned by this operation.
+     * Get favorite filters
+     */
+    async getFavouriteFiltersRaw(requestParameters: GetFavouriteFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Filter>>> {
+        const requestOptions = await this.getFavouriteFiltersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -410,10 +458,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a filter.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, the filter is only returned where it is:   *  owned by the user.  *  shared with a group that the user is a member of.  *  shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  shared with a public project.  *  shared with the public.
-     * Get filter
+     * Creates request options for getFilter without sending the request
      */
-    async getFilterRaw(requestParameters: GetFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+    async getFilterRequestOpts(requestParameters: GetFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -445,12 +492,21 @@ export class FiltersApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a filter.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, the filter is only returned where it is:   *  owned by the user.  *  shared with a group that the user is a member of.  *  shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  shared with a public project.  *  shared with the public.
+     * Get filter
+     */
+    async getFilterRaw(requestParameters: GetFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+        const requestOptions = await this.getFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -465,10 +521,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of filters. Use this operation to get:   *  specific filters, by defining `id` only.  *  filters that match all of the specified attributes. For example, all filters for a user with a particular word in their name. When multiple attributes are specified only filters matching all attributes are returned.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, only the following filters that match the query parameters are returned:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
-     * Search for filters
+     * Creates request options for getFiltersPaginated without sending the request
      */
-    async getFiltersPaginatedRaw(requestParameters: GetFiltersPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFilterDetails>> {
+    async getFiltersPaginatedRequestOpts(requestParameters: GetFiltersPaginatedRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filterName'] != null) {
@@ -536,12 +591,21 @@ export class FiltersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/filter/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of filters. Use this operation to get:   *  specific filters, by defining `id` only.  *  filters that match all of the specified attributes. For example, all filters for a user with a particular word in their name. When multiple attributes are specified only filters matching all attributes are returned.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, only the following filters that match the query parameters are returned:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
+     * Search for filters
+     */
+    async getFiltersPaginatedRaw(requestParameters: GetFiltersPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFilterDetails>> {
+        const requestOptions = await this.getFiltersPaginatedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -556,10 +620,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the filters owned by the user. If `includeFavourites` is `true`, the user\'s visible favorite filters are also returned.  **[Permissions](#permissions) required:** Permission to access Jira, however, a favorite filters is only visible to the user where the filter is:   *  owned by the user.  *  shared with a group that the user is a member of.  *  shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  shared with a public project.  *  shared with the public.  For example, if the user favorites a public filter that is subsequently made private that filter is not returned by this operation.
-     * Get my filters
+     * Creates request options for getMyFilters without sending the request
      */
-    async getMyFiltersRaw(requestParameters: GetMyFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Filter>>> {
+    async getMyFiltersRequestOpts(requestParameters: GetMyFiltersRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['expand'] != null) {
@@ -583,12 +646,21 @@ export class FiltersApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/filter/my`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the filters owned by the user. If `includeFavourites` is `true`, the user\'s visible favorite filters are also returned.  **[Permissions](#permissions) required:** Permission to access Jira, however, a favorite filters is only visible to the user where the filter is:   *  owned by the user.  *  shared with a group that the user is a member of.  *  shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  shared with a public project.  *  shared with the public.  For example, if the user favorites a public filter that is subsequently made private that filter is not returned by this operation.
+     * Get my filters
+     */
+    async getMyFiltersRaw(requestParameters: GetMyFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Filter>>> {
+        const requestOptions = await this.getMyFiltersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -603,10 +675,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Reset the user\'s column configuration for the filter to the default.  **[Permissions](#permissions) required:** Permission to access Jira, however, columns are only reset for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
-     * Reset columns
+     * Creates request options for resetColumns without sending the request
      */
-    async resetColumnsRaw(requestParameters: ResetColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async resetColumnsRequestOpts(requestParameters: ResetColumnsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -630,12 +701,21 @@ export class FiltersApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}/columns`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Reset the user\'s column configuration for the filter to the default.  **[Permissions](#permissions) required:** Permission to access Jira, however, columns are only reset for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
+     * Reset columns
+     */
+    async resetColumnsRaw(requestParameters: ResetColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.resetColumnsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -649,10 +729,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the columns for a filter. Only navigable fields can be set as columns. Use [Get fields](#api-rest-api-3-field-get) to get the list fields in Jira. A navigable field has `navigable` set to `true`.  The parameters for this resource are expressed as HTML form data. For example, in curl:  `curl -X PUT -d columns=summary -d columns=description https://your-domain.atlassian.net/rest/api/3/filter/10000/columns`  **[Permissions](#permissions) required:** Permission to access Jira, however, columns are only set for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
-     * Set columns
+     * Creates request options for setColumns without sending the request
      */
-    async setColumnsRaw(requestParameters: SetColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setColumnsRequestOpts(requestParameters: SetColumnsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -685,13 +764,22 @@ export class FiltersApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}/columns`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['columnRequestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the columns for a filter. Only navigable fields can be set as columns. Use [Get fields](#api-rest-api-3-field-get) to get the list fields in Jira. A navigable field has `navigable` set to `true`.  The parameters for this resource are expressed as HTML form data. For example, in curl:  `curl -X PUT -d columns=summary -d columns=description https://your-domain.atlassian.net/rest/api/3/filter/10000/columns`  **[Permissions](#permissions) required:** Permission to access Jira, however, columns are only set for:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
+     * Set columns
+     */
+    async setColumnsRaw(requestParameters: SetColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setColumnsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -710,10 +798,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a filter as a favorite for the user.  **[Permissions](#permissions) required:** Permission to access Jira, however, the user can only favorite:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
-     * Add filter as favorite
+     * Creates request options for setFavouriteForFilter without sending the request
      */
-    async setFavouriteForFilterRaw(requestParameters: SetFavouriteForFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+    async setFavouriteForFilterRequestOpts(requestParameters: SetFavouriteForFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -741,12 +828,21 @@ export class FiltersApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}/favourite`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a filter as a favorite for the user.  **[Permissions](#permissions) required:** Permission to access Jira, however, the user can only favorite:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
+     * Add filter as favorite
+     */
+    async setFavouriteForFilterRaw(requestParameters: SetFavouriteForFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+        const requestOptions = await this.setFavouriteForFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -761,10 +857,9 @@ export class FiltersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a filter. Use this operation to update a filter\'s name, description, JQL, or sharing.  **[Permissions](#permissions) required:** Permission to access Jira, however the user must own the filter.
-     * Update filter
+     * Creates request options for updateFilter without sending the request
      */
-    async updateFilterRaw(requestParameters: UpdateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+    async updateFilterRequestOpts(requestParameters: UpdateFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -805,13 +900,22 @@ export class FiltersApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/filter/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['filter'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a filter. Use this operation to update a filter\'s name, description, JQL, or sharing.  **[Permissions](#permissions) required:** Permission to access Jira, however the user must own the filter.
+     * Update filter
+     */
+    async updateFilterRaw(requestParameters: UpdateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
+        const requestOptions = await this.updateFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -78,10 +78,9 @@ export interface UpdateStatusesRequest {
 export class StatusApi extends runtime.BaseAPI {
 
     /**
-     * Creates statuses for a global or project scope.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
-     * Bulk create statuses
+     * Creates request options for createStatuses without sending the request
      */
-    async createStatusesRaw(requestParameters: CreateStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<JiraStatus>>> {
+    async createStatusesRequestOpts(requestParameters: CreateStatusesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['statusCreateRequest'] == null) {
             throw new runtime.RequiredError(
                 'statusCreateRequest',
@@ -106,13 +105,22 @@ export class StatusApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/statuses`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['statusCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates statuses for a global or project scope.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
+     * Bulk create statuses
+     */
+    async createStatusesRaw(requestParameters: CreateStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<JiraStatus>>> {
+        const requestOptions = await this.createStatusesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -127,10 +135,9 @@ export class StatusApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes statuses by ID.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
-     * Bulk delete Statuses
+     * Creates request options for deleteStatusesById without sending the request
      */
-    async deleteStatusesByIdRaw(requestParameters: DeleteStatusesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteStatusesByIdRequestOpts(requestParameters: DeleteStatusesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -157,12 +164,21 @@ export class StatusApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/statuses`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes statuses by ID.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
+     * Bulk delete Statuses
+     */
+    async deleteStatusesByIdRaw(requestParameters: DeleteStatusesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteStatusesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -181,10 +197,9 @@ export class StatusApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of issue types in a project using a given status.
-     * Get issue type usages by status and project
+     * Creates request options for getProjectIssueTypeUsagesForStatus without sending the request
      */
-    async getProjectIssueTypeUsagesForStatusRaw(requestParameters: GetProjectIssueTypeUsagesForStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusProjectIssueTypeUsageDTO>> {
+    async getProjectIssueTypeUsagesForStatusRequestOpts(requestParameters: GetProjectIssueTypeUsagesForStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['statusId'] == null) {
             throw new runtime.RequiredError(
                 'statusId',
@@ -224,12 +239,21 @@ export class StatusApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"statusId"}}`, encodeURIComponent(String(requestParameters['statusId'])));
         urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of issue types in a project using a given status.
+     * Get issue type usages by status and project
+     */
+    async getProjectIssueTypeUsagesForStatusRaw(requestParameters: GetProjectIssueTypeUsagesForStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusProjectIssueTypeUsageDTO>> {
+        const requestOptions = await this.getProjectIssueTypeUsagesForStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -244,10 +268,9 @@ export class StatusApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of projects using a given status.
-     * Get project usages by status
+     * Creates request options for getProjectUsagesForStatus without sending the request
      */
-    async getProjectUsagesForStatusRaw(requestParameters: GetProjectUsagesForStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusProjectUsageDTO>> {
+    async getProjectUsagesForStatusRequestOpts(requestParameters: GetProjectUsagesForStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['statusId'] == null) {
             throw new runtime.RequiredError(
                 'statusId',
@@ -279,12 +302,21 @@ export class StatusApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/statuses/{statusId}/projectUsages`;
         urlPath = urlPath.replace(`{${"statusId"}}`, encodeURIComponent(String(requestParameters['statusId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of projects using a given status.
+     * Get project usages by status
+     */
+    async getProjectUsagesForStatusRaw(requestParameters: GetProjectUsagesForStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusProjectUsageDTO>> {
+        const requestOptions = await this.getProjectUsagesForStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -299,10 +331,9 @@ export class StatusApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of the statuses specified by one or more status IDs.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
-     * Bulk get statuses
+     * Creates request options for getStatusesById without sending the request
      */
-    async getStatusesByIdRaw(requestParameters: GetStatusesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<JiraStatus>>> {
+    async getStatusesByIdRequestOpts(requestParameters: GetStatusesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -329,12 +360,21 @@ export class StatusApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/statuses`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of the statuses specified by one or more status IDs.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
+     * Bulk get statuses
+     */
+    async getStatusesByIdRaw(requestParameters: GetStatusesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<JiraStatus>>> {
+        const requestOptions = await this.getStatusesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -349,10 +389,9 @@ export class StatusApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of the statuses specified by one or more status names.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Browse projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)
-     * Bulk get statuses by name
+     * Creates request options for getStatusesByName without sending the request
      */
-    async getStatusesByNameRaw(requestParameters: GetStatusesByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<JiraStatus>>> {
+    async getStatusesByNameRequestOpts(requestParameters: GetStatusesByNameRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -383,12 +422,21 @@ export class StatusApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/statuses/byNames`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of the statuses specified by one or more status names.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Browse projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)
+     * Bulk get statuses by name
+     */
+    async getStatusesByNameRaw(requestParameters: GetStatusesByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<JiraStatus>>> {
+        const requestOptions = await this.getStatusesByNameRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -403,10 +451,9 @@ export class StatusApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of workflows using a given status.
-     * Get workflow usages by status
+     * Creates request options for getWorkflowUsagesForStatus without sending the request
      */
-    async getWorkflowUsagesForStatusRaw(requestParameters: GetWorkflowUsagesForStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusWorkflowUsageDTO>> {
+    async getWorkflowUsagesForStatusRequestOpts(requestParameters: GetWorkflowUsagesForStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['statusId'] == null) {
             throw new runtime.RequiredError(
                 'statusId',
@@ -438,12 +485,21 @@ export class StatusApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/statuses/{statusId}/workflowUsages`;
         urlPath = urlPath.replace(`{${"statusId"}}`, encodeURIComponent(String(requestParameters['statusId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of workflows using a given status.
+     * Get workflow usages by status
+     */
+    async getWorkflowUsagesForStatusRaw(requestParameters: GetWorkflowUsagesForStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusWorkflowUsageDTO>> {
+        const requestOptions = await this.getWorkflowUsagesForStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -458,10 +514,9 @@ export class StatusApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/#pagination) list of statuses that match a search on name or project.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
-     * Search statuses paginated
+     * Creates request options for search without sending the request
      */
-    async searchRaw(requestParameters: SearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfStatuses>> {
+    async searchRequestOpts(requestParameters: SearchRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['projectId'] != null) {
@@ -497,12 +552,21 @@ export class StatusApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/statuses/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/#pagination) list of statuses that match a search on name or project.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
+     * Search statuses paginated
+     */
+    async searchRaw(requestParameters: SearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfStatuses>> {
+        const requestOptions = await this.searchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -517,10 +581,9 @@ export class StatusApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates statuses by ID.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
-     * Bulk update statuses
+     * Creates request options for updateStatuses without sending the request
      */
-    async updateStatusesRaw(requestParameters: UpdateStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateStatusesRequestOpts(requestParameters: UpdateStatusesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['statusUpdateRequest'] == null) {
             throw new runtime.RequiredError(
                 'statusUpdateRequest',
@@ -545,13 +608,22 @@ export class StatusApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/statuses`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['statusUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates statuses by ID.  **[Permissions](#permissions) required:**   *  *Administer projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)  *  *Administer Jira* [project permission.](https://confluence.atlassian.com/x/yodKLg)
+     * Bulk update statuses
+     */
+    async updateStatusesRaw(requestParameters: UpdateStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateStatusesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

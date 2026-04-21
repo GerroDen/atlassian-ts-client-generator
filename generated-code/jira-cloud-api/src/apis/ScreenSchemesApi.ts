@@ -49,10 +49,9 @@ export interface UpdateScreenSchemeRequest {
 export class ScreenSchemesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create screen scheme
+     * Creates request options for createScreenScheme without sending the request
      */
-    async createScreenSchemeRaw(requestParameters: CreateScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenSchemeId>> {
+    async createScreenSchemeRequestOpts(requestParameters: CreateScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenSchemeDetails'] == null) {
             throw new runtime.RequiredError(
                 'screenSchemeDetails',
@@ -77,13 +76,22 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/screenscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['screenSchemeDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a screen scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create screen scheme
+     */
+    async createScreenSchemeRaw(requestParameters: CreateScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenSchemeId>> {
+        const requestOptions = await this.createScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -98,10 +106,9 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a screen scheme. A screen scheme cannot be deleted if it is used in an issue type screen scheme.  Only screens schemes used in classic projects can be deleted.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete screen scheme
+     * Creates request options for deleteScreenScheme without sending the request
      */
-    async deleteScreenSchemeRaw(requestParameters: DeleteScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteScreenSchemeRequestOpts(requestParameters: DeleteScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'screenSchemeId',
@@ -125,12 +132,21 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/screenscheme/{screenSchemeId}`;
         urlPath = urlPath.replace(`{${"screenSchemeId"}}`, encodeURIComponent(String(requestParameters['screenSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a screen scheme. A screen scheme cannot be deleted if it is used in an issue type screen scheme.  Only screens schemes used in classic projects can be deleted.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete screen scheme
+     */
+    async deleteScreenSchemeRaw(requestParameters: DeleteScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -144,10 +160,9 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of screen schemes.  Only screen schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get screen schemes
+     * Creates request options for getScreenSchemes without sending the request
      */
-    async getScreenSchemesRaw(requestParameters: GetScreenSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanScreenScheme>> {
+    async getScreenSchemesRequestOpts(requestParameters: GetScreenSchemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -187,12 +202,21 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/screenscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of screen schemes.  Only screen schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get screen schemes
+     */
+    async getScreenSchemesRaw(requestParameters: GetScreenSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanScreenScheme>> {
+        const requestOptions = await this.getScreenSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -207,10 +231,9 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a screen scheme. Only screen schemes used in classic projects can be updated.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update screen scheme
+     * Creates request options for updateScreenScheme without sending the request
      */
-    async updateScreenSchemeRaw(requestParameters: UpdateScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateScreenSchemeRequestOpts(requestParameters: UpdateScreenSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'screenSchemeId',
@@ -243,13 +266,22 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/screenscheme/{screenSchemeId}`;
         urlPath = urlPath.replace(`{${"screenSchemeId"}}`, encodeURIComponent(String(requestParameters['screenSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateScreenSchemeDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a screen scheme. Only screen schemes used in classic projects can be updated.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update screen scheme
+     */
+    async updateScreenSchemeRaw(requestParameters: UpdateScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateScreenSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

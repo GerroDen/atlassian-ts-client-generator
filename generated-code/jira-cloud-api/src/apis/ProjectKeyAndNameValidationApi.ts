@@ -36,10 +36,9 @@ export interface ValidateProjectKeyRequest {
 export class ProjectKeyAndNameValidationApi extends runtime.BaseAPI {
 
     /**
-     * Validates a project key and, if the key is invalid or in use, generates a valid random string for the project key.  **[Permissions](#permissions) required:** None.
-     * Get valid project key
+     * Creates request options for getValidProjectKey without sending the request
      */
-    async getValidProjectKeyRaw(requestParameters: GetValidProjectKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async getValidProjectKeyRequestOpts(requestParameters: GetValidProjectKeyRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['key'] != null) {
@@ -59,12 +58,21 @@ export class ProjectKeyAndNameValidationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/projectvalidate/validProjectKey`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Validates a project key and, if the key is invalid or in use, generates a valid random string for the project key.  **[Permissions](#permissions) required:** None.
+     * Get valid project key
+     */
+    async getValidProjectKeyRaw(requestParameters: GetValidProjectKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        const requestOptions = await this.getValidProjectKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<string>(response);
@@ -83,10 +91,9 @@ export class ProjectKeyAndNameValidationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Checks that a project name isn\'t in use. If the name isn\'t in use, the passed string is returned. If the name is in use, this operation attempts to generate a valid project name based on the one supplied, usually by adding a sequence number. If a valid project name cannot be generated, a 404 response is returned.  **[Permissions](#permissions) required:** None.
-     * Get valid project name
+     * Creates request options for getValidProjectName without sending the request
      */
-    async getValidProjectNameRaw(requestParameters: GetValidProjectNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async getValidProjectNameRequestOpts(requestParameters: GetValidProjectNameRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -113,12 +120,21 @@ export class ProjectKeyAndNameValidationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/projectvalidate/validProjectName`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Checks that a project name isn\'t in use. If the name isn\'t in use, the passed string is returned. If the name is in use, this operation attempts to generate a valid project name based on the one supplied, usually by adding a sequence number. If a valid project name cannot be generated, a 404 response is returned.  **[Permissions](#permissions) required:** None.
+     * Get valid project name
+     */
+    async getValidProjectNameRaw(requestParameters: GetValidProjectNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        const requestOptions = await this.getValidProjectNameRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<string>(response);
@@ -137,10 +153,9 @@ export class ProjectKeyAndNameValidationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Validates a project key by confirming the key is a valid string and not in use.  **[Permissions](#permissions) required:** None.
-     * Validate project key
+     * Creates request options for validateProjectKey without sending the request
      */
-    async validateProjectKeyRaw(requestParameters: ValidateProjectKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ErrorCollection>> {
+    async validateProjectKeyRequestOpts(requestParameters: ValidateProjectKeyRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['key'] != null) {
@@ -160,12 +175,21 @@ export class ProjectKeyAndNameValidationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/projectvalidate/key`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Validates a project key by confirming the key is a valid string and not in use.  **[Permissions](#permissions) required:** None.
+     * Validate project key
+     */
+    async validateProjectKeyRaw(requestParameters: ValidateProjectKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ErrorCollection>> {
+        const requestOptions = await this.validateProjectKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

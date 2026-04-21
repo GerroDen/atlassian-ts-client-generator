@@ -116,10 +116,9 @@ export interface UpdateCustomFieldContextRequest {
 export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
 
     /**
-     * Adds issue types to a custom field context, appending the issue types to the issue types list.  A custom field context without any issue types applies to all issue types. Adding issue types to such a custom field context would result in it applying to only the listed issue types.  If any of the issue types exists in the custom field context, the operation fails and no issue types are added.  This API will not allow adding issue types to the global context from April 2026. See [CHANGE-3019](https://developer.atlassian.com/changelog/#CHANGE-3019)  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Add issue types to context
+     * Creates request options for addIssueTypesToContext without sending the request
      */
-    async addIssueTypesToContextRaw(requestParameters: AddIssueTypesToContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async addIssueTypesToContextRequestOpts(requestParameters: AddIssueTypesToContextRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -160,13 +159,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeIds'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds issue types to a custom field context, appending the issue types to the issue types list.  A custom field context without any issue types applies to all issue types. Adding issue types to such a custom field context would result in it applying to only the listed issue types.  If any of the issue types exists in the custom field context, the operation fails and no issue types are added.  This API will not allow adding issue types to the global context from April 2026. See [CHANGE-3019](https://developer.atlassian.com/changelog/#CHANGE-3019)  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add issue types to context
+     */
+    async addIssueTypesToContextRaw(requestParameters: AddIssueTypesToContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.addIssueTypesToContextRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -185,10 +193,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Assigns a custom field context to projects.  If any project in the request is assigned to any context of the custom field, the operation fails.  This API will not allow adding projects to the global context from April 2026. See [CHANGE-3019](https://developer.atlassian.com/changelog/#CHANGE-3019)  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Assign custom field context to projects
+     * Creates request options for assignProjectsToCustomFieldContext without sending the request
      */
-    async assignProjectsToCustomFieldContextRaw(requestParameters: AssignProjectsToCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async assignProjectsToCustomFieldContextRequestOpts(requestParameters: AssignProjectsToCustomFieldContextRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -229,13 +236,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectIds'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Assigns a custom field context to projects.  If any project in the request is assigned to any context of the custom field, the operation fails.  This API will not allow adding projects to the global context from April 2026. See [CHANGE-3019](https://developer.atlassian.com/changelog/#CHANGE-3019)  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Assign custom field context to projects
+     */
+    async assignProjectsToCustomFieldContextRaw(requestParameters: AssignProjectsToCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.assignProjectsToCustomFieldContextRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -254,10 +270,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a custom field context.  If `projectIds` is empty, a global context is created. A global context is one that applies to all project. If `issueTypeIds` is empty, the context applies to all issue types.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create custom field context
+     * Creates request options for createCustomFieldContext without sending the request
      */
-    async createCustomFieldContextRaw(requestParameters: CreateCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomFieldContext>> {
+    async createCustomFieldContextRequestOpts(requestParameters: CreateCustomFieldContextRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -290,13 +305,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}/context`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createCustomFieldContext'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a custom field context.  If `projectIds` is empty, a global context is created. A global context is one that applies to all project. If `issueTypeIds` is empty, the context applies to all issue types.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create custom field context
+     */
+    async createCustomFieldContextRaw(requestParameters: CreateCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomFieldContext>> {
+        const requestOptions = await this.createCustomFieldContextRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -311,10 +335,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a [ custom field context](https://confluence.atlassian.com/adminjiracloud/what-are-custom-field-contexts-991923859.html).  This API will not allow removing the global context from April 2026. See [CHANGE-3019](https://developer.atlassian.com/changelog/#CHANGE-3019)  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete custom field context
+     * Creates request options for deleteCustomFieldContext without sending the request
      */
-    async deleteCustomFieldContextRaw(requestParameters: DeleteCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteCustomFieldContextRequestOpts(requestParameters: DeleteCustomFieldContextRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -346,12 +369,21 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a [ custom field context](https://confluence.atlassian.com/adminjiracloud/what-are-custom-field-contexts-991923859.html).  This API will not allow removing the global context from April 2026. See [CHANGE-3019](https://developer.atlassian.com/changelog/#CHANGE-3019)  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete custom field context
+     */
+    async deleteCustomFieldContextRaw(requestParameters: DeleteCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteCustomFieldContextRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -370,10 +402,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of [ contexts](https://confluence.atlassian.com/adminjiracloud/what-are-custom-field-contexts-991923859.html) for a custom field. Contexts can be returned as follows:   *  With no other parameters set, all contexts.  *  By defining `id` only, all contexts from the list of IDs.  *  By defining `isAnyIssueType`, limit the list of contexts returned to either those that apply to all issue types (true) or those that apply to only a subset of issue types (false)  *  By defining `isGlobalContext`, limit the list of contexts return to either those that apply to all projects (global contexts) (true) or those that apply to only a subset of projects (false).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). *Edit Workflow* [edit workflow permission](https://support.atlassian.com/jira-cloud-administration/docs/permissions-for-company-managed-projects/#Edit-Workflows)
-     * Get custom field contexts
+     * Creates request options for getContextsForField without sending the request
      */
-    async getContextsForFieldRaw(requestParameters: GetContextsForFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContext>> {
+    async getContextsForFieldRequestOpts(requestParameters: GetContextsForFieldRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -417,12 +448,21 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}/context`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of [ contexts](https://confluence.atlassian.com/adminjiracloud/what-are-custom-field-contexts-991923859.html) for a custom field. Contexts can be returned as follows:   *  With no other parameters set, all contexts.  *  By defining `id` only, all contexts from the list of IDs.  *  By defining `isAnyIssueType`, limit the list of contexts returned to either those that apply to all issue types (true) or those that apply to only a subset of issue types (false)  *  By defining `isGlobalContext`, limit the list of contexts return to either those that apply to all projects (global contexts) (true) or those that apply to only a subset of projects (false).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg). *Edit Workflow* [edit workflow permission](https://support.atlassian.com/jira-cloud-administration/docs/permissions-for-company-managed-projects/#Edit-Workflows)
+     * Get custom field contexts
+     */
+    async getContextsForFieldRaw(requestParameters: GetContextsForFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContext>> {
+        const requestOptions = await this.getContextsForFieldRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -437,10 +477,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of project and issue type mappings and, for each mapping, the ID of a [custom field context](https://confluence.atlassian.com/x/k44fOw) that applies to the project and issue type.  If there is no custom field context assigned to the project then, if present, the custom field context that applies to all projects is returned if it also applies to the issue type or all issue types. If a custom field context is not found, the returned custom field context ID is `null`.  Duplicate project and issue type mappings cannot be provided in the request.  The order of the returned values is the same as provided in the request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get custom field contexts for projects and issue types
+     * Creates request options for getCustomFieldContextsForProjectsAndIssueTypes without sending the request
      */
-    async getCustomFieldContextsForProjectsAndIssueTypesRaw(requestParameters: GetCustomFieldContextsForProjectsAndIssueTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanContextForProjectAndIssueType>> {
+    async getCustomFieldContextsForProjectsAndIssueTypesRequestOpts(requestParameters: GetCustomFieldContextsForProjectsAndIssueTypesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -481,13 +520,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}/context/mapping`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectIssueTypeMappings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of project and issue type mappings and, for each mapping, the ID of a [custom field context](https://confluence.atlassian.com/x/k44fOw) that applies to the project and issue type.  If there is no custom field context assigned to the project then, if present, the custom field context that applies to all projects is returned if it also applies to the issue type or all issue types. If a custom field context is not found, the returned custom field context ID is `null`.  Duplicate project and issue type mappings cannot be provided in the request.  The order of the returned values is the same as provided in the request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get custom field contexts for projects and issue types
+     */
+    async getCustomFieldContextsForProjectsAndIssueTypesRaw(requestParameters: GetCustomFieldContextsForProjectsAndIssueTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanContextForProjectAndIssueType>> {
+        const requestOptions = await this.getCustomFieldContextsForProjectsAndIssueTypesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -502,10 +550,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of defaults for a custom field. The results can be filtered by `contextId`, otherwise all values are returned. If no defaults are set for a context, nothing is returned.   The returned object depends on type of the custom field:   *  `CustomFieldContextDefaultValueDate` (type `datepicker`) for date fields.  *  `CustomFieldContextDefaultValueDateTime` (type `datetimepicker`) for date-time fields.  *  `CustomFieldContextDefaultValueSingleOption` (type `option.single`) for single choice select lists and radio buttons.  *  `CustomFieldContextDefaultValueMultipleOption` (type `option.multiple`) for multiple choice select lists and checkboxes.  *  `CustomFieldContextDefaultValueCascadingOption` (type `option.cascading`) for cascading select lists.  *  `CustomFieldContextSingleUserPickerDefaults` (type `single.user.select`) for single users.  *  `CustomFieldContextDefaultValueMultiUserPicker` (type `multi.user.select`) for user lists.  *  `CustomFieldContextDefaultValueSingleGroupPicker` (type `grouppicker.single`) for single choice group pickers.  *  `CustomFieldContextDefaultValueMultipleGroupPicker` (type `grouppicker.multiple`) for multiple choice group pickers.  *  `CustomFieldContextDefaultValueURL` (type `url`) for URLs.  *  `CustomFieldContextDefaultValueProject` (type `project`) for project pickers.  *  `CustomFieldContextDefaultValueFloat` (type `float`) for floats (floating-point numbers).  *  `CustomFieldContextDefaultValueLabels` (type `labels`) for labels.  *  `CustomFieldContextDefaultValueTextField` (type `textfield`) for text fields.  *  `CustomFieldContextDefaultValueTextArea` (type `textarea`) for text area fields.  *  `CustomFieldContextDefaultValueReadOnly` (type `readonly`) for read only (text) fields.  *  `CustomFieldContextDefaultValueMultipleVersion` (type `version.multiple`) for single choice version pickers.  *  `CustomFieldContextDefaultValueSingleVersion` (type `version.single`) for multiple choice version pickers.  Forge custom fields [types](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/#data-types) are also supported, returning:   *  `CustomFieldContextDefaultValueForgeStringFieldBean` (type `forge.string`) for Forge string fields.  *  `CustomFieldContextDefaultValueForgeMultiStringFieldBean` (type `forge.string.list`) for Forge string collection fields.  *  `CustomFieldContextDefaultValueForgeObjectFieldBean` (type `forge.object`) for Forge object fields.  *  `CustomFieldContextDefaultValueForgeDateTimeFieldBean` (type `forge.datetime`) for Forge date-time fields.  *  `CustomFieldContextDefaultValueForgeGroupFieldBean` (type `forge.group`) for Forge group fields.  *  `CustomFieldContextDefaultValueForgeMultiGroupFieldBean` (type `forge.group.list`) for Forge group collection fields.  *  `CustomFieldContextDefaultValueForgeNumberFieldBean` (type `forge.number`) for Forge number fields.  *  `CustomFieldContextDefaultValueForgeUserFieldBean` (type `forge.user`) for Forge user fields.  *  `CustomFieldContextDefaultValueForgeMultiUserFieldBean` (type `forge.user.list`) for Forge user collection fields.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get custom field contexts default values
+     * Creates request options for getDefaultValues without sending the request
      */
-    async getDefaultValuesRaw(requestParameters: GetDefaultValuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContextDefaultValue>> {
+    async getDefaultValuesRequestOpts(requestParameters: GetDefaultValuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -541,12 +588,21 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}/context/defaultValue`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of defaults for a custom field. The results can be filtered by `contextId`, otherwise all values are returned. If no defaults are set for a context, nothing is returned.   The returned object depends on type of the custom field:   *  `CustomFieldContextDefaultValueDate` (type `datepicker`) for date fields.  *  `CustomFieldContextDefaultValueDateTime` (type `datetimepicker`) for date-time fields.  *  `CustomFieldContextDefaultValueSingleOption` (type `option.single`) for single choice select lists and radio buttons.  *  `CustomFieldContextDefaultValueMultipleOption` (type `option.multiple`) for multiple choice select lists and checkboxes.  *  `CustomFieldContextDefaultValueCascadingOption` (type `option.cascading`) for cascading select lists.  *  `CustomFieldContextSingleUserPickerDefaults` (type `single.user.select`) for single users.  *  `CustomFieldContextDefaultValueMultiUserPicker` (type `multi.user.select`) for user lists.  *  `CustomFieldContextDefaultValueSingleGroupPicker` (type `grouppicker.single`) for single choice group pickers.  *  `CustomFieldContextDefaultValueMultipleGroupPicker` (type `grouppicker.multiple`) for multiple choice group pickers.  *  `CustomFieldContextDefaultValueURL` (type `url`) for URLs.  *  `CustomFieldContextDefaultValueProject` (type `project`) for project pickers.  *  `CustomFieldContextDefaultValueFloat` (type `float`) for floats (floating-point numbers).  *  `CustomFieldContextDefaultValueLabels` (type `labels`) for labels.  *  `CustomFieldContextDefaultValueTextField` (type `textfield`) for text fields.  *  `CustomFieldContextDefaultValueTextArea` (type `textarea`) for text area fields.  *  `CustomFieldContextDefaultValueReadOnly` (type `readonly`) for read only (text) fields.  *  `CustomFieldContextDefaultValueMultipleVersion` (type `version.multiple`) for single choice version pickers.  *  `CustomFieldContextDefaultValueSingleVersion` (type `version.single`) for multiple choice version pickers.  Forge custom fields [types](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/#data-types) are also supported, returning:   *  `CustomFieldContextDefaultValueForgeStringFieldBean` (type `forge.string`) for Forge string fields.  *  `CustomFieldContextDefaultValueForgeMultiStringFieldBean` (type `forge.string.list`) for Forge string collection fields.  *  `CustomFieldContextDefaultValueForgeObjectFieldBean` (type `forge.object`) for Forge object fields.  *  `CustomFieldContextDefaultValueForgeDateTimeFieldBean` (type `forge.datetime`) for Forge date-time fields.  *  `CustomFieldContextDefaultValueForgeGroupFieldBean` (type `forge.group`) for Forge group fields.  *  `CustomFieldContextDefaultValueForgeMultiGroupFieldBean` (type `forge.group.list`) for Forge group collection fields.  *  `CustomFieldContextDefaultValueForgeNumberFieldBean` (type `forge.number`) for Forge number fields.  *  `CustomFieldContextDefaultValueForgeUserFieldBean` (type `forge.user`) for Forge user fields.  *  `CustomFieldContextDefaultValueForgeMultiUserFieldBean` (type `forge.user.list`) for Forge user collection fields.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get custom field contexts default values
+     */
+    async getDefaultValuesRaw(requestParameters: GetDefaultValuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContextDefaultValue>> {
+        const requestOptions = await this.getDefaultValuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -561,10 +617,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of context to issue type mappings for a custom field. Mappings are returned for all contexts or a list of contexts. Mappings are ordered first by context ID and then by issue type ID.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue types for custom field context
+     * Creates request options for getIssueTypeMappingsForContexts without sending the request
      */
-    async getIssueTypeMappingsForContextsRaw(requestParameters: GetIssueTypeMappingsForContextsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeToContextMapping>> {
+    async getIssueTypeMappingsForContextsRequestOpts(requestParameters: GetIssueTypeMappingsForContextsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -600,12 +655,21 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}/context/issuetypemapping`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of context to issue type mappings for a custom field. Mappings are returned for all contexts or a list of contexts. Mappings are ordered first by context ID and then by issue type ID.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue types for custom field context
+     */
+    async getIssueTypeMappingsForContextsRaw(requestParameters: GetIssueTypeMappingsForContextsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeToContextMapping>> {
+        const requestOptions = await this.getIssueTypeMappingsForContextsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -620,10 +684,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of context to project mappings for a custom field. The result can be filtered by `contextId`. Otherwise, all mappings are returned. Invalid IDs are ignored.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get project mappings for custom field context
+     * Creates request options for getProjectContextMapping without sending the request
      */
-    async getProjectContextMappingRaw(requestParameters: GetProjectContextMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContextProjectMapping>> {
+    async getProjectContextMappingRequestOpts(requestParameters: GetProjectContextMappingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -659,12 +722,21 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}/context/projectmapping`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of context to project mappings for a custom field. The result can be filtered by `contextId`. Otherwise, all mappings are returned. Invalid IDs are ignored.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get project mappings for custom field context
+     */
+    async getProjectContextMappingRaw(requestParameters: GetProjectContextMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContextProjectMapping>> {
+        const requestOptions = await this.getProjectContextMappingRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -679,10 +751,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a custom field context from projects.  A custom field context without any projects applies to all projects. Removing all projects from a custom field context would result in it applying to all projects.  If any project in the request is not assigned to the context, or the operation would result in two global contexts for the field, the operation fails.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove custom field context from projects
+     * Creates request options for removeCustomFieldContextFromProjects without sending the request
      */
-    async removeCustomFieldContextFromProjectsRaw(requestParameters: RemoveCustomFieldContextFromProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async removeCustomFieldContextFromProjectsRequestOpts(requestParameters: RemoveCustomFieldContextFromProjectsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -723,13 +794,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectIds'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a custom field context from projects.  A custom field context without any projects applies to all projects. Removing all projects from a custom field context would result in it applying to all projects.  If any project in the request is not assigned to the context, or the operation would result in two global contexts for the field, the operation fails.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove custom field context from projects
+     */
+    async removeCustomFieldContextFromProjectsRaw(requestParameters: RemoveCustomFieldContextFromProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeCustomFieldContextFromProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -748,10 +828,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes issue types from a custom field context.  A custom field context without any issue types applies to all issue types.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove issue types from context
+     * Creates request options for removeIssueTypesFromContext without sending the request
      */
-    async removeIssueTypesFromContextRaw(requestParameters: RemoveIssueTypesFromContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async removeIssueTypesFromContextRequestOpts(requestParameters: RemoveIssueTypesFromContextRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -792,13 +871,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeIds'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes issue types from a custom field context.  A custom field context without any issue types applies to all issue types.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove issue types from context
+     */
+    async removeIssueTypesFromContextRaw(requestParameters: RemoveIssueTypesFromContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeIssueTypesFromContextRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -817,10 +905,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets default for contexts of a custom field. Default are defined using these objects:   *  `CustomFieldContextDefaultValueDate` (type `datepicker`) for date fields.  *  `CustomFieldContextDefaultValueDateTime` (type `datetimepicker`) for date-time fields.  *  `CustomFieldContextDefaultValueSingleOption` (type `option.single`) for single choice select lists and radio buttons.  *  `CustomFieldContextDefaultValueMultipleOption` (type `option.multiple`) for multiple choice select lists and checkboxes.  *  `CustomFieldContextDefaultValueCascadingOption` (type `option.cascading`) for cascading select lists.  *  `CustomFieldContextSingleUserPickerDefaults` (type `single.user.select`) for single users.  *  `CustomFieldContextDefaultValueMultiUserPicker` (type `multi.user.select`) for user lists.  *  `CustomFieldContextDefaultValueSingleGroupPicker` (type `grouppicker.single`) for single choice group pickers.  *  `CustomFieldContextDefaultValueMultipleGroupPicker` (type `grouppicker.multiple`) for multiple choice group pickers.  *  `CustomFieldContextDefaultValueURL` (type `url`) for URLs.  *  `CustomFieldContextDefaultValueProject` (type `project`) for project pickers.  *  `CustomFieldContextDefaultValueFloat` (type `float`) for floats (floating-point numbers).  *  `CustomFieldContextDefaultValueLabels` (type `labels`) for labels.  *  `CustomFieldContextDefaultValueTextField` (type `textfield`) for text fields.  *  `CustomFieldContextDefaultValueTextArea` (type `textarea`) for text area fields.  *  `CustomFieldContextDefaultValueReadOnly` (type `readonly`) for read only (text) fields.  *  `CustomFieldContextDefaultValueMultipleVersion` (type `version.multiple`) for single choice version pickers.  *  `CustomFieldContextDefaultValueSingleVersion` (type `version.single`) for multiple choice version pickers.  Forge custom fields [types](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/#data-types) are also supported, returning:   *  `CustomFieldContextDefaultValueForgeStringFieldBean` (type `forge.string`) for Forge string fields.  *  `CustomFieldContextDefaultValueForgeMultiStringFieldBean` (type `forge.string.list`) for Forge string collection fields.  *  `CustomFieldContextDefaultValueForgeObjectFieldBean` (type `forge.object`) for Forge object fields.  *  `CustomFieldContextDefaultValueForgeDateTimeFieldBean` (type `forge.datetime`) for Forge date-time fields.  *  `CustomFieldContextDefaultValueForgeGroupFieldBean` (type `forge.group`) for Forge group fields.  *  `CustomFieldContextDefaultValueForgeMultiGroupFieldBean` (type `forge.group.list`) for Forge group collection fields.  *  `CustomFieldContextDefaultValueForgeNumberFieldBean` (type `forge.number`) for Forge number fields.  *  `CustomFieldContextDefaultValueForgeUserFieldBean` (type `forge.user`) for Forge user fields.  *  `CustomFieldContextDefaultValueForgeMultiUserFieldBean` (type `forge.user.list`) for Forge user collection fields.  Only one type of default object can be included in a request. To remove a default for a context, set the default parameter to `null`.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Set custom field contexts default values
+     * Creates request options for setDefaultValues without sending the request
      */
-    async setDefaultValuesRaw(requestParameters: SetDefaultValuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setDefaultValuesRequestOpts(requestParameters: SetDefaultValuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -853,13 +940,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/field/{fieldId}/context/defaultValue`;
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['customFieldContextDefaultValueUpdate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets default for contexts of a custom field. Default are defined using these objects:   *  `CustomFieldContextDefaultValueDate` (type `datepicker`) for date fields.  *  `CustomFieldContextDefaultValueDateTime` (type `datetimepicker`) for date-time fields.  *  `CustomFieldContextDefaultValueSingleOption` (type `option.single`) for single choice select lists and radio buttons.  *  `CustomFieldContextDefaultValueMultipleOption` (type `option.multiple`) for multiple choice select lists and checkboxes.  *  `CustomFieldContextDefaultValueCascadingOption` (type `option.cascading`) for cascading select lists.  *  `CustomFieldContextSingleUserPickerDefaults` (type `single.user.select`) for single users.  *  `CustomFieldContextDefaultValueMultiUserPicker` (type `multi.user.select`) for user lists.  *  `CustomFieldContextDefaultValueSingleGroupPicker` (type `grouppicker.single`) for single choice group pickers.  *  `CustomFieldContextDefaultValueMultipleGroupPicker` (type `grouppicker.multiple`) for multiple choice group pickers.  *  `CustomFieldContextDefaultValueURL` (type `url`) for URLs.  *  `CustomFieldContextDefaultValueProject` (type `project`) for project pickers.  *  `CustomFieldContextDefaultValueFloat` (type `float`) for floats (floating-point numbers).  *  `CustomFieldContextDefaultValueLabels` (type `labels`) for labels.  *  `CustomFieldContextDefaultValueTextField` (type `textfield`) for text fields.  *  `CustomFieldContextDefaultValueTextArea` (type `textarea`) for text area fields.  *  `CustomFieldContextDefaultValueReadOnly` (type `readonly`) for read only (text) fields.  *  `CustomFieldContextDefaultValueMultipleVersion` (type `version.multiple`) for single choice version pickers.  *  `CustomFieldContextDefaultValueSingleVersion` (type `version.single`) for multiple choice version pickers.  Forge custom fields [types](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field-type/#data-types) are also supported, returning:   *  `CustomFieldContextDefaultValueForgeStringFieldBean` (type `forge.string`) for Forge string fields.  *  `CustomFieldContextDefaultValueForgeMultiStringFieldBean` (type `forge.string.list`) for Forge string collection fields.  *  `CustomFieldContextDefaultValueForgeObjectFieldBean` (type `forge.object`) for Forge object fields.  *  `CustomFieldContextDefaultValueForgeDateTimeFieldBean` (type `forge.datetime`) for Forge date-time fields.  *  `CustomFieldContextDefaultValueForgeGroupFieldBean` (type `forge.group`) for Forge group fields.  *  `CustomFieldContextDefaultValueForgeMultiGroupFieldBean` (type `forge.group.list`) for Forge group collection fields.  *  `CustomFieldContextDefaultValueForgeNumberFieldBean` (type `forge.number`) for Forge number fields.  *  `CustomFieldContextDefaultValueForgeUserFieldBean` (type `forge.user`) for Forge user fields.  *  `CustomFieldContextDefaultValueForgeMultiUserFieldBean` (type `forge.user.list`) for Forge user collection fields.  Only one type of default object can be included in a request. To remove a default for a context, set the default parameter to `null`.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Set custom field contexts default values
+     */
+    async setDefaultValuesRaw(requestParameters: SetDefaultValuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setDefaultValuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -878,10 +974,9 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a [ custom field context](https://confluence.atlassian.com/adminjiracloud/what-are-custom-field-contexts-991923859.html).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update custom field context
+     * Creates request options for updateCustomFieldContext without sending the request
      */
-    async updateCustomFieldContextRaw(requestParameters: UpdateCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateCustomFieldContextRequestOpts(requestParameters: UpdateCustomFieldContextRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fieldId'] == null) {
             throw new runtime.RequiredError(
                 'fieldId',
@@ -922,13 +1017,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
         urlPath = urlPath.replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['customFieldContextUpdateDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a [ custom field context](https://confluence.atlassian.com/adminjiracloud/what-are-custom-field-contexts-991923859.html).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update custom field context
+     */
+    async updateCustomFieldContextRaw(requestParameters: UpdateCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateCustomFieldContextRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

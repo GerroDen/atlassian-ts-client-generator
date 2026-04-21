@@ -29,10 +29,9 @@ export interface GetAllLabelsRequest {
 export class LabelsApi extends runtime.BaseAPI {
 
     /**
-     * Returns a [paginated](#pagination) list of labels.
-     * Get all labels
+     * Creates request options for getAllLabels without sending the request
      */
-    async getAllLabelsRaw(requestParameters: GetAllLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanString>> {
+    async getAllLabelsRequestOpts(requestParameters: GetAllLabelsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -56,12 +55,21 @@ export class LabelsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/label`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of labels.
+     * Get all labels
+     */
+    async getAllLabelsRaw(requestParameters: GetAllLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanString>> {
+        const requestOptions = await this.getAllLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

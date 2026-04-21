@@ -85,10 +85,9 @@ export interface UpdateIssueTypeSchemeRequest {
 export class IssueTypeSchemesApi extends runtime.BaseAPI {
 
     /**
-     * Adds issue types to an issue type scheme.  The added issue types are appended to the issue types list.  If any of the issue types exist in the issue type scheme, the operation fails and no issue types are added.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Add issue types to issue type scheme
+     * Creates request options for addIssueTypesToIssueTypeScheme without sending the request
      */
-    async addIssueTypesToIssueTypeSchemeRaw(requestParameters: AddIssueTypesToIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async addIssueTypesToIssueTypeSchemeRequestOpts(requestParameters: AddIssueTypesToIssueTypeSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeSchemeId',
@@ -121,13 +120,22 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescheme/{issueTypeSchemeId}/issuetype`;
         urlPath = urlPath.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeIds'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds issue types to an issue type scheme.  The added issue types are appended to the issue types list.  If any of the issue types exist in the issue type scheme, the operation fails and no issue types are added.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add issue types to issue type scheme
+     */
+    async addIssueTypesToIssueTypeSchemeRaw(requestParameters: AddIssueTypesToIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.addIssueTypesToIssueTypeSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -146,10 +154,9 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Assigns an issue type scheme to a project.  If any issues in the project are assigned issue types not present in the new scheme, the operation will fail. To complete the assignment those issues must be updated to use issue types in the new scheme.  Issue type schemes can only be assigned to classic projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Assign issue type scheme to project
+     * Creates request options for assignIssueTypeSchemeToProject without sending the request
      */
-    async assignIssueTypeSchemeToProjectRaw(requestParameters: AssignIssueTypeSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async assignIssueTypeSchemeToProjectRequestOpts(requestParameters: AssignIssueTypeSchemeToProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeSchemeProjectAssociation'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeSchemeProjectAssociation',
@@ -174,13 +181,22 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescheme/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeSchemeProjectAssociation'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Assigns an issue type scheme to a project.  If any issues in the project are assigned issue types not present in the new scheme, the operation will fail. To complete the assignment those issues must be updated to use issue types in the new scheme.  Issue type schemes can only be assigned to classic projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Assign issue type scheme to project
+     */
+    async assignIssueTypeSchemeToProjectRaw(requestParameters: AssignIssueTypeSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.assignIssueTypeSchemeToProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -199,10 +215,9 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates an issue type scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create issue type scheme
+     * Creates request options for createIssueTypeScheme without sending the request
      */
-    async createIssueTypeSchemeRaw(requestParameters: CreateIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeSchemeID>> {
+    async createIssueTypeSchemeRequestOpts(requestParameters: CreateIssueTypeSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeSchemeDetails'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeSchemeDetails',
@@ -227,13 +242,22 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeSchemeDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates an issue type scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create issue type scheme
+     */
+    async createIssueTypeSchemeRaw(requestParameters: CreateIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeSchemeID>> {
+        const requestOptions = await this.createIssueTypeSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -248,10 +272,9 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes an issue type scheme.  Only issue type schemes used in classic projects can be deleted. Only issue type schemes not associated with a project can be deleted  A validation error will be returned if the specified scheme is associated with one or more projects. Use [Get issue type scheme API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-type-schemes/#api-rest-api-3-issuetypescheme-get) (with the projects expand, and id query parameter) to get a list of projects. Then, use [Assign issue type scheme to project API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-type-schemes/#api-rest-api-3-issuetypescheme-project-put) to associate all projects to another scheme before deleting.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete issue type scheme
+     * Creates request options for deleteIssueTypeScheme without sending the request
      */
-    async deleteIssueTypeSchemeRaw(requestParameters: DeleteIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteIssueTypeSchemeRequestOpts(requestParameters: DeleteIssueTypeSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeSchemeId',
@@ -275,12 +298,21 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescheme/{issueTypeSchemeId}`;
         urlPath = urlPath.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes an issue type scheme.  Only issue type schemes used in classic projects can be deleted. Only issue type schemes not associated with a project can be deleted  A validation error will be returned if the specified scheme is associated with one or more projects. Use [Get issue type scheme API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-type-schemes/#api-rest-api-3-issuetypescheme-get) (with the projects expand, and id query parameter) to get a list of projects. Then, use [Assign issue type scheme to project API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-type-schemes/#api-rest-api-3-issuetypescheme-project-put) to associate all projects to another scheme before deleting.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete issue type scheme
+     */
+    async deleteIssueTypeSchemeRaw(requestParameters: DeleteIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteIssueTypeSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -299,10 +331,9 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of issue type schemes.  Only issue type schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get all issue type schemes
+     * Creates request options for getAllIssueTypeSchemes without sending the request
      */
-    async getAllIssueTypeSchemesRaw(requestParameters: GetAllIssueTypeSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeScheme>> {
+    async getAllIssueTypeSchemesRequestOpts(requestParameters: GetAllIssueTypeSchemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -342,12 +373,21 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue type schemes.  Only issue type schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get all issue type schemes
+     */
+    async getAllIssueTypeSchemesRaw(requestParameters: GetAllIssueTypeSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeScheme>> {
+        const requestOptions = await this.getAllIssueTypeSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -362,10 +402,9 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of issue type schemes and, for each issue type scheme, a list of the projects that use it.  Only issue type schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue type schemes for projects
+     * Creates request options for getIssueTypeSchemeForProjects without sending the request
      */
-    async getIssueTypeSchemeForProjectsRaw(requestParameters: GetIssueTypeSchemeForProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeSchemeProjects>> {
+    async getIssueTypeSchemeForProjectsRequestOpts(requestParameters: GetIssueTypeSchemeForProjectsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -400,12 +439,21 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescheme/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue type schemes and, for each issue type scheme, a list of the projects that use it.  Only issue type schemes used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue type schemes for projects
+     */
+    async getIssueTypeSchemeForProjectsRaw(requestParameters: GetIssueTypeSchemeForProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeSchemeProjects>> {
+        const requestOptions = await this.getIssueTypeSchemeForProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -420,10 +468,9 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of issue type scheme items.  Only issue type scheme items used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue type scheme items
+     * Creates request options for getIssueTypeSchemesMapping without sending the request
      */
-    async getIssueTypeSchemesMappingRaw(requestParameters: GetIssueTypeSchemesMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeSchemeMapping>> {
+    async getIssueTypeSchemesMappingRequestOpts(requestParameters: GetIssueTypeSchemesMappingRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -451,12 +498,21 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetypescheme/mapping`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue type scheme items.  Only issue type scheme items used in classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue type scheme items
+     */
+    async getIssueTypeSchemesMappingRaw(requestParameters: GetIssueTypeSchemesMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeSchemeMapping>> {
+        const requestOptions = await this.getIssueTypeSchemesMappingRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -471,10 +527,9 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes an issue type from an issue type scheme.  This operation cannot remove:   *  any issue type used by issues.  *  any issue types from the default issue type scheme.  *  the last standard issue type from an issue type scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove issue type from issue type scheme
+     * Creates request options for removeIssueTypeFromIssueTypeScheme without sending the request
      */
-    async removeIssueTypeFromIssueTypeSchemeRaw(requestParameters: RemoveIssueTypeFromIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async removeIssueTypeFromIssueTypeSchemeRequestOpts(requestParameters: RemoveIssueTypeFromIssueTypeSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeSchemeId',
@@ -506,12 +561,21 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId'])));
         urlPath = urlPath.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes an issue type from an issue type scheme.  This operation cannot remove:   *  any issue type used by issues.  *  any issue types from the default issue type scheme.  *  the last standard issue type from an issue type scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove issue type from issue type scheme
+     */
+    async removeIssueTypeFromIssueTypeSchemeRaw(requestParameters: RemoveIssueTypeFromIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeIssueTypeFromIssueTypeSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -530,10 +594,9 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Changes the order of issue types in an issue type scheme.  The request body parameters must meet the following requirements:   *  all of the issue types must belong to the issue type scheme.  *  either `after` or `position` must be provided.  *  the issue type in `after` must not be in the issue type list.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Change order of issue types
+     * Creates request options for reorderIssueTypesInIssueTypeScheme without sending the request
      */
-    async reorderIssueTypesInIssueTypeSchemeRaw(requestParameters: ReorderIssueTypesInIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async reorderIssueTypesInIssueTypeSchemeRequestOpts(requestParameters: ReorderIssueTypesInIssueTypeSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeSchemeId',
@@ -566,13 +629,22 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescheme/{issueTypeSchemeId}/issuetype/move`;
         urlPath = urlPath.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['orderOfIssueTypes'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Changes the order of issue types in an issue type scheme.  The request body parameters must meet the following requirements:   *  all of the issue types must belong to the issue type scheme.  *  either `after` or `position` must be provided.  *  the issue type in `after` must not be in the issue type list.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Change order of issue types
+     */
+    async reorderIssueTypesInIssueTypeSchemeRaw(requestParameters: ReorderIssueTypesInIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.reorderIssueTypesInIssueTypeSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -591,10 +663,9 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates an issue type scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update issue type scheme
+     * Creates request options for updateIssueTypeScheme without sending the request
      */
-    async updateIssueTypeSchemeRaw(requestParameters: UpdateIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateIssueTypeSchemeRequestOpts(requestParameters: UpdateIssueTypeSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeSchemeId',
@@ -627,13 +698,22 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetypescheme/{issueTypeSchemeId}`;
         urlPath = urlPath.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeSchemeUpdateDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates an issue type scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update issue type scheme
+     */
+    async updateIssueTypeSchemeRaw(requestParameters: UpdateIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateIssueTypeSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

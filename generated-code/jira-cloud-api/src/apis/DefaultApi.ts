@@ -29,10 +29,9 @@ export interface GetWorklogsByIssueIdAndWorklogIdRequest {
 export class DefaultApi extends runtime.BaseAPI {
 
     /**
-     * Returns worklog details for a list of issue ID and worklog ID pairs.  This is an internal API for bulk fetching worklogs by their issue and worklog IDs. Worklogs that don\'t exist will be filtered out from the response.  The returned list of worklogs is limited to 1000 items.  **[Permissions](#permissions) required:** This is an internal service-to-service API that requires ASAP authentication. No user permission checks are performed as this bypasses normal user context.
-     * Get worklogs by issue id and worklog id
+     * Creates request options for getWorklogsByIssueIdAndWorklogId without sending the request
      */
-    async getWorklogsByIssueIdAndWorklogIdRaw(requestParameters: GetWorklogsByIssueIdAndWorklogIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkWorklogKeyResponseBean>> {
+    async getWorklogsByIssueIdAndWorklogIdRequestOpts(requestParameters: GetWorklogsByIssueIdAndWorklogIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['bulkWorklogKeyRequestBean'] == null) {
             throw new runtime.RequiredError(
                 'bulkWorklogKeyRequestBean',
@@ -52,13 +51,22 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/internal/api/latest/worklog/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['bulkWorklogKeyRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns worklog details for a list of issue ID and worklog ID pairs.  This is an internal API for bulk fetching worklogs by their issue and worklog IDs. Worklogs that don\'t exist will be filtered out from the response.  The returned list of worklogs is limited to 1000 items.  **[Permissions](#permissions) required:** This is an internal service-to-service API that requires ASAP authentication. No user permission checks are performed as this bypasses normal user context.
+     * Get worklogs by issue id and worklog id
+     */
+    async getWorklogsByIssueIdAndWorklogIdRaw(requestParameters: GetWorklogsByIssueIdAndWorklogIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkWorklogKeyResponseBean>> {
+        const requestOptions = await this.getWorklogsByIssueIdAndWorklogIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

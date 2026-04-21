@@ -58,10 +58,9 @@ export interface RenameScreenTabRequest {
 export class ScreenTabsApi extends runtime.BaseAPI {
 
     /**
-     * Creates a tab for a screen.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create screen tab
+     * Creates request options for addScreenTab without sending the request
      */
-    async addScreenTabRaw(requestParameters: AddScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenableTab>> {
+    async addScreenTabRequestOpts(requestParameters: AddScreenTabRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -94,13 +93,22 @@ export class ScreenTabsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/screens/{screenId}/tabs`;
         urlPath = urlPath.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['screenableTab'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a tab for a screen.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create screen tab
+     */
+    async addScreenTabRaw(requestParameters: AddScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenableTab>> {
+        const requestOptions = await this.addScreenTabRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -115,10 +123,9 @@ export class ScreenTabsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete screen tab
+     * Creates request options for deleteScreenTab without sending the request
      */
-    async deleteScreenTabRaw(requestParameters: DeleteScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteScreenTabRequestOpts(requestParameters: DeleteScreenTabRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -150,12 +157,21 @@ export class ScreenTabsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId'])));
         urlPath = urlPath.replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete screen tab
+     */
+    async deleteScreenTabRaw(requestParameters: DeleteScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteScreenTabRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -169,10 +185,9 @@ export class ScreenTabsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the list of tabs for a screen.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) when the project key is specified, providing that the screen is associated with the project through a Screen Scheme and Issue Type Screen Scheme.
-     * Get all screen tabs
+     * Creates request options for getAllScreenTabs without sending the request
      */
-    async getAllScreenTabsRaw(requestParameters: GetAllScreenTabsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ScreenableTab>>> {
+    async getAllScreenTabsRequestOpts(requestParameters: GetAllScreenTabsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -200,12 +215,21 @@ export class ScreenTabsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/screens/{screenId}/tabs`;
         urlPath = urlPath.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the list of tabs for a screen.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) when the project key is specified, providing that the screen is associated with the project through a Screen Scheme and Issue Type Screen Scheme.
+     * Get all screen tabs
+     */
+    async getAllScreenTabsRaw(requestParameters: GetAllScreenTabsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ScreenableTab>>> {
+        const requestOptions = await this.getAllScreenTabsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -220,10 +244,9 @@ export class ScreenTabsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the list of tabs for a bulk of screens.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get bulk screen tabs
+     * Creates request options for getBulkScreenTabs without sending the request
      */
-    async getBulkScreenTabsRaw(requestParameters: GetBulkScreenTabsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getBulkScreenTabsRequestOpts(requestParameters: GetBulkScreenTabsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['screenId'] != null) {
@@ -255,12 +278,21 @@ export class ScreenTabsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/screens/tabs`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the list of tabs for a bulk of screens.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get bulk screen tabs
+     */
+    async getBulkScreenTabsRaw(requestParameters: GetBulkScreenTabsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getBulkScreenTabsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -274,10 +306,9 @@ export class ScreenTabsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Move screen tab
+     * Creates request options for moveScreenTab without sending the request
      */
-    async moveScreenTabRaw(requestParameters: MoveScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async moveScreenTabRequestOpts(requestParameters: MoveScreenTabRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -317,12 +348,21 @@ export class ScreenTabsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId'])));
         urlPath = urlPath.replace(`{${"pos"}}`, encodeURIComponent(String(requestParameters['pos'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Moves a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Move screen tab
+     */
+    async moveScreenTabRaw(requestParameters: MoveScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.moveScreenTabRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -341,10 +381,9 @@ export class ScreenTabsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the name of a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update screen tab
+     * Creates request options for renameScreenTab without sending the request
      */
-    async renameScreenTabRaw(requestParameters: RenameScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenableTab>> {
+    async renameScreenTabRequestOpts(requestParameters: RenameScreenTabRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['screenId'] == null) {
             throw new runtime.RequiredError(
                 'screenId',
@@ -385,13 +424,22 @@ export class ScreenTabsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId'])));
         urlPath = urlPath.replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['screenableTab'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the name of a screen tab.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update screen tab
+     */
+    async renameScreenTabRaw(requestParameters: RenameScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenableTab>> {
+        const requestOptions = await this.renameScreenTabRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

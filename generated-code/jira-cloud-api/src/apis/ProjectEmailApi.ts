@@ -33,10 +33,9 @@ export interface UpdateProjectEmailRequest {
 export class ProjectEmailApi extends runtime.BaseAPI {
 
     /**
-     * Returns the [project\'s sender email address](https://confluence.atlassian.com/x/dolKLg).  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
-     * Get project\'s sender email
+     * Creates request options for getProjectEmail without sending the request
      */
-    async getProjectEmailRaw(requestParameters: GetProjectEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectEmailAddress>> {
+    async getProjectEmailRequestOpts(requestParameters: GetProjectEmailRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -60,12 +59,21 @@ export class ProjectEmailApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectId}/email`;
         urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the [project\'s sender email address](https://confluence.atlassian.com/x/dolKLg).  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
+     * Get project\'s sender email
+     */
+    async getProjectEmailRaw(requestParameters: GetProjectEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectEmailAddress>> {
+        const requestOptions = await this.getProjectEmailRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -80,10 +88,9 @@ export class ProjectEmailApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the [project\'s sender email address](https://confluence.atlassian.com/x/dolKLg).  If `emailAddress` is an empty string, the default email address is restored.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)
-     * Set project\'s sender email
+     * Creates request options for updateProjectEmail without sending the request
      */
-    async updateProjectEmailRaw(requestParameters: UpdateProjectEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateProjectEmailRequestOpts(requestParameters: UpdateProjectEmailRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -116,13 +123,22 @@ export class ProjectEmailApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/project/{projectId}/email`;
         urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['projectEmailAddress'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the [project\'s sender email address](https://confluence.atlassian.com/x/dolKLg).  If `emailAddress` is an empty string, the default email address is restored.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission.](https://confluence.atlassian.com/x/yodKLg)
+     * Set project\'s sender email
+     */
+    async updateProjectEmailRaw(requestParameters: UpdateProjectEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateProjectEmailRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

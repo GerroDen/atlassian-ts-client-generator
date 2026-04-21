@@ -133,10 +133,9 @@ export interface UpdateGadgetRequest {
 export class DashboardsApi extends runtime.BaseAPI {
 
     /**
-     * Adds a gadget to a dashboard.  **[Permissions](#permissions) required:** None.
-     * Add gadget to dashboard
+     * Creates request options for addGadget without sending the request
      */
-    async addGadgetRaw(requestParameters: AddGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DashboardGadget>> {
+    async addGadgetRequestOpts(requestParameters: AddGadgetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['dashboardId'] == null) {
             throw new runtime.RequiredError(
                 'dashboardId',
@@ -169,13 +168,22 @@ export class DashboardsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/dashboard/{dashboardId}/gadget`;
         urlPath = urlPath.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['dashboardGadgetSettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a gadget to a dashboard.  **[Permissions](#permissions) required:** None.
+     * Add gadget to dashboard
+     */
+    async addGadgetRaw(requestParameters: AddGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DashboardGadget>> {
+        const requestOptions = await this.addGadgetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -190,10 +198,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk edit dashboards. Maximum number of dashboards to be edited at the same time is 100.  **[Permissions](#permissions) required:** None  The dashboards to be updated must be owned by the user, or the user must be an administrator.
-     * Bulk edit dashboards
+     * Creates request options for bulkEditDashboards without sending the request
      */
-    async bulkEditDashboardsRaw(requestParameters: BulkEditDashboardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkEditShareableEntityResponse>> {
+    async bulkEditDashboardsRequestOpts(requestParameters: BulkEditDashboardsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['bulkEditShareableEntityRequest'] == null) {
             throw new runtime.RequiredError(
                 'bulkEditShareableEntityRequest',
@@ -218,13 +225,22 @@ export class DashboardsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/dashboard/bulk/edit`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['bulkEditShareableEntityRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk edit dashboards. Maximum number of dashboards to be edited at the same time is 100.  **[Permissions](#permissions) required:** None  The dashboards to be updated must be owned by the user, or the user must be an administrator.
+     * Bulk edit dashboards
+     */
+    async bulkEditDashboardsRaw(requestParameters: BulkEditDashboardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkEditShareableEntityResponse>> {
+        const requestOptions = await this.bulkEditDashboardsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -239,10 +255,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Copies a dashboard. Any values provided in the `dashboard` parameter replace those in the copied dashboard.  **[Permissions](#permissions) required:** None  The dashboard to be copied must be owned by or shared with the user.
-     * Copy dashboard
+     * Creates request options for copyDashboard without sending the request
      */
-    async copyDashboardRaw(requestParameters: CopyDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
+    async copyDashboardRequestOpts(requestParameters: CopyDashboardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -279,13 +294,22 @@ export class DashboardsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/dashboard/{id}/copy`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['dashboardDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Copies a dashboard. Any values provided in the `dashboard` parameter replace those in the copied dashboard.  **[Permissions](#permissions) required:** None  The dashboard to be copied must be owned by or shared with the user.
+     * Copy dashboard
+     */
+    async copyDashboardRaw(requestParameters: CopyDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
+        const requestOptions = await this.copyDashboardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -300,10 +324,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a dashboard.  **[Permissions](#permissions) required:** None.
-     * Create dashboard
+     * Creates request options for createDashboard without sending the request
      */
-    async createDashboardRaw(requestParameters: CreateDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
+    async createDashboardRequestOpts(requestParameters: CreateDashboardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['dashboardDetails'] == null) {
             throw new runtime.RequiredError(
                 'dashboardDetails',
@@ -332,13 +355,22 @@ export class DashboardsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/dashboard`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['dashboardDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a dashboard.  **[Permissions](#permissions) required:** None.
+     * Create dashboard
+     */
+    async createDashboardRaw(requestParameters: CreateDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
+        const requestOptions = await this.createDashboardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -353,10 +385,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a dashboard.  **[Permissions](#permissions) required:** None  The dashboard to be deleted must be owned by the user.
-     * Delete dashboard
+     * Creates request options for deleteDashboard without sending the request
      */
-    async deleteDashboardRaw(requestParameters: DeleteDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteDashboardRequestOpts(requestParameters: DeleteDashboardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -380,12 +411,21 @@ export class DashboardsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/dashboard/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a dashboard.  **[Permissions](#permissions) required:** None  The dashboard to be deleted must be owned by the user.
+     * Delete dashboard
+     */
+    async deleteDashboardRaw(requestParameters: DeleteDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteDashboardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -399,10 +439,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a dashboard item property.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The user must have edit permission of the dashboard.
-     * Delete dashboard item property
+     * Creates request options for deleteDashboardItemProperty without sending the request
      */
-    async deleteDashboardItemPropertyRaw(requestParameters: DeleteDashboardItemPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteDashboardItemPropertyRequestOpts(requestParameters: DeleteDashboardItemPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['dashboardId'] == null) {
             throw new runtime.RequiredError(
                 'dashboardId',
@@ -442,12 +481,21 @@ export class DashboardsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters['itemId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a dashboard item property.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The user must have edit permission of the dashboard.
+     * Delete dashboard item property
+     */
+    async deleteDashboardItemPropertyRaw(requestParameters: DeleteDashboardItemPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteDashboardItemPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -466,10 +514,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets a list of all available gadgets that can be added to all dashboards.  **[Permissions](#permissions) required:** None.
-     * Get available gadgets
+     * Creates request options for getAllAvailableDashboardGadgets without sending the request
      */
-    async getAllAvailableDashboardGadgetsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AvailableDashboardGadgetsResponse>> {
+    async getAllAvailableDashboardGadgetsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -485,12 +532,21 @@ export class DashboardsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/dashboard/gadgets`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets a list of all available gadgets that can be added to all dashboards.  **[Permissions](#permissions) required:** None.
+     * Get available gadgets
+     */
+    async getAllAvailableDashboardGadgetsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AvailableDashboardGadgetsResponse>> {
+        const requestOptions = await this.getAllAvailableDashboardGadgetsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -505,10 +561,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of dashboards owned by or shared with the user. The list may be filtered to include only favorite or owned dashboards.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get all dashboards
+     * Creates request options for getAllDashboards without sending the request
      */
-    async getAllDashboardsRaw(requestParameters: GetAllDashboardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfDashboards>> {
+    async getAllDashboardsRequestOpts(requestParameters: GetAllDashboardsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -536,12 +591,21 @@ export class DashboardsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/dashboard`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of dashboards owned by or shared with the user. The list may be filtered to include only favorite or owned dashboards.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get all dashboards
+     */
+    async getAllDashboardsRaw(requestParameters: GetAllDashboardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfDashboards>> {
+        const requestOptions = await this.getAllDashboardsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -556,10 +620,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of dashboard gadgets on a dashboard.  This operation returns:   *  Gadgets from a list of IDs, when `id` is set.  *  Gadgets with a module key, when `moduleKey` is set.  *  Gadgets from a list of URIs, when `uri` is set.  *  All gadgets, when no other parameters are set.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get gadgets
+     * Creates request options for getAllGadgets without sending the request
      */
-    async getAllGadgetsRaw(requestParameters: GetAllGadgetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DashboardGadgetResponse>> {
+    async getAllGadgetsRequestOpts(requestParameters: GetAllGadgetsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['dashboardId'] == null) {
             throw new runtime.RequiredError(
                 'dashboardId',
@@ -595,12 +658,21 @@ export class DashboardsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/dashboard/{dashboardId}/gadget`;
         urlPath = urlPath.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of dashboard gadgets on a dashboard.  This operation returns:   *  Gadgets from a list of IDs, when `id` is set.  *  Gadgets with a module key, when `moduleKey` is set.  *  Gadgets from a list of URIs, when `uri` is set.  *  All gadgets, when no other parameters are set.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get gadgets
+     */
+    async getAllGadgetsRaw(requestParameters: GetAllGadgetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DashboardGadgetResponse>> {
+        const requestOptions = await this.getAllGadgetsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -615,10 +687,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a dashboard.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.  However, to get a dashboard, the dashboard must be shared with the user or the user must own it. Note, users with the *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) are considered owners of the System dashboard. The System dashboard is considered to be shared with all other users.
-     * Get dashboard
+     * Creates request options for getDashboard without sending the request
      */
-    async getDashboardRaw(requestParameters: GetDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
+    async getDashboardRequestOpts(requestParameters: GetDashboardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -642,12 +713,21 @@ export class DashboardsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/dashboard/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a dashboard.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.  However, to get a dashboard, the dashboard must be shared with the user or the user must own it. Note, users with the *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) are considered owners of the System dashboard. The System dashboard is considered to be shared with all other users.
+     * Get dashboard
+     */
+    async getDashboardRaw(requestParameters: GetDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
+        const requestOptions = await this.getDashboardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -662,10 +742,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the key and value of a dashboard item property.  A dashboard item enables an app to add user-specific information to a user dashboard. Dashboard items are exposed to users as gadgets that users can add to their dashboards. For more information on how users do this, see [Adding and customizing gadgets](https://confluence.atlassian.com/x/7AeiLQ).  When an app creates a dashboard item it registers a callback to receive the dashboard item ID. The callback fires whenever the item is rendered or, where the item is configurable, the user edits the item. The app then uses this resource to store the item\'s content or configuration details. For more information on working with dashboard items, see [ Building a dashboard item for a JIRA Connect add-on](https://developer.atlassian.com/server/jira/platform/guide-building-a-dashboard-item-for-a-jira-connect-add-on-33746254/) and the [Dashboard Item](https://developer.atlassian.com/cloud/jira/platform/modules/dashboard-item/) documentation.  There is no resource to set or get dashboard items.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The user must have read permission of the dashboard or have the dashboard shared with them.
-     * Get dashboard item property
+     * Creates request options for getDashboardItemProperty without sending the request
      */
-    async getDashboardItemPropertyRaw(requestParameters: GetDashboardItemPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+    async getDashboardItemPropertyRequestOpts(requestParameters: GetDashboardItemPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['dashboardId'] == null) {
             throw new runtime.RequiredError(
                 'dashboardId',
@@ -705,12 +784,21 @@ export class DashboardsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters['itemId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the key and value of a dashboard item property.  A dashboard item enables an app to add user-specific information to a user dashboard. Dashboard items are exposed to users as gadgets that users can add to their dashboards. For more information on how users do this, see [Adding and customizing gadgets](https://confluence.atlassian.com/x/7AeiLQ).  When an app creates a dashboard item it registers a callback to receive the dashboard item ID. The callback fires whenever the item is rendered or, where the item is configurable, the user edits the item. The app then uses this resource to store the item\'s content or configuration details. For more information on working with dashboard items, see [ Building a dashboard item for a JIRA Connect add-on](https://developer.atlassian.com/server/jira/platform/guide-building-a-dashboard-item-for-a-jira-connect-add-on-33746254/) and the [Dashboard Item](https://developer.atlassian.com/cloud/jira/platform/modules/dashboard-item/) documentation.  There is no resource to set or get dashboard items.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The user must have read permission of the dashboard or have the dashboard shared with them.
+     * Get dashboard item property
+     */
+    async getDashboardItemPropertyRaw(requestParameters: GetDashboardItemPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+        const requestOptions = await this.getDashboardItemPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -725,10 +813,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the keys of all properties for a dashboard item.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The user must have read permission of the dashboard or have the dashboard shared with them.
-     * Get dashboard item property keys
+     * Creates request options for getDashboardItemPropertyKeys without sending the request
      */
-    async getDashboardItemPropertyKeysRaw(requestParameters: GetDashboardItemPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+    async getDashboardItemPropertyKeysRequestOpts(requestParameters: GetDashboardItemPropertyKeysRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['dashboardId'] == null) {
             throw new runtime.RequiredError(
                 'dashboardId',
@@ -760,12 +847,21 @@ export class DashboardsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId'])));
         urlPath = urlPath.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters['itemId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the keys of all properties for a dashboard item.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The user must have read permission of the dashboard or have the dashboard shared with them.
+     * Get dashboard item property keys
+     */
+    async getDashboardItemPropertyKeysRaw(requestParameters: GetDashboardItemPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+        const requestOptions = await this.getDashboardItemPropertyKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -780,10 +876,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of dashboards. This operation is similar to [Get dashboards](#api-rest-api-3-dashboard-get) except that the results can be refined to include dashboards that have specific attributes. For example, dashboards with a particular name. When multiple attributes are specified only filters matching all attributes are returned.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The following dashboards that match the query parameters are returned:   *  Dashboards owned by the user. Not returned for anonymous users.  *  Dashboards shared with a group that the user is a member of. Not returned for anonymous users.  *  Dashboards shared with a private project that the user can browse. Not returned for anonymous users.  *  Dashboards shared with a public project.  *  Dashboards shared with the public.
-     * Search for dashboards
+     * Creates request options for getDashboardsPaginated without sending the request
      */
-    async getDashboardsPaginatedRaw(requestParameters: GetDashboardsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanDashboard>> {
+    async getDashboardsPaginatedRequestOpts(requestParameters: GetDashboardsPaginatedRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['dashboardName'] != null) {
@@ -843,12 +938,21 @@ export class DashboardsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/dashboard/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of dashboards. This operation is similar to [Get dashboards](#api-rest-api-3-dashboard-get) except that the results can be refined to include dashboards that have specific attributes. For example, dashboards with a particular name. When multiple attributes are specified only filters matching all attributes are returned.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The following dashboards that match the query parameters are returned:   *  Dashboards owned by the user. Not returned for anonymous users.  *  Dashboards shared with a group that the user is a member of. Not returned for anonymous users.  *  Dashboards shared with a private project that the user can browse. Not returned for anonymous users.  *  Dashboards shared with a public project.  *  Dashboards shared with the public.
+     * Search for dashboards
+     */
+    async getDashboardsPaginatedRaw(requestParameters: GetDashboardsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanDashboard>> {
+        const requestOptions = await this.getDashboardsPaginatedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -863,10 +967,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a dashboard gadget from a dashboard.  When a gadget is removed from a dashboard, other gadgets in the same column are moved up to fill the emptied position.  **[Permissions](#permissions) required:** None.
-     * Remove gadget from dashboard
+     * Creates request options for removeGadget without sending the request
      */
-    async removeGadgetRaw(requestParameters: RemoveGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async removeGadgetRequestOpts(requestParameters: RemoveGadgetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['dashboardId'] == null) {
             throw new runtime.RequiredError(
                 'dashboardId',
@@ -898,12 +1001,21 @@ export class DashboardsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId'])));
         urlPath = urlPath.replace(`{${"gadgetId"}}`, encodeURIComponent(String(requestParameters['gadgetId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a dashboard gadget from a dashboard.  When a gadget is removed from a dashboard, other gadgets in the same column are moved up to fill the emptied position.  **[Permissions](#permissions) required:** None.
+     * Remove gadget from dashboard
+     */
+    async removeGadgetRaw(requestParameters: RemoveGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeGadgetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -922,10 +1034,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the value of a dashboard item property. Use this resource in apps to store custom data against a dashboard item.  A dashboard item enables an app to add user-specific information to a user dashboard. Dashboard items are exposed to users as gadgets that users can add to their dashboards. For more information on how users do this, see [Adding and customizing gadgets](https://confluence.atlassian.com/x/7AeiLQ).  When an app creates a dashboard item it registers a callback to receive the dashboard item ID. The callback fires whenever the item is rendered or, where the item is configurable, the user edits the item. The app then uses this resource to store the item\'s content or configuration details. For more information on working with dashboard items, see [ Building a dashboard item for a JIRA Connect add-on](https://developer.atlassian.com/server/jira/platform/guide-building-a-dashboard-item-for-a-jira-connect-add-on-33746254/) and the [Dashboard Item](https://developer.atlassian.com/cloud/jira/platform/modules/dashboard-item/) documentation.  There is no resource to set or get dashboard items.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The user must have edit permisson of the dashboard.
-     * Set dashboard item property
+     * Creates request options for setDashboardItemProperty without sending the request
      */
-    async setDashboardItemPropertyRaw(requestParameters: SetDashboardItemPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setDashboardItemPropertyRequestOpts(requestParameters: SetDashboardItemPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['dashboardId'] == null) {
             throw new runtime.RequiredError(
                 'dashboardId',
@@ -974,13 +1085,22 @@ export class DashboardsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters['itemId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the value of a dashboard item property. Use this resource in apps to store custom data against a dashboard item.  A dashboard item enables an app to add user-specific information to a user dashboard. Dashboard items are exposed to users as gadgets that users can add to their dashboards. For more information on how users do this, see [Adding and customizing gadgets](https://confluence.atlassian.com/x/7AeiLQ).  When an app creates a dashboard item it registers a callback to receive the dashboard item ID. The callback fires whenever the item is rendered or, where the item is configurable, the user edits the item. The app then uses this resource to store the item\'s content or configuration details. For more information on working with dashboard items, see [ Building a dashboard item for a JIRA Connect add-on](https://developer.atlassian.com/server/jira/platform/guide-building-a-dashboard-item-for-a-jira-connect-add-on-33746254/) and the [Dashboard Item](https://developer.atlassian.com/cloud/jira/platform/modules/dashboard-item/) documentation.  There is no resource to set or get dashboard items.  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** The user must have edit permisson of the dashboard.
+     * Set dashboard item property
+     */
+    async setDashboardItemPropertyRaw(requestParameters: SetDashboardItemPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setDashboardItemPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -999,10 +1119,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a dashboard, replacing all the dashboard details with those provided.  **[Permissions](#permissions) required:** None  The dashboard to be updated must be owned by the user.
-     * Update dashboard
+     * Creates request options for updateDashboard without sending the request
      */
-    async updateDashboardRaw(requestParameters: UpdateDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
+    async updateDashboardRequestOpts(requestParameters: UpdateDashboardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1039,13 +1158,22 @@ export class DashboardsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/dashboard/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['dashboardDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a dashboard, replacing all the dashboard details with those provided.  **[Permissions](#permissions) required:** None  The dashboard to be updated must be owned by the user.
+     * Update dashboard
+     */
+    async updateDashboardRaw(requestParameters: UpdateDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
+        const requestOptions = await this.updateDashboardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1060,10 +1188,9 @@ export class DashboardsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Changes the title, position, and color of the gadget on a dashboard.  **[Permissions](#permissions) required:** None.
-     * Update gadget on dashboard
+     * Creates request options for updateGadget without sending the request
      */
-    async updateGadgetRaw(requestParameters: UpdateGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateGadgetRequestOpts(requestParameters: UpdateGadgetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['dashboardId'] == null) {
             throw new runtime.RequiredError(
                 'dashboardId',
@@ -1104,13 +1231,22 @@ export class DashboardsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId'])));
         urlPath = urlPath.replace(`{${"gadgetId"}}`, encodeURIComponent(String(requestParameters['gadgetId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['dashboardGadgetUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Changes the title, position, and color of the gadget on a dashboard.  **[Permissions](#permissions) required:** None.
+     * Update gadget on dashboard
+     */
+    async updateGadgetRaw(requestParameters: UpdateGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateGadgetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

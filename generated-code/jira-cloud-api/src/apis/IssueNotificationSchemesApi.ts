@@ -75,10 +75,9 @@ export interface UpdateNotificationSchemeRequest {
 export class IssueNotificationSchemesApi extends runtime.BaseAPI {
 
     /**
-     * Adds notifications to a notification scheme. You can add up to 1000 notifications per request.  *Deprecated: The notification type `EmailAddress` is no longer supported in Cloud. Refer to the [changelog](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-1031) for more details.*  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Add notifications to notification scheme
+     * Creates request options for addNotifications without sending the request
      */
-    async addNotificationsRaw(requestParameters: AddNotificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async addNotificationsRequestOpts(requestParameters: AddNotificationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -111,13 +110,22 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/notificationscheme/{id}/notification`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['addNotificationsDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds notifications to a notification scheme. You can add up to 1000 notifications per request.  *Deprecated: The notification type `EmailAddress` is no longer supported in Cloud. Refer to the [changelog](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-1031) for more details.*  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add notifications to notification scheme
+     */
+    async addNotificationsRaw(requestParameters: AddNotificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.addNotificationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -136,10 +144,9 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a notification scheme with notifications. You can create up to 1000 notifications per request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create notification scheme
+     * Creates request options for createNotificationScheme without sending the request
      */
-    async createNotificationSchemeRaw(requestParameters: CreateNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationSchemeId>> {
+    async createNotificationSchemeRequestOpts(requestParameters: CreateNotificationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createNotificationSchemeDetails'] == null) {
             throw new runtime.RequiredError(
                 'createNotificationSchemeDetails',
@@ -164,13 +171,22 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/notificationscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createNotificationSchemeDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a notification scheme with notifications. You can create up to 1000 notifications per request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create notification scheme
+     */
+    async createNotificationSchemeRaw(requestParameters: CreateNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationSchemeId>> {
+        const requestOptions = await this.createNotificationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -185,10 +201,9 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a notification scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete notification scheme
+     * Creates request options for deleteNotificationScheme without sending the request
      */
-    async deleteNotificationSchemeRaw(requestParameters: DeleteNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteNotificationSchemeRequestOpts(requestParameters: DeleteNotificationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['notificationSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'notificationSchemeId',
@@ -212,12 +227,21 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/notificationscheme/{notificationSchemeId}`;
         urlPath = urlPath.replace(`{${"notificationSchemeId"}}`, encodeURIComponent(String(requestParameters['notificationSchemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a notification scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete notification scheme
+     */
+    async deleteNotificationSchemeRaw(requestParameters: DeleteNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteNotificationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -236,10 +260,9 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [notification scheme](https://confluence.atlassian.com/x/8YdKLg), including the list of events and the recipients who will receive notifications for those events.  **[Permissions](#permissions) required:** Permission to access Jira, however, the user must have permission to administer at least one project associated with the notification scheme.
-     * Get notification scheme
+     * Creates request options for getNotificationScheme without sending the request
      */
-    async getNotificationSchemeRaw(requestParameters: GetNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationScheme>> {
+    async getNotificationSchemeRequestOpts(requestParameters: GetNotificationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -267,12 +290,21 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/notificationscheme/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [notification scheme](https://confluence.atlassian.com/x/8YdKLg), including the list of events and the recipients who will receive notifications for those events.  **[Permissions](#permissions) required:** Permission to access Jira, however, the user must have permission to administer at least one project associated with the notification scheme.
+     * Get notification scheme
+     */
+    async getNotificationSchemeRaw(requestParameters: GetNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationScheme>> {
+        const requestOptions = await this.getNotificationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -287,10 +319,9 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) mapping of project that have notification scheme assigned. You can provide either one or multiple notification scheme IDs or project IDs to filter by. If you don\'t provide any, this will return a list of all mappings. Note that only company-managed (classic) projects are supported. This is because team-managed projects don\'t have a concept of a default notification scheme. The mappings are ordered by projectId.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get projects using notification schemes paginated
+     * Creates request options for getNotificationSchemeToProjectMappings without sending the request
      */
-    async getNotificationSchemeToProjectMappingsRaw(requestParameters: GetNotificationSchemeToProjectMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanNotificationSchemeAndProjectMappingJsonBean>> {
+    async getNotificationSchemeToProjectMappingsRequestOpts(requestParameters: GetNotificationSchemeToProjectMappingsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -322,12 +353,21 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/notificationscheme/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) mapping of project that have notification scheme assigned. You can provide either one or multiple notification scheme IDs or project IDs to filter by. If you don\'t provide any, this will return a list of all mappings. Note that only company-managed (classic) projects are supported. This is because team-managed projects don\'t have a concept of a default notification scheme. The mappings are ordered by projectId.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get projects using notification schemes paginated
+     */
+    async getNotificationSchemeToProjectMappingsRaw(requestParameters: GetNotificationSchemeToProjectMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanNotificationSchemeAndProjectMappingJsonBean>> {
+        const requestOptions = await this.getNotificationSchemeToProjectMappingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -342,10 +382,9 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of [notification schemes](https://confluence.atlassian.com/x/8YdKLg) ordered by the display name.  *Note that you should allow for events without recipients to appear in responses.*  **[Permissions](#permissions) required:** Permission to access Jira, however, the user must have permission to administer at least one project associated with a notification scheme for it to be returned.
-     * Get notification schemes paginated
+     * Creates request options for getNotificationSchemes without sending the request
      */
-    async getNotificationSchemesRaw(requestParameters: GetNotificationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanNotificationScheme>> {
+    async getNotificationSchemesRequestOpts(requestParameters: GetNotificationSchemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -385,12 +424,21 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/notificationscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of [notification schemes](https://confluence.atlassian.com/x/8YdKLg) ordered by the display name.  *Note that you should allow for events without recipients to appear in responses.*  **[Permissions](#permissions) required:** Permission to access Jira, however, the user must have permission to administer at least one project associated with a notification scheme for it to be returned.
+     * Get notification schemes paginated
+     */
+    async getNotificationSchemesRaw(requestParameters: GetNotificationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanNotificationScheme>> {
+        const requestOptions = await this.getNotificationSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -405,10 +453,9 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a notification from a notification scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove notification from notification scheme
+     * Creates request options for removeNotificationFromNotificationScheme without sending the request
      */
-    async removeNotificationFromNotificationSchemeRaw(requestParameters: RemoveNotificationFromNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async removeNotificationFromNotificationSchemeRequestOpts(requestParameters: RemoveNotificationFromNotificationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['notificationSchemeId'] == null) {
             throw new runtime.RequiredError(
                 'notificationSchemeId',
@@ -440,12 +487,21 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"notificationSchemeId"}}`, encodeURIComponent(String(requestParameters['notificationSchemeId'])));
         urlPath = urlPath.replace(`{${"notificationId"}}`, encodeURIComponent(String(requestParameters['notificationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a notification from a notification scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove notification from notification scheme
+     */
+    async removeNotificationFromNotificationSchemeRaw(requestParameters: RemoveNotificationFromNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeNotificationFromNotificationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -464,10 +520,9 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a notification scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update notification scheme
+     * Creates request options for updateNotificationScheme without sending the request
      */
-    async updateNotificationSchemeRaw(requestParameters: UpdateNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async updateNotificationSchemeRequestOpts(requestParameters: UpdateNotificationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -500,13 +555,22 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/notificationscheme/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateNotificationSchemeDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a notification scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update notification scheme
+     */
+    async updateNotificationSchemeRaw(requestParameters: UpdateNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.updateNotificationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

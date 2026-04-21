@@ -57,10 +57,9 @@ export interface SanitiseJqlQueriesRequest {
 export class JQLApi extends runtime.BaseAPI {
 
     /**
-     * Returns reference data for JQL searches. This is a downloadable version of the documentation provided in [Advanced searching - fields reference](https://confluence.atlassian.com/x/gwORLQ) and [Advanced searching - functions reference](https://confluence.atlassian.com/x/hgORLQ), along with a list of JQL-reserved words. Use this information to assist with the programmatic creation of JQL queries or the validation of queries built in a custom query builder.  To filter visible field details by project or collapse non-unique fields by field type then [Get field reference data (POST)](#api-rest-api-3-jql-autocompletedata-post) can be used.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get field reference data (GET)
+     * Creates request options for getAutoComplete without sending the request
      */
-    async getAutoCompleteRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JQLReferenceData>> {
+    async getAutoCompleteRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -76,12 +75,21 @@ export class JQLApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/autocompletedata`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns reference data for JQL searches. This is a downloadable version of the documentation provided in [Advanced searching - fields reference](https://confluence.atlassian.com/x/gwORLQ) and [Advanced searching - functions reference](https://confluence.atlassian.com/x/hgORLQ), along with a list of JQL-reserved words. Use this information to assist with the programmatic creation of JQL queries or the validation of queries built in a custom query builder.  To filter visible field details by project or collapse non-unique fields by field type then [Get field reference data (POST)](#api-rest-api-3-jql-autocompletedata-post) can be used.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get field reference data (GET)
+     */
+    async getAutoCompleteRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JQLReferenceData>> {
+        const requestOptions = await this.getAutoCompleteRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -96,10 +104,9 @@ export class JQLApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns reference data for JQL searches. This is a downloadable version of the documentation provided in [Advanced searching - fields reference](https://confluence.atlassian.com/x/gwORLQ) and [Advanced searching - functions reference](https://confluence.atlassian.com/x/hgORLQ), along with a list of JQL-reserved words. Use this information to assist with the programmatic creation of JQL queries or the validation of queries built in a custom query builder.  This operation can filter the custom fields returned by project. Invalid project IDs in `projectIds` are ignored. System fields are always returned.  It can also return the collapsed field for custom fields. Collapsed fields enable searches to be performed across all fields with the same name and of the same field type. For example, the collapsed field `Component - Component[Dropdown]` enables dropdown fields `Component - cf[10061]` and `Component - cf[10062]` to be searched simultaneously.  **[Permissions](#permissions) required:** None.
-     * Get field reference data (POST)
+     * Creates request options for getAutoCompletePost without sending the request
      */
-    async getAutoCompletePostRaw(requestParameters: GetAutoCompletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JQLReferenceData>> {
+    async getAutoCompletePostRequestOpts(requestParameters: GetAutoCompletePostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['searchAutoCompleteFilter'] == null) {
             throw new runtime.RequiredError(
                 'searchAutoCompleteFilter',
@@ -124,13 +131,22 @@ export class JQLApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/autocompletedata`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['searchAutoCompleteFilter'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns reference data for JQL searches. This is a downloadable version of the documentation provided in [Advanced searching - fields reference](https://confluence.atlassian.com/x/gwORLQ) and [Advanced searching - functions reference](https://confluence.atlassian.com/x/hgORLQ), along with a list of JQL-reserved words. Use this information to assist with the programmatic creation of JQL queries or the validation of queries built in a custom query builder.  This operation can filter the custom fields returned by project. Invalid project IDs in `projectIds` are ignored. System fields are always returned.  It can also return the collapsed field for custom fields. Collapsed fields enable searches to be performed across all fields with the same name and of the same field type. For example, the collapsed field `Component - Component[Dropdown]` enables dropdown fields `Component - cf[10061]` and `Component - cf[10062]` to be searched simultaneously.  **[Permissions](#permissions) required:** None.
+     * Get field reference data (POST)
+     */
+    async getAutoCompletePostRaw(requestParameters: GetAutoCompletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JQLReferenceData>> {
+        const requestOptions = await this.getAutoCompletePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -145,10 +161,9 @@ export class JQLApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the JQL search auto complete suggestions for a field.  Suggestions can be obtained by providing:   *  `fieldName` to get a list of all values for the field.  *  `fieldName` and `fieldValue` to get a list of values containing the text in `fieldValue`.  *  `fieldName` and `predicateName` to get a list of all predicate values for the field.  *  `fieldName`, `predicateName`, and `predicateValue` to get a list of predicate values containing the text in `predicateValue`.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get field auto complete suggestions
+     * Creates request options for getFieldAutoCompleteForQueryString without sending the request
      */
-    async getFieldAutoCompleteForQueryStringRaw(requestParameters: GetFieldAutoCompleteForQueryStringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AutoCompleteSuggestions>> {
+    async getFieldAutoCompleteForQueryStringRequestOpts(requestParameters: GetFieldAutoCompleteForQueryStringRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['fieldName'] != null) {
@@ -180,12 +195,21 @@ export class JQLApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/autocompletedata/suggestions`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the JQL search auto complete suggestions for a field.  Suggestions can be obtained by providing:   *  `fieldName` to get a list of all values for the field.  *  `fieldName` and `fieldValue` to get a list of values containing the text in `fieldValue`.  *  `fieldName` and `predicateName` to get a list of all predicate values for the field.  *  `fieldName`, `predicateName`, and `predicateValue` to get a list of predicate values containing the text in `predicateValue`.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get field auto complete suggestions
+     */
+    async getFieldAutoCompleteForQueryStringRaw(requestParameters: GetFieldAutoCompleteForQueryStringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AutoCompleteSuggestions>> {
+        const requestOptions = await this.getFieldAutoCompleteForQueryStringRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -200,10 +224,9 @@ export class JQLApi extends runtime.BaseAPI {
     }
 
     /**
-     * Converts one or more JQL queries with user identifiers (username or user key) to equivalent JQL queries with account IDs.  You may wish to use this operation if your system stores JQL queries and you want to make them GDPR-compliant. For more information about GDPR-related changes, see the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/).  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Convert user identifiers to account IDs in JQL queries
+     * Creates request options for migrateQueries without sending the request
      */
-    async migrateQueriesRaw(requestParameters: MigrateQueriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ConvertedJQLQueries>> {
+    async migrateQueriesRequestOpts(requestParameters: MigrateQueriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jQLPersonalDataMigrationRequest'] == null) {
             throw new runtime.RequiredError(
                 'jQLPersonalDataMigrationRequest',
@@ -228,13 +251,22 @@ export class JQLApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/pdcleaner`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['jQLPersonalDataMigrationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Converts one or more JQL queries with user identifiers (username or user key) to equivalent JQL queries with account IDs.  You may wish to use this operation if your system stores JQL queries and you want to make them GDPR-compliant. For more information about GDPR-related changes, see the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/).  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Convert user identifiers to account IDs in JQL queries
+     */
+    async migrateQueriesRaw(requestParameters: MigrateQueriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ConvertedJQLQueries>> {
+        const requestOptions = await this.migrateQueriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -249,10 +281,9 @@ export class JQLApi extends runtime.BaseAPI {
     }
 
     /**
-     * Parses and validates JQL queries.  Validation is performed in context of the current user.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Parse JQL query
+     * Creates request options for parseJqlQueries without sending the request
      */
-    async parseJqlQueriesRaw(requestParameters: ParseJqlQueriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ParsedJqlQueries>> {
+    async parseJqlQueriesRequestOpts(requestParameters: ParseJqlQueriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['validation'] == null) {
             throw new runtime.RequiredError(
                 'validation',
@@ -288,13 +319,22 @@ export class JQLApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/parse`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['jqlQueriesToParse'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Parses and validates JQL queries.  Validation is performed in context of the current user.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Parse JQL query
+     */
+    async parseJqlQueriesRaw(requestParameters: ParseJqlQueriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ParsedJqlQueries>> {
+        const requestOptions = await this.parseJqlQueriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -309,10 +349,9 @@ export class JQLApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sanitizes one or more JQL queries by converting readable details into IDs where a user doesn\'t have permission to view the entity.  For example, if the query contains the clause *project = \'Secret project\'*, and a user does not have browse permission for the project \"Secret project\", the sanitized query replaces the clause with *project = 12345\"* (where 12345 is the ID of the project). If a user has the required permission, the clause is not sanitized. If the account ID is null, sanitizing is performed for an anonymous user.  Note that sanitization doesn\'t make the queries GDPR-compliant, because it doesn\'t remove user identifiers (username or user key). If you need to make queries GDPR-compliant, use [Convert user identifiers to account IDs in JQL queries](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-jql/#api-rest-api-3-jql-sanitize-post).  Before sanitization each JQL query is parsed. The queries are returned in the same order that they were passed.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Sanitize JQL queries
+     * Creates request options for sanitiseJqlQueries without sending the request
      */
-    async sanitiseJqlQueriesRaw(requestParameters: SanitiseJqlQueriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SanitizedJqlQueries>> {
+    async sanitiseJqlQueriesRequestOpts(requestParameters: SanitiseJqlQueriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jqlQueriesToSanitize'] == null) {
             throw new runtime.RequiredError(
                 'jqlQueriesToSanitize',
@@ -337,13 +376,22 @@ export class JQLApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/sanitize`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['jqlQueriesToSanitize'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sanitizes one or more JQL queries by converting readable details into IDs where a user doesn\'t have permission to view the entity.  For example, if the query contains the clause *project = \'Secret project\'*, and a user does not have browse permission for the project \"Secret project\", the sanitized query replaces the clause with *project = 12345\"* (where 12345 is the ID of the project). If a user has the required permission, the clause is not sanitized. If the account ID is null, sanitizing is performed for an anonymous user.  Note that sanitization doesn\'t make the queries GDPR-compliant, because it doesn\'t remove user identifiers (username or user key). If you need to make queries GDPR-compliant, use [Convert user identifiers to account IDs in JQL queries](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-jql/#api-rest-api-3-jql-sanitize-post).  Before sanitization each JQL query is parsed. The queries are returned in the same order that they were passed.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Sanitize JQL queries
+     */
+    async sanitiseJqlQueriesRaw(requestParameters: SanitiseJqlQueriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SanitizedJqlQueries>> {
+        const requestOptions = await this.sanitiseJqlQueriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

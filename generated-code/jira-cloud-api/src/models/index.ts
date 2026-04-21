@@ -76,7 +76,7 @@ export interface AddAtlassianTeamRequest {
     issueSourceId?: number;
     /**
      * The planning style for the Atlassian team. This must be "Scrum" or "Kanban".
-     * @type {string}
+     * @type {AddAtlassianTeamRequestPlanningStyleEnum}
      * @memberof AddAtlassianTeamRequest
      */
     planningStyle: AddAtlassianTeamRequestPlanningStyleEnum;
@@ -184,7 +184,7 @@ export interface AnnouncementBannerConfiguration {
     readonly message?: string;
     /**
      * Visibility of the announcement banner.
-     * @type {string}
+     * @type {AnnouncementBannerConfigurationVisibilityEnum}
      * @memberof AnnouncementBannerConfiguration
      */
     readonly visibility?: AnnouncementBannerConfigurationVisibilityEnum;
@@ -442,13 +442,13 @@ export interface ApplicationRole {
 export interface ApprovalConfiguration {
     /**
      * Whether the approval configuration is active.
-     * @type {string}
+     * @type {ApprovalConfigurationActiveEnum}
      * @memberof ApprovalConfiguration
      */
     active: ApprovalConfigurationActiveEnum;
     /**
      * How the required approval count is calculated. It may be configured to require a specific number of approvals, or approval by a percentage of approvers. If the approvers source field is Approver groups, you can configure how many approvals per group are required for the request to be approved. The number will be the same across all groups.
-     * @type {string}
+     * @type {ApprovalConfigurationConditionTypeEnum}
      * @memberof ApprovalConfiguration
      */
     conditionType: ApprovalConfigurationConditionTypeEnum;
@@ -460,7 +460,7 @@ export interface ApprovalConfiguration {
     conditionValue: string;
     /**
      * A list of roles that should be excluded as possible approvers.
-     * @type {Array<string | null>}
+     * @type {Array<ApprovalConfigurationExcludeEnum | null>}
      * @memberof ApprovalConfiguration
      */
     exclude?: Array<ApprovalConfigurationExcludeEnum | null> | null;
@@ -1222,7 +1222,7 @@ export interface AvailableWorkflowConnectRule {
     ruleKey?: string;
     /**
      * The rule type.
-     * @type {string}
+     * @type {AvailableWorkflowConnectRuleRuleTypeEnum}
      * @memberof AvailableWorkflowConnectRule
      */
     ruleType?: AvailableWorkflowConnectRuleRuleTypeEnum;
@@ -1278,7 +1278,7 @@ export interface AvailableWorkflowForgeRule {
     ruleKey?: string;
     /**
      * The rule type.
-     * @type {string}
+     * @type {AvailableWorkflowForgeRuleRuleTypeEnum}
      * @memberof AvailableWorkflowForgeRule
      */
     ruleType?: AvailableWorkflowForgeRuleRuleTypeEnum;
@@ -1340,7 +1340,7 @@ export interface AvailableWorkflowSystemRule {
     ruleKey: string;
     /**
      * The rule type.
-     * @type {string}
+     * @type {AvailableWorkflowSystemRuleRuleTypeEnum}
      * @memberof AvailableWorkflowSystemRule
      */
     ruleType: AvailableWorkflowSystemRuleRuleTypeEnum;
@@ -1541,7 +1541,7 @@ export interface BoardColumnPayload {
 export interface BoardFeaturePayload {
     /**
      * The key of the feature
-     * @type {string}
+     * @type {BoardFeaturePayloadFeatureKeyEnum}
      * @memberof BoardFeaturePayload
      */
     featureKey?: BoardFeaturePayloadFeatureKeyEnum;
@@ -1577,7 +1577,7 @@ export interface BoardPayload {
     boardFilterJQL?: string;
     /**
      * Card color settings of the board
-     * @type {string}
+     * @type {BoardPayloadCardColorStrategyEnum}
      * @memberof BoardPayload
      */
     cardColorStrategy?: BoardPayloadCardColorStrategyEnum;
@@ -1854,7 +1854,7 @@ export interface BulkEditGetFields {
 export interface BulkEditShareableEntityRequest {
     /**
      * Allowed action for bulk edit shareable entity
-     * @type {string}
+     * @type {BulkEditShareableEntityRequestActionEnum}
      * @memberof BulkEditShareableEntityRequest
      */
     action: BulkEditShareableEntityRequestActionEnum;
@@ -1904,7 +1904,7 @@ export type BulkEditShareableEntityRequestActionEnum = typeof BulkEditShareableE
 export interface BulkEditShareableEntityResponse {
     /**
      * Allowed action for bulk edit shareable entity
-     * @type {string}
+     * @type {BulkEditShareableEntityResponseActionEnum}
      * @memberof BulkEditShareableEntityResponse
      */
     action: BulkEditShareableEntityResponseActionEnum;
@@ -2129,7 +2129,7 @@ export interface BulkOperationProgress {
     started?: string;
     /**
      * The status of the task.
-     * @type {string}
+     * @type {BulkOperationProgressStatusEnum}
      * @memberof BulkOperationProgress
      */
     status?: BulkOperationProgressStatusEnum;
@@ -2397,7 +2397,7 @@ export interface CardLayoutField {
     id?: number;
     /**
      * 
-     * @type {string}
+     * @type {CardLayoutFieldModeEnum}
      * @memberof CardLayoutField
      */
     mode?: CardLayoutFieldModeEnum;
@@ -2805,7 +2805,7 @@ export interface ComponentWithIssueCount {
      *  *  `COMPONENT_LEAD` the assignee to any issues created with this component is nominally the lead for the component.
      *  *  `UNASSIGNED` an assignee is not set for issues created with this component.
      *  *  `PROJECT_DEFAULT` the assignee to any issues created with this component is nominally the default assignee for the project that the component is in.
-     * @type {string}
+     * @type {ComponentWithIssueCountAssigneeTypeEnum}
      * @memberof ComponentWithIssueCount
      */
     readonly assigneeType?: ComponentWithIssueCountAssigneeTypeEnum;
@@ -2870,7 +2870,7 @@ export interface ComponentWithIssueCount {
      *  *  `COMPONENT_LEAD` when `assignee`Type is `COMPONENT_LEAD` and the component lead has permission to be assigned issues in the project that the component is in.
      *  *  `UNASSIGNED` when `assigneeType` is `UNASSIGNED` and Jira is configured to allow unassigned issues.
      *  *  `PROJECT_DEFAULT` when none of the preceding cases are true.
-     * @type {string}
+     * @type {ComponentWithIssueCountRealAssigneeTypeEnum}
      * @memberof ComponentWithIssueCount
      */
     readonly realAssigneeType?: ComponentWithIssueCountRealAssigneeTypeEnum;
@@ -2919,7 +2919,7 @@ export interface CompoundClause {
     clauses: Array<JqlQueryClause>;
     /**
      * The operator between the clauses.
-     * @type {string}
+     * @type {CompoundClauseOperatorEnum}
      * @memberof CompoundClause
      */
     operator: CompoundClauseOperatorEnum;
@@ -2956,7 +2956,7 @@ export interface ConditionGroupConfiguration {
     conditions?: Array<WorkflowRuleConfiguration>;
     /**
      * Determines how the conditions in the group are evaluated. Accepts either `ANY` or `ALL`. If `ANY` is used, at least one condition in the group must be true for the group to evaluate to true. If `ALL` is used, all conditions in the group must be true for the group to evaluate to true.
-     * @type {string}
+     * @type {ConditionGroupConfigurationOperationEnum}
      * @memberof ConditionGroupConfiguration
      */
     operation?: ConditionGroupConfigurationOperationEnum;
@@ -2992,7 +2992,7 @@ export interface ConditionGroupPayload {
     conditions?: Array<RulePayload>;
     /**
      * Determines how the conditions in the group are evaluated. Accepts either `ANY` or `ALL`. If `ANY` is used, at least one condition in the group must be true for the group to evaluate to true. If `ALL` is used, all conditions in the group must be true for the group to evaluate to true.
-     * @type {string}
+     * @type {ConditionGroupPayloadOperationEnum}
      * @memberof ConditionGroupPayload
      */
     operation?: ConditionGroupPayloadOperationEnum;
@@ -3028,7 +3028,7 @@ export interface ConditionGroupUpdate {
     conditions?: Array<WorkflowRuleConfiguration>;
     /**
      * Determines how the conditions in the group are evaluated. Accepts either `ANY` or `ALL`. If `ANY` is used, at least one condition in the group must be true for the group to evaluate to true. If `ALL` is used, all conditions in the group must be true for the group to evaluate to true.
-     * @type {string}
+     * @type {ConditionGroupUpdateOperationEnum}
      * @memberof ConditionGroupUpdate
      */
     operation: ConditionGroupUpdateOperationEnum;
@@ -3065,7 +3065,7 @@ export interface ConfigurationsListParameters {
 export interface ConnectCustomFieldValue {
     /**
      * The type of custom field.
-     * @type {string}
+     * @type {ConnectCustomFieldValueTypeEnum}
      * @memberof ConnectCustomFieldValue
      */
     type: ConnectCustomFieldValueTypeEnum;
@@ -3259,7 +3259,7 @@ export interface ContentItem {
      *  *  **issuefieldvalue** \- To redact in issue fields
      *  *  **issue-comment** \- To redact in issue comments.
      *  *  **issue-worklog** \- To redact in issue worklogs
-     * @type {string}
+     * @type {ContentItemEntityTypeEnum}
      * @memberof ContentItem
      */
     entityType: ContentItemEntityTypeEnum;
@@ -3471,7 +3471,7 @@ export interface CreateDateFieldRequest {
     dateCustomFieldId?: number;
     /**
      * The date field type. This must be "DueDate", "TargetStartDate", "TargetEndDate" or "DateCustomField".
-     * @type {string}
+     * @type {CreateDateFieldRequestTypeEnum}
      * @memberof CreateDateFieldRequest
      */
     type: CreateDateFieldRequestTypeEnum;
@@ -3635,7 +3635,7 @@ export interface CreateIssueSecuritySchemeDetails {
 export interface CreateIssueSourceRequest {
     /**
      * The issue source type. This must be "Board", "Project" or "Filter".
-     * @type {string}
+     * @type {CreateIssueSourceRequestTypeEnum}
      * @memberof CreateIssueSourceRequest
      */
     type: CreateIssueSourceRequestTypeEnum;
@@ -3692,7 +3692,7 @@ export interface CreateNotificationSchemeDetails {
 export interface CreatePermissionHolderRequest {
     /**
      * The permission holder type. This must be "Group" or "AccountId".
-     * @type {string}
+     * @type {CreatePermissionHolderRequestTypeEnum}
      * @memberof CreatePermissionHolderRequest
      */
     type: CreatePermissionHolderRequestTypeEnum;
@@ -3728,7 +3728,7 @@ export interface CreatePermissionRequest {
     holder: CreatePermissionHolderRequest;
     /**
      * The permission type. This must be "View" or "Edit".
-     * @type {string}
+     * @type {CreatePermissionRequestTypeEnum}
      * @memberof CreatePermissionRequest
      */
     type: CreatePermissionRequestTypeEnum;
@@ -3776,7 +3776,7 @@ export interface CreatePlanOnlyTeamRequest {
     name: string;
     /**
      * The planning style for the plan-only team. This must be "Scrum" or "Kanban".
-     * @type {string}
+     * @type {CreatePlanOnlyTeamRequestPlanningStyleEnum}
      * @memberof CreatePlanOnlyTeamRequest
      */
     planningStyle: CreatePlanOnlyTeamRequestPlanningStyleEnum;
@@ -3874,7 +3874,7 @@ export interface CreatePriorityDetails {
     description?: string | null;
     /**
      * The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used. Either the iconUrl or avatarId must be defined, but not both.
-     * @type {string}
+     * @type {CreatePriorityDetailsIconUrlEnum}
      * @memberof CreatePriorityDetails
      */
     iconUrl?: CreatePriorityDetailsIconUrlEnum | null;
@@ -3984,7 +3984,7 @@ export interface CreatePrioritySchemeDetails {
 export interface CreateProjectDetails {
     /**
      * The default assignee when creating issues for this project.
-     * @type {string}
+     * @type {CreateProjectDetailsAssigneeTypeEnum}
      * @memberof CreateProjectDetails
      */
     assigneeType?: CreateProjectDetailsAssigneeTypeEnum;
@@ -4068,13 +4068,13 @@ export interface CreateProjectDetails {
     permissionScheme?: number;
     /**
      * A predefined configuration for a project. The type of the `projectTemplateKey` must match with the type of the `projectTypeKey`.
-     * @type {string}
+     * @type {CreateProjectDetailsProjectTemplateKeyEnum}
      * @memberof CreateProjectDetails
      */
     projectTemplateKey?: CreateProjectDetailsProjectTemplateKeyEnum;
     /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes), which defines the application-specific feature set. If you don't specify the project template you have to specify the project type.
-     * @type {string}
+     * @type {CreateProjectDetailsProjectTypeKeyEnum}
      * @memberof CreateProjectDetails
      */
     projectTypeKey?: CreateProjectDetailsProjectTypeKeyEnum;
@@ -4187,7 +4187,7 @@ export interface CreateResolutionDetails {
 export interface CreateSchedulingRequest {
     /**
      * The dependencies for the plan. This must be "Sequential" or "Concurrent".
-     * @type {string}
+     * @type {CreateSchedulingRequestDependenciesEnum}
      * @memberof CreateSchedulingRequest
      */
     dependencies?: CreateSchedulingRequestDependenciesEnum;
@@ -4199,13 +4199,13 @@ export interface CreateSchedulingRequest {
     endDate?: CreateDateFieldRequest;
     /**
      * The estimation unit for the plan. This must be "StoryPoints", "Days" or "Hours".
-     * @type {string}
+     * @type {CreateSchedulingRequestEstimationEnum}
      * @memberof CreateSchedulingRequest
      */
     estimation: CreateSchedulingRequestEstimationEnum;
     /**
      * The inferred dates for the plan. This must be "None", "SprintDates" or "ReleaseDates".
-     * @type {string}
+     * @type {CreateSchedulingRequestInferredDatesEnum}
      * @memberof CreateSchedulingRequest
      */
     inferredDates?: CreateSchedulingRequestInferredDatesEnum;
@@ -4317,7 +4317,7 @@ export interface CreateWorkflowCondition {
     configuration?: { [key: string]: any; };
     /**
      * The compound condition operator.
-     * @type {string}
+     * @type {CreateWorkflowConditionOperatorEnum}
      * @memberof CreateWorkflowCondition
      */
     operator?: CreateWorkflowConditionOperatorEnum;
@@ -4449,7 +4449,7 @@ export interface CreateWorkflowTransitionDetails {
     to: string;
     /**
      * The type of the transition.
-     * @type {string}
+     * @type {CreateWorkflowTransitionDetailsTypeEnum}
      * @memberof CreateWorkflowTransitionDetails
      */
     type: CreateWorkflowTransitionDetailsTypeEnum;
@@ -5501,7 +5501,7 @@ export interface CustomFieldDefinitionJsonBean {
      *  *  `version`: `versionsearcher`
      * 
      * If no searcher is provided, the field isn't searchable. However, [Forge custom fields](https://developer.atlassian.com/platform/forge/manifest-reference/modules/#jira-custom-field-type--beta-) have a searcher set automatically, so are always searchable.
-     * @type {string}
+     * @type {CustomFieldDefinitionJsonBeanSearcherKeyEnum}
      * @memberof CustomFieldDefinitionJsonBean
      */
     searcherKey?: CustomFieldDefinitionJsonBeanSearcherKeyEnum;
@@ -5653,7 +5653,7 @@ export interface CustomFieldPayload {
     name?: string;
     /**
      * The strategy to use when there is a conflict with an existing custom field. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters
-     * @type {string}
+     * @type {CustomFieldPayloadOnConflictEnum}
      * @memberof CustomFieldPayload
      */
     onConflict?: CustomFieldPayloadOnConflictEnum;
@@ -5665,7 +5665,7 @@ export interface CustomFieldPayload {
     pcri?: ProjectCreateResourceIdentifier;
     /**
      * Allows an overwrite to declare the new Custom Field to be created as a GLOBAL-scoped field. Leave this as empty or null to use the project's default scope.
-     * @type {string}
+     * @type {CustomFieldPayloadScopeEnum}
      * @memberof CustomFieldPayload
      */
     scope?: CustomFieldPayloadScopeEnum;
@@ -5864,7 +5864,7 @@ export interface CustomTemplateRequestDTO {
 export interface CustomTemplatesProjectDetails {
     /**
      * The access level of the project. Only used by team-managed project
-     * @type {string}
+     * @type {CustomTemplatesProjectDetailsAccessLevelEnum}
      * @memberof CustomTemplatesProjectDetails
      */
     accessLevel?: CustomTemplatesProjectDetailsAccessLevelEnum;
@@ -5876,7 +5876,7 @@ export interface CustomTemplatesProjectDetails {
     additionalProperties?: { [key: string]: string; };
     /**
      * The default assignee when creating issues in the project
-     * @type {string}
+     * @type {CustomTemplatesProjectDetailsAssigneeTypeEnum}
      * @memberof CustomTemplatesProjectDetails
      */
     assigneeType?: CustomTemplatesProjectDetailsAssigneeTypeEnum;
@@ -6089,7 +6089,7 @@ export interface DashboardDetails {
 export interface DashboardGadget {
     /**
      * The color of the gadget. Should be one of `blue`, `red`, `yellow`, `green`, `cyan`, `purple`, `gray`, or `white`.
-     * @type {string}
+     * @type {DashboardGadgetColorEnum}
      * @memberof DashboardGadget
      */
     readonly color: DashboardGadgetColorEnum;
@@ -6354,7 +6354,7 @@ export interface DefaultShareScope {
      *  *  `AUTHENTICATED` Shared with all logged-in users.
      *  *  `GLOBAL` Shared with all logged-in users. This shows as `AUTHENTICATED` in the response.
      *  *  `PRIVATE` Not shared with any users.
-     * @type {string}
+     * @type {DefaultShareScopeScopeEnum}
      * @memberof DefaultShareScope
      */
     scope: DefaultShareScopeScopeEnum;
@@ -6398,7 +6398,7 @@ export interface DefaultWorkflow {
 export interface DefaultWorkflowEditorResponse {
     /**
      * 
-     * @type {string}
+     * @type {DefaultWorkflowEditorResponseValueEnum}
      * @memberof DefaultWorkflowEditorResponse
      */
     value?: DefaultWorkflowEditorResponseValueEnum;
@@ -6758,7 +6758,7 @@ export interface EventNotification {
     id?: number;
     /**
      * Identifies the recipients of the notification.
-     * @type {string}
+     * @type {EventNotificationNotificationTypeEnum}
      * @memberof EventNotification
      */
     notificationType?: EventNotificationNotificationTypeEnum;
@@ -7275,7 +7275,7 @@ export interface FieldChangedClause {
     field: JqlQueryField;
     /**
      * The operator applied to the field.
-     * @type {string}
+     * @type {FieldChangedClauseOperatorEnum}
      * @memberof FieldChangedClause
      */
     operator: FieldChangedClauseOperatorEnum;
@@ -7687,7 +7687,7 @@ export interface FieldLastUsed {
      *  *  *TRACKED*: field is tracked and a last used date is available.
      *  *  *NOT\_TRACKED*: field is not tracked, last used date is not available.
      *  *  *NO\_INFORMATION*: field is tracked, but no last used date is available.
-     * @type {string}
+     * @type {FieldLastUsedTypeEnum}
      * @memberof FieldLastUsed
      */
     type?: FieldLastUsedTypeEnum;
@@ -7878,7 +7878,7 @@ export interface FieldMetadata {
 export interface FieldReferenceData {
     /**
      * Whether the field provide auto-complete suggestions.
-     * @type {string}
+     * @type {FieldReferenceDataAutoEnum}
      * @memberof FieldReferenceData
      */
     auto?: FieldReferenceDataAutoEnum;
@@ -7890,7 +7890,7 @@ export interface FieldReferenceData {
     cfid?: string;
     /**
      * Whether this field has been deprecated.
-     * @type {string}
+     * @type {FieldReferenceDataDeprecatedEnum}
      * @memberof FieldReferenceData
      */
     deprecated?: FieldReferenceDataDeprecatedEnum;
@@ -7918,13 +7918,13 @@ export interface FieldReferenceData {
     operators?: Array<string>;
     /**
      * Whether the field can be used in a query's `ORDER BY` clause.
-     * @type {string}
+     * @type {FieldReferenceDataOrderableEnum}
      * @memberof FieldReferenceData
      */
     orderable?: FieldReferenceDataOrderableEnum;
     /**
      * Whether the content of this field can be searched.
-     * @type {string}
+     * @type {FieldReferenceDataSearchableEnum}
      * @memberof FieldReferenceData
      */
     searchable?: FieldReferenceDataSearchableEnum;
@@ -8143,7 +8143,7 @@ export interface FieldValueClause {
     operand: JqlQueryClauseOperand;
     /**
      * The operator between the field and operand.
-     * @type {string}
+     * @type {FieldValueClauseOperatorEnum}
      * @memberof FieldValueClause
      */
     operator: FieldValueClauseOperatorEnum;
@@ -8189,7 +8189,7 @@ export interface FieldWasClause {
     operand: JqlQueryClauseOperand;
     /**
      * The operator between the field and operand.
-     * @type {string}
+     * @type {FieldWasClauseOperatorEnum}
      * @memberof FieldWasClause
      */
     operator: FieldWasClauseOperatorEnum;
@@ -8227,7 +8227,7 @@ export interface Fields {
     retain?: boolean | null;
     /**
      * 
-     * @type {string}
+     * @type {FieldsTypeEnum}
      * @memberof Fields
      */
     type?: FieldsTypeEnum;
@@ -8585,7 +8585,7 @@ export interface FoundGroup {
      * \* admins - when a team is managed by an admin (team members can only be modified by admins).  
      * \* team-members - managed by existing team members, new members need to be invited to join.  
      * \* open - anyone can join or modify this team.
-     * @type {string}
+     * @type {FoundGroupManagedByEnum}
      * @memberof FoundGroup
      */
     managedBy?: FoundGroupManagedByEnum;
@@ -8600,7 +8600,7 @@ export interface FoundGroup {
      * \* team-collaboration - A platform team managed in people directory.  
      * \* userbase-group - a group of users created in adminhub.  
      * \* admin-oversight - currently unused.
-     * @type {string}
+     * @type {FoundGroupUsageTypeEnum}
      * @memberof FoundGroup
      */
     usageType?: FoundGroupUsageTypeEnum;
@@ -8761,13 +8761,13 @@ export interface FunctionReferenceData {
     displayName?: string;
     /**
      * Whether the function can take a list of arguments.
-     * @type {string}
+     * @type {FunctionReferenceDataIsListEnum}
      * @memberof FunctionReferenceData
      */
     isList?: FunctionReferenceDataIsListEnum;
     /**
      * Whether the function supports both single and list value operators.
-     * @type {string}
+     * @type {FunctionReferenceDataSupportsListAndSingleValueOperatorsEnum}
      * @memberof FunctionReferenceData
      */
     supportsListAndSingleValueOperators?: FunctionReferenceDataSupportsListAndSingleValueOperatorsEnum;
@@ -8830,7 +8830,7 @@ export interface GetAtlassianTeamResponse {
     issueSourceId?: number;
     /**
      * The planning style for the Atlassian team. This is "Scrum" or "Kanban".
-     * @type {string}
+     * @type {GetAtlassianTeamResponsePlanningStyleEnum}
      * @memberof GetAtlassianTeamResponse
      */
     planningStyle: GetAtlassianTeamResponsePlanningStyleEnum;
@@ -8904,7 +8904,7 @@ export interface GetDateFieldResponse {
     dateCustomFieldId?: number;
     /**
      * The date field type. This is "DueDate", "TargetStartDate", "TargetEndDate" or "DateCustomField".
-     * @type {string}
+     * @type {GetDateFieldResponseTypeEnum}
      * @memberof GetDateFieldResponse
      */
     type: GetDateFieldResponseTypeEnum;
@@ -9129,7 +9129,7 @@ export interface GetForgeAppPropertyKeys200ResponseKeysInner {
 export interface GetIssueSourceResponse {
     /**
      * The issue source type. This is "Board", "Project" or "Filter".
-     * @type {string}
+     * @type {GetIssueSourceResponseTypeEnum}
      * @memberof GetIssueSourceResponse
      */
     type: GetIssueSourceResponseTypeEnum;
@@ -9161,7 +9161,7 @@ export type GetIssueSourceResponseTypeEnum = typeof GetIssueSourceResponseTypeEn
 export interface GetPermissionHolderResponse {
     /**
      * The permission holder type. This is "Group" or "AccountId".
-     * @type {string}
+     * @type {GetPermissionHolderResponseTypeEnum}
      * @memberof GetPermissionHolderResponse
      */
     type: GetPermissionHolderResponseTypeEnum;
@@ -9197,7 +9197,7 @@ export interface GetPermissionResponse {
     holder: GetPermissionHolderResponse;
     /**
      * The permission type. This is "View" or "Edit".
-     * @type {string}
+     * @type {GetPermissionResponseTypeEnum}
      * @memberof GetPermissionResponse
      */
     type: GetPermissionResponseTypeEnum;
@@ -9251,7 +9251,7 @@ export interface GetPlanOnlyTeamResponse {
     name: string;
     /**
      * The planning style for the plan-only team. This is "Scrum" or "Kanban".
-     * @type {string}
+     * @type {GetPlanOnlyTeamResponsePlanningStyleEnum}
      * @memberof GetPlanOnlyTeamResponse
      */
     planningStyle: GetPlanOnlyTeamResponsePlanningStyleEnum;
@@ -9341,7 +9341,7 @@ export interface GetPlanResponse {
     scheduling: GetSchedulingResponse;
     /**
      * The plan status. This is "Active", "Trashed" or "Archived".
-     * @type {string}
+     * @type {GetPlanResponseStatusEnum}
      * @memberof GetPlanResponse
      */
     status: GetPlanResponseStatusEnum;
@@ -9390,7 +9390,7 @@ export interface GetPlanResponseForPage {
     scenarioId: string;
     /**
      * The plan status. This is "Active", "Trashed" or "Archived".
-     * @type {string}
+     * @type {GetPlanResponseForPageStatusEnum}
      * @memberof GetPlanResponseForPage
      */
     status: GetPlanResponseForPageStatusEnum;
@@ -9440,7 +9440,7 @@ export type GetRemoteIssueLinks200Response = Array<RemoteIssueLink> | RemoteIssu
 export interface GetSchedulingResponse {
     /**
      * The dependencies for the plan. This is "Sequential" or "Concurrent".
-     * @type {string}
+     * @type {GetSchedulingResponseDependenciesEnum}
      * @memberof GetSchedulingResponse
      */
     dependencies: GetSchedulingResponseDependenciesEnum;
@@ -9452,13 +9452,13 @@ export interface GetSchedulingResponse {
     endDate: GetDateFieldResponse;
     /**
      * The estimation unit for the plan. This is "StoryPoints", "Days" or "Hours".
-     * @type {string}
+     * @type {GetSchedulingResponseEstimationEnum}
      * @memberof GetSchedulingResponse
      */
     estimation: GetSchedulingResponseEstimationEnum;
     /**
      * The inferred dates for the plan. This is "None", "SprintDates" or "ReleaseDates".
-     * @type {string}
+     * @type {GetSchedulingResponseInferredDatesEnum}
      * @memberof GetSchedulingResponse
      */
     inferredDates: GetSchedulingResponseInferredDatesEnum;
@@ -9520,7 +9520,7 @@ export interface GetTeamResponseForPage {
     name?: string;
     /**
      * The team type. This is "PlanOnly" or "Atlassian".
-     * @type {string}
+     * @type {GetTeamResponseForPageTypeEnum}
      * @memberof GetTeamResponseForPage
      */
     type: GetTeamResponseForPageTypeEnum;
@@ -9544,7 +9544,7 @@ export type GetTeamResponseForPageTypeEnum = typeof GetTeamResponseForPageTypeEn
 export interface GlobalScopeBean {
     /**
      * Defines the behavior of the option in the global context.If notSelectable is set, the option cannot be set as the field's value. This is useful for archiving an option that has previously been selected but shouldn't be used anymore.If defaultValue is set, the option is selected by default.
-     * @type {Set<string>}
+     * @type {Set<GlobalScopeBeanAttributesEnum>}
      * @memberof GlobalScopeBean
      */
     attributes?: Array<GlobalScopeBeanAttributesEnum>;
@@ -9636,7 +9636,7 @@ export interface GroupLabel {
     title?: string;
     /**
      * The type of the group label.
-     * @type {string}
+     * @type {GroupLabelTypeEnum}
      * @memberof GroupLabel
      */
     type?: GroupLabelTypeEnum;
@@ -10149,7 +10149,7 @@ export interface IssueBulkEditField {
     isRequired?: boolean;
     /**
      * Specifies supported actions (like add, replace, remove) on multi-select fields via an enum.
-     * @type {Array<string>}
+     * @type {Array<IssueBulkEditFieldMultiSelectFieldOptionsEnum>}
      * @memberof IssueBulkEditField
      */
     multiSelectFieldOptions?: Array<IssueBulkEditFieldMultiSelectFieldOptionsEnum>;
@@ -10519,7 +10519,7 @@ export interface IssueFieldOption {
 export interface IssueFieldOptionConfiguration {
     /**
      * DEPRECATED
-     * @type {Set<string>}
+     * @type {Set<IssueFieldOptionConfigurationAttributesEnum>}
      * @memberof IssueFieldOptionConfiguration
      */
     attributes?: Array<IssueFieldOptionConfigurationAttributesEnum>;
@@ -10656,13 +10656,13 @@ export interface IssueLayoutItemPayload {
     properties?: { [key: string]: any; };
     /**
      * The item section type
-     * @type {string}
+     * @type {IssueLayoutItemPayloadSectionTypeEnum}
      * @memberof IssueLayoutItemPayload
      */
     sectionType?: IssueLayoutItemPayloadSectionTypeEnum;
     /**
      * The item type. Currently only support FIELD
-     * @type {string}
+     * @type {IssueLayoutItemPayloadTypeEnum}
      * @memberof IssueLayoutItemPayload
      */
     type?: IssueLayoutItemPayloadTypeEnum;
@@ -10701,7 +10701,7 @@ export interface IssueLayoutPayload {
     containerId?: ProjectCreateResourceIdentifier;
     /**
      * The issue layout type
-     * @type {string}
+     * @type {IssueLayoutPayloadIssueLayoutTypeEnum}
      * @memberof IssueLayoutPayload
      */
     issueLayoutType?: IssueLayoutPayloadIssueLayoutTypeEnum;
@@ -11123,7 +11123,7 @@ export interface IssueTypeCreateBean {
      * Deprecated. Use `hierarchyLevel` instead. See the [deprecation notice](https://community.developer.atlassian.com/t/deprecation-of-the-epic-link-parent-link-and-other-related-fields-in-rest-apis-and-webhooks/54048) for details.
      * 
      * Whether the issue type is `subtype` or `standard`. Defaults to `standard`.
-     * @type {string}
+     * @type {IssueTypeCreateBeanTypeEnum}
      * @memberof IssueTypeCreateBean
      */
     type?: IssueTypeCreateBeanTypeEnum;
@@ -11226,7 +11226,7 @@ export interface IssueTypeHierarchyPayload {
     name?: string;
     /**
      * The conflict strategy to use when the issue type already exists. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters
-     * @type {string}
+     * @type {IssueTypeHierarchyPayloadOnConflictEnum}
      * @memberof IssueTypeHierarchyPayload
      */
     onConflict?: IssueTypeHierarchyPayloadOnConflictEnum;
@@ -11411,7 +11411,7 @@ export interface IssueTypePayload {
     name?: string;
     /**
      * The conflict strategy to use when the issue type already exists. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters
-     * @type {string}
+     * @type {IssueTypePayloadOnConflictEnum}
      * @memberof IssueTypePayload
      */
     onConflict?: IssueTypePayloadOnConflictEnum;
@@ -12383,7 +12383,7 @@ export interface JexpJqlIssues {
     startAt?: number;
     /**
      * Determines how to validate the JQL query and treat the validation results.
-     * @type {string}
+     * @type {JexpJqlIssuesValidationEnum}
      * @memberof JexpJqlIssues
      */
     validation?: JexpJqlIssuesValidationEnum;
@@ -12856,7 +12856,7 @@ export interface JiraExpressionValidationError {
     message: string;
     /**
      * The error type.
-     * @type {string}
+     * @type {JiraExpressionValidationErrorTypeEnum}
      * @memberof JiraExpressionValidationError
      */
     type: JiraExpressionValidationErrorTypeEnum;
@@ -13173,7 +13173,7 @@ export interface JiraIssueTypeField {
 export interface JiraLabelPropertiesInputJackson1 {
     /**
      * 
-     * @type {string}
+     * @type {JiraLabelPropertiesInputJackson1ColorEnum}
      * @memberof JiraLabelPropertiesInputJackson1
      */
     color?: JiraLabelPropertiesInputJackson1ColorEnum;
@@ -13251,7 +13251,7 @@ export type JiraLabelPropertiesInputJackson1ColorEnum = typeof JiraLabelProperti
 export interface JiraLabelsField {
     /**
      * 
-     * @type {string}
+     * @type {JiraLabelsFieldBulkEditMultiSelectFieldOptionEnum}
      * @memberof JiraLabelsField
      */
     bulkEditMultiSelectFieldOption: JiraLabelsFieldBulkEditMultiSelectFieldOptionEnum;
@@ -13308,7 +13308,7 @@ export interface JiraLabelsInput {
 export interface JiraMultiSelectComponentField {
     /**
      * 
-     * @type {string}
+     * @type {JiraMultiSelectComponentFieldBulkEditMultiSelectFieldOptionEnum}
      * @memberof JiraMultiSelectComponentField
      */
     bulkEditMultiSelectFieldOption: JiraMultiSelectComponentFieldBulkEditMultiSelectFieldOptionEnum;
@@ -13403,7 +13403,7 @@ export interface JiraMultipleSelectUserPickerField {
 export interface JiraMultipleVersionPickerField {
     /**
      * 
-     * @type {string}
+     * @type {JiraMultipleVersionPickerFieldBulkEditMultiSelectFieldOptionEnum}
      * @memberof JiraMultipleVersionPickerField
      */
     bulkEditMultiSelectFieldOption: JiraMultipleVersionPickerFieldBulkEditMultiSelectFieldOptionEnum;
@@ -13640,7 +13640,7 @@ export interface JiraStatus {
     scope?: StatusScope;
     /**
      * The category of the status.
-     * @type {string}
+     * @type {JiraStatusStatusCategoryEnum}
      * @memberof JiraStatus
      */
     statusCategory?: JiraStatusStatusCategoryEnum;
@@ -13851,7 +13851,7 @@ export interface JiraWorkflowPreviewStatus {
     scope?: WorkflowPreviewScope;
     /**
      * The category of the status.
-     * @type {string}
+     * @type {JiraWorkflowPreviewStatusStatusCategoryEnum}
      * @memberof JiraWorkflowPreviewStatus
      */
     statusCategory?: JiraWorkflowPreviewStatusStatusCategoryEnum;
@@ -13906,7 +13906,7 @@ export interface JiraWorkflowStatus {
     scope?: WorkflowScope;
     /**
      * The category of the status.
-     * @type {string}
+     * @type {JiraWorkflowStatusStatusCategoryEnum}
      * @memberof JiraWorkflowStatus
      */
     statusCategory?: JiraWorkflowStatusStatusCategoryEnum;
@@ -14163,7 +14163,7 @@ export interface JqlQueryClause {
     clauses: Array<JqlQueryClause>;
     /**
      * The operator applied to the field.
-     * @type {string}
+     * @type {JqlQueryClauseOperatorEnum}
      * @memberof JqlQueryClause
      */
     operator: JqlQueryClauseOperatorEnum;
@@ -14240,7 +14240,7 @@ export interface JqlQueryClauseOperand {
     _function: string;
     /**
      * The keyword that is the operand value.
-     * @type {string}
+     * @type {JqlQueryClauseOperandKeywordEnum}
      * @memberof JqlQueryClauseOperand
      */
     keyword: JqlQueryClauseOperandKeywordEnum;
@@ -14269,7 +14269,7 @@ export interface JqlQueryClauseTimePredicate {
     operand: JqlQueryClauseOperand;
     /**
      * The operator between the field and the operand.
-     * @type {string}
+     * @type {JqlQueryClauseTimePredicateOperatorEnum}
      * @memberof JqlQueryClauseTimePredicate
      */
     operator: JqlQueryClauseTimePredicateOperatorEnum;
@@ -14341,7 +14341,7 @@ export interface JqlQueryFieldEntityProperty {
     path: string;
     /**
      * The type of the property value extraction. Not available if the extraction for the property is not registered on the instance with the [Entity property](https://developer.atlassian.com/cloud/jira/platform/modules/entity-property/) module.
-     * @type {string}
+     * @type {JqlQueryFieldEntityPropertyTypeEnum}
      * @memberof JqlQueryFieldEntityProperty
      */
     type?: JqlQueryFieldEntityPropertyTypeEnum;
@@ -14381,7 +14381,7 @@ export interface JqlQueryOrderByClause {
 export interface JqlQueryOrderByClauseElement {
     /**
      * The direction in which to order the results.
-     * @type {string}
+     * @type {JqlQueryOrderByClauseElementDirectionEnum}
      * @memberof JqlQueryOrderByClauseElement
      */
     direction?: JqlQueryOrderByClauseElementDirectionEnum;
@@ -14460,7 +14460,7 @@ export interface JqlQueryUnitaryOperand {
     _function: string;
     /**
      * The keyword that is the operand value.
-     * @type {string}
+     * @type {JqlQueryUnitaryOperandKeywordEnum}
      * @memberof JqlQueryUnitaryOperand
      */
     keyword: JqlQueryUnitaryOperandKeywordEnum;
@@ -14646,7 +14646,7 @@ export interface JsonNode {
     number?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {JsonNodeNumberTypeEnum}
      * @memberof JsonNode
      */
     numberType?: JsonNodeNumberTypeEnum;
@@ -14783,7 +14783,7 @@ export interface JsonTypeBean {
 export interface KeywordOperand {
     /**
      * The keyword that is the operand value.
-     * @type {string}
+     * @type {KeywordOperandKeywordEnum}
      * @memberof KeywordOperand
      */
     keyword: KeywordOperandKeywordEnum;
@@ -14844,7 +14844,7 @@ export interface LicensedApplication {
     readonly id: string;
     /**
      * The licensing plan.
-     * @type {string}
+     * @type {LicensedApplicationPlanEnum}
      * @memberof LicensedApplication
      */
     readonly plan: LicensedApplicationPlanEnum;
@@ -15012,7 +15012,7 @@ export interface MandatoryFieldValue {
     retain?: boolean | null;
     /**
      * Will treat as `MandatoryFieldValue` if type is `raw` or `empty`
-     * @type {string}
+     * @type {MandatoryFieldValueTypeEnum}
      * @memberof MandatoryFieldValue
      */
     type?: MandatoryFieldValueTypeEnum | null;
@@ -15048,7 +15048,7 @@ export interface MandatoryFieldValueForADF {
     retain?: boolean | null;
     /**
      * Will treat as `MandatoryFieldValueForADF` if type is `adf`
-     * @type {string}
+     * @type {MandatoryFieldValueForADFTypeEnum}
      * @memberof MandatoryFieldValueForADF
      */
     type: MandatoryFieldValueForADFTypeEnum;
@@ -15252,7 +15252,7 @@ export interface MoveFieldBean {
     after?: string;
     /**
      * The named position to which the screen tab field should be moved. Required if `after` isn't provided.
-     * @type {string}
+     * @type {MoveFieldBeanPositionEnum}
      * @memberof MoveFieldBean
      */
     position?: MoveFieldBeanPositionEnum;
@@ -15811,7 +15811,7 @@ export interface NotificationSchemePayload {
     notificationSchemeEvents?: Array<NotificationSchemeEventPayload>;
     /**
      * The strategy to use when there is a conflict with an existing entity
-     * @type {string}
+     * @type {NotificationSchemePayloadOnConflictEnum}
      * @memberof NotificationSchemePayload
      */
     onConflict?: NotificationSchemePayloadOnConflictEnum;
@@ -15906,7 +15906,7 @@ export interface OrderOfCustomFieldOptions {
     customFieldOptionIds: Array<string>;
     /**
      * The position the custom field options should be moved to. Required if `after` isn't provided.
-     * @type {string}
+     * @type {OrderOfCustomFieldOptionsPositionEnum}
      * @memberof OrderOfCustomFieldOptions
      */
     position?: OrderOfCustomFieldOptionsPositionEnum;
@@ -15942,7 +15942,7 @@ export interface OrderOfIssueTypes {
     issueTypeIds: Array<string>;
     /**
      * The position the issue types should be moved to. Required if `after` isn't provided.
-     * @type {string}
+     * @type {OrderOfIssueTypesPositionEnum}
      * @memberof OrderOfIssueTypes
      */
     position?: OrderOfIssueTypesPositionEnum;
@@ -19683,7 +19683,7 @@ export interface PermissionPayloadDTO {
     name?: string;
     /**
      * The strategy to use when there is a conflict with an existing permission scheme. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters; NEW - If the entity exist, try and create a new one with a different name
-     * @type {string}
+     * @type {PermissionPayloadDTOOnConflictEnum}
      * @memberof PermissionPayloadDTO
      */
     onConflict?: PermissionPayloadDTOOnConflictEnum;
@@ -19828,7 +19828,7 @@ export interface PreviewConditionGroupConfiguration {
     conditions?: Array<PreviewRuleConfiguration>;
     /**
      * Determines how the conditions in the group are evaluated. Accepts either `ANY` or `ALL`. If `ANY` is used, at least one condition in the group must be true for the group to evaluate to true. If `ALL` is used, all conditions in the group must be true for the group to evaluate to true.
-     * @type {string}
+     * @type {PreviewConditionGroupConfigurationOperationEnum}
      * @memberof PreviewConditionGroupConfiguration
      */
     operation?: PreviewConditionGroupConfigurationOperationEnum;
@@ -20162,7 +20162,7 @@ export interface Project {
     readonly archivedDate?: string;
     /**
      * The default assignee when creating issues for this project.
-     * @type {string}
+     * @type {ProjectAssigneeTypeEnum}
      * @memberof Project
      */
     readonly assigneeType?: ProjectAssigneeTypeEnum;
@@ -20288,7 +20288,7 @@ export interface Project {
     readonly projectCategory?: ProjectCategory;
     /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
-     * @type {string}
+     * @type {ProjectProjectTypeKeyEnum}
      * @memberof Project
      */
     readonly projectTypeKey?: ProjectProjectTypeKeyEnum;
@@ -20324,7 +20324,7 @@ export interface Project {
     readonly simplified?: boolean;
     /**
      * The type of the project.
-     * @type {string}
+     * @type {ProjectStyleEnum}
      * @memberof Project
      */
     readonly style?: ProjectStyleEnum;
@@ -20404,19 +20404,19 @@ export interface ProjectAndIssueTypePair {
 export interface ProjectArchetype {
     /**
      * 
-     * @type {string}
+     * @type {ProjectArchetypeRealTypeEnum}
      * @memberof ProjectArchetype
      */
     realType?: ProjectArchetypeRealTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {ProjectArchetypeStyleEnum}
      * @memberof ProjectArchetype
      */
     style?: ProjectArchetypeStyleEnum;
     /**
      * 
-     * @type {string}
+     * @type {ProjectArchetypeTypeEnum}
      * @memberof ProjectArchetype
      */
     type?: ProjectArchetypeTypeEnum;
@@ -20536,7 +20536,7 @@ export interface ProjectComponent {
      * 
      * Default value: `PROJECT_DEFAULT`.  
      * Optional when creating or updating a component.
-     * @type {string}
+     * @type {ProjectComponentAssigneeTypeEnum}
      * @memberof ProjectComponent
      */
     assigneeType?: ProjectComponentAssigneeTypeEnum;
@@ -20613,7 +20613,7 @@ export interface ProjectComponent {
      *  *  `COMPONENT_LEAD` when `assignee`Type is `COMPONENT_LEAD` and the component lead has permission to be assigned issues in the project that the component is in.
      *  *  `UNASSIGNED` when `assigneeType` is `UNASSIGNED` and Jira is configured to allow unassigned issues.
      *  *  `PROJECT_DEFAULT` when none of the preceding cases are true.
-     * @type {string}
+     * @type {ProjectComponentRealAssigneeTypeEnum}
      * @memberof ProjectComponent
      */
     readonly realAssigneeType?: ProjectComponentRealAssigneeTypeEnum;
@@ -20686,7 +20686,7 @@ export interface ProjectCreateResourceIdentifier {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {ProjectCreateResourceIdentifierTypeEnum}
      * @memberof ProjectCreateResourceIdentifier
      */
     type?: ProjectCreateResourceIdentifierTypeEnum;
@@ -20785,7 +20785,7 @@ export interface ProjectDetails {
     readonly projectCategory?: UpdatedProjectCategory;
     /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
-     * @type {string}
+     * @type {ProjectDetailsProjectTypeKeyEnum}
      * @memberof ProjectDetails
      */
     readonly projectTypeKey?: ProjectDetailsProjectTypeKeyEnum;
@@ -20877,7 +20877,7 @@ export interface ProjectFeature {
     projectId?: number;
     /**
      * The state of the feature. When updating the state of a feature, only ENABLED and DISABLED are supported. Responses can contain all values
-     * @type {string}
+     * @type {ProjectFeatureStateEnum}
      * @memberof ProjectFeature
      */
     state?: ProjectFeatureStateEnum;
@@ -20908,7 +20908,7 @@ export type ProjectFeatureStateEnum = typeof ProjectFeatureStateEnum[keyof typeo
 export interface ProjectFeatureState {
     /**
      * The feature state.
-     * @type {string}
+     * @type {ProjectFeatureStateStateEnum}
      * @memberof ProjectFeatureState
      */
     state?: ProjectFeatureStateStateEnum;
@@ -21350,7 +21350,7 @@ export interface ProjectPayload {
     permissionSchemeId?: ProjectCreateResourceIdentifier;
     /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes), which defines the application-specific feature set. If you don't specify the project template you have to specify the project type.
-     * @type {string}
+     * @type {ProjectPayloadProjectTypeKeyEnum}
      * @memberof ProjectPayload
      */
     projectTypeKey?: ProjectPayloadProjectTypeKeyEnum;
@@ -21550,7 +21550,7 @@ export interface ProjectRoleDetails {
     translatedName?: string;
     /**
      * The type of the project role. This is "DEFAULT" or "GUEST\_ROLE".
-     * @type {string}
+     * @type {ProjectRoleDetailsTypeEnum}
      * @memberof ProjectRoleDetails
      */
     readonly type?: ProjectRoleDetailsTypeEnum;
@@ -21612,7 +21612,7 @@ export interface ProjectRoleUser {
 export interface ProjectScopeBean {
     /**
      * Defines the behavior of the option in the project.If notSelectable is set, the option cannot be set as the field's value. This is useful for archiving an option that has previously been selected but shouldn't be used anymore.If defaultValue is set, the option is selected by default.
-     * @type {Set<string>}
+     * @type {Set<ProjectScopeBeanAttributesEnum>}
      * @memberof ProjectScopeBean
      */
     attributes?: Array<ProjectScopeBeanAttributesEnum>;
@@ -21709,7 +21709,7 @@ export interface ProjectTemplateModel {
     templateGenerationOptions?: CustomTemplateOptions;
     /**
      * 
-     * @type {string}
+     * @type {ProjectTemplateModelTypeEnum}
      * @memberof ProjectTemplateModel
      */
     type?: ProjectTemplateModelTypeEnum;
@@ -21916,7 +21916,7 @@ export interface RedactionJobStatusResponse {
     bulkRedactionResponse?: BulkRedactionResponse;
     /**
      * 
-     * @type {string}
+     * @type {RedactionJobStatusResponseJobStatusEnum}
      * @memberof RedactionJobStatusResponse
      */
     jobStatus?: RedactionJobStatusResponseJobStatusEnum;
@@ -22521,7 +22521,7 @@ export interface RoleActor {
     readonly name?: string;
     /**
      * The type of role actor.
-     * @type {string}
+     * @type {RoleActorTypeEnum}
      * @memberof RoleActor
      */
     readonly type?: RoleActorTypeEnum;
@@ -22563,7 +22563,7 @@ export interface RolePayload {
     name?: string;
     /**
      * The strategy to use when there is a conflict with an existing project role. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters
-     * @type {string}
+     * @type {RolePayloadOnConflictEnum}
      * @memberof RolePayload
      */
     onConflict?: RolePayloadOnConflictEnum;
@@ -22575,7 +22575,7 @@ export interface RolePayload {
     pcri?: ProjectCreateResourceIdentifier;
     /**
      * The type of the role. Only used by project-scoped project
-     * @type {string}
+     * @type {RolePayloadTypeEnum}
      * @memberof RolePayload
      */
     type?: RolePayloadTypeEnum;
@@ -22729,7 +22729,7 @@ export interface SaveProjectTemplateRequest {
     templateGenerationOptions?: CustomTemplateOptions;
     /**
      * The type of the template: LIVE | SNAPSHOT
-     * @type {string}
+     * @type {SaveProjectTemplateRequestTemplateTypeEnum}
      * @memberof SaveProjectTemplateRequest
      */
     templateType?: SaveProjectTemplateRequestTemplateTypeEnum;
@@ -22798,7 +22798,7 @@ export interface Scope {
     readonly project?: ProjectDetails;
     /**
      * The type of scope.
-     * @type {string}
+     * @type {ScopeTypeEnum}
      * @memberof Scope
      */
     readonly type?: ScopeTypeEnum;
@@ -22822,7 +22822,7 @@ export type ScopeTypeEnum = typeof ScopeTypeEnum[keyof typeof ScopeTypeEnum];
 export interface ScopePayload {
     /**
      * The type of the scope. Use `GLOBAL` or empty for company-managed project, and `PROJECT` for team-managed project
-     * @type {string}
+     * @type {ScopePayloadTypeEnum}
      * @memberof ScopePayload
      */
     type?: ScopePayloadTypeEnum;
@@ -23365,7 +23365,7 @@ export interface SearchRequestBean {
      * The default is `strict`.
      * 
      * Note: If the JQL is not correctly formed a 400 response code is returned, regardless of the `validateQuery` value.
-     * @type {string}
+     * @type {SearchRequestBeanValidateQueryEnum}
      * @memberof SearchRequestBean
      */
     validateQuery?: SearchRequestBeanValidateQueryEnum;
@@ -23578,7 +23578,7 @@ export interface SecurityLevelMemberPayload {
     parameter?: string;
     /**
      * The type of the security level member
-     * @type {string}
+     * @type {SecurityLevelMemberPayloadTypeEnum}
      * @memberof SecurityLevelMemberPayload
      */
     type?: SecurityLevelMemberPayloadTypeEnum;
@@ -24112,7 +24112,7 @@ export interface SharePermission {
      *  *  `global` Shared globally. If set in a request, no other `sharePermission` properties need to be specified.
      *  *  `loggedin` Shared with all logged-in users. Note: This value is set in a request by specifying `authenticated` as the `type`.
      *  *  `project-unknown` Shared with a project that the user does not have access to. Cannot be set in a request.
-     * @type {string}
+     * @type {SharePermissionTypeEnum}
      * @memberof SharePermission
      */
     type: SharePermissionTypeEnum;
@@ -24191,7 +24191,7 @@ export interface SharePermissionInputBean {
      *  *  `projectRole` Share with a project role in a project. Specify `projectId` and `projectRoleId` as well.
      *  *  `global` Share globally, including anonymous users. If set, this type overrides all existing share permissions and must be deleted before any non-global share permissions is set.
      *  *  `authenticated` Share with all logged-in users. This shows as `loggedin` in the response. If set, this type overrides all existing share permissions and must be deleted before any non-global share permissions is set.
-     * @type {string}
+     * @type {SharePermissionInputBeanTypeEnum}
      * @memberof SharePermissionInputBean
      */
     type: SharePermissionInputBeanTypeEnum;
@@ -24623,7 +24623,7 @@ export interface StatusCreate {
     name: string;
     /**
      * The category of the status.
-     * @type {string}
+     * @type {StatusCreateStatusCategoryEnum}
      * @memberof StatusCreate
      */
     statusCategory: StatusCreateStatusCategoryEnum;
@@ -24800,7 +24800,7 @@ export interface StatusMappingDTO {
 export interface StatusMetadata {
     /**
      * The category of the status.
-     * @type {string}
+     * @type {StatusMetadataCategoryEnum}
      * @memberof StatusMetadata
      */
     category?: StatusMetadataCategoryEnum;
@@ -24869,7 +24869,7 @@ export interface StatusPayload {
     name?: string;
     /**
      * The conflict strategy for the status already exists. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters; NEW - Create a new entity
-     * @type {string}
+     * @type {StatusPayloadOnConflictEnum}
      * @memberof StatusPayload
      */
     onConflict?: StatusPayloadOnConflictEnum;
@@ -24881,7 +24881,7 @@ export interface StatusPayload {
     pcri?: ProjectCreateResourceIdentifier;
     /**
      * The status category of the status. The value is case-sensitive.
-     * @type {string}
+     * @type {StatusPayloadStatusCategoryEnum}
      * @memberof StatusPayload
      */
     statusCategory?: StatusPayloadStatusCategoryEnum;
@@ -25030,7 +25030,7 @@ export interface StatusScope {
     project?: ProjectId | null;
     /**
      * The scope of the status. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
-     * @type {string}
+     * @type {StatusScopeTypeEnum}
      * @memberof StatusScope
      */
     type: StatusScopeTypeEnum;
@@ -25073,7 +25073,7 @@ export interface StatusUpdate {
     name: string;
     /**
      * The category of the status.
-     * @type {string}
+     * @type {StatusUpdateStatusCategoryEnum}
      * @memberof StatusUpdate
      */
     statusCategory: StatusUpdateStatusCategoryEnum;
@@ -25386,7 +25386,7 @@ export interface SwimlanesPayload {
     defaultCustomSwimlaneName?: string;
     /**
      * The swimlane strategy for the board.
-     * @type {string}
+     * @type {SwimlanesPayloadSwimlaneStrategyEnum}
      * @memberof SwimlanesPayload
      */
     swimlaneStrategy?: SwimlanesPayloadSwimlaneStrategyEnum;
@@ -25651,7 +25651,7 @@ export interface TaskProgress {
     started?: string;
     /**
      * The status of the task.
-     * @type {string}
+     * @type {TaskProgressStatusEnum}
      * @memberof TaskProgress
      */
     status: TaskProgressStatusEnum;
@@ -25752,7 +25752,7 @@ export interface TaskProgressBeanJsonNode {
     started?: number;
     /**
      * The status of the task.
-     * @type {string}
+     * @type {TaskProgressBeanJsonNodeStatusEnum}
      * @memberof TaskProgressBeanJsonNode
      */
     status: TaskProgressBeanJsonNodeStatusEnum;
@@ -25853,7 +25853,7 @@ export interface TaskProgressBeanObject {
     started?: number;
     /**
      * The status of the task.
-     * @type {string}
+     * @type {TaskProgressBeanObjectStatusEnum}
      * @memberof TaskProgressBeanObject
      */
     status: TaskProgressBeanObjectStatusEnum;
@@ -25954,7 +25954,7 @@ export interface TaskProgressBeanRemoveOptionFromIssuesResult {
     started?: number;
     /**
      * The status of the task.
-     * @type {string}
+     * @type {TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum}
      * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
      */
     status: TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum;
@@ -25995,13 +25995,13 @@ export type TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum = typeof Task
 export interface TimeTrackingConfiguration {
     /**
      * The default unit of time applied to logged time.
-     * @type {string}
+     * @type {TimeTrackingConfigurationDefaultUnitEnum}
      * @memberof TimeTrackingConfiguration
      */
     defaultUnit: TimeTrackingConfigurationDefaultUnitEnum;
     /**
      * The format that will appear on an issue's *Time Spent* field.
-     * @type {string}
+     * @type {TimeTrackingConfigurationTimeFormatEnum}
      * @memberof TimeTrackingConfiguration
      */
     timeFormat: TimeTrackingConfigurationTimeFormatEnum;
@@ -26184,7 +26184,7 @@ export interface Transition {
     to: string;
     /**
      * The type of the transition.
-     * @type {string}
+     * @type {TransitionTypeEnum}
      * @memberof Transition
      */
     type: TransitionTypeEnum;
@@ -26300,7 +26300,7 @@ export interface TransitionPayload {
     triggers?: Array<RulePayload>;
     /**
      * The type of the transition
-     * @type {string}
+     * @type {TransitionPayloadTypeEnum}
      * @memberof TransitionPayload
      */
     type?: TransitionPayloadTypeEnum;
@@ -26391,7 +26391,7 @@ export interface TransitionPreview {
     triggers?: Array<PreviewTrigger>;
     /**
      * The transition type.
-     * @type {string}
+     * @type {TransitionPreviewTypeEnum}
      * @memberof TransitionPreview
      */
     type?: TransitionPreviewTypeEnum;
@@ -26508,7 +26508,7 @@ export interface TransitionUpdateDTO {
     triggers?: Array<WorkflowTrigger>;
     /**
      * The transition type.
-     * @type {string}
+     * @type {TransitionUpdateDTOTypeEnum}
      * @memberof TransitionUpdateDTO
      */
     type?: TransitionUpdateDTOTypeEnum;
@@ -26604,7 +26604,7 @@ export interface UiModificationContextDetails {
      * For Jira view types (`GIC`, `IssueView`, `IssueTransition`), null is treated as a wildcard, meaning the UI modification will be applied to all view types. Each Jira context can have a maximum of one wildcard.  
      *   
      * Wildcards are not applicable for JSM contexts.
-     * @type {string}
+     * @type {UiModificationContextDetailsViewTypeEnum}
      * @memberof UiModificationContextDetails
      */
     viewType?: UiModificationContextDetailsViewTypeEnum;
@@ -26746,7 +26746,7 @@ export interface UpdateCustomFieldDetails {
      *  *  `url`: `exacttextsearcher`
      *  *  `userpicker`: `userpickergroupsearcher`
      *  *  `version`: `versionsearcher`
-     * @type {string}
+     * @type {UpdateCustomFieldDetailsSearcherKeyEnum}
      * @memberof UpdateCustomFieldDetails
      */
     searcherKey?: UpdateCustomFieldDetailsSearcherKeyEnum;
@@ -27081,7 +27081,7 @@ export interface UpdatePriorityDetails {
     description?: string | null;
     /**
      * The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used. Both iconUrl and avatarId cannot be defined.
-     * @type {string}
+     * @type {UpdatePriorityDetailsIconUrlEnum}
      * @memberof UpdatePriorityDetails
      */
     iconUrl?: UpdatePriorityDetailsIconUrlEnum | null;
@@ -27215,7 +27215,7 @@ export interface UpdatePrioritySchemeResponseBean {
 export interface UpdateProjectDetails {
     /**
      * The default assignee when creating issues for this project.
-     * @type {string}
+     * @type {UpdateProjectDetailsAssigneeTypeEnum}
      * @memberof UpdateProjectDetails
      */
     assigneeType?: UpdateProjectDetailsAssigneeTypeEnum;
@@ -27522,7 +27522,7 @@ export interface User {
      *  *  `atlassian` regular Atlassian user account
      *  *  `app` system account used for Connect applications and OAuth to represent external systems
      *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
+     * @type {UserAccountTypeEnum}
      * @memberof User
      */
     readonly accountType?: UserAccountTypeEnum;
@@ -27964,7 +27964,7 @@ export interface UserPermission {
     name?: string;
     /**
      * The type of the permission.
-     * @type {string}
+     * @type {UserPermissionTypeEnum}
      * @memberof UserPermission
      */
     type?: UserPermissionTypeEnum;
@@ -27998,7 +27998,7 @@ export interface UserPickerUser {
      *  *  `atlassian` regular Atlassian user account
      *  *  `app` system account used for Connect applications and OAuth to represent external systems
      *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
+     * @type {UserPickerUserAccountTypeEnum}
      * @memberof UserPickerUser
      */
     accountType?: UserPickerUserAccountTypeEnum;
@@ -28054,7 +28054,7 @@ export type UserPickerUserAccountTypeEnum = typeof UserPickerUserAccountTypeEnum
 export interface ValidationOptionsForCreate {
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<ValidationOptionsForCreateLevelsEnum>}
      * @memberof ValidationOptionsForCreate
      */
     levels?: Array<ValidationOptionsForCreateLevelsEnum>;
@@ -28078,7 +28078,7 @@ export type ValidationOptionsForCreateLevelsEnum = typeof ValidationOptionsForCr
 export interface ValidationOptionsForUpdate {
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<ValidationOptionsForUpdateLevelsEnum>}
      * @memberof ValidationOptionsForUpdate
      */
     levels?: Array<ValidationOptionsForUpdateLevelsEnum>;
@@ -28356,7 +28356,7 @@ export interface VersionMoveBean {
     after?: string;
     /**
      * An absolute position in which to place the moved version. Cannot be used with `after`.
-     * @type {string}
+     * @type {VersionMoveBeanPositionEnum}
      * @memberof VersionMoveBean
      */
     position?: VersionMoveBeanPositionEnum;
@@ -28476,7 +28476,7 @@ export interface Visibility {
     identifier?: string | null;
     /**
      * Whether visibility of this item is restricted to a group or role.
-     * @type {string}
+     * @type {VisibilityTypeEnum}
      * @memberof Visibility
      */
     type?: VisibilityTypeEnum;
@@ -28581,7 +28581,7 @@ export interface Watchers {
 export interface Webhook {
     /**
      * The Jira events that trigger the webhook.
-     * @type {Array<string>}
+     * @type {Array<WebhookEventsEnum>}
      * @memberof Webhook
      */
     events: Array<WebhookEventsEnum>;
@@ -28659,7 +28659,7 @@ export type WebhookEventsEnum = typeof WebhookEventsEnum[keyof typeof WebhookEve
 export interface WebhookDetails {
     /**
      * The Jira events that trigger the webhook.
-     * @type {Array<string>}
+     * @type {Array<WebhookDetailsEventsEnum>}
      * @memberof WebhookDetails
      */
     events: Array<WebhookDetailsEventsEnum>;
@@ -28890,7 +28890,7 @@ export interface WorkflowCapabilities {
     connectRules?: Array<AvailableWorkflowConnectRule>;
     /**
      * The scope of the workflow capabilities. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
-     * @type {string}
+     * @type {WorkflowCapabilitiesEditorScopeEnum}
      * @memberof WorkflowCapabilities
      */
     editorScope?: WorkflowCapabilitiesEditorScopeEnum;
@@ -28902,7 +28902,7 @@ export interface WorkflowCapabilities {
     forgeRules?: Array<AvailableWorkflowForgeRule>;
     /**
      * The types of projects that this capability set is available for.
-     * @type {Array<string>}
+     * @type {Array<WorkflowCapabilitiesProjectTypesEnum>}
      * @memberof WorkflowCapabilities
      */
     projectTypes?: Array<WorkflowCapabilitiesProjectTypesEnum>;
@@ -28987,7 +28987,7 @@ export interface WorkflowCompoundCondition {
     nodeType: string;
     /**
      * The compound condition operator.
-     * @type {string}
+     * @type {WorkflowCompoundConditionOperatorEnum}
      * @memberof WorkflowCompoundCondition
      */
     operator: WorkflowCompoundConditionOperatorEnum;
@@ -29540,7 +29540,7 @@ export interface WorkflowPayload {
     name?: string;
     /**
      * The strategy to use if there is a conflict with another workflow
-     * @type {string}
+     * @type {WorkflowPayloadOnConflictEnum}
      * @memberof WorkflowPayload
      */
     onConflict?: WorkflowPayloadOnConflictEnum;
@@ -29731,7 +29731,7 @@ export interface WorkflowPreviewScope {
     project?: WorkflowProjectIdScope | null;
     /**
      * The scope of the workflow. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
-     * @type {string}
+     * @type {WorkflowPreviewScopeTypeEnum}
      * @memberof WorkflowPreviewScope
      */
     type?: WorkflowPreviewScopeTypeEnum;
@@ -30548,7 +30548,7 @@ export interface WorkflowScope {
     project?: ProjectId | null;
     /**
      * The scope of the workflow. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
-     * @type {string}
+     * @type {WorkflowScopeTypeEnum}
      * @memberof WorkflowScope
      */
     type?: WorkflowScopeTypeEnum;
@@ -30759,7 +30759,7 @@ export interface WorkflowStatusUpdate {
     name: string;
     /**
      * The category of the status.
-     * @type {string}
+     * @type {WorkflowStatusUpdateStatusCategoryEnum}
      * @memberof WorkflowStatusUpdate
      */
     statusCategory: WorkflowStatusUpdateStatusCategoryEnum;
@@ -31046,7 +31046,7 @@ export interface WorkflowTransitions {
     triggers?: Array<WorkflowTrigger>;
     /**
      * The transition type.
-     * @type {string}
+     * @type {WorkflowTransitionsTypeEnum}
      * @memberof WorkflowTransitions
      */
     type?: WorkflowTransitionsTypeEnum;
@@ -31239,7 +31239,7 @@ export interface WorkflowValidationError {
     elementReference?: WorkflowElementReference;
     /**
      * The validation error level.
-     * @type {string}
+     * @type {WorkflowValidationErrorLevelEnum}
      * @memberof WorkflowValidationError
      */
     level?: WorkflowValidationErrorLevelEnum;
@@ -31251,7 +31251,7 @@ export interface WorkflowValidationError {
     message?: string;
     /**
      * The type of element the error or warning references.
-     * @type {string}
+     * @type {WorkflowValidationErrorTypeEnum}
      * @memberof WorkflowValidationError
      */
     type?: WorkflowValidationErrorTypeEnum;

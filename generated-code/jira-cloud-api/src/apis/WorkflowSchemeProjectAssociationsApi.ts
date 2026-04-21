@@ -33,10 +33,9 @@ export interface GetWorkflowSchemeProjectAssociationsRequest {
 export class WorkflowSchemeProjectAssociationsApi extends runtime.BaseAPI {
 
     /**
-     * Assigns a workflow scheme to a project. This operation is performed only when there are no issues in the project.  Workflow schemes can only be assigned to classic projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Assign workflow scheme to project
+     * Creates request options for assignSchemeToProject without sending the request
      */
-    async assignSchemeToProjectRaw(requestParameters: AssignSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async assignSchemeToProjectRequestOpts(requestParameters: AssignSchemeToProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['workflowSchemeProjectAssociation'] == null) {
             throw new runtime.RequiredError(
                 'workflowSchemeProjectAssociation',
@@ -61,13 +60,22 @@ export class WorkflowSchemeProjectAssociationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/workflowscheme/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['workflowSchemeProjectAssociation'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Assigns a workflow scheme to a project. This operation is performed only when there are no issues in the project.  Workflow schemes can only be assigned to classic projects.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Assign workflow scheme to project
+     */
+    async assignSchemeToProjectRaw(requestParameters: AssignSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.assignSchemeToProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -86,10 +94,9 @@ export class WorkflowSchemeProjectAssociationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of the workflow schemes associated with a list of projects. Each returned workflow scheme includes a list of the requested projects associated with it. Any team-managed or non-existent projects in the request are ignored and no errors are returned.  If the project is associated with the `Default Workflow Scheme` no ID is returned. This is because the way the `Default Workflow Scheme` is stored means it has no ID.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get workflow scheme project associations
+     * Creates request options for getWorkflowSchemeProjectAssociations without sending the request
      */
-    async getWorkflowSchemeProjectAssociationsRaw(requestParameters: GetWorkflowSchemeProjectAssociationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerOfWorkflowSchemeAssociations>> {
+    async getWorkflowSchemeProjectAssociationsRequestOpts(requestParameters: GetWorkflowSchemeProjectAssociationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -116,12 +123,21 @@ export class WorkflowSchemeProjectAssociationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/workflowscheme/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of the workflow schemes associated with a list of projects. Each returned workflow scheme includes a list of the requested projects associated with it. Any team-managed or non-existent projects in the request are ignored and no errors are returned.  If the project is associated with the `Default Workflow Scheme` no ID is returned. This is because the way the `Default Workflow Scheme` is stored means it has no ID.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get workflow scheme project associations
+     */
+    async getWorkflowSchemeProjectAssociationsRaw(requestParameters: GetWorkflowSchemeProjectAssociationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerOfWorkflowSchemeAssociations>> {
+        const requestOptions = await this.getWorkflowSchemeProjectAssociationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

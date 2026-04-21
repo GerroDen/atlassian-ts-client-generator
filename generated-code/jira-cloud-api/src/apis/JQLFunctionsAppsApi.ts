@@ -46,10 +46,9 @@ export interface UpdatePrecomputationsRequest {
 export class JQLFunctionsAppsApi extends runtime.BaseAPI {
 
     /**
-     * Returns the list of a function\'s precomputations along with information about when they were created, updated, and last used. Each precomputation has a `value` \\- the JQL fragment to replace the custom function clause with.  **[Permissions](#permissions) required:** This API is only accessible to apps and apps can only inspect their own functions.  The new `read:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Get precomputations (apps)
+     * Creates request options for getPrecomputations without sending the request
      */
-    async getPrecomputationsRaw(requestParameters: GetPrecomputationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2JqlFunctionPrecomputationBean>> {
+    async getPrecomputationsRequestOpts(requestParameters: GetPrecomputationsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['functionKey'] != null) {
@@ -81,12 +80,21 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/function/computation`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the list of a function\'s precomputations along with information about when they were created, updated, and last used. Each precomputation has a `value` \\- the JQL fragment to replace the custom function clause with.  **[Permissions](#permissions) required:** This API is only accessible to apps and apps can only inspect their own functions.  The new `read:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Get precomputations (apps)
+     */
+    async getPrecomputationsRaw(requestParameters: GetPrecomputationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2JqlFunctionPrecomputationBean>> {
+        const requestOptions = await this.getPrecomputationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -101,10 +109,9 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns function precomputations by IDs, along with information about when they were created, updated, and last used. Each precomputation has a `value` \\- the JQL fragment to replace the custom function clause with.  **[Permissions](#permissions) required:** This API is only accessible to apps and apps can only inspect their own functions.  The new `read:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Get precomputations by ID (apps)
+     * Creates request options for getPrecomputationsByID without sending the request
      */
-    async getPrecomputationsByIDRaw(requestParameters: GetPrecomputationsByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JqlFunctionPrecomputationGetByIdResponse>> {
+    async getPrecomputationsByIDRequestOpts(requestParameters: GetPrecomputationsByIDRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jqlFunctionPrecomputationGetByIdRequest'] == null) {
             throw new runtime.RequiredError(
                 'jqlFunctionPrecomputationGetByIdRequest',
@@ -133,13 +140,22 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/function/computation/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['jqlFunctionPrecomputationGetByIdRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns function precomputations by IDs, along with information about when they were created, updated, and last used. Each precomputation has a `value` \\- the JQL fragment to replace the custom function clause with.  **[Permissions](#permissions) required:** This API is only accessible to apps and apps can only inspect their own functions.  The new `read:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Get precomputations by ID (apps)
+     */
+    async getPrecomputationsByIDRaw(requestParameters: GetPrecomputationsByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JqlFunctionPrecomputationGetByIdResponse>> {
+        const requestOptions = await this.getPrecomputationsByIDRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -154,10 +170,9 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the precomputation value of a function created by a Forge/Connect app.  **[Permissions](#permissions) required:** An API for apps to update their own precomputations.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
-     * Update precomputations (apps)
+     * Creates request options for updatePrecomputations without sending the request
      */
-    async updatePrecomputationsRaw(requestParameters: UpdatePrecomputationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JqlFunctionPrecomputationUpdateResponse>> {
+    async updatePrecomputationsRequestOpts(requestParameters: UpdatePrecomputationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jqlFunctionPrecomputationUpdateRequestBean'] == null) {
             throw new runtime.RequiredError(
                 'jqlFunctionPrecomputationUpdateRequestBean',
@@ -186,13 +201,22 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/jql/function/computation`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['jqlFunctionPrecomputationUpdateRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the precomputation value of a function created by a Forge/Connect app.  **[Permissions](#permissions) required:** An API for apps to update their own precomputations.  The new `write:app-data:jira` OAuth scope is 100% optional now, and not using it won\'t break your app. However, we recommend adding it to your app\'s scope list because we will eventually make it mandatory.
+     * Update precomputations (apps)
+     */
+    async updatePrecomputationsRaw(requestParameters: UpdatePrecomputationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JqlFunctionPrecomputationUpdateResponse>> {
+        const requestOptions = await this.updatePrecomputationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

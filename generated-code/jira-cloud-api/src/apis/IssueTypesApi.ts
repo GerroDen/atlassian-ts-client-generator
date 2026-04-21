@@ -62,10 +62,9 @@ export interface UpdateIssueTypeRequest {
 export class IssueTypesApi extends runtime.BaseAPI {
 
     /**
-     * Creates an issue type.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create issue type
+     * Creates request options for createIssueType without sending the request
      */
-    async createIssueTypeRaw(requestParameters: CreateIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeDetails>> {
+    async createIssueTypeRequestOpts(requestParameters: CreateIssueTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueTypeCreateBean'] == null) {
             throw new runtime.RequiredError(
                 'issueTypeCreateBean',
@@ -90,13 +89,22 @@ export class IssueTypesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetype`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeCreateBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates an issue type.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create issue type
+     */
+    async createIssueTypeRaw(requestParameters: CreateIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeDetails>> {
+        const requestOptions = await this.createIssueTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -111,10 +119,9 @@ export class IssueTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Loads an avatar for the issue type.  Specify the avatar\'s local file location in the body of the request. Also, include the following headers:   *  `X-Atlassian-Token: no-check` To prevent XSRF protection blocking the request, for more information see [Special Headers](#special-request-headers).  *  `Content-Type: image/image type` Valid image types are JPEG, GIF, or PNG.  For example:   `curl --request POST \\ --user email@example.com:<api_token> \\ --header \'X-Atlassian-Token: no-check\' \\ --header \'Content-Type: image/< image_type>\' \\ --data-binary \"<@/path/to/file/with/your/avatar>\" \\ --url \'https://your-domain.atlassian.net/rest/api/3/issuetype/{issueTypeId}\'This`  The avatar is cropped to a square. If no crop parameters are specified, the square originates at the top left of the image. The length of the square\'s sides is set to the smaller of the height or width of the image.  The cropped image is then used to create avatars of 16x16, 24x24, 32x32, and 48x48 in size.  After creating the avatar, use [ Update issue type](#api-rest-api-3-issuetype-id-put) to set it as the issue type\'s displayed avatar.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Load issue type avatar
+     * Creates request options for createIssueTypeAvatar without sending the request
      */
-    async createIssueTypeAvatarRaw(requestParameters: CreateIssueTypeAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Avatar>> {
+    async createIssueTypeAvatarRequestOpts(requestParameters: CreateIssueTypeAvatarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -166,13 +173,22 @@ export class IssueTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetype/{id}/avatar2`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Loads an avatar for the issue type.  Specify the avatar\'s local file location in the body of the request. Also, include the following headers:   *  `X-Atlassian-Token: no-check` To prevent XSRF protection blocking the request, for more information see [Special Headers](#special-request-headers).  *  `Content-Type: image/image type` Valid image types are JPEG, GIF, or PNG.  For example:   `curl --request POST \\ --user email@example.com:<api_token> \\ --header \'X-Atlassian-Token: no-check\' \\ --header \'Content-Type: image/< image_type>\' \\ --data-binary \"<@/path/to/file/with/your/avatar>\" \\ --url \'https://your-domain.atlassian.net/rest/api/3/issuetype/{issueTypeId}\'This`  The avatar is cropped to a square. If no crop parameters are specified, the square originates at the top left of the image. The length of the square\'s sides is set to the smaller of the height or width of the image.  The cropped image is then used to create avatars of 16x16, 24x24, 32x32, and 48x48 in size.  After creating the avatar, use [ Update issue type](#api-rest-api-3-issuetype-id-put) to set it as the issue type\'s displayed avatar.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Load issue type avatar
+     */
+    async createIssueTypeAvatarRaw(requestParameters: CreateIssueTypeAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Avatar>> {
+        const requestOptions = await this.createIssueTypeAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -187,10 +203,9 @@ export class IssueTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the issue type. If the issue type is in use, all uses are updated with the alternative issue type (`alternativeIssueTypeId`). A list of alternative issue types are obtained from the [Get alternative issue types](#api-rest-api-3-issuetype-id-alternatives-get) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete issue type
+     * Creates request options for deleteIssueType without sending the request
      */
-    async deleteIssueTypeRaw(requestParameters: DeleteIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteIssueTypeRequestOpts(requestParameters: DeleteIssueTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -218,12 +233,21 @@ export class IssueTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetype/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the issue type. If the issue type is in use, all uses are updated with the alternative issue type (`alternativeIssueTypeId`). A list of alternative issue types are obtained from the [Get alternative issue types](#api-rest-api-3-issuetype-id-alternatives-get) resource.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete issue type
+     */
+    async deleteIssueTypeRaw(requestParameters: DeleteIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteIssueTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -237,10 +261,9 @@ export class IssueTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of issue types that can be used to replace the issue type. The alternative issue types are those assigned to the same workflow scheme, field configuration scheme, and screen scheme.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
-     * Get alternative issue types
+     * Creates request options for getAlternativeIssueTypes without sending the request
      */
-    async getAlternativeIssueTypesRaw(requestParameters: GetAlternativeIssueTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IssueTypeDetails>>> {
+    async getAlternativeIssueTypesRequestOpts(requestParameters: GetAlternativeIssueTypesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -264,12 +287,21 @@ export class IssueTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetype/{id}/alternatives`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of issue types that can be used to replace the issue type. The alternative issue types are those assigned to the same workflow scheme, field configuration scheme, and screen scheme.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+     * Get alternative issue types
+     */
+    async getAlternativeIssueTypesRaw(requestParameters: GetAlternativeIssueTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IssueTypeDetails>>> {
+        const requestOptions = await this.getAlternativeIssueTypesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -284,10 +316,9 @@ export class IssueTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all issue types.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issue types are only returned as follows:   *  if the user has the *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), all issue types are returned.  *  if the user has the *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for one or more projects, the issue types associated with the projects the user has permission to browse are returned.  *  if the user is anonymous then they will be able to access projects with the *Browse projects* for anonymous users  *  if the user authentication is incorrect they will fall back to anonymous
-     * Get all issue types for user
+     * Creates request options for getIssueAllTypes without sending the request
      */
-    async getIssueAllTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IssueTypeDetails>>> {
+    async getIssueAllTypesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -303,12 +334,21 @@ export class IssueTypesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetype`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all issue types.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issue types are only returned as follows:   *  if the user has the *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), all issue types are returned.  *  if the user has the *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for one or more projects, the issue types associated with the projects the user has permission to browse are returned.  *  if the user is anonymous then they will be able to access projects with the *Browse projects* for anonymous users  *  if the user authentication is incorrect they will fall back to anonymous
+     * Get all issue types for user
+     */
+    async getIssueAllTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IssueTypeDetails>>> {
+        const requestOptions = await this.getIssueAllTypesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -323,10 +363,9 @@ export class IssueTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an issue type.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) in a project the issue type is associated with or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue type
+     * Creates request options for getIssueType without sending the request
      */
-    async getIssueTypeRaw(requestParameters: GetIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeDetails>> {
+    async getIssueTypeRequestOpts(requestParameters: GetIssueTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -350,12 +389,21 @@ export class IssueTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetype/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns an issue type.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) in a project the issue type is associated with or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue type
+     */
+    async getIssueTypeRaw(requestParameters: GetIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeDetails>> {
+        const requestOptions = await this.getIssueTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -370,10 +418,9 @@ export class IssueTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns issue types for a project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) in the relevant project or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get issue types for project
+     * Creates request options for getIssueTypesForProject without sending the request
      */
-    async getIssueTypesForProjectRaw(requestParameters: GetIssueTypesForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IssueTypeDetails>>> {
+    async getIssueTypesForProjectRequestOpts(requestParameters: GetIssueTypesForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -404,12 +451,21 @@ export class IssueTypesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/issuetype/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns issue types for a project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) in the relevant project or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue types for project
+     */
+    async getIssueTypesForProjectRaw(requestParameters: GetIssueTypesForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IssueTypeDetails>>> {
+        const requestOptions = await this.getIssueTypesForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -424,10 +480,9 @@ export class IssueTypesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the issue type.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update issue type
+     * Creates request options for updateIssueType without sending the request
      */
-    async updateIssueTypeRaw(requestParameters: UpdateIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeDetails>> {
+    async updateIssueTypeRequestOpts(requestParameters: UpdateIssueTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -460,13 +515,22 @@ export class IssueTypesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/issuetype/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['issueTypeUpdateBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the issue type.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update issue type
+     */
+    async updateIssueTypeRaw(requestParameters: UpdateIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeDetails>> {
+        const requestOptions = await this.updateIssueTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

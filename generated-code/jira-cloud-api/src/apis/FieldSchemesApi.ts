@@ -113,10 +113,9 @@ export interface UpdateFieldsAssociatedWithSchemesRequest {
 export class FieldSchemesApi extends runtime.BaseAPI {
 
     /**
-     * Associate projects to field association schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Associate projects to field schemes
+     * Creates request options for associateProjectsToFieldAssociationSchemes without sending the request
      */
-    async associateProjectsToFieldAssociationSchemesRaw(requestParameters: AssociateProjectsToFieldAssociationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldSchemeToProjectsResponse>> {
+    async associateProjectsToFieldAssociationSchemesRequestOpts(requestParameters: AssociateProjectsToFieldAssociationSchemesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestBody'] == null) {
             throw new runtime.RequiredError(
                 'requestBody',
@@ -141,13 +140,22 @@ export class FieldSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/config/fieldschemes/projects`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Associate projects to field association schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Associate projects to field schemes
+     */
+    async associateProjectsToFieldAssociationSchemesRaw(requestParameters: AssociateProjectsToFieldAssociationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldSchemeToProjectsResponse>> {
+        const requestOptions = await this.associateProjectsToFieldAssociationSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -162,10 +170,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Endpoint for creating a new field association scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create field scheme
+     * Creates request options for createFieldAssociationScheme without sending the request
      */
-    async createFieldAssociationSchemeRaw(requestParameters: CreateFieldAssociationSchemeOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFieldAssociationSchemeResponse>> {
+    async createFieldAssociationSchemeRequestOpts(requestParameters: CreateFieldAssociationSchemeOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createFieldAssociationSchemeRequest'] == null) {
             throw new runtime.RequiredError(
                 'createFieldAssociationSchemeRequest',
@@ -190,13 +197,22 @@ export class FieldSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/config/fieldschemes`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createFieldAssociationSchemeRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Endpoint for creating a new field association scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create field scheme
+     */
+    async createFieldAssociationSchemeRaw(requestParameters: CreateFieldAssociationSchemeOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFieldAssociationSchemeResponse>> {
+        const requestOptions = await this.createFieldAssociationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -211,10 +227,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a specified field association scheme  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete a field scheme
+     * Creates request options for deleteFieldAssociationScheme without sending the request
      */
-    async deleteFieldAssociationSchemeRaw(requestParameters: DeleteFieldAssociationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeleteFieldAssociationSchemeResponse>> {
+    async deleteFieldAssociationSchemeRequestOpts(requestParameters: DeleteFieldAssociationSchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -238,12 +253,21 @@ export class FieldSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/config/fieldschemes/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a specified field association scheme  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete a field scheme
+     */
+    async deleteFieldAssociationSchemeRaw(requestParameters: DeleteFieldAssociationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeleteFieldAssociationSchemeResponse>> {
+        const requestOptions = await this.deleteFieldAssociationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -258,10 +282,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Endpoint for fetching a field association scheme by its ID  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get field scheme
+     * Creates request options for getFieldAssociationSchemeById without sending the request
      */
-    async getFieldAssociationSchemeByIdRaw(requestParameters: GetFieldAssociationSchemeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFieldAssociationSchemeByIdResponse>> {
+    async getFieldAssociationSchemeByIdRequestOpts(requestParameters: GetFieldAssociationSchemeByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -285,12 +308,21 @@ export class FieldSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/config/fieldschemes/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Endpoint for fetching a field association scheme by its ID  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get field scheme
+     */
+    async getFieldAssociationSchemeByIdRaw(requestParameters: GetFieldAssociationSchemeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFieldAssociationSchemeByIdResponse>> {
+        const requestOptions = await this.getFieldAssociationSchemeByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -305,10 +337,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve field association parameters on a field association scheme  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get field parameters
+     * Creates request options for getFieldAssociationSchemeItemParameters without sending the request
      */
-    async getFieldAssociationSchemeItemParametersRaw(requestParameters: GetFieldAssociationSchemeItemParametersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFieldAssociationParametersResponse>> {
+    async getFieldAssociationSchemeItemParametersRequestOpts(requestParameters: GetFieldAssociationSchemeItemParametersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -340,12 +371,21 @@ export class FieldSchemesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve field association parameters on a field association scheme  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get field parameters
+     */
+    async getFieldAssociationSchemeItemParametersRaw(requestParameters: GetFieldAssociationSchemeItemParametersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFieldAssociationParametersResponse>> {
+        const requestOptions = await this.getFieldAssociationSchemeItemParametersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -360,10 +400,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * REST endpoint for retrieving a paginated list of field association schemes with optional filtering.  This endpoint allows clients to fetch field association schemes with optional filtering by project IDs and text queries. The response includes scheme details with navigation links and filter metadata when applicable.  Filtering Behavior:   *  When projectId or query parameters are provided, the response includes matchedFilters metadata showing which filters were applied.  *  When no filters are applied, matchedFilters is omitted from individual scheme objects  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get field schemes
+     * Creates request options for getFieldAssociationSchemes without sending the request
      */
-    async getFieldAssociationSchemesRaw(requestParameters: GetFieldAssociationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2GetFieldAssociationSchemeResponse>> {
+    async getFieldAssociationSchemesRequestOpts(requestParameters: GetFieldAssociationSchemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['projectId'] != null) {
@@ -395,12 +434,21 @@ export class FieldSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/config/fieldschemes`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * REST endpoint for retrieving a paginated list of field association schemes with optional filtering.  This endpoint allows clients to fetch field association schemes with optional filtering by project IDs and text queries. The response includes scheme details with navigation links and filter metadata when applicable.  Filtering Behavior:   *  When projectId or query parameters are provided, the response includes matchedFilters metadata showing which filters were applied.  *  When no filters are applied, matchedFilters is omitted from individual scheme objects  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get field schemes
+     */
+    async getFieldAssociationSchemesRaw(requestParameters: GetFieldAssociationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2GetFieldAssociationSchemeResponse>> {
+        const requestOptions = await this.getFieldAssociationSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -415,10 +463,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get projects with field association schemes. This will be a temporary API but useful when transitioning from the legacy field configuration APIs to the new ones.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get projects with field schemes
+     * Creates request options for getProjectsWithFieldSchemes without sending the request
      */
-    async getProjectsWithFieldSchemesRaw(requestParameters: GetProjectsWithFieldSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2GetProjectsWithFieldSchemesResponse>> {
+    async getProjectsWithFieldSchemesRequestOpts(requestParameters: GetProjectsWithFieldSchemesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -453,12 +500,21 @@ export class FieldSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/config/fieldschemes/projects`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get projects with field association schemes. This will be a temporary API but useful when transitioning from the legacy field configuration APIs to the new ones.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get projects with field schemes
+     */
+    async getProjectsWithFieldSchemesRaw(requestParameters: GetProjectsWithFieldSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2GetProjectsWithFieldSchemesResponse>> {
+        const requestOptions = await this.getProjectsWithFieldSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -473,10 +529,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove field association parameters overrides for work types.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove field parameters
+     * Creates request options for removeFieldAssociationSchemeItemParameters without sending the request
      */
-    async removeFieldAssociationSchemeItemParametersRaw(requestParameters: RemoveFieldAssociationSchemeItemParametersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeFieldAssociationSchemeItemParametersRequestOpts(requestParameters: RemoveFieldAssociationSchemeItemParametersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestBody'] == null) {
             throw new runtime.RequiredError(
                 'requestBody',
@@ -501,13 +556,22 @@ export class FieldSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/config/fieldschemes/fields/parameters`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove field association parameters overrides for work types.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove field parameters
+     */
+    async removeFieldAssociationSchemeItemParametersRaw(requestParameters: RemoveFieldAssociationSchemeItemParametersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeFieldAssociationSchemeItemParametersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -521,10 +585,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove fields associated with field association schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Remove fields associated with field schemes
+     * Creates request options for removeFieldsAssociatedWithSchemes without sending the request
      */
-    async removeFieldsAssociatedWithSchemesRaw(requestParameters: RemoveFieldsAssociatedWithSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MinimalFieldSchemeToFieldsResponse>> {
+    async removeFieldsAssociatedWithSchemesRequestOpts(requestParameters: RemoveFieldsAssociatedWithSchemesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestBody'] == null) {
             throw new runtime.RequiredError(
                 'requestBody',
@@ -549,13 +612,22 @@ export class FieldSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/config/fieldschemes/fields`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove fields associated with field association schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove fields associated with field schemes
+     */
+    async removeFieldsAssociatedWithSchemesRaw(requestParameters: RemoveFieldsAssociatedWithSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MinimalFieldSchemeToFieldsResponse>> {
+        const requestOptions = await this.removeFieldsAssociatedWithSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -570,10 +642,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for fields belonging to a given field association scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Search field scheme fields
+     * Creates request options for searchFieldAssociationSchemeFields without sending the request
      */
-    async searchFieldAssociationSchemeFieldsRaw(requestParameters: SearchFieldAssociationSchemeFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2FieldAssociationSchemeFieldSearchResult>> {
+    async searchFieldAssociationSchemeFieldsRequestOpts(requestParameters: SearchFieldAssociationSchemeFieldsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -609,12 +680,21 @@ export class FieldSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/config/fieldschemes/{id}/fields`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for fields belonging to a given field association scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Search field scheme fields
+     */
+    async searchFieldAssociationSchemeFieldsRaw(requestParameters: SearchFieldAssociationSchemeFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2FieldAssociationSchemeFieldSearchResult>> {
+        const requestOptions = await this.searchFieldAssociationSchemeFieldsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -629,10 +709,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * REST Endpoint for searching for projects belonging to a given field association scheme  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Search field scheme projects
+     * Creates request options for searchFieldAssociationSchemeProjects without sending the request
      */
-    async searchFieldAssociationSchemeProjectsRaw(requestParameters: SearchFieldAssociationSchemeProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2FieldAssociationSchemeProjectSearchResult>> {
+    async searchFieldAssociationSchemeProjectsRequestOpts(requestParameters: SearchFieldAssociationSchemeProjectsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -668,12 +747,21 @@ export class FieldSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/config/fieldschemes/{id}/projects`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * REST Endpoint for searching for projects belonging to a given field association scheme  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Search field scheme projects
+     */
+    async searchFieldAssociationSchemeProjectsRaw(requestParameters: SearchFieldAssociationSchemeProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2FieldAssociationSchemeProjectSearchResult>> {
+        const requestOptions = await this.searchFieldAssociationSchemeProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -688,10 +776,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Endpoint for updating an existing field association scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update field scheme
+     * Creates request options for updateFieldAssociationScheme without sending the request
      */
-    async updateFieldAssociationSchemeRaw(requestParameters: UpdateFieldAssociationSchemeOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateFieldAssociationSchemeResponse>> {
+    async updateFieldAssociationSchemeRequestOpts(requestParameters: UpdateFieldAssociationSchemeOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -724,13 +811,22 @@ export class FieldSchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/config/fieldschemes/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateFieldAssociationSchemeRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Endpoint for updating an existing field association scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update field scheme
+     */
+    async updateFieldAssociationSchemeRaw(requestParameters: UpdateFieldAssociationSchemeOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateFieldAssociationSchemeResponse>> {
+        const requestOptions = await this.updateFieldAssociationSchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -745,10 +841,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update field association item parameters in field association schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update field parameters
+     * Creates request options for updateFieldAssociationSchemeItemParameters without sending the request
      */
-    async updateFieldAssociationSchemeItemParametersRaw(requestParameters: UpdateFieldAssociationSchemeItemParametersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateFieldSchemeParametersResponse>> {
+    async updateFieldAssociationSchemeItemParametersRequestOpts(requestParameters: UpdateFieldAssociationSchemeItemParametersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestBody'] == null) {
             throw new runtime.RequiredError(
                 'requestBody',
@@ -773,13 +868,22 @@ export class FieldSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/config/fieldschemes/fields/parameters`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update field association item parameters in field association schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update field parameters
+     */
+    async updateFieldAssociationSchemeItemParametersRaw(requestParameters: UpdateFieldAssociationSchemeItemParametersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateFieldSchemeParametersResponse>> {
+        const requestOptions = await this.updateFieldAssociationSchemeItemParametersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -794,10 +898,9 @@ export class FieldSchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update fields associated with field association schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update fields associated with field schemes
+     * Creates request options for updateFieldsAssociatedWithSchemes without sending the request
      */
-    async updateFieldsAssociatedWithSchemesRaw(requestParameters: UpdateFieldsAssociatedWithSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldSchemeToFieldsResponse>> {
+    async updateFieldsAssociatedWithSchemesRequestOpts(requestParameters: UpdateFieldsAssociatedWithSchemesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestBody'] == null) {
             throw new runtime.RequiredError(
                 'requestBody',
@@ -822,13 +925,22 @@ export class FieldSchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/config/fieldschemes/fields`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update fields associated with field association schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update fields associated with field schemes
+     */
+    async updateFieldsAssociatedWithSchemesRaw(requestParameters: UpdateFieldsAssociatedWithSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldSchemeToFieldsResponse>> {
+        const requestOptions = await this.updateFieldsAssociatedWithSchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -81,10 +81,9 @@ export interface UpdatePrioritySchemeRequest {
 export class PrioritySchemesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new priority scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Create priority scheme
+     * Creates request options for createPriorityScheme without sending the request
      */
-    async createPrioritySchemeRaw(requestParameters: CreatePrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PrioritySchemeId>> {
+    async createPrioritySchemeRequestOpts(requestParameters: CreatePrioritySchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createPrioritySchemeDetails'] == null) {
             throw new runtime.RequiredError(
                 'createPrioritySchemeDetails',
@@ -109,13 +108,22 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/priorityscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createPrioritySchemeDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new priority scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create priority scheme
+     */
+    async createPrioritySchemeRaw(requestParameters: CreatePrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PrioritySchemeId>> {
+        const requestOptions = await this.createPrioritySchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -130,10 +138,9 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a priority scheme.  This operation is only available for priority schemes without any associated projects. Any associated projects must be removed from the priority scheme before this operation can be performed.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Delete priority scheme
+     * Creates request options for deletePriorityScheme without sending the request
      */
-    async deletePrioritySchemeRaw(requestParameters: DeletePrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deletePrioritySchemeRequestOpts(requestParameters: DeletePrioritySchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -157,12 +164,21 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/priorityscheme/{schemeId}`;
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a priority scheme.  This operation is only available for priority schemes without any associated projects. Any associated projects must be removed from the priority scheme before this operation can be performed.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete priority scheme
+     */
+    async deletePrioritySchemeRaw(requestParameters: DeletePrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deletePrioritySchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -181,10 +197,9 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of priorities available for adding to a priority scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get available priorities by priority scheme
+     * Creates request options for getAvailablePrioritiesByPriorityScheme without sending the request
      */
-    async getAvailablePrioritiesByPrioritySchemeRaw(requestParameters: GetAvailablePrioritiesByPrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriorityWithSequence>> {
+    async getAvailablePrioritiesByPrioritySchemeRequestOpts(requestParameters: GetAvailablePrioritiesByPrioritySchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -227,12 +242,21 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/priorityscheme/priorities/available`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of priorities available for adding to a priority scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get available priorities by priority scheme
+     */
+    async getAvailablePrioritiesByPrioritySchemeRaw(requestParameters: GetAvailablePrioritiesByPrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriorityWithSequence>> {
+        const requestOptions = await this.getAvailablePrioritiesByPrioritySchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -247,10 +271,9 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of priorities by scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get priorities by priority scheme
+     * Creates request options for getPrioritiesByPriorityScheme without sending the request
      */
-    async getPrioritiesByPrioritySchemeRaw(requestParameters: GetPrioritiesByPrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriorityWithSequence>> {
+    async getPrioritiesByPrioritySchemeRequestOpts(requestParameters: GetPrioritiesByPrioritySchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -282,12 +305,21 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/priorityscheme/{schemeId}/priorities`;
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of priorities by scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get priorities by priority scheme
+     */
+    async getPrioritiesByPrioritySchemeRaw(requestParameters: GetPrioritiesByPrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriorityWithSequence>> {
+        const requestOptions = await this.getPrioritiesByPrioritySchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -302,10 +334,9 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of priority schemes.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get priority schemes
+     * Creates request options for getPrioritySchemes without sending the request
      */
-    async getPrioritySchemesRaw(requestParameters: GetPrioritySchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects>> {
+    async getPrioritySchemesRequestOpts(requestParameters: GetPrioritySchemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -353,12 +384,21 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/priorityscheme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of priority schemes.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get priority schemes
+     */
+    async getPrioritySchemesRaw(requestParameters: GetPrioritySchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects>> {
+        const requestOptions = await this.getPrioritySchemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -373,10 +413,9 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of projects by scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get projects by priority scheme
+     * Creates request options for getProjectsByPriorityScheme without sending the request
      */
-    async getProjectsByPrioritySchemeRaw(requestParameters: GetProjectsByPrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanProject>> {
+    async getProjectsByPrioritySchemeRequestOpts(requestParameters: GetProjectsByPrioritySchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -416,12 +455,21 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/priorityscheme/{schemeId}/projects`;
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of projects by scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Get projects by priority scheme
+     */
+    async getProjectsByPrioritySchemeRaw(requestParameters: GetProjectsByPrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanProject>> {
+        const requestOptions = await this.getProjectsByPrioritySchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -436,10 +484,9 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of priorities that would require mapping, given a change in priorities or projects associated with a priority scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Suggested priorities for mappings
+     * Creates request options for suggestedPrioritiesForMappings without sending the request
      */
-    async suggestedPrioritiesForMappingsRaw(requestParameters: SuggestedPrioritiesForMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriorityWithSequence>> {
+    async suggestedPrioritiesForMappingsRequestOpts(requestParameters: SuggestedPrioritiesForMappingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['suggestedMappingsRequestBean'] == null) {
             throw new runtime.RequiredError(
                 'suggestedMappingsRequestBean',
@@ -464,13 +511,22 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/priorityscheme/mappings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['suggestedMappingsRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of priorities that would require mapping, given a change in priorities or projects associated with a priority scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+     * Suggested priorities for mappings
+     */
+    async suggestedPrioritiesForMappingsRaw(requestParameters: SuggestedPrioritiesForMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriorityWithSequence>> {
+        const requestOptions = await this.suggestedPrioritiesForMappingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -485,10 +541,9 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a priority scheme. This includes its details, the lists of priorities and projects in it  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Update priority scheme
+     * Creates request options for updatePriorityScheme without sending the request
      */
-    async updatePrioritySchemeRaw(requestParameters: UpdatePrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdatePrioritySchemeResponseBean>> {
+    async updatePrioritySchemeRequestOpts(requestParameters: UpdatePrioritySchemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['schemeId'] == null) {
             throw new runtime.RequiredError(
                 'schemeId',
@@ -521,13 +576,22 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/priorityscheme/{schemeId}`;
         urlPath = urlPath.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updatePrioritySchemeRequestBean'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a priority scheme. This includes its details, the lists of priorities and projects in it  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update priority scheme
+     */
+    async updatePrioritySchemeRaw(requestParameters: UpdatePrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdatePrioritySchemeResponseBean>> {
+        const requestOptions = await this.updatePrioritySchemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

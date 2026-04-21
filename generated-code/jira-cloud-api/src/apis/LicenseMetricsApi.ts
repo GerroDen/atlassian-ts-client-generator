@@ -30,10 +30,9 @@ export interface GetApproximateApplicationLicenseCountRequest {
 export class LicenseMetricsApi extends runtime.BaseAPI {
 
     /**
-     * Returns the total approximate number of user accounts for a single Jira license. Note that this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get approximate application license count
+     * Creates request options for getApproximateApplicationLicenseCount without sending the request
      */
-    async getApproximateApplicationLicenseCountRaw(requestParameters: GetApproximateApplicationLicenseCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LicenseMetric>> {
+    async getApproximateApplicationLicenseCountRequestOpts(requestParameters: GetApproximateApplicationLicenseCountRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['applicationKey'] == null) {
             throw new runtime.RequiredError(
                 'applicationKey',
@@ -57,12 +56,21 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
         let urlPath = `/rest/api/3/license/approximateLicenseCount/product/{applicationKey}`;
         urlPath = urlPath.replace(`{${"applicationKey"}}`, encodeURIComponent(String(requestParameters['applicationKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the total approximate number of user accounts for a single Jira license. Note that this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get approximate application license count
+     */
+    async getApproximateApplicationLicenseCountRaw(requestParameters: GetApproximateApplicationLicenseCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LicenseMetric>> {
+        const requestOptions = await this.getApproximateApplicationLicenseCountRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -77,10 +85,9 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the approximate number of user accounts across all Jira licenses. Note that this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
-     * Get approximate license count
+     * Creates request options for getApproximateLicenseCount without sending the request
      */
-    async getApproximateLicenseCountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LicenseMetric>> {
+    async getApproximateLicenseCountRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -96,12 +103,21 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/license/approximateLicenseCount`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the approximate number of user accounts across all Jira licenses. Note that this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get approximate license count
+     */
+    async getApproximateLicenseCountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LicenseMetric>> {
+        const requestOptions = await this.getApproximateLicenseCountRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -116,10 +132,9 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns licensing information about the Jira instance.  **[Permissions](#permissions) required:** None.
-     * Get license
+     * Creates request options for getLicense without sending the request
      */
-    async getLicenseRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<License>> {
+    async getLicenseRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -135,12 +150,21 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/instance/license`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns licensing information about the Jira instance.  **[Permissions](#permissions) required:** None.
+     * Get license
+     */
+    async getLicenseRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<License>> {
+        const requestOptions = await this.getLicenseRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

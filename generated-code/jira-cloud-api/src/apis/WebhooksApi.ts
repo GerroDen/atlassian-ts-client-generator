@@ -52,10 +52,9 @@ export interface RegisterDynamicWebhooksRequest {
 export class WebhooksApi extends runtime.BaseAPI {
 
     /**
-     * Removes webhooks by ID. Only webhooks registered by the calling app are removed. If webhooks created by other apps are specified, they are ignored.  **[Permissions](#permissions) required:** Only [Connect](https://developer.atlassian.com/cloud/jira/platform/#connect-apps) and [OAuth 2.0](https://developer.atlassian.com/cloud/jira/platform/oauth-2-3lo-apps) apps can use this operation.
-     * Delete webhooks by ID
+     * Creates request options for deleteWebhookById without sending the request
      */
-    async deleteWebhookByIdRaw(requestParameters: DeleteWebhookByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWebhookByIdRequestOpts(requestParameters: DeleteWebhookByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['containerForWebhookIDs'] == null) {
             throw new runtime.RequiredError(
                 'containerForWebhookIDs',
@@ -80,13 +79,22 @@ export class WebhooksApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/webhook`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['containerForWebhookIDs'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes webhooks by ID. Only webhooks registered by the calling app are removed. If webhooks created by other apps are specified, they are ignored.  **[Permissions](#permissions) required:** Only [Connect](https://developer.atlassian.com/cloud/jira/platform/#connect-apps) and [OAuth 2.0](https://developer.atlassian.com/cloud/jira/platform/oauth-2-3lo-apps) apps can use this operation.
+     * Delete webhooks by ID
+     */
+    async deleteWebhookByIdRaw(requestParameters: DeleteWebhookByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWebhookByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -100,10 +108,9 @@ export class WebhooksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a [paginated](#pagination) list of the webhooks registered by the calling app.  **[Permissions](#permissions) required:** Only [Connect](https://developer.atlassian.com/cloud/jira/platform/#connect-apps) and [OAuth 2.0](https://developer.atlassian.com/cloud/jira/platform/oauth-2-3lo-apps) apps can use this operation.
-     * Get dynamic webhooks for app
+     * Creates request options for getDynamicWebhooksForApp without sending the request
      */
-    async getDynamicWebhooksForAppRaw(requestParameters: GetDynamicWebhooksForAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanWebhook>> {
+    async getDynamicWebhooksForAppRequestOpts(requestParameters: GetDynamicWebhooksForAppRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -127,12 +134,21 @@ export class WebhooksApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/webhook`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of the webhooks registered by the calling app.  **[Permissions](#permissions) required:** Only [Connect](https://developer.atlassian.com/cloud/jira/platform/#connect-apps) and [OAuth 2.0](https://developer.atlassian.com/cloud/jira/platform/oauth-2-3lo-apps) apps can use this operation.
+     * Get dynamic webhooks for app
+     */
+    async getDynamicWebhooksForAppRaw(requestParameters: GetDynamicWebhooksForAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanWebhook>> {
+        const requestOptions = await this.getDynamicWebhooksForAppRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -147,10 +163,9 @@ export class WebhooksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns webhooks that have recently failed to be delivered to the requesting app after the maximum number of retries.  After 72 hours the failure may no longer be returned by this operation.  The oldest failure is returned first.  This method uses a cursor-based pagination. To request the next page use the failure time of the last webhook on the list as the `failedAfter` value or use the URL provided in `next`.  **[Permissions](#permissions) required:** Only [Connect apps](https://developer.atlassian.com/cloud/jira/platform/index/#connect-apps) can use this operation.
-     * Get failed webhooks
+     * Creates request options for getFailedWebhooks without sending the request
      */
-    async getFailedWebhooksRaw(requestParameters: GetFailedWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FailedWebhooks>> {
+    async getFailedWebhooksRequestOpts(requestParameters: GetFailedWebhooksRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['maxResults'] != null) {
@@ -174,12 +189,21 @@ export class WebhooksApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/webhook/failed`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns webhooks that have recently failed to be delivered to the requesting app after the maximum number of retries.  After 72 hours the failure may no longer be returned by this operation.  The oldest failure is returned first.  This method uses a cursor-based pagination. To request the next page use the failure time of the last webhook on the list as the `failedAfter` value or use the URL provided in `next`.  **[Permissions](#permissions) required:** Only [Connect apps](https://developer.atlassian.com/cloud/jira/platform/index/#connect-apps) can use this operation.
+     * Get failed webhooks
+     */
+    async getFailedWebhooksRaw(requestParameters: GetFailedWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FailedWebhooks>> {
+        const requestOptions = await this.getFailedWebhooksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -194,10 +218,9 @@ export class WebhooksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Extends the life of webhook. Webhooks registered through the REST API expire after 30 days. Call this operation to keep them alive.  Unrecognized webhook IDs (those that are not found or belong to other apps) are ignored.  **[Permissions](#permissions) required:** Only [Connect](https://developer.atlassian.com/cloud/jira/platform/#connect-apps) and [OAuth 2.0](https://developer.atlassian.com/cloud/jira/platform/oauth-2-3lo-apps) apps can use this operation.
-     * Extend webhook life
+     * Creates request options for refreshWebhooks without sending the request
      */
-    async refreshWebhooksRaw(requestParameters: RefreshWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhooksExpirationDate>> {
+    async refreshWebhooksRequestOpts(requestParameters: RefreshWebhooksRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['containerForWebhookIDs'] == null) {
             throw new runtime.RequiredError(
                 'containerForWebhookIDs',
@@ -222,13 +245,22 @@ export class WebhooksApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/webhook/refresh`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['containerForWebhookIDs'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Extends the life of webhook. Webhooks registered through the REST API expire after 30 days. Call this operation to keep them alive.  Unrecognized webhook IDs (those that are not found or belong to other apps) are ignored.  **[Permissions](#permissions) required:** Only [Connect](https://developer.atlassian.com/cloud/jira/platform/#connect-apps) and [OAuth 2.0](https://developer.atlassian.com/cloud/jira/platform/oauth-2-3lo-apps) apps can use this operation.
+     * Extend webhook life
+     */
+    async refreshWebhooksRaw(requestParameters: RefreshWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhooksExpirationDate>> {
+        const requestOptions = await this.refreshWebhooksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -243,10 +275,9 @@ export class WebhooksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Registers webhooks.  **NOTE:** for non-public OAuth apps, webhooks are delivered only if there is a match between the app owner and the user who registered a dynamic webhook.  **[Permissions](#permissions) required:** Only [Connect](https://developer.atlassian.com/cloud/jira/platform/#connect-apps) and [OAuth 2.0](https://developer.atlassian.com/cloud/jira/platform/oauth-2-3lo-apps) apps can use this operation.
-     * Register dynamic webhooks
+     * Creates request options for registerDynamicWebhooks without sending the request
      */
-    async registerDynamicWebhooksRaw(requestParameters: RegisterDynamicWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerForRegisteredWebhooks>> {
+    async registerDynamicWebhooksRequestOpts(requestParameters: RegisterDynamicWebhooksRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['webhookRegistrationDetails'] == null) {
             throw new runtime.RequiredError(
                 'webhookRegistrationDetails',
@@ -271,13 +302,22 @@ export class WebhooksApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/api/3/webhook`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['webhookRegistrationDetails'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Registers webhooks.  **NOTE:** for non-public OAuth apps, webhooks are delivered only if there is a match between the app owner and the user who registered a dynamic webhook.  **[Permissions](#permissions) required:** Only [Connect](https://developer.atlassian.com/cloud/jira/platform/#connect-apps) and [OAuth 2.0](https://developer.atlassian.com/cloud/jira/platform/oauth-2-3lo-apps) apps can use this operation.
+     * Register dynamic webhooks
+     */
+    async registerDynamicWebhooksRaw(requestParameters: RegisterDynamicWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerForRegisteredWebhooks>> {
+        const requestOptions = await this.registerDynamicWebhooksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
