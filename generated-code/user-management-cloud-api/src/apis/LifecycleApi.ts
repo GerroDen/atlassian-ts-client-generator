@@ -46,10 +46,9 @@ export interface UsersAccountIdManageLifecycleEnablePostRequest {
 export class LifecycleApi extends runtime.BaseAPI {
 
     /**
-     * This API will:  - Cancel the scheduled deletion of the specified managed account.  - Restore and activate the user’s account.    Specifications:  - You can cancel the deletion within the 14-day grace period of deleting a managed account. After that the account is permanently deleted.    The permission to make use of this resource is exposed by the `lifecycle.delete` privilege. Learn more about [Get user management permissions API](https://developer.atlassian.com/cloud/admin/user-management/rest/api-group-manage/#api-users-account-id-manage-get) to manage the specified user. 
-     * Cancel delete account
+     * Creates request options for usersAccountIdManageLifecycleCancelDeletePost without sending the request
      */
-    async usersAccountIdManageLifecycleCancelDeletePostRaw(requestParameters: UsersAccountIdManageLifecycleCancelDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResultMessage>> {
+    async usersAccountIdManageLifecycleCancelDeletePostRequestOpts(requestParameters: UsersAccountIdManageLifecycleCancelDeletePostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -73,12 +72,21 @@ export class LifecycleApi extends runtime.BaseAPI {
         let urlPath = `/users/{account_id}/manage/lifecycle/cancel-delete`;
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This API will:  - Cancel the scheduled deletion of the specified managed account.  - Restore and activate the user’s account.    Specifications:  - You can cancel the deletion within the 14-day grace period of deleting a managed account. After that the account is permanently deleted.    The permission to make use of this resource is exposed by the `lifecycle.delete` privilege. Learn more about [Get user management permissions API](https://developer.atlassian.com/cloud/admin/user-management/rest/api-group-manage/#api-users-account-id-manage-get) to manage the specified user. 
+     * Cancel delete account
+     */
+    async usersAccountIdManageLifecycleCancelDeletePostRaw(requestParameters: UsersAccountIdManageLifecycleCancelDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResultMessage>> {
+        const requestOptions = await this.usersAccountIdManageLifecycleCancelDeletePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -93,10 +101,9 @@ export class LifecycleApi extends runtime.BaseAPI {
     }
 
     /**
-     * This API will: - Delete a managed account from Atlassian Administration. - Withdraw complete access to all products and services listed in Atlassian Administration. - Remove reference to the account from all lists under Directory in Atlassian Administration.  Specifications: - Deleting an account is permanent. If you think you’ll need the account again, we recommend you [deactivate](https://support.atlassian.com/user-management/docs/deactivate-a-managed-account/) it instead. - Before you permanently delete the account, you’ll have a 14-day grace period, during which the account will appear as temporarily deactivated.  Learn more about [deleting a managed account](https://support.atlassian.com/user-management/docs/delete-a-managed-account/).  Learn the fastest way to get the paramaters and delete account with a detailed [tutorial](https://developer.atlassian.com/cloud/admin/user-management/delete-managed-account/#delete-account).   The permission to make use of this resource is exposed by the `lifecycle.delete` privilege. Learn more about [Get user management permissions API](https://developer.atlassian.com/cloud/admin/user-management/rest/api-group-manage/#api-users-account-id-manage-get) to manage the specified user. 
-     * Delete account
+     * Creates request options for usersAccountIdManageLifecycleDeletePost without sending the request
      */
-    async usersAccountIdManageLifecycleDeletePostRaw(requestParameters: UsersAccountIdManageLifecycleDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResultMessage>> {
+    async usersAccountIdManageLifecycleDeletePostRequestOpts(requestParameters: UsersAccountIdManageLifecycleDeletePostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -120,12 +127,21 @@ export class LifecycleApi extends runtime.BaseAPI {
         let urlPath = `/users/{account_id}/manage/lifecycle/delete`;
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This API will: - Delete a managed account from Atlassian Administration. - Withdraw complete access to all products and services listed in Atlassian Administration. - Remove reference to the account from all lists under Directory in Atlassian Administration.  Specifications: - Deleting an account is permanent. If you think you’ll need the account again, we recommend you [deactivate](https://support.atlassian.com/user-management/docs/deactivate-a-managed-account/) it instead. - Before you permanently delete the account, you’ll have a 14-day grace period, during which the account will appear as temporarily deactivated.  Learn more about [deleting a managed account](https://support.atlassian.com/user-management/docs/delete-a-managed-account/).  Learn the fastest way to get the paramaters and delete account with a detailed [tutorial](https://developer.atlassian.com/cloud/admin/user-management/delete-managed-account/#delete-account).   The permission to make use of this resource is exposed by the `lifecycle.delete` privilege. Learn more about [Get user management permissions API](https://developer.atlassian.com/cloud/admin/user-management/rest/api-group-manage/#api-users-account-id-manage-get) to manage the specified user. 
+     * Delete account
+     */
+    async usersAccountIdManageLifecycleDeletePostRaw(requestParameters: UsersAccountIdManageLifecycleDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResultMessage>> {
+        const requestOptions = await this.usersAccountIdManageLifecycleDeletePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -140,10 +156,9 @@ export class LifecycleApi extends runtime.BaseAPI {
     }
 
     /**
-     *  Deactivate (block) the specified user account from logging into Atlassian. The permission to make use of this resource is exposed by the `lifecycle.enablement` privilege. You can optionally set a message associated with the block. If none is supplied, a default message will be used. 
-     * Deactivate a user
+     * Creates request options for usersAccountIdManageLifecycleDisablePost without sending the request
      */
-    async usersAccountIdManageLifecycleDisablePostRaw(requestParameters: UsersAccountIdManageLifecycleDisablePostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async usersAccountIdManageLifecycleDisablePostRequestOpts(requestParameters: UsersAccountIdManageLifecycleDisablePostOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -176,13 +191,22 @@ export class LifecycleApi extends runtime.BaseAPI {
         let urlPath = `/users/{account_id}/manage/lifecycle/disable`;
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['usersAccountIdManageLifecycleDisablePostRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     *  Deactivate (block) the specified user account from logging into Atlassian. The permission to make use of this resource is exposed by the `lifecycle.enablement` privilege. You can optionally set a message associated with the block. If none is supplied, a default message will be used. 
+     * Deactivate a user
+     */
+    async usersAccountIdManageLifecycleDisablePostRaw(requestParameters: UsersAccountIdManageLifecycleDisablePostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.usersAccountIdManageLifecycleDisablePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -196,10 +220,9 @@ export class LifecycleApi extends runtime.BaseAPI {
     }
 
     /**
-     * Activates the specified user account. The permission to make use of this resource is exposed by the `lifecycle.enablement` privilege.  User accounts that were deactivated due to US export controls cannot be reactivated using this API. If you believe the account was incorrectly blocked, please contact [Atlassian Support](https://support.atlassian.com/contact).  User accounts that have been deleted need the deletion to be canceled before reactivating. 
-     * Activate a user
+     * Creates request options for usersAccountIdManageLifecycleEnablePost without sending the request
      */
-    async usersAccountIdManageLifecycleEnablePostRaw(requestParameters: UsersAccountIdManageLifecycleEnablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async usersAccountIdManageLifecycleEnablePostRequestOpts(requestParameters: UsersAccountIdManageLifecycleEnablePostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -223,12 +246,21 @@ export class LifecycleApi extends runtime.BaseAPI {
         let urlPath = `/users/{account_id}/manage/lifecycle/enable`;
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Activates the specified user account. The permission to make use of this resource is exposed by the `lifecycle.enablement` privilege.  User accounts that were deactivated due to US export controls cannot be reactivated using this API. If you believe the account was incorrectly blocked, please contact [Atlassian Support](https://support.atlassian.com/contact).  User accounts that have been deleted need the deletion to be canceled before reactivating. 
+     * Activate a user
+     */
+    async usersAccountIdManageLifecycleEnablePostRaw(requestParameters: UsersAccountIdManageLifecycleEnablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.usersAccountIdManageLifecycleEnablePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

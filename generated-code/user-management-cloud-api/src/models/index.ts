@@ -177,7 +177,7 @@ export interface AtlassianAccountUser {
 export interface ConflictLifecycleErrors {
     /**
      * 
-     * @type {string}
+     * @type {ConflictLifecycleErrorsKeyEnum}
      * @memberof ConflictLifecycleErrors
      */
     key: ConflictLifecycleErrorsKeyEnum;
@@ -323,7 +323,7 @@ export interface ManageabilityRestrictionReason {
      * - _managedAccount_: The property or action is restricted because it is
      *   available only to the user's organisation administrator
      * 
-     * @type {string}
+     * @type {ManageabilityRestrictionReasonKeyEnum}
      * @memberof ManageabilityRestrictionReason
      */
     key: ManageabilityRestrictionReasonKeyEnum;
@@ -381,7 +381,7 @@ export interface NotFoundAccount {
      * - _accountNotFound_: Requested accountId not found
      * - _notFound_: Requested resource not found
      * 
-     * @type {string}
+     * @type {NotFoundAccountKeyEnum}
      * @memberof NotFoundAccount
      */
     key: NotFoundAccountKeyEnum;
@@ -487,7 +487,7 @@ export interface ResponseBadRequestFieldConstraintsViolatedContextFieldViolation
 export interface ResponseForbiddenAction {
     /**
      * 
-     * @type {string}
+     * @type {ResponseForbiddenActionKeyEnum}
      * @memberof ResponseForbiddenAction
      */
     key: ResponseForbiddenActionKeyEnum;
@@ -517,7 +517,7 @@ export type ResponseForbiddenActionKeyEnum = typeof ResponseForbiddenActionKeyEn
 export interface ResponseForbiddenBasic {
     /**
      * 
-     * @type {string}
+     * @type {ResponseForbiddenBasicKeyEnum}
      * @memberof ResponseForbiddenBasic
      */
     key: ResponseForbiddenBasicKeyEnum;
@@ -540,7 +540,7 @@ export type ResponseForbiddenBasicKeyEnum = typeof ResponseForbiddenBasicKeyEnum
 export interface ResponseForbiddenObjectMutability {
     /**
      * 
-     * @type {string}
+     * @type {ResponseForbiddenObjectMutabilityKeyEnum}
      * @memberof ResponseForbiddenObjectMutability
      */
     key: ResponseForbiddenObjectMutabilityKeyEnum;
@@ -571,7 +571,7 @@ export type ResponseForbiddenObjectMutabilityKeyEnum = typeof ResponseForbiddenO
 export interface ResponseForbiddenTargetUnverified {
     /**
      * 
-     * @type {string}
+     * @type {ResponseForbiddenTargetUnverifiedKeyEnum}
      * @memberof ResponseForbiddenTargetUnverified
      */
     key: ResponseForbiddenTargetUnverifiedKeyEnum;
@@ -594,7 +594,7 @@ export type ResponseForbiddenTargetUnverifiedKeyEnum = typeof ResponseForbiddenT
 export interface ResponseForbiddenUnclaimedDomain {
     /**
      * 
-     * @type {string}
+     * @type {ResponseForbiddenUnclaimedDomainKeyEnum}
      * @memberof ResponseForbiddenUnclaimedDomain
      */
     key: ResponseForbiddenUnclaimedDomainKeyEnum;
@@ -649,7 +649,7 @@ export interface ResultMessage {
 export interface Unauthorized {
     /**
      * 
-     * @type {string}
+     * @type {UnauthorizedKeyEnum}
      * @memberof Unauthorized
      */
     key: UnauthorizedKeyEnum;

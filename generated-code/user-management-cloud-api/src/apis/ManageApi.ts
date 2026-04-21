@@ -32,10 +32,9 @@ export interface UsersAccountIdManageGetRequest {
 export class ManageApi extends runtime.BaseAPI {
 
     /**
-     * Returns the set of permissions you have for managing the specified Atlassian account
-     * Get user management permissions
+     * Creates request options for usersAccountIdManageGet without sending the request
      */
-    async usersAccountIdManageGetRaw(requestParameters: UsersAccountIdManageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersAccountIdManageGet200Response>> {
+    async usersAccountIdManageGetRequestOpts(requestParameters: UsersAccountIdManageGetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -63,12 +62,21 @@ export class ManageApi extends runtime.BaseAPI {
         let urlPath = `/users/{account_id}/manage`;
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the set of permissions you have for managing the specified Atlassian account
+     * Get user management permissions
+     */
+    async usersAccountIdManageGetRaw(requestParameters: UsersAccountIdManageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersAccountIdManageGet200Response>> {
+        const requestOptions = await this.usersAccountIdManageGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

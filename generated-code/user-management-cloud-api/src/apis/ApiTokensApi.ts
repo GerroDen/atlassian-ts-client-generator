@@ -37,10 +37,9 @@ export interface UsersAccountIdManageApiTokensTokenIdDeleteRequest {
 export class ApiTokensApi extends runtime.BaseAPI {
 
     /**
-     * Gets the API tokens owned by the specified user.
-     * Get API tokens
+     * Creates request options for usersAccountIdManageApiTokensGet without sending the request
      */
-    async usersAccountIdManageApiTokensGetRaw(requestParameters: UsersAccountIdManageApiTokensGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApiTokenModel>>> {
+    async usersAccountIdManageApiTokensGetRequestOpts(requestParameters: UsersAccountIdManageApiTokensGetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -64,12 +63,21 @@ export class ApiTokensApi extends runtime.BaseAPI {
         let urlPath = `/users/{account_id}/manage/api-tokens`;
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the API tokens owned by the specified user.
+     * Get API tokens
+     */
+    async usersAccountIdManageApiTokensGetRaw(requestParameters: UsersAccountIdManageApiTokensGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApiTokenModel>>> {
+        const requestOptions = await this.usersAccountIdManageApiTokensGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -84,10 +92,9 @@ export class ApiTokensApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a specifid API token by ID.
-     * Delete API token
+     * Creates request options for usersAccountIdManageApiTokensTokenIdDelete without sending the request
      */
-    async usersAccountIdManageApiTokensTokenIdDeleteRaw(requestParameters: UsersAccountIdManageApiTokensTokenIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async usersAccountIdManageApiTokensTokenIdDeleteRequestOpts(requestParameters: UsersAccountIdManageApiTokensTokenIdDeleteRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -119,12 +126,21 @@ export class ApiTokensApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a specifid API token by ID.
+     * Delete API token
+     */
+    async usersAccountIdManageApiTokensTokenIdDeleteRaw(requestParameters: UsersAccountIdManageApiTokensTokenIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.usersAccountIdManageApiTokensTokenIdDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

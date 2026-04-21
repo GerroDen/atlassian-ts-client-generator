@@ -39,10 +39,9 @@ export interface UsersAccountIdManageProfilePatchRequest {
 export class ProfileApi extends runtime.BaseAPI {
 
     /**
-     * Returns information about a single Atlassian account by ID
-     * Get profile
+     * Creates request options for usersAccountIdManageProfileGet without sending the request
      */
-    async usersAccountIdManageProfileGetRaw(requestParameters: UsersAccountIdManageProfileGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersAccountIdManageProfileGet200Response>> {
+    async usersAccountIdManageProfileGetRequestOpts(requestParameters: UsersAccountIdManageProfileGetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -66,12 +65,21 @@ export class ProfileApi extends runtime.BaseAPI {
         let urlPath = `/users/{account_id}/manage/profile`;
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns information about a single Atlassian account by ID
+     * Get profile
+     */
+    async usersAccountIdManageProfileGetRaw(requestParameters: UsersAccountIdManageProfileGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersAccountIdManageProfileGet200Response>> {
+        const requestOptions = await this.usersAccountIdManageProfileGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -86,10 +94,9 @@ export class ProfileApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates fields in a user account. The `profile.write` privilege details which fields you can change.
-     * Update profile
+     * Creates request options for usersAccountIdManageProfilePatch without sending the request
      */
-    async usersAccountIdManageProfilePatchRaw(requestParameters: UsersAccountIdManageProfilePatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersAccountIdManageProfileGet200Response>> {
+    async usersAccountIdManageProfilePatchRequestOpts(requestParameters: UsersAccountIdManageProfilePatchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -122,13 +129,22 @@ export class ProfileApi extends runtime.BaseAPI {
         let urlPath = `/users/{account_id}/manage/profile`;
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['atlassianAccountUser'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates fields in a user account. The `profile.write` privilege details which fields you can change.
+     * Update profile
+     */
+    async usersAccountIdManageProfilePatchRaw(requestParameters: UsersAccountIdManageProfilePatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersAccountIdManageProfileGet200Response>> {
+        const requestOptions = await this.usersAccountIdManageProfilePatchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

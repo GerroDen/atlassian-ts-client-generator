@@ -33,10 +33,9 @@ export interface UsersAccountIdManageEmailPutOperationRequest {
 export class EmailApi extends runtime.BaseAPI {
 
     /**
-     * Sets the specified user\'s email address. Before using this endpoint, you must [verify the target domain](https://confluence.atlassian.com/x/gjcWN) as the new email address will be considered verified. The permission to make use of this resource is exposed by the `email.set` privilege. This call invalidates all active sessions. 
-     * Set email 
+     * Creates request options for usersAccountIdManageEmailPut without sending the request
      */
-    async usersAccountIdManageEmailPutRaw(requestParameters: UsersAccountIdManageEmailPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async usersAccountIdManageEmailPutRequestOpts(requestParameters: UsersAccountIdManageEmailPutOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -69,13 +68,22 @@ export class EmailApi extends runtime.BaseAPI {
         let urlPath = `/users/{account_id}/manage/email`;
         urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['usersAccountIdManageEmailPutRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the specified user\'s email address. Before using this endpoint, you must [verify the target domain](https://confluence.atlassian.com/x/gjcWN) as the new email address will be considered verified. The permission to make use of this resource is exposed by the `email.set` privilege. This call invalidates all active sessions. 
+     * Set email 
+     */
+    async usersAccountIdManageEmailPutRaw(requestParameters: UsersAccountIdManageEmailPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.usersAccountIdManageEmailPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
