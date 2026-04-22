@@ -15,36 +15,40 @@ const transformer = (file, { j }) => {
     .forEach((path) => {
       path.node.typeName = j.identifier("Array");
     });
-  source
+  const fetchApiDeclarations = source
     .find(j.ExportNamedDeclaration)
-    .filter((path) => path.node.declaration.id?.name === "FetchAPI")
-    .replaceWith(
-      j.exportNamedDeclaration(
-        j.tsTypeAliasDeclaration(
-          j.identifier("FetchAPI"),
-          j.tsFunctionType.from({
-            parameters: [
-              j.identifier.from({
-                name: "url",
-                typeAnnotation: j.tsTypeAnnotation(j.tsStringKeyword()),
-              }),
-              j.identifier.from({
-                name: "init",
-                optional: true,
-                typeAnnotation: j.tsTypeAnnotation(j.tsTypeReference(j.identifier("RequestInit"))),
-              }),
-            ],
-            typeAnnotation: j.tsTypeAnnotation(
-              j.tsTypeReference(
-                j.identifier("Promise"),
-                j.tsTypeParameterInstantiation([j.tsTypeReference(j.identifier("Response"))]),
-              ),
+    .filter((path) => path.node.declaration.id?.name === "FetchAPI");
+  fetchApiDeclarations.replaceWith(
+    j.exportNamedDeclaration(
+      j.tsTypeAliasDeclaration(
+        j.identifier("FetchAPI"),
+        j.tsFunctionType.from({
+          parameters: [
+            j.identifier.from({
+              name: "url",
+              typeAnnotation: j.tsTypeAnnotation(j.tsStringKeyword()),
+            }),
+            j.identifier.from({
+              name: "init",
+              optional: true,
+              typeAnnotation: j.tsTypeAnnotation(j.tsTypeReference(j.identifier("RequestInit"))),
+            }),
+          ],
+          typeAnnotation: j.tsTypeAnnotation(
+            j.tsTypeReference(
+              j.identifier("Promise"),
+              j.tsTypeParameterInstantiation([j.tsTypeReference(j.identifier("Response"))]),
             ),
-          }),
-        ),
+          ),
+        }),
       ),
-    )
-    .insertAfter(
+    ),
+  );
+  const requestCredentialsDeclarations = source
+    .find(j.ExportNamedDeclaration)
+    .filter((path) => path.node.declaration.id?.name === "RequestCredentials");
+  if (!requestCredentialsDeclarations.length) {
+    fetchApiDeclarations.insertAfter(
       j.exportNamedDeclaration(
         j.tsTypeAliasDeclaration(
           j.identifier("RequestCredentials"),
@@ -56,6 +60,7 @@ const transformer = (file, { j }) => {
         ),
       ),
     );
+  }
   source
     .find(j.ClassDeclaration)
     .filter((path) => path.node.id.name === "BaseAPI")

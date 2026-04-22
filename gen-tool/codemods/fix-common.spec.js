@@ -59,6 +59,22 @@ describe("fix-common", () => {
 export type RequestCredentials = "omit" | "include" | "same-origin";`);
   });
 
+  it("skips another definition of RequestCredentials", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
+export type RequestCredentials = "omit" | "include" | "same-origin";`,
+      },
+      options,
+    );
+
+    expect(result)
+      .toBe(`export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
+export type RequestCredentials = "omit" | "include" | "same-origin";`);
+  });
+
   it("updates signature of BaseAPI.fetchApi with optional init parameter to reflect the native fetch signature", () => {
     const result = applyTransform(
       transformer,
