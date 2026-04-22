@@ -27,6 +27,27 @@ describe("fix-jira-cloud-common-api", () => {
 } as const;`);
   });
 
+  it("avoids multiple escapes of order enums", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export const GetCommentsOrderByEnum = {
+  Created: 'created',
+  CreatedDesc: '-created',
+  CreatedAsc: '+created'
+} as const;`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export const GetCommentsOrderByEnum = {
+  Created: 'created',
+  CreatedDesc: '-created',
+  CreatedAsc: '+created'
+} as const;`);
+  });
+
   it("properly defines request types with first number character", () => {
     const result = applyTransform(
       transformer,

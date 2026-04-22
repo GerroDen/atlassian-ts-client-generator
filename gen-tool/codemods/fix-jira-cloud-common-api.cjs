@@ -5,13 +5,15 @@ const transformer = (file, api) => {
   const source = j(file.source);
   source
     .find(j.ObjectProperty)
-    .filter((path) => path.node.value?.value?.startsWith?.("+"))
+    .filter((path) => path.node.value?.value?.startsWith("+"))
+    .filter((path) => !path.node.key.name.endsWith("Asc"))
     .forEach((path) => {
       path.node.key.name += "Asc";
     });
   source
     .find(j.ObjectProperty)
     .filter((path) => path.node.value?.value?.startsWith?.("-"))
+    .filter((path) => !path.node.key.name.endsWith("Desc"))
     .forEach((path) => {
       path.node.key.name += "Desc";
     });
