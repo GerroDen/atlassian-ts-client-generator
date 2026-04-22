@@ -25,10 +25,9 @@ import type {
 export class InfoApi extends runtime.BaseAPI {
 
     /**
-     * This method retrieves information about the Jira Service Management instance such as software version, builds, and related links.  **[Permissions](#permissions) required**: None, the user does not need to be logged in.
-     * Get info
+     * Creates request options for getInfo without sending the request
      */
-    async getInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareInfoDTO>> {
+    async getInfoRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -41,12 +40,21 @@ export class InfoApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/info`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method retrieves information about the Jira Service Management instance such as software version, builds, and related links.  **[Permissions](#permissions) required**: None, the user does not need to be logged in.
+     * Get info
+     */
+    async getInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareInfoDTO>> {
+        const requestOptions = await this.getInfoRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

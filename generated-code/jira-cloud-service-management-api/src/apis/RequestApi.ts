@@ -201,10 +201,9 @@ export interface UnsubscribeRequest {
 export class RequestApi extends runtime.BaseAPI {
 
     /**
-     * This method adds participants to a customer request.  **[Permissions](#permissions) required**: Permission to manage participants on the customer request.  Note, participants can be added when creating a customer request using the [request](#api-request-post) resource, by defining the participants in the `requestParticipants` field.
-     * Add request participants
+     * Creates request options for addRequestParticipants without sending the request
      */
-    async addRequestParticipantsRaw(requestParameters: AddRequestParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+    async addRequestParticipantsRequestOpts(requestParameters: AddRequestParticipantsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -234,13 +233,22 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/participant`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestParticipantUpdateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method adds participants to a customer request.  **[Permissions](#permissions) required**: Permission to manage participants on the customer request.  Note, participants can be added when creating a customer request using the [request](#api-request-post) resource, by defining the participants in the `requestParticipants` field.
+     * Add request participants
+     */
+    async addRequestParticipantsRaw(requestParameters: AddRequestParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+        const requestOptions = await this.addRequestParticipantsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -255,10 +263,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method enables a user to **Approve** or **Decline** an approval on a customer request. The approval is assumed to be owned by the user making the call.  **[Permissions](#permissions) required**: User is assigned to the approval request.
-     * Answer approval
+     * Creates request options for answerApproval without sending the request
      */
-    async answerApprovalRaw(requestParameters: AnswerApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApprovalDTO>> {
+    async answerApprovalRequestOpts(requestParameters: AnswerApprovalRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -296,13 +303,22 @@ export class RequestApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"approvalId"}}`, encodeURIComponent(String(requestParameters['approvalId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['approvalDecisionRequestDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method enables a user to **Approve** or **Decline** an approval on a customer request. The approval is assumed to be owned by the user making the call.  **[Permissions](#permissions) required**: User is assigned to the approval request.
+     * Answer approval
+     */
+    async answerApprovalRaw(requestParameters: AnswerApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApprovalDTO>> {
+        const requestOptions = await this.answerApprovalRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -317,10 +333,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method creates a comment on a customer request using one or more attachment files (uploaded using [servicedeskapi/servicedesk/\\{serviceDeskId\\}/attachTemporaryFile](https://developer.atlassian.com/cloud/jira/service-desk/rest/api-group-servicedesk/#api-rest-servicedeskapi-servicedesk-servicedeskid-attachtemporaryfile-post)), with the visibility set by `public`. See   *  GET [servicedeskapi/request/\\{issueIdOrKey\\}/attachment](./#api-rest-servicedeskapi-request-issueidorkey-attachment-get)  *  GET [servicedeskapi/request/\\{issueIdOrKey\\}/comment/\\{commentId\\}/attachment](./#api-rest-servicedeskapi-request-issueidorkey-comment-commentid-attachment-get)  **[Permissions](#permissions) required**: Permission to add an attachment.  **Request limitations**: Customers can set public visibility only.
-     * Create comment with attachment
+     * Creates request options for createCommentWithAttachment without sending the request
      */
-    async createCommentWithAttachmentRaw(requestParameters: CreateCommentWithAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AttachmentCreateResultDTO>> {
+    async createCommentWithAttachmentRequestOpts(requestParameters: CreateCommentWithAttachmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -350,13 +365,22 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/attachment`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['attachmentCreateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method creates a comment on a customer request using one or more attachment files (uploaded using [servicedeskapi/servicedesk/\\{serviceDeskId\\}/attachTemporaryFile](https://developer.atlassian.com/cloud/jira/service-desk/rest/api-group-servicedesk/#api-rest-servicedeskapi-servicedesk-servicedeskid-attachtemporaryfile-post)), with the visibility set by `public`. See   *  GET [servicedeskapi/request/\\{issueIdOrKey\\}/attachment](./#api-rest-servicedeskapi-request-issueidorkey-attachment-get)  *  GET [servicedeskapi/request/\\{issueIdOrKey\\}/comment/\\{commentId\\}/attachment](./#api-rest-servicedeskapi-request-issueidorkey-comment-commentid-attachment-get)  **[Permissions](#permissions) required**: Permission to add an attachment.  **Request limitations**: Customers can set public visibility only.
+     * Create comment with attachment
+     */
+    async createCommentWithAttachmentRaw(requestParameters: CreateCommentWithAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AttachmentCreateResultDTO>> {
+        const requestOptions = await this.createCommentWithAttachmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -371,10 +395,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method creates a customer request in a service desk.  The JSON request must include the service desk and customer request type, as well as any fields that are required for the request type. A list of the fields required by a customer request type can be obtained using [servicedesk/\\{serviceDeskId\\}/requesttype/\\{requestTypeId\\}/field](#api-servicedesk-serviceDeskId-requesttype-requestTypeId-field-get).  The fields required for a customer request type depend on the user\'s permissions:   *  `raiseOnBehalfOf` is not available to Users who have the customer permission only.  *  `requestParticipants` is not available to Users who have the customer permission only or if the feature is turned off for customers.  `requestFieldValues` is a map of Jira field IDs and their values. See [Field input formats](#fieldformats), for details of each field\'s JSON semantics and the values they can take.  **[Permissions](#permissions) required**: Permission to create requests in the specified service desk.
-     * Create customer request
+     * Creates request options for createCustomerRequest without sending the request
      */
-    async createCustomerRequestRaw(requestParameters: CreateCustomerRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomerRequestDTO>> {
+    async createCustomerRequestRequestOpts(requestParameters: CreateCustomerRequestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestCreateDTO'] == null) {
             throw new runtime.RequiredError(
                 'requestCreateDTO',
@@ -396,13 +419,22 @@ export class RequestApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/request`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestCreateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method creates a customer request in a service desk.  The JSON request must include the service desk and customer request type, as well as any fields that are required for the request type. A list of the fields required by a customer request type can be obtained using [servicedesk/\\{serviceDeskId\\}/requesttype/\\{requestTypeId\\}/field](#api-servicedesk-serviceDeskId-requesttype-requestTypeId-field-get).  The fields required for a customer request type depend on the user\'s permissions:   *  `raiseOnBehalfOf` is not available to Users who have the customer permission only.  *  `requestParticipants` is not available to Users who have the customer permission only or if the feature is turned off for customers.  `requestFieldValues` is a map of Jira field IDs and their values. See [Field input formats](#fieldformats), for details of each field\'s JSON semantics and the values they can take.  **[Permissions](#permissions) required**: Permission to create requests in the specified service desk.
+     * Create customer request
+     */
+    async createCustomerRequestRaw(requestParameters: CreateCustomerRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomerRequestDTO>> {
+        const requestOptions = await this.createCustomerRequestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -417,10 +449,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method creates a public or private (internal) comment on a customer request, with the comment visibility set by `public`. The user recorded as the author of the comment.  **[Permissions](#permissions) required**: User has Add Comments permission.  **Request limitations**: Customers can set comments to public visibility only.
-     * Create request comment
+     * Creates request options for createRequestComment without sending the request
      */
-    async createRequestCommentRaw(requestParameters: CreateRequestCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CommentDTO>> {
+    async createRequestCommentRequestOpts(requestParameters: CreateRequestCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -450,13 +481,22 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/comment`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['commentCreateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method creates a public or private (internal) comment on a customer request, with the comment visibility set by `public`. The user recorded as the author of the comment.  **[Permissions](#permissions) required**: User has Add Comments permission.  **Request limitations**: Customers can set comments to public visibility only.
+     * Create request comment
+     */
+    async createRequestCommentRaw(requestParameters: CreateRequestCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CommentDTO>> {
+        const requestOptions = await this.createRequestCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -471,10 +511,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method deletes the feedback of request using it\'s `requestKey` or `requestId`  **[Permissions](#permissions) required**: User must be the reporter or an Atlassian Connect app.
-     * Delete feedback
+     * Creates request options for deleteFeedback without sending the request
      */
-    async deleteFeedbackRaw(requestParameters: DeleteFeedbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async deleteFeedbackRequestOpts(requestParameters: DeleteFeedbackRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'requestIdOrKey',
@@ -495,12 +534,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{requestIdOrKey}/feedback`;
         urlPath = urlPath.replace(`{${"requestIdOrKey"}}`, encodeURIComponent(String(requestParameters['requestIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method deletes the feedback of request using it\'s `requestKey` or `requestId`  **[Permissions](#permissions) required**: User must be the reporter or an Atlassian Connect app.
+     * Delete feedback
+     */
+    async deleteFeedbackRaw(requestParameters: DeleteFeedbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteFeedbackRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -519,10 +567,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns an approval. Use this method to determine the status of an approval and the list of approvers.  **[Permissions](#permissions) required**: Permission to view the customer request.
-     * Get approval by id
+     * Creates request options for getApprovalById without sending the request
      */
-    async getApprovalByIdRaw(requestParameters: GetApprovalByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApprovalDTO>> {
+    async getApprovalByIdRequestOpts(requestParameters: GetApprovalByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -551,12 +598,21 @@ export class RequestApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"approvalId"}}`, encodeURIComponent(String(requestParameters['approvalId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns an approval. Use this method to determine the status of an approval and the list of approvers.  **[Permissions](#permissions) required**: Permission to view the customer request.
+     * Get approval by id
+     */
+    async getApprovalByIdRaw(requestParameters: GetApprovalByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApprovalDTO>> {
+        const requestOptions = await this.getApprovalByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -571,10 +627,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns all approvals on a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
-     * Get approvals
+     * Creates request options for getApprovals without sending the request
      */
-    async getApprovalsRaw(requestParameters: GetApprovalsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOApprovalDTO>> {
+    async getApprovalsRequestOpts(requestParameters: GetApprovalsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -603,12 +658,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/approval`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns all approvals on a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
+     * Get approvals
+     */
+    async getApprovalsRaw(requestParameters: GetApprovalsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOApprovalDTO>> {
+        const requestOptions = await this.getApprovalsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -623,10 +687,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the contents of an attachment.  To return a thumbnail of the attachment, use [servicedeskapi/request/\\{issueIdOrKey\\}/attachment/\\{attachmentId\\}/thumbnail](./#api-rest-servicedeskapi-request-issueidorkey-attachment-attachmentid-thumbnail-get).  **[Permissions](#permissions) required:** For the issue containing the attachment:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Get attachment content
+     * Creates request options for getAttachmentContent without sending the request
      */
-    async getAttachmentContentRaw(requestParameters: GetAttachmentContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getAttachmentContentRequestOpts(requestParameters: GetAttachmentContentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -655,12 +718,21 @@ export class RequestApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the contents of an attachment.  To return a thumbnail of the attachment, use [servicedeskapi/request/\\{issueIdOrKey\\}/attachment/\\{attachmentId\\}/thumbnail](./#api-rest-servicedeskapi-request-issueidorkey-attachment-attachmentid-thumbnail-get).  **[Permissions](#permissions) required:** For the issue containing the attachment:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Get attachment content
+     */
+    async getAttachmentContentRaw(requestParameters: GetAttachmentContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getAttachmentContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -679,10 +751,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the thumbnail of an attachment.  To return the attachment contents, use [servicedeskapi/request/\\{issueIdOrKey\\}/attachment/\\{attachmentId\\}](#api-rest-servicedeskapi-request-issueidorkey-attachment-attachmentid-get).  **[Permissions](#permissions) required:** For the issue containing the attachment:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
-     * Get attachment thumbnail
+     * Creates request options for getAttachmentThumbnail without sending the request
      */
-    async getAttachmentThumbnailRaw(requestParameters: GetAttachmentThumbnailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getAttachmentThumbnailRequestOpts(requestParameters: GetAttachmentThumbnailRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -711,12 +782,21 @@ export class RequestApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the thumbnail of an attachment.  To return the attachment contents, use [servicedeskapi/request/\\{issueIdOrKey\\}/attachment/\\{attachmentId\\}](#api-rest-servicedeskapi-request-issueidorkey-attachment-attachmentid-get).  **[Permissions](#permissions) required:** For the issue containing the attachment:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+     * Get attachment thumbnail
+     */
+    async getAttachmentThumbnailRaw(requestParameters: GetAttachmentThumbnailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getAttachmentThumbnailRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -735,10 +815,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns all the attachments for a customer requests.  **[Permissions](#permissions) required**: Permission to view the customer request.  **Response limitations**: Customers will only get a list of public attachments.
-     * Get attachments for request
+     * Creates request options for getAttachmentsForRequest without sending the request
      */
-    async getAttachmentsForRequestRaw(requestParameters: GetAttachmentsForRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOAttachmentDTO>> {
+    async getAttachmentsForRequestRequestOpts(requestParameters: GetAttachmentsForRequestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -781,12 +860,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/attachment`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns all the attachments for a customer requests.  **[Permissions](#permissions) required**: Permission to view the customer request.  **Response limitations**: Customers will only get a list of public attachments.
+     * Get attachments for request
+     */
+    async getAttachmentsForRequestRaw(requestParameters: GetAttachmentsForRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOAttachmentDTO>> {
+        const requestOptions = await this.getAttachmentsForRequestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -801,10 +889,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns the attachments referenced in a comment.  **[Permissions](#permissions) required**: Permission to view the customer request.  **Response limitations**: Customers can only view public comments, and retrieve their attachments, on requests where they are the reporter or a participant whereas agents can see both internal and public comments.
-     * Get comment attachments
+     * Creates request options for getCommentAttachments without sending the request
      */
-    async getCommentAttachmentsRaw(requestParameters: GetCommentAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOAttachmentDTO>> {
+    async getCommentAttachmentsRequestOpts(requestParameters: GetCommentAttachmentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -841,12 +928,21 @@ export class RequestApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns the attachments referenced in a comment.  **[Permissions](#permissions) required**: Permission to view the customer request.  **Response limitations**: Customers can only view public comments, and retrieve their attachments, on requests where they are the reporter or a participant whereas agents can see both internal and public comments.
+     * Get comment attachments
+     */
+    async getCommentAttachmentsRaw(requestParameters: GetCommentAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOAttachmentDTO>> {
+        const requestOptions = await this.getCommentAttachmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -861,10 +957,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a customer request.  **[Permissions](#permissions) required**: Permission to access the specified service desk.  **Response limitations**: For customers, only a request they created, was created on their behalf, or they are participating in will be returned.  **Note:** `requestFieldValues` does not include hidden fields. To get a list of request type fields that includes hidden fields, see [/rest/servicedeskapi/servicedesk/\\{serviceDeskId\\}/requesttype/\\{requestTypeId\\}/field](https://developer.atlassian.com/cloud/jira/service-desk/rest/api-group-servicedesk/#api-rest-servicedeskapi-servicedesk-servicedeskid-requesttype-requesttypeid-field-get)
-     * Get customer request by id or key
+     * Creates request options for getCustomerRequestByIdOrKey without sending the request
      */
-    async getCustomerRequestByIdOrKeyRaw(requestParameters: GetCustomerRequestByIdOrKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomerRequestDTO>> {
+    async getCustomerRequestByIdOrKeyRequestOpts(requestParameters: GetCustomerRequestByIdOrKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -889,12 +984,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a customer request.  **[Permissions](#permissions) required**: Permission to access the specified service desk.  **Response limitations**: For customers, only a request they created, was created on their behalf, or they are participating in will be returned.  **Note:** `requestFieldValues` does not include hidden fields. To get a list of request type fields that includes hidden fields, see [/rest/servicedeskapi/servicedesk/\\{serviceDeskId\\}/requesttype/\\{requestTypeId\\}/field](https://developer.atlassian.com/cloud/jira/service-desk/rest/api-group-servicedesk/#api-rest-servicedeskapi-servicedesk-servicedeskid-requesttype-requesttypeid-field-get)
+     * Get customer request by id or key
+     */
+    async getCustomerRequestByIdOrKeyRaw(requestParameters: GetCustomerRequestByIdOrKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomerRequestDTO>> {
+        const requestOptions = await this.getCustomerRequestByIdOrKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -909,10 +1013,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a list of all the statuses a customer Request has achieved. A status represents the state of an issue in its workflow. An issue can have one active status only. The list returns the status history in chronological order, most recent (current) status first.  **[Permissions](#permissions) required**: Permission to view the customer request.
-     * Get customer request status
+     * Creates request options for getCustomerRequestStatus without sending the request
      */
-    async getCustomerRequestStatusRaw(requestParameters: GetCustomerRequestStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOCustomerRequestStatusDTO>> {
+    async getCustomerRequestStatusRequestOpts(requestParameters: GetCustomerRequestStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -941,12 +1044,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/status`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a list of all the statuses a customer Request has achieved. A status represents the state of an issue in its workflow. An issue can have one active status only. The list returns the status history in chronological order, most recent (current) status first.  **[Permissions](#permissions) required**: Permission to view the customer request.
+     * Get customer request status
+     */
+    async getCustomerRequestStatusRaw(requestParameters: GetCustomerRequestStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOCustomerRequestStatusDTO>> {
+        const requestOptions = await this.getCustomerRequestStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -961,10 +1073,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns all customer requests for the user executing the query.  The returned customer requests are ordered chronologically by the latest activity on each request. For example, the latest status transition or comment.  **[Permissions](#permissions) required**: Permission to access the specified service desk.  **Response limitations**: For customers, the list returned will include request they created (or were created on their behalf) or are participating in only.
-     * Get customer requests
+     * Creates request options for getCustomerRequests without sending the request
      */
-    async getCustomerRequestsRaw(requestParameters: GetCustomerRequestsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOCustomerRequestDTO>> {
+    async getCustomerRequestsRequestOpts(requestParameters: GetCustomerRequestsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['searchTerm'] != null) {
@@ -1017,12 +1128,21 @@ export class RequestApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/request`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns all customer requests for the user executing the query.  The returned customer requests are ordered chronologically by the latest activity on each request. For example, the latest status transition or comment.  **[Permissions](#permissions) required**: Permission to access the specified service desk.  **Response limitations**: For customers, the list returned will include request they created (or were created on their behalf) or are participating in only.
+     * Get customer requests
+     */
+    async getCustomerRequestsRaw(requestParameters: GetCustomerRequestsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOCustomerRequestDTO>> {
+        const requestOptions = await this.getCustomerRequestsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1037,10 +1157,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a list of transitions, the workflow processes that moves a customer request from one status to another, that the user can perform on a request. Use this method to provide a user with a list if the actions they can take on a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
-     * Get customer transitions
+     * Creates request options for getCustomerTransitions without sending the request
      */
-    async getCustomerTransitionsRaw(requestParameters: GetCustomerTransitionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOCustomerTransitionDTO>> {
+    async getCustomerTransitionsRequestOpts(requestParameters: GetCustomerTransitionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1069,12 +1188,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/transition`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a list of transitions, the workflow processes that moves a customer request from one status to another, that the user can perform on a request. Use this method to provide a user with a list if the actions they can take on a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
+     * Get customer transitions
+     */
+    async getCustomerTransitionsRaw(requestParameters: GetCustomerTransitionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOCustomerTransitionDTO>> {
+        const requestOptions = await this.getCustomerTransitionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1089,10 +1217,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method retrieves a feedback of a request using it\'s `requestKey` or `requestId`  **[Permissions](#permissions) required**: User has view request permissions.
-     * Get feedback
+     * Creates request options for getFeedback without sending the request
      */
-    async getFeedbackRaw(requestParameters: GetFeedbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CSATFeedbackFullDTO>> {
+    async getFeedbackRequestOpts(requestParameters: GetFeedbackRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'requestIdOrKey',
@@ -1113,12 +1240,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{requestIdOrKey}/feedback`;
         urlPath = urlPath.replace(`{${"requestIdOrKey"}}`, encodeURIComponent(String(requestParameters['requestIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method retrieves a feedback of a request using it\'s `requestKey` or `requestId`  **[Permissions](#permissions) required**: User has view request permissions.
+     * Get feedback
+     */
+    async getFeedbackRaw(requestParameters: GetFeedbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CSATFeedbackFullDTO>> {
+        const requestOptions = await this.getFeedbackRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1133,10 +1269,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns details of a customer request\'s comment.  **[Permissions](#permissions) required**: Permission to view the customer request.  **Response limitations**: Customers can only view public comments on requests where they are the reporter or a participant whereas agents can see both internal and public comments.
-     * Get request comment by id
+     * Creates request options for getRequestCommentById without sending the request
      */
-    async getRequestCommentByIdRaw(requestParameters: GetRequestCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CommentDTO>> {
+    async getRequestCommentByIdRequestOpts(requestParameters: GetRequestCommentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1169,12 +1304,21 @@ export class RequestApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns details of a customer request\'s comment.  **[Permissions](#permissions) required**: Permission to view the customer request.  **Response limitations**: Customers can only view public comments on requests where they are the reporter or a participant whereas agents can see both internal and public comments.
+     * Get request comment by id
+     */
+    async getRequestCommentByIdRaw(requestParameters: GetRequestCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CommentDTO>> {
+        const requestOptions = await this.getRequestCommentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1189,10 +1333,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns all comments on a customer request. No permissions error is provided if, for example, the user doesn\'t have access to the service desk or request, the method simply returns an empty response.  **[Permissions](#permissions) required**: Permission to view the customer request.  **Response limitations**: Customers are returned public comments only.
-     * Get request comments
+     * Creates request options for getRequestComments without sending the request
      */
-    async getRequestCommentsRaw(requestParameters: GetRequestCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOCommentDTO>> {
+    async getRequestCommentsRequestOpts(requestParameters: GetRequestCommentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1233,12 +1376,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/comment`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns all comments on a customer request. No permissions error is provided if, for example, the user doesn\'t have access to the service desk or request, the method simply returns an empty response.  **[Permissions](#permissions) required**: Permission to view the customer request.  **Response limitations**: Customers are returned public comments only.
+     * Get request comments
+     */
+    async getRequestCommentsRaw(requestParameters: GetRequestCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOCommentDTO>> {
+        const requestOptions = await this.getRequestCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1253,10 +1405,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a list of all the participants on a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
-     * Get request participants
+     * Creates request options for getRequestParticipants without sending the request
      */
-    async getRequestParticipantsRaw(requestParameters: GetRequestParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+    async getRequestParticipantsRequestOpts(requestParameters: GetRequestParticipantsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1285,12 +1436,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/participant`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a list of all the participants on a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
+     * Get request participants
+     */
+    async getRequestParticipantsRaw(requestParameters: GetRequestParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+        const requestOptions = await this.getRequestParticipantsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1305,10 +1465,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns all the SLA records on a customer request. A customer request can have zero or more SLAs. Each SLA can have recordings for zero or more \"completed cycles\" and zero or 1 \"ongoing cycle\". Each cycle includes information on when it started and stopped, and whether it breached the SLA goal.  **[Permissions](#permissions) required**: Agent for the Service Desk containing the queried customer request.
-     * Get sla information
+     * Creates request options for getSlaInformation without sending the request
      */
-    async getSlaInformationRaw(requestParameters: GetSlaInformationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOSlaInformationDTO>> {
+    async getSlaInformationRequestOpts(requestParameters: GetSlaInformationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1337,12 +1496,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/sla`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns all the SLA records on a customer request. A customer request can have zero or more SLAs. Each SLA can have recordings for zero or more \"completed cycles\" and zero or 1 \"ongoing cycle\". Each cycle includes information on when it started and stopped, and whether it breached the SLA goal.  **[Permissions](#permissions) required**: Agent for the Service Desk containing the queried customer request.
+     * Get sla information
+     */
+    async getSlaInformationRaw(requestParameters: GetSlaInformationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOSlaInformationDTO>> {
+        const requestOptions = await this.getSlaInformationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1357,10 +1525,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns the details for an SLA on a customer request.  **[Permissions](#permissions) required**: Agent for the Service Desk containing the queried customer request.
-     * Get sla information by id
+     * Creates request options for getSlaInformationById without sending the request
      */
-    async getSlaInformationByIdRaw(requestParameters: GetSlaInformationByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SlaInformationDTO>> {
+    async getSlaInformationByIdRequestOpts(requestParameters: GetSlaInformationByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1389,12 +1556,21 @@ export class RequestApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
         urlPath = urlPath.replace(`{${"slaMetricId"}}`, encodeURIComponent(String(requestParameters['slaMetricId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns the details for an SLA on a customer request.  **[Permissions](#permissions) required**: Agent for the Service Desk containing the queried customer request.
+     * Get sla information by id
+     */
+    async getSlaInformationByIdRaw(requestParameters: GetSlaInformationByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SlaInformationDTO>> {
+        const requestOptions = await this.getSlaInformationByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1409,10 +1585,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns the notification subscription status of the user making the request. Use this method to determine if the user is subscribed to a customer request\'s notifications.  **[Permissions](#permissions) required**: Permission to view the customer request.
-     * Get subscription status
+     * Creates request options for getSubscriptionStatus without sending the request
      */
-    async getSubscriptionStatusRaw(requestParameters: GetSubscriptionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestNotificationSubscriptionDTO>> {
+    async getSubscriptionStatusRequestOpts(requestParameters: GetSubscriptionStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1433,12 +1608,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/notification`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns the notification subscription status of the user making the request. Use this method to determine if the user is subscribed to a customer request\'s notifications.  **[Permissions](#permissions) required**: Permission to view the customer request.
+     * Get subscription status
+     */
+    async getSubscriptionStatusRaw(requestParameters: GetSubscriptionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestNotificationSubscriptionDTO>> {
+        const requestOptions = await this.getSubscriptionStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1453,10 +1637,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method performs a customer transition for a given request and transition. An optional comment can be included to provide a reason for the transition.  **[Permissions](#permissions) required**: The user must be able to view the request and have the Transition Issues permission. If a comment is passed the user must have the Add Comments permission.
-     * Perform customer transition
+     * Creates request options for performCustomerTransition without sending the request
      */
-    async performCustomerTransitionRaw(requestParameters: PerformCustomerTransitionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async performCustomerTransitionRequestOpts(requestParameters: PerformCustomerTransitionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1486,13 +1669,22 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/transition`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['customerTransitionExecutionDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method performs a customer transition for a given request and transition. An optional comment can be included to provide a reason for the transition.  **[Permissions](#permissions) required**: The user must be able to view the request and have the Transition Issues permission. If a comment is passed the user must have the Add Comments permission.
+     * Perform customer transition
+     */
+    async performCustomerTransitionRaw(requestParameters: PerformCustomerTransitionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.performCustomerTransitionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1506,10 +1698,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method adds a feedback on an request using it\'s `requestKey` or `requestId`  **[Permissions](#permissions) required**: User must be the reporter or an Atlassian Connect app.
-     * Post feedback
+     * Creates request options for postFeedback without sending the request
      */
-    async postFeedbackRaw(requestParameters: PostFeedbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CSATFeedbackFullDTO>> {
+    async postFeedbackRequestOpts(requestParameters: PostFeedbackRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'requestIdOrKey',
@@ -1539,13 +1730,22 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{requestIdOrKey}/feedback`;
         urlPath = urlPath.replace(`{${"requestIdOrKey"}}`, encodeURIComponent(String(requestParameters['requestIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['cSATFeedbackFullDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method adds a feedback on an request using it\'s `requestKey` or `requestId`  **[Permissions](#permissions) required**: User must be the reporter or an Atlassian Connect app.
+     * Post feedback
+     */
+    async postFeedbackRaw(requestParameters: PostFeedbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CSATFeedbackFullDTO>> {
+        const requestOptions = await this.postFeedbackRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1560,10 +1760,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method removes participants from a customer request.  **[Permissions](#permissions) required**: Permission to manage participants on the customer request.
-     * Remove request participants
+     * Creates request options for removeRequestParticipants without sending the request
      */
-    async removeRequestParticipantsRaw(requestParameters: RemoveRequestParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+    async removeRequestParticipantsRequestOpts(requestParameters: RemoveRequestParticipantsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1593,13 +1792,22 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/participant`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestParticipantUpdateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method removes participants from a customer request.  **[Permissions](#permissions) required**: Permission to manage participants on the customer request.
+     * Remove request participants
+     */
+    async removeRequestParticipantsRaw(requestParameters: RemoveRequestParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+        const requestOptions = await this.removeRequestParticipantsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1614,10 +1822,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method subscribes the user to receiving notifications from a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
-     * Subscribe
+     * Creates request options for subscribe without sending the request
      */
-    async subscribeRaw(requestParameters: SubscribeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async subscribeRequestOpts(requestParameters: SubscribeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1638,12 +1845,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/notification`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method subscribes the user to receiving notifications from a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
+     * Subscribe
+     */
+    async subscribeRaw(requestParameters: SubscribeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.subscribeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1657,10 +1873,9 @@ export class RequestApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method unsubscribes the user from notifications from a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
-     * Unsubscribe
+     * Creates request options for unsubscribe without sending the request
      */
-    async unsubscribeRaw(requestParameters: UnsubscribeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unsubscribeRequestOpts(requestParameters: UnsubscribeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -1681,12 +1896,21 @@ export class RequestApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/request/{issueIdOrKey}/notification`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method unsubscribes the user from notifications from a customer request.  **[Permissions](#permissions) required**: Permission to view the customer request.
+     * Unsubscribe
+     */
+    async unsubscribeRaw(requestParameters: UnsubscribeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unsubscribeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

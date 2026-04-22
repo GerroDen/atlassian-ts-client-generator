@@ -36,10 +36,9 @@ export interface GetInsightWorkspacesRequest {
 export class AssetsApi extends runtime.BaseAPI {
 
     /**
-     * Returns a list of Assets workspace IDs. Include a workspace ID in the path to access the [Assets REST APIs](https://developer.atlassian.com/cloud/assets/rest).  **[Permissions](#permissions) required**: Any
-     * Get assets workspaces
+     * Creates request options for getAssetsWorkspaces without sending the request
      */
-    async getAssetsWorkspacesRaw(requestParameters: GetAssetsWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOAssetsWorkspaceDTO>> {
+    async getAssetsWorkspacesRequestOpts(requestParameters: GetAssetsWorkspacesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -60,12 +59,21 @@ export class AssetsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/assets/workspace`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of Assets workspace IDs. Include a workspace ID in the path to access the [Assets REST APIs](https://developer.atlassian.com/cloud/assets/rest).  **[Permissions](#permissions) required**: Any
+     * Get assets workspaces
+     */
+    async getAssetsWorkspacesRaw(requestParameters: GetAssetsWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOAssetsWorkspaceDTO>> {
+        const requestOptions = await this.getAssetsWorkspacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -80,10 +88,9 @@ export class AssetsApi extends runtime.BaseAPI {
     }
 
     /**
-     * This endpoint is deprecated, please use /assets/workspace/.
-     * Get insight workspaces
+     * Creates request options for getInsightWorkspaces without sending the request
      */
-    async getInsightWorkspacesRaw(requestParameters: GetInsightWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOInsightWorkspaceDTO>> {
+    async getInsightWorkspacesRequestOpts(requestParameters: GetInsightWorkspacesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -104,12 +111,21 @@ export class AssetsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/insight/workspace`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This endpoint is deprecated, please use /assets/workspace/.
+     * Get insight workspaces
+     */
+    async getInsightWorkspacesRaw(requestParameters: GetInsightWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOInsightWorkspaceDTO>> {
+        const requestOptions = await this.getInsightWorkspacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

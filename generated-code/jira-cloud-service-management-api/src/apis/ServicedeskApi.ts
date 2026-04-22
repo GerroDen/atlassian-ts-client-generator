@@ -168,10 +168,9 @@ export interface SetPropertyServicedeskRequest {
 export class ServicedeskApi extends runtime.BaseAPI {
 
     /**
-     * Adds one or more customers to a service desk. If any of the passed customers are associated with the service desk, no changes will be made for those customers and the resource returns a 204 success code.  **[Permissions](#permissions) required**: Service desk administrator
-     * Add customers
+     * Creates request options for addCustomers without sending the request
      */
-    async addCustomersRaw(requestParameters: AddCustomersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addCustomersRequestOpts(requestParameters: AddCustomersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -201,13 +200,22 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/customer`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['serviceDeskCustomerDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds one or more customers to a service desk. If any of the passed customers are associated with the service desk, no changes will be made for those customers and the resource returns a 204 success code.  **[Permissions](#permissions) required**: Service desk administrator
+     * Add customers
+     */
+    async addCustomersRaw(requestParameters: AddCustomersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addCustomersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -221,10 +229,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method adds one or more temporary attachments to a service desk, which can then be permanently attached to a customer request using [servicedeskapi/request/\\{issueIdOrKey\\}/attachment](#api-request-issueIdOrKey-attachment-post).  **Note**: It is possible for a service desk administrator to turn off the ability to add attachments to a service desk.  This method expects a multipart request. The media-type multipart/form-data is defined in RFC 1867. Most client libraries have classes that make dealing with multipart posts simple. For instance, in Java the Apache HTTP Components library provides [MultiPartEntity](http://hc.apache.org/httpcomponents-client-ga/httpmime/apidocs/org/apache/http/entity/mime/MultipartEntity.html).  Because this method accepts multipart/form-data, it has XSRF protection on it. This means you must submit a header of X-Atlassian-Token: no-check with the request or it will be blocked.  The name of the multipart/form-data parameter that contains the attachments must be `file`.  For example, to upload a file called `myfile.txt` in the Service Desk with ID 10001 use      curl -D- -u customer:customer -X POST -H \"X-ExperimentalApi: opt-in\" -H \"X-Atlassian-Token: no-check\" -F \"file=@myfile.txt\" https://your-domain.atlassian.net/rest/servicedeskapi/servicedesk/10001/attachTemporaryFile  **[Permissions](#permissions) required**: Permission to add attachments in this Service Desk.
-     * Attach temporary file
+     * Creates request options for attachTemporaryFile without sending the request
      */
-    async attachTemporaryFileRaw(requestParameters: AttachTemporaryFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async attachTemporaryFileRequestOpts(requestParameters: AttachTemporaryFileRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -245,12 +252,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/attachTemporaryFile`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method adds one or more temporary attachments to a service desk, which can then be permanently attached to a customer request using [servicedeskapi/request/\\{issueIdOrKey\\}/attachment](#api-request-issueIdOrKey-attachment-post).  **Note**: It is possible for a service desk administrator to turn off the ability to add attachments to a service desk.  This method expects a multipart request. The media-type multipart/form-data is defined in RFC 1867. Most client libraries have classes that make dealing with multipart posts simple. For instance, in Java the Apache HTTP Components library provides [MultiPartEntity](http://hc.apache.org/httpcomponents-client-ga/httpmime/apidocs/org/apache/http/entity/mime/MultipartEntity.html).  Because this method accepts multipart/form-data, it has XSRF protection on it. This means you must submit a header of X-Atlassian-Token: no-check with the request or it will be blocked.  The name of the multipart/form-data parameter that contains the attachments must be `file`.  For example, to upload a file called `myfile.txt` in the Service Desk with ID 10001 use      curl -D- -u customer:customer -X POST -H \"X-ExperimentalApi: opt-in\" -H \"X-Atlassian-Token: no-check\" -F \"file=@myfile.txt\" https://your-domain.atlassian.net/rest/servicedeskapi/servicedesk/10001/attachTemporaryFile  **[Permissions](#permissions) required**: Permission to add attachments in this Service Desk.
+     * Attach temporary file
+     */
+    async attachTemporaryFileRaw(requestParameters: AttachTemporaryFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.attachTemporaryFileRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -264,10 +280,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns:   *  a list of request type IDs where the given user has permission to administer.  *  a list of request type IDs where the given user has permission to submit the request.  If no account ID is provided, the operation returns details for the logged in user.  Note that:   *  invalid request type IDs are ignored.  *  a maximum of 50 request types can be checked.  **[Permissions](#permissions) required:**   *  *Administer Jira* or *Project Administrator* to check the permissions for other users.  However, Connect apps can make a call from the app server to the product to obtain permission details for any user, without admin permission. This Connect app ability doesn\'t apply to calls made using AP.request() in a browser.
-     * Check request type permissions
+     * Creates request options for checkRequestTypePermissions without sending the request
      */
-    async checkRequestTypePermissionsRaw(requestParameters: CheckRequestTypePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestTypePermissionCheckResponse>> {
+    async checkRequestTypePermissionsRequestOpts(requestParameters: CheckRequestTypePermissionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -297,13 +312,22 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/requesttype/permissions/check`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestTypePermissionCheckRequestDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns:   *  a list of request type IDs where the given user has permission to administer.  *  a list of request type IDs where the given user has permission to submit the request.  If no account ID is provided, the operation returns details for the logged in user.  Note that:   *  invalid request type IDs are ignored.  *  a maximum of 50 request types can be checked.  **[Permissions](#permissions) required:**   *  *Administer Jira* or *Project Administrator* to check the permissions for other users.  However, Connect apps can make a call from the app server to the product to obtain permission details for any user, without admin permission. This Connect app ability doesn\'t apply to calls made using AP.request() in a browser.
+     * Check request type permissions
+     */
+    async checkRequestTypePermissionsRaw(requestParameters: CheckRequestTypePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestTypePermissionCheckResponse>> {
+        const requestOptions = await this.checkRequestTypePermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -318,10 +342,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method enables a customer request type to be added to a service desk based on an issue type. Note that not all customer request type fields can be specified in the request and these fields are given the following default values:   *  Request type icon is given the headset icon.  *  Request type groups is left empty, which means this customer request type will not be visible on the [customer portal](https://confluence.atlassian.com/servicedeskcloud/configuring-the-customer-portal-732528918.html).  *  Request type status mapping is left empty, so the request type has no custom status mapping but inherits the status map from the issue type upon which it is based.  *  Request type field mapping is set to show the required fields as specified by the issue type used to create the customer request type.     These fields can be updated by a service desk administrator using the **Request types** option in **Project settings**.   Request Types are created in next-gen projects by creating Issue Types. Please use the Jira Cloud Platform Create issue type endpoint instead.  **[Permissions](#permissions) required**: Service desk\'s administrator
-     * Create request type
+     * Creates request options for createRequestType without sending the request
      */
-    async createRequestTypeRaw(requestParameters: CreateRequestTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestTypeDTO>> {
+    async createRequestTypeRequestOpts(requestParameters: CreateRequestTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -351,13 +374,22 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/requesttype`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestTypeCreateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method enables a customer request type to be added to a service desk based on an issue type. Note that not all customer request type fields can be specified in the request and these fields are given the following default values:   *  Request type icon is given the headset icon.  *  Request type groups is left empty, which means this customer request type will not be visible on the [customer portal](https://confluence.atlassian.com/servicedeskcloud/configuring-the-customer-portal-732528918.html).  *  Request type status mapping is left empty, so the request type has no custom status mapping but inherits the status map from the issue type upon which it is based.  *  Request type field mapping is set to show the required fields as specified by the issue type used to create the customer request type.     These fields can be updated by a service desk administrator using the **Request types** option in **Project settings**.   Request Types are created in next-gen projects by creating Issue Types. Please use the Jira Cloud Platform Create issue type endpoint instead.  **[Permissions](#permissions) required**: Service desk\'s administrator
+     * Create request type
+     */
+    async createRequestTypeRaw(requestParameters: CreateRequestTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestTypeDTO>> {
+        const requestOptions = await this.createRequestTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -372,10 +404,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a property from a request type.  Properties for a Request Type in next-gen are stored as Issue Type properties and therefore can also be deleted by calling the Jira Cloud Platform [Delete issue type property](https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issuetype-issueTypeId-properties-propertyKey-delete) endpoint.  **[Permissions](#permissions) required**: Jira project administrator with a Jira Service Management agent license.
-     * Delete property
+     * Creates request options for deleteProperty without sending the request
      */
-    async deletePropertyRaw(requestParameters: DeletePropertyServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePropertyRequestOpts(requestParameters: DeletePropertyServicedeskRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -412,12 +443,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"requestTypeId"}}`, encodeURIComponent(String(requestParameters['requestTypeId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a property from a request type.  Properties for a Request Type in next-gen are stored as Issue Type properties and therefore can also be deleted by calling the Jira Cloud Platform [Delete issue type property](https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issuetype-issueTypeId-properties-propertyKey-delete) endpoint.  **[Permissions](#permissions) required**: Jira project administrator with a Jira Service Management agent license.
+     * Delete property
+     */
+    async deletePropertyRaw(requestParameters: DeletePropertyServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -431,10 +471,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method deletes a customer request type from a service desk, and removes it from all customer requests.   This only supports classic projects.  **[Permissions](#permissions) required**: Service desk administrator.
-     * Delete request type
+     * Creates request options for deleteRequestType without sending the request
      */
-    async deleteRequestTypeRaw(requestParameters: DeleteRequestTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRequestTypeRequestOpts(requestParameters: DeleteRequestTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -463,12 +502,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
         urlPath = urlPath.replace(`{${"requestTypeId"}}`, encodeURIComponent(String(requestParameters['requestTypeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method deletes a customer request type from a service desk, and removes it from all customer requests.   This only supports classic projects.  **[Permissions](#permissions) required**: Service desk administrator.
+     * Delete request type
+     */
+    async deleteRequestTypeRaw(requestParameters: DeleteRequestTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRequestTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -482,10 +530,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns articles which match the given query and belong to the knowledge base linked to the service desk.  **[Permissions](#permissions) required**: Permission to access the service desk.
-     * Get articles
+     * Creates request options for getArticles without sending the request
      */
-    async getArticlesRaw(requestParameters: GetArticlesServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOArticleDTO>> {
+    async getArticlesRequestOpts(requestParameters: GetArticlesServicedeskRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -537,12 +584,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/knowledgebase/article`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns articles which match the given query and belong to the knowledge base linked to the service desk.  **[Permissions](#permissions) required**: Permission to access the service desk.
+     * Get articles
+     */
+    async getArticlesRaw(requestParameters: GetArticlesServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOArticleDTO>> {
+        const requestOptions = await this.getArticlesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -557,10 +613,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a list of the customers on a service desk.  The returned list of customers can be filtered using the `query` parameter. The parameter is matched against customers\' `displayName`, `name`, or `email`. For example, searching for \"John\", \"Jo\", \"Smi\", or \"Smith\" will match a user with display name \"John Smith\".  **[Permissions](#permissions) required**: Permission to view this Service Desk\'s customers.
-     * Get customers
+     * Creates request options for getCustomers without sending the request
      */
-    async getCustomersRaw(requestParameters: GetCustomersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+    async getCustomersRequestOpts(requestParameters: GetCustomersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -593,12 +648,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/customer`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a list of the customers on a service desk.  The returned list of customers can be filtered using the `query` parameter. The parameter is matched against customers\' `displayName`, `name`, or `email`. For example, searching for \"John\", \"Jo\", \"Smi\", or \"Smith\" will match a user with display name \"John Smith\".  **[Permissions](#permissions) required**: Permission to view this Service Desk\'s customers.
+     * Get customers
+     */
+    async getCustomersRaw(requestParameters: GetCustomersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+        const requestOptions = await this.getCustomersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -613,10 +677,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns the customer requests in a queue. Only fields that the queue is configured to show are returned. For example, if a queue is configured to show description and due date, then only those two fields are returned for each customer request in the queue.  **[Permissions](#permissions) required**: Service desk\'s agent.
-     * Get issues in queue
+     * Creates request options for getIssuesInQueue without sending the request
      */
-    async getIssuesInQueueRaw(requestParameters: GetIssuesInQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOIssueBean>> {
+    async getIssuesInQueueRequestOpts(requestParameters: GetIssuesInQueueRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -653,12 +716,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
         urlPath = urlPath.replace(`{${"queueId"}}`, encodeURIComponent(String(requestParameters['queueId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns the customer requests in a queue. Only fields that the queue is configured to show are returned. For example, if a queue is configured to show description and due date, then only those two fields are returned for each customer request in the queue.  **[Permissions](#permissions) required**: Service desk\'s agent.
+     * Get issues in queue
+     */
+    async getIssuesInQueueRaw(requestParameters: GetIssuesInQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOIssueBean>> {
+        const requestOptions = await this.getIssuesInQueueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -673,10 +745,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the keys of all properties for a request type.  Properties for a Request Type in next-gen are stored as Issue Type properties and therefore the keys of all properties for a request type are also available by calling the Jira Cloud Platform [Get issue type property keys](https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issuetype-issueTypeId-properties-get) endpoint.  **[Permissions](#permissions) required**: The user must have permission to view the request type.
-     * Get properties keys
+     * Creates request options for getPropertiesKeys without sending the request
      */
-    async getPropertiesKeysRaw(requestParameters: GetPropertiesKeysServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+    async getPropertiesKeysRequestOpts(requestParameters: GetPropertiesKeysServicedeskRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestTypeId'] == null) {
             throw new runtime.RequiredError(
                 'requestTypeId',
@@ -705,12 +776,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"requestTypeId"}}`, encodeURIComponent(String(requestParameters['requestTypeId'])));
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the keys of all properties for a request type.  Properties for a Request Type in next-gen are stored as Issue Type properties and therefore the keys of all properties for a request type are also available by calling the Jira Cloud Platform [Get issue type property keys](https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issuetype-issueTypeId-properties-get) endpoint.  **[Permissions](#permissions) required**: The user must have permission to view the request type.
+     * Get properties keys
+     */
+    async getPropertiesKeysRaw(requestParameters: GetPropertiesKeysServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+        const requestOptions = await this.getPropertiesKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -725,10 +805,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the value of the property from a request type.  Properties for a Request Type in next-gen are stored as Issue Type properties and therefore also available by calling the Jira Cloud Platform [Get issue type property](https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issuetype-issueTypeId-properties-propertyKey-get) endpoint.  **[Permissions](#permissions) required**: User must have permission to view the request type.
-     * Get property
+     * Creates request options for getProperty without sending the request
      */
-    async getPropertyRaw(requestParameters: GetPropertyServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+    async getPropertyRequestOpts(requestParameters: GetPropertyServicedeskRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -765,12 +844,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"requestTypeId"}}`, encodeURIComponent(String(requestParameters['requestTypeId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the value of the property from a request type.  Properties for a Request Type in next-gen are stored as Issue Type properties and therefore also available by calling the Jira Cloud Platform [Get issue type property](https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issuetype-issueTypeId-properties-propertyKey-get) endpoint.  **[Permissions](#permissions) required**: User must have permission to view the request type.
+     * Get property
+     */
+    async getPropertyRaw(requestParameters: GetPropertyServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+        const requestOptions = await this.getPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -785,10 +873,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a specific queues in a service desk. To include a customer request count for the queue (in the `issueCount` field) in the response, set the query parameter `includeCount` to true (its default is false).  **[Permissions](#permissions) required**: service desk\'s Agent.
-     * Get queue
+     * Creates request options for getQueue without sending the request
      */
-    async getQueueRaw(requestParameters: GetQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<QueueDTO>> {
+    async getQueueRequestOpts(requestParameters: GetQueueRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -821,12 +908,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
         urlPath = urlPath.replace(`{${"queueId"}}`, encodeURIComponent(String(requestParameters['queueId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a specific queues in a service desk. To include a customer request count for the queue (in the `issueCount` field) in the response, set the query parameter `includeCount` to true (its default is false).  **[Permissions](#permissions) required**: service desk\'s Agent.
+     * Get queue
+     */
+    async getQueueRaw(requestParameters: GetQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<QueueDTO>> {
+        const requestOptions = await this.getQueueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -841,10 +937,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns the queues in a service desk. To include a customer request count for each queue (in the `issueCount` field) in the response, set the query parameter `includeCount` to true (its default is false).  **[Permissions](#permissions) required**: service desk\'s Agent.
-     * Get queues
+     * Creates request options for getQueues without sending the request
      */
-    async getQueuesRaw(requestParameters: GetQueuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOQueueDTO>> {
+    async getQueuesRequestOpts(requestParameters: GetQueuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -877,12 +972,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/queue`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns the queues in a service desk. To include a customer request count for each queue (in the `issueCount` field) in the response, set the query parameter `includeCount` to true (its default is false).  **[Permissions](#permissions) required**: service desk\'s Agent.
+     * Get queues
+     */
+    async getQueuesRaw(requestParameters: GetQueuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOQueueDTO>> {
+        const requestOptions = await this.getQueuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -897,10 +1001,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a customer request type from a service desk.  This operation can be accessed anonymously.  **[Permissions](#permissions) required**: Permission to access the service desk.
-     * Get request type by id
+     * Creates request options for getRequestTypeById without sending the request
      */
-    async getRequestTypeByIdRaw(requestParameters: GetRequestTypeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestTypeDTO>> {
+    async getRequestTypeByIdRequestOpts(requestParameters: GetRequestTypeByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -933,12 +1036,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
         urlPath = urlPath.replace(`{${"requestTypeId"}}`, encodeURIComponent(String(requestParameters['requestTypeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a customer request type from a service desk.  This operation can be accessed anonymously.  **[Permissions](#permissions) required**: Permission to access the service desk.
+     * Get request type by id
+     */
+    async getRequestTypeByIdRaw(requestParameters: GetRequestTypeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestTypeDTO>> {
+        const requestOptions = await this.getRequestTypeByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -953,10 +1065,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns the fields for a service desk\'s customer request type.  Also, the following information about the user\'s permissions for the request type is returned:   *  `canRaiseOnBehalfOf` returns `true` if the user has permission to raise customer requests on behalf of other customers. Otherwise, returns `false`.  *  `canAddRequestParticipants` returns `true` if the user can add customer request participants. Otherwise, returns `false`.  **[Permissions](#permissions) required**: Permission to view the Service Desk. However, hidden fields would be visible to only Service desk\'s Administrator.
-     * Get request type fields
+     * Creates request options for getRequestTypeFields without sending the request
      */
-    async getRequestTypeFieldsRaw(requestParameters: GetRequestTypeFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomerRequestCreateMetaDTO>> {
+    async getRequestTypeFieldsRequestOpts(requestParameters: GetRequestTypeFieldsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -989,12 +1100,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
         urlPath = urlPath.replace(`{${"requestTypeId"}}`, encodeURIComponent(String(requestParameters['requestTypeId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns the fields for a service desk\'s customer request type.  Also, the following information about the user\'s permissions for the request type is returned:   *  `canRaiseOnBehalfOf` returns `true` if the user has permission to raise customer requests on behalf of other customers. Otherwise, returns `false`.  *  `canAddRequestParticipants` returns `true` if the user can add customer request participants. Otherwise, returns `false`.  **[Permissions](#permissions) required**: Permission to view the Service Desk. However, hidden fields would be visible to only Service desk\'s Administrator.
+     * Get request type fields
+     */
+    async getRequestTypeFieldsRaw(requestParameters: GetRequestTypeFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomerRequestCreateMetaDTO>> {
+        const requestOptions = await this.getRequestTypeFieldsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1009,10 +1129,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a service desk\'s customer request type groups. Jira Service Management administrators can arrange the customer request type groups in an arbitrary order for display on the customer portal; the groups are returned in this order.  **[Permissions](#permissions) required**: Permission to view the service desk.
-     * Get request type groups
+     * Creates request options for getRequestTypeGroups without sending the request
      */
-    async getRequestTypeGroupsRaw(requestParameters: GetRequestTypeGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTORequestTypeGroupDTO>> {
+    async getRequestTypeGroupsRequestOpts(requestParameters: GetRequestTypeGroupsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -1041,12 +1160,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/requesttypegroup`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a service desk\'s customer request type groups. Jira Service Management administrators can arrange the customer request type groups in an arbitrary order for display on the customer portal; the groups are returned in this order.  **[Permissions](#permissions) required**: Permission to view the service desk.
+     * Get request type groups
+     */
+    async getRequestTypeGroupsRaw(requestParameters: GetRequestTypeGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTORequestTypeGroupDTO>> {
+        const requestOptions = await this.getRequestTypeGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1061,10 +1189,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns all customer request types from a service desk. There are two parameters for filtering the returned list:   *  `groupId` which filters the results to items in the customer request type group.  *  `searchQuery` which is matched against request types\' `name` or `description`. For example, the strings \"Install\", \"Inst\", \"Equi\", or \"Equipment\" will match a request type with the *name* \"Equipment Installation Request\".  **Note:** This API by default will filter out request types hidden in the portal (i.e. request types without groups and request types where a user doesn\'t have permission) when `searchQuery` is provided, unless `includeHiddenRequestTypesInSearch` is set to true. Restricted request types will not be returned for those who aren\'t admins.  **[Permissions](#permissions) required**: Permission to access the service desk.
-     * Get request types
+     * Creates request options for getRequestTypes without sending the request
      */
-    async getRequestTypesRaw(requestParameters: GetRequestTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTORequestTypeDTO>> {
+    async getRequestTypesRequestOpts(requestParameters: GetRequestTypesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -1113,12 +1240,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/requesttype`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns all customer request types from a service desk. There are two parameters for filtering the returned list:   *  `groupId` which filters the results to items in the customer request type group.  *  `searchQuery` which is matched against request types\' `name` or `description`. For example, the strings \"Install\", \"Inst\", \"Equi\", or \"Equipment\" will match a request type with the *name* \"Equipment Installation Request\".  **Note:** This API by default will filter out request types hidden in the portal (i.e. request types without groups and request types where a user doesn\'t have permission) when `searchQuery` is provided, unless `includeHiddenRequestTypesInSearch` is set to true. Restricted request types will not be returned for those who aren\'t admins.  **[Permissions](#permissions) required**: Permission to access the service desk.
+     * Get request types
+     */
+    async getRequestTypesRaw(requestParameters: GetRequestTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTORequestTypeDTO>> {
+        const requestOptions = await this.getRequestTypesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1133,10 +1269,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a service desk. Use this method to get service desk details whenever your application component is passed a service desk ID but needs to display other service desk details.  **[Permissions](#permissions) required**: Permission to access the Service Desk. For example, being the Service Desk\'s Administrator or one of its Agents or Users.
-     * Get service desk by id
+     * Creates request options for getServiceDeskById without sending the request
      */
-    async getServiceDeskByIdRaw(requestParameters: GetServiceDeskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ServiceDeskDTO>> {
+    async getServiceDeskByIdRequestOpts(requestParameters: GetServiceDeskByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -1157,12 +1292,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a service desk. Use this method to get service desk details whenever your application component is passed a service desk ID but needs to display other service desk details.  **[Permissions](#permissions) required**: Permission to access the Service Desk. For example, being the Service Desk\'s Administrator or one of its Agents or Users.
+     * Get service desk by id
+     */
+    async getServiceDeskByIdRaw(requestParameters: GetServiceDeskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ServiceDeskDTO>> {
+        const requestOptions = await this.getServiceDeskByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1177,10 +1321,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns all the service desks in the Jira Service Management instance that the user has permission to access. Use this method where you need a list of service desks or need to locate a service desk by name or keyword.  **Note:** This method will be slow if the instance has hundreds of service desks. If you want to fetch a single service desk by its ID, use [/rest/servicedeskapi/servicedesk/\\{serviceDeskId\\}](./#api-rest-servicedeskapi-servicedesk-servicedeskid-get) instead.  **[Permissions](#permissions) required**: Any
-     * Get service desks
+     * Creates request options for getServiceDesks without sending the request
      */
-    async getServiceDesksRaw(requestParameters: GetServiceDesksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOServiceDeskDTO>> {
+    async getServiceDesksRequestOpts(requestParameters: GetServiceDesksRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -1201,12 +1344,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/servicedesk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns all the service desks in the Jira Service Management instance that the user has permission to access. Use this method where you need a list of service desks or need to locate a service desk by name or keyword.  **Note:** This method will be slow if the instance has hundreds of service desks. If you want to fetch a single service desk by its ID, use [/rest/servicedeskapi/servicedesk/\\{serviceDeskId\\}](./#api-rest-servicedeskapi-servicedesk-servicedeskid-get) instead.  **[Permissions](#permissions) required**: Any
+     * Get service desks
+     */
+    async getServiceDesksRaw(requestParameters: GetServiceDesksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOServiceDeskDTO>> {
+        const requestOptions = await this.getServiceDesksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1221,10 +1373,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method removes one or more customers from a service desk. The service desk must have closed access. If any of the passed customers are not associated with the service desk, no changes will be made for those customers and the resource returns a 204 success code.  **[Permissions](#permissions) required**: Services desk administrator
-     * Remove customers
+     * Creates request options for removeCustomers without sending the request
      */
-    async removeCustomersRaw(requestParameters: RemoveCustomersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeCustomersRequestOpts(requestParameters: RemoveCustomersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -1254,13 +1405,22 @@ export class ServicedeskApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/customer`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['serviceDeskCustomerDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method removes one or more customers from a service desk. The service desk must have closed access. If any of the passed customers are not associated with the service desk, no changes will be made for those customers and the resource returns a 204 success code.  **[Permissions](#permissions) required**: Services desk administrator
+     * Remove customers
+     */
+    async removeCustomersRaw(requestParameters: RemoveCustomersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeCustomersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1274,10 +1434,9 @@ export class ServicedeskApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the value of a request type property. Use this resource to store custom data against a request type.  Properties for a Request Type in next-gen are stored as Issue Type properties and therefore can also be set by calling the Jira Cloud Platform [Set issue type property](https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issuetype-issueTypeId-properties-propertyKey-put) endpoint.  **[Permissions](#permissions) required**: Jira project administrator with a Jira Service Management agent license.
-     * Set property
+     * Creates request options for setProperty without sending the request
      */
-    async setPropertyRaw(requestParameters: SetPropertyServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setPropertyRequestOpts(requestParameters: SetPropertyServicedeskRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -1314,12 +1473,21 @@ export class ServicedeskApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"requestTypeId"}}`, encodeURIComponent(String(requestParameters['requestTypeId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the value of a request type property. Use this resource to store custom data against a request type.  Properties for a Request Type in next-gen are stored as Issue Type properties and therefore can also be set by calling the Jira Cloud Platform [Set issue type property](https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-issuetype-issueTypeId-properties-propertyKey-put) endpoint.  **[Permissions](#permissions) required**: Jira project administrator with a Jira Service Management agent license.
+     * Set property
+     */
+    async setPropertyRaw(requestParameters: SetPropertyServicedeskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

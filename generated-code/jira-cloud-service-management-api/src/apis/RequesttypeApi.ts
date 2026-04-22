@@ -35,10 +35,9 @@ export interface GetAllRequestTypesRequest {
 export class RequesttypeApi extends runtime.BaseAPI {
 
     /**
-     * This method returns all customer request types used in the Jira Service Management instance, optionally filtered by a query string.  Use [servicedeskapi/servicedesk/\\{serviceDeskId\\}/requesttype](#api-servicedesk-serviceDeskId-requesttype-get) to find the customer request types supported by a specific service desk.  The returned list of customer request types can be filtered using the `searchQuery` parameter. The parameter is matched against the customer request types\' `name` or `description`. For example, searching for \"Install\", \"Inst\", \"Equi\", or \"Equipment\" will match a customer request type with the *name* \"Equipment Installation Request\".  **Note:** This API by default will filter out request types hidden in the portal (i.e. request types without groups and request types where a user doesn\'t have permission) when `searchQuery` is provided, unless `includeHiddenRequestTypesInSearch` is set to true. Restricted request types will not be returned for those who aren\'t admins.  **[Permissions](#permissions) required**: Any
-     * Get all request types
+     * Creates request options for getAllRequestTypes without sending the request
      */
-    async getAllRequestTypesRaw(requestParameters: GetAllRequestTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTORequestTypeDTO>> {
+    async getAllRequestTypesRequestOpts(requestParameters: GetAllRequestTypesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['searchQuery'] != null) {
@@ -79,12 +78,21 @@ export class RequesttypeApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/requesttype`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns all customer request types used in the Jira Service Management instance, optionally filtered by a query string.  Use [servicedeskapi/servicedesk/\\{serviceDeskId\\}/requesttype](#api-servicedesk-serviceDeskId-requesttype-get) to find the customer request types supported by a specific service desk.  The returned list of customer request types can be filtered using the `searchQuery` parameter. The parameter is matched against the customer request types\' `name` or `description`. For example, searching for \"Install\", \"Inst\", \"Equi\", or \"Equipment\" will match a customer request type with the *name* \"Equipment Installation Request\".  **Note:** This API by default will filter out request types hidden in the portal (i.e. request types without groups and request types where a user doesn\'t have permission) when `searchQuery` is provided, unless `includeHiddenRequestTypesInSearch` is set to true. Restricted request types will not be returned for those who aren\'t admins.  **[Permissions](#permissions) required**: Any
+     * Get all request types
+     */
+    async getAllRequestTypesRaw(requestParameters: GetAllRequestTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTORequestTypeDTO>> {
+        const requestOptions = await this.getAllRequestTypesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -103,10 +103,9 @@ export interface SetPropertyRequest {
 export class OrganizationApi extends runtime.BaseAPI {
 
     /**
-     * This method adds an organization to a service desk. If the organization ID is already associated with the service desk, no change is made and the resource returns a 204 success code.  **[Permissions](#permissions) required**: Service desk\'s agent.
-     * Add organization
+     * Creates request options for addOrganization without sending the request
      */
-    async addOrganizationRaw(requestParameters: AddOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addOrganizationRequestOpts(requestParameters: AddOrganizationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -136,13 +135,22 @@ export class OrganizationApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/organization`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['organizationServiceDeskUpdateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method adds an organization to a service desk. If the organization ID is already associated with the service desk, no change is made and the resource returns a 204 success code.  **[Permissions](#permissions) required**: Service desk\'s agent.
+     * Add organization
+     */
+    async addOrganizationRaw(requestParameters: AddOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addOrganizationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -156,10 +164,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method adds users to an organization.  **[Permissions](#permissions) required**: Service desk administrator or agent. Note: Permission to add users to an organization can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
-     * Add users to organization
+     * Creates request options for addUsersToOrganization without sending the request
      */
-    async addUsersToOrganizationRaw(requestParameters: AddUsersToOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addUsersToOrganizationRequestOpts(requestParameters: AddUsersToOrganizationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationId'] == null) {
             throw new runtime.RequiredError(
                 'organizationId',
@@ -189,13 +196,22 @@ export class OrganizationApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/organization/{organizationId}/user`;
         urlPath = urlPath.replace(`{${"organizationId"}}`, encodeURIComponent(String(requestParameters['organizationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['usersOrganizationUpdateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method adds users to an organization.  **[Permissions](#permissions) required**: Service desk administrator or agent. Note: Permission to add users to an organization can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
+     * Add users to organization
+     */
+    async addUsersToOrganizationRaw(requestParameters: AddUsersToOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addUsersToOrganizationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -209,10 +225,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method creates an organization by passing the name of the organization.  **[Permissions](#permissions) required**: Service desk administrator or agent. Note: Permission to create organizations can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
-     * Create organization
+     * Creates request options for createOrganization without sending the request
      */
-    async createOrganizationRaw(requestParameters: CreateOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganizationDTO>> {
+    async createOrganizationRequestOpts(requestParameters: CreateOrganizationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationCreateDTO'] == null) {
             throw new runtime.RequiredError(
                 'organizationCreateDTO',
@@ -234,13 +249,22 @@ export class OrganizationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/organization`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['organizationCreateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method creates an organization by passing the name of the organization.  **[Permissions](#permissions) required**: Service desk administrator or agent. Note: Permission to create organizations can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
+     * Create organization
+     */
+    async createOrganizationRaw(requestParameters: CreateOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganizationDTO>> {
+        const requestOptions = await this.createOrganizationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -255,10 +279,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method deletes an organization. Note that the organization is deleted regardless of other associations it may have. For example, associations with service desks.  **[Permissions](#permissions) required**: Jira administrator.
-     * Delete organization
+     * Creates request options for deleteOrganization without sending the request
      */
-    async deleteOrganizationRaw(requestParameters: DeleteOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteOrganizationRequestOpts(requestParameters: DeleteOrganizationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationId'] == null) {
             throw new runtime.RequiredError(
                 'organizationId',
@@ -279,12 +302,21 @@ export class OrganizationApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/organization/{organizationId}`;
         urlPath = urlPath.replace(`{${"organizationId"}}`, encodeURIComponent(String(requestParameters['organizationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method deletes an organization. Note that the organization is deleted regardless of other associations it may have. For example, associations with service desks.  **[Permissions](#permissions) required**: Jira administrator.
+     * Delete organization
+     */
+    async deleteOrganizationRaw(requestParameters: DeleteOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteOrganizationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -298,10 +330,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes an organization property. Organization properties are a type of entity property which are available to the API only, and not shown in Jira Service Management. [Learn more](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).  For operations relating to organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Service Desk Administrator or Agent.  Note: Permission to manage organizations can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
-     * Delete property
+     * Creates request options for deleteProperty without sending the request
      */
-    async deletePropertyRaw(requestParameters: DeletePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePropertyRequestOpts(requestParameters: DeletePropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationId'] == null) {
             throw new runtime.RequiredError(
                 'organizationId',
@@ -330,12 +361,21 @@ export class OrganizationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"organizationId"}}`, encodeURIComponent(String(requestParameters['organizationId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes an organization property. Organization properties are a type of entity property which are available to the API only, and not shown in Jira Service Management. [Learn more](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).  For operations relating to organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Service Desk Administrator or Agent.  Note: Permission to manage organizations can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
+     * Delete property
+     */
+    async deletePropertyRaw(requestParameters: DeletePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -349,10 +389,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns details of an organization. Use this method to get organization details whenever your application component is passed an organization ID but needs to display other organization details.  To get organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Any  **Response limitations**: Customers can only retrieve organization of which they are members.
-     * Get organization
+     * Creates request options for getOrganization without sending the request
      */
-    async getOrganizationRaw(requestParameters: GetOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganizationDTO>> {
+    async getOrganizationRequestOpts(requestParameters: GetOrganizationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationId'] == null) {
             throw new runtime.RequiredError(
                 'organizationId',
@@ -373,12 +412,21 @@ export class OrganizationApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/organization/{organizationId}`;
         urlPath = urlPath.replace(`{${"organizationId"}}`, encodeURIComponent(String(requestParameters['organizationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns details of an organization. Use this method to get organization details whenever your application component is passed an organization ID but needs to display other organization details.  To get organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Any  **Response limitations**: Customers can only retrieve organization of which they are members.
+     * Get organization
+     */
+    async getOrganizationRaw(requestParameters: GetOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganizationDTO>> {
+        const requestOptions = await this.getOrganizationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -393,10 +441,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a list of organizations in the Jira Service Management instance. Use this method when you want to present a list of organizations or want to locate an organization by name.  **[Permissions](#permissions) required**: Any. However, to fetch organizations based on `accountId` the user must have a Service Desk agent license.  **Response limitations**: If the user is a customer, only those organizations of which the customer is a member are listed.
-     * Get organizations
+     * Creates request options for getOrganizations without sending the request
      */
-    async getOrganizationsRaw(requestParameters: GetOrganizationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOOrganizationDTO>> {
+    async getOrganizationsRequestOpts(requestParameters: GetOrganizationsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -421,12 +468,21 @@ export class OrganizationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/organization`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a list of organizations in the Jira Service Management instance. Use this method when you want to present a list of organizations or want to locate an organization by name.  **[Permissions](#permissions) required**: Any. However, to fetch organizations based on `accountId` the user must have a Service Desk agent license.  **Response limitations**: If the user is a customer, only those organizations of which the customer is a member are listed.
+     * Get organizations
+     */
+    async getOrganizationsRaw(requestParameters: GetOrganizationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOOrganizationDTO>> {
+        const requestOptions = await this.getOrganizationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -441,10 +497,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns a list of all organizations associated with a service desk.  **[Permissions](#permissions) required**: Service desk\'s agent.
-     * Get organizations
+     * Creates request options for getOrganizations_1 without sending the request
      */
-    async getOrganizations_1Raw(requestParameters: GetOrganizations0Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOOrganizationDTO>> {
+    async getOrganizations_1RequestOpts(requestParameters: GetOrganizations0Request): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -477,12 +532,21 @@ export class OrganizationApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/organization`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns a list of all organizations associated with a service desk.  **[Permissions](#permissions) required**: Service desk\'s agent.
+     * Get organizations
+     */
+    async getOrganizations_1Raw(requestParameters: GetOrganizations0Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOOrganizationDTO>> {
+        const requestOptions = await this.getOrganizations_1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -497,10 +561,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the keys of all organization properties. Organization properties are a type of entity property which are available to the API only, and not shown in Jira Service Management. [Learn more](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).  To get organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Any  **Response limitations**: Customers can only access properties of organizations of which they are members.
-     * Get properties keys
+     * Creates request options for getPropertiesKeys without sending the request
      */
-    async getPropertiesKeysRaw(requestParameters: GetPropertiesKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+    async getPropertiesKeysRequestOpts(requestParameters: GetPropertiesKeysRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationId'] == null) {
             throw new runtime.RequiredError(
                 'organizationId',
@@ -521,12 +584,21 @@ export class OrganizationApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/organization/{organizationId}/property`;
         urlPath = urlPath.replace(`{${"organizationId"}}`, encodeURIComponent(String(requestParameters['organizationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the keys of all organization properties. Organization properties are a type of entity property which are available to the API only, and not shown in Jira Service Management. [Learn more](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).  To get organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Any  **Response limitations**: Customers can only access properties of organizations of which they are members.
+     * Get properties keys
+     */
+    async getPropertiesKeysRaw(requestParameters: GetPropertiesKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
+        const requestOptions = await this.getPropertiesKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -541,10 +613,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the value of an organization property. Use this method to obtain the JSON content for an organization\'s property. Organization properties are a type of entity property which are available to the API only, and not shown in Jira Service Management. [Learn more](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).  To get organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Any  **Response limitations**: Customers can only access properties of organizations of which they are members.
-     * Get property
+     * Creates request options for getProperty without sending the request
      */
-    async getPropertyRaw(requestParameters: GetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+    async getPropertyRequestOpts(requestParameters: GetPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationId'] == null) {
             throw new runtime.RequiredError(
                 'organizationId',
@@ -573,12 +644,21 @@ export class OrganizationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"organizationId"}}`, encodeURIComponent(String(requestParameters['organizationId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the value of an organization property. Use this method to obtain the JSON content for an organization\'s property. Organization properties are a type of entity property which are available to the API only, and not shown in Jira Service Management. [Learn more](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).  To get organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Any  **Response limitations**: Customers can only access properties of organizations of which they are members.
+     * Get property
+     */
+    async getPropertyRaw(requestParameters: GetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
+        const requestOptions = await this.getPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -593,10 +673,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method returns all the users associated with an organization. Use this method where you want to provide a list of users for an organization or determine if a user is associated with an organization.  **[Permissions](#permissions) required**: Service desk administrator or agent.
-     * Get users in organization
+     * Creates request options for getUsersInOrganization without sending the request
      */
-    async getUsersInOrganizationRaw(requestParameters: GetUsersInOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+    async getUsersInOrganizationRequestOpts(requestParameters: GetUsersInOrganizationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationId'] == null) {
             throw new runtime.RequiredError(
                 'organizationId',
@@ -625,12 +704,21 @@ export class OrganizationApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/organization/{organizationId}/user`;
         urlPath = urlPath.replace(`{${"organizationId"}}`, encodeURIComponent(String(requestParameters['organizationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method returns all the users associated with an organization. Use this method where you want to provide a list of users for an organization or determine if a user is associated with an organization.  **[Permissions](#permissions) required**: Service desk administrator or agent.
+     * Get users in organization
+     */
+    async getUsersInOrganizationRaw(requestParameters: GetUsersInOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOUserDTO>> {
+        const requestOptions = await this.getUsersInOrganizationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -645,10 +733,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method removes an organization from a service desk. If the organization ID does not match an organization associated with the service desk, no change is made and the resource returns a 204 success code.  **[Permissions](#permissions) required**: Service desk\'s agent.
-     * Remove organization
+     * Creates request options for removeOrganization without sending the request
      */
-    async removeOrganizationRaw(requestParameters: RemoveOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeOrganizationRequestOpts(requestParameters: RemoveOrganizationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['serviceDeskId'] == null) {
             throw new runtime.RequiredError(
                 'serviceDeskId',
@@ -678,13 +765,22 @@ export class OrganizationApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/servicedesk/{serviceDeskId}/organization`;
         urlPath = urlPath.replace(`{${"serviceDeskId"}}`, encodeURIComponent(String(requestParameters['serviceDeskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['organizationServiceDeskUpdateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method removes an organization from a service desk. If the organization ID does not match an organization associated with the service desk, no change is made and the resource returns a 204 success code.  **[Permissions](#permissions) required**: Service desk\'s agent.
+     * Remove organization
+     */
+    async removeOrganizationRaw(requestParameters: RemoveOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeOrganizationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -698,10 +794,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method removes users from an organization.  **[Permissions](#permissions) required**: Service desk administrator or agent. Note: Permission to delete users from an organization can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
-     * Remove users from organization
+     * Creates request options for removeUsersFromOrganization without sending the request
      */
-    async removeUsersFromOrganizationRaw(requestParameters: RemoveUsersFromOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeUsersFromOrganizationRequestOpts(requestParameters: RemoveUsersFromOrganizationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationId'] == null) {
             throw new runtime.RequiredError(
                 'organizationId',
@@ -731,13 +826,22 @@ export class OrganizationApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/organization/{organizationId}/user`;
         urlPath = urlPath.replace(`{${"organizationId"}}`, encodeURIComponent(String(requestParameters['organizationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['usersOrganizationUpdateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method removes users from an organization.  **[Permissions](#permissions) required**: Service desk administrator or agent. Note: Permission to delete users from an organization can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
+     * Remove users from organization
+     */
+    async removeUsersFromOrganizationRaw(requestParameters: RemoveUsersFromOrganizationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeUsersFromOrganizationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -751,10 +855,9 @@ export class OrganizationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the value of an organization property. Use this resource to store custom data against an organization. Organization properties are a type of entity property which are available to the API only, and not shown in Jira Service Management. [Learn more](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).  To store organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Service Desk Administrator or Agent.  Note: Permission to manage organizations can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
-     * Set property
+     * Creates request options for setProperty without sending the request
      */
-    async setPropertyRaw(requestParameters: SetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setPropertyRequestOpts(requestParameters: SetPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['organizationId'] == null) {
             throw new runtime.RequiredError(
                 'organizationId',
@@ -792,13 +895,22 @@ export class OrganizationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"organizationId"}}`, encodeURIComponent(String(requestParameters['organizationId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the value of an organization property. Use this resource to store custom data against an organization. Organization properties are a type of entity property which are available to the API only, and not shown in Jira Service Management. [Learn more](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).  To store organization detail field values which are visible in Jira Service Management, see the [Customer Service Management REST API](https://developer.atlassian.com/cloud/customer-service-management/rest/v1/api-group-organization/#api-group-organization).  **[Permissions](#permissions) required**: Service Desk Administrator or Agent.  Note: Permission to manage organizations can be switched to users with the Jira administrator permission, using the **[Organization management](https://confluence.atlassian.com/servicedeskcloud/setting-up-service-desk-users-732528877.html#Settingupservicedeskusers-manageorgsManageorganizations)** feature.
+     * Set property
+     */
+    async setPropertyRaw(requestParameters: SetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);

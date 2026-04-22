@@ -34,10 +34,9 @@ export interface GetArticlesRequest {
 export class KnowledgebaseApi extends runtime.BaseAPI {
 
     /**
-     * Returns articles which match the given query string across all service desks.  **[Permissions](#permissions) required**: Permission to access the [customer portal](https://confluence.atlassian.com/servicedeskcloud/configuring-the-customer-portal-732528918.html).
-     * Get articles
+     * Creates request options for getArticles without sending the request
      */
-    async getArticlesRaw(requestParameters: GetArticlesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOArticleDTO>> {
+    async getArticlesRequestOpts(requestParameters: GetArticlesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['query'] == null) {
             throw new runtime.RequiredError(
                 'query',
@@ -88,12 +87,21 @@ export class KnowledgebaseApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/knowledgebase/article`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns articles which match the given query string across all service desks.  **[Permissions](#permissions) required**: Permission to access the [customer portal](https://confluence.atlassian.com/servicedeskcloud/configuring-the-customer-portal-732528918.html).
+     * Get articles
+     */
+    async getArticlesRaw(requestParameters: GetArticlesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PagedDTOArticleDTO>> {
+        const requestOptions = await this.getArticlesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

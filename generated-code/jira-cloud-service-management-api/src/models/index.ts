@@ -51,7 +51,7 @@ export interface ApprovalDTO {
     createdDate?: DateDTO;
     /**
      * Outcome of the approval, based on the approvals provided by all approvers.
-     * @type {string}
+     * @type {ApprovalDTOFinalDecisionEnum}
      * @memberof ApprovalDTO
      */
     finalDecision?: ApprovalDTOFinalDecisionEnum;
@@ -88,7 +88,7 @@ export type ApprovalDTOFinalDecisionEnum = typeof ApprovalDTOFinalDecisionEnum[k
 export interface ApprovalDecisionRequestDTO {
     /**
      * Response to the approval request.
-     * @type {string}
+     * @type {ApprovalDecisionRequestDTODecisionEnum}
      * @memberof ApprovalDecisionRequestDTO
      */
     decision?: ApprovalDecisionRequestDTODecisionEnum;
@@ -118,7 +118,7 @@ export interface ApproverDTO {
     approver?: UserDTO;
     /**
      * Decision made by the approver.
-     * @type {string}
+     * @type {ApproverDTOApproverDecisionEnum}
      * @memberof ApproverDTO
      */
     approverDecision?: ApproverDTOApproverDecisionEnum;
@@ -823,7 +823,7 @@ export interface CustomerRequestStatusDTO {
     status?: string;
     /**
      * Status category the status belongs to.
-     * @type {string}
+     * @type {CustomerRequestStatusDTOStatusCategoryEnum}
      * @memberof CustomerRequestStatusDTO
      */
     statusCategory?: CustomerRequestStatusDTOStatusCategoryEnum;
@@ -1640,7 +1640,7 @@ export interface JsonNode {
     number?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {JsonNodeNumberTypeEnum}
      * @memberof JsonNode
      */
     numberType?: JsonNodeNumberTypeEnum;
@@ -2893,7 +2893,7 @@ export interface ProjectDetails {
     readonly projectCategory?: UpdatedProjectCategory;
     /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
-     * @type {string}
+     * @type {ProjectDetailsProjectTypeKeyEnum}
      * @memberof ProjectDetails
      */
     readonly projectTypeKey?: ProjectDetailsProjectTypeKeyEnum;
@@ -3214,7 +3214,7 @@ export interface RequestTypeDTO {
     practice?: string;
     /**
      * Whether request type is restricted or not.
-     * @type {string}
+     * @type {RequestTypeDTORestrictionStatusEnum}
      * @memberof RequestTypeDTO
      */
     restrictionStatus?: RequestTypeDTORestrictionStatusEnum;
@@ -3387,7 +3387,7 @@ export interface RequestTypePermissionCheckRequestDTO {
     accountId?: string;
     /**
      * List of requested permissions.
-     * @type {Array<string>}
+     * @type {Array<RequestTypePermissionCheckRequestDTOPermissionsEnum>}
      * @memberof RequestTypePermissionCheckRequestDTO
      */
     permissions?: Array<RequestTypePermissionCheckRequestDTOPermissionsEnum>;
@@ -3498,7 +3498,7 @@ export interface Scope {
     readonly project?: ProjectDetails;
     /**
      * The type of scope.
-     * @type {string}
+     * @type {ScopeTypeEnum}
      * @memberof Scope
      */
     readonly type?: ScopeTypeEnum;
@@ -3837,7 +3837,7 @@ export interface SourceDTO {
     [key: string]: any | any;
     /**
      * Type of the knowledge base source
-     * @type {string}
+     * @type {SourceDTOTypeEnum}
      * @memberof SourceDTO
      */
     type?: SourceDTOTypeEnum;

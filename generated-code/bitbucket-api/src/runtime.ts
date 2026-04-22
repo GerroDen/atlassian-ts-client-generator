@@ -303,7 +303,7 @@ export const COLLECTION_FORMATS = {
     pipes: "|",
 };
 
-export type FetchAPI = typeof globalThis.fetch;
+export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
 export type RequestCredentials = "omit" | "include" | "same-origin";
 
 export type Json = any;

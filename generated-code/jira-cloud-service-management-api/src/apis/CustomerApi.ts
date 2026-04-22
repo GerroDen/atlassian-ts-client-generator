@@ -35,10 +35,9 @@ export interface RevokePortalOnlyAccessForUserRequest {
 export class CustomerApi extends runtime.BaseAPI {
 
     /**
-     * This method adds a customer to the Jira Service Management instance by passing a JSON file including an email address and display name. The display name does not need to be unique. The record\'s identifiers, `name` and `key`, are automatically generated from the request details.  **[Permissions](#permissions) required**: Jira Administrator Global permission
-     * Create customer
+     * Creates request options for createCustomer without sending the request
      */
-    async createCustomerRaw(requestParameters: CreateCustomerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDTO>> {
+    async createCustomerRequestOpts(requestParameters: CreateCustomerRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['customerCreateDTO'] == null) {
             throw new runtime.RequiredError(
                 'customerCreateDTO',
@@ -64,13 +63,22 @@ export class CustomerApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/servicedeskapi/customer`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['customerCreateDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method adds a customer to the Jira Service Management instance by passing a JSON file including an email address and display name. The display name does not need to be unique. The record\'s identifiers, `name` and `key`, are automatically generated from the request details.  **[Permissions](#permissions) required**: Jira Administrator Global permission
+     * Create customer
+     */
+    async createCustomerRaw(requestParameters: CreateCustomerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDTO>> {
+        const requestOptions = await this.createCustomerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -85,10 +93,9 @@ export class CustomerApi extends runtime.BaseAPI {
     }
 
     /**
-     * This method revokes portal-only access for a particular user, removing their ability to log in to the Jira Service Management customer portal as a portal-only user. After revocation, the user cannot submit or view requests through the portal.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
-     * Revoke portal only access for user
+     * Creates request options for revokePortalOnlyAccessForUser without sending the request
      */
-    async revokePortalOnlyAccessForUserRaw(requestParameters: RevokePortalOnlyAccessForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async revokePortalOnlyAccessForUserRequestOpts(requestParameters: RevokePortalOnlyAccessForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -109,12 +116,21 @@ export class CustomerApi extends runtime.BaseAPI {
         let urlPath = `/rest/servicedeskapi/customer/user/{accountId}/revoke-portal-only-access`;
         urlPath = urlPath.replace(`{${"accountId"}}`, encodeURIComponent(String(requestParameters['accountId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This method revokes portal-only access for a particular user, removing their ability to log in to the Jira Service Management customer portal as a portal-only user. After revocation, the user cannot submit or view requests through the portal.  **[Permissions](#permissions) required:** Site administration (that is, member of the *site-admin* [group](https://confluence.atlassian.com/x/24xjL)).
+     * Revoke portal only access for user
+     */
+    async revokePortalOnlyAccessForUserRaw(requestParameters: RevokePortalOnlyAccessForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.revokePortalOnlyAccessForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
