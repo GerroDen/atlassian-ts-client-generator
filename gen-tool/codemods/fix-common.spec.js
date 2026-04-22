@@ -54,7 +54,8 @@ describe("fix-common", () => {
       options,
     );
 
-    expect(result).toBe(`export type FetchAPI = typeof globalThis.fetch;
+    expect(result)
+      .toBe(`export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
 export type RequestCredentials = "omit" | "include" | "same-origin";`);
   });
 

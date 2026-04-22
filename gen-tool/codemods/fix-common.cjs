@@ -22,7 +22,25 @@ const transformer = (file, { j }) => {
       j.exportNamedDeclaration(
         j.tsTypeAliasDeclaration(
           j.identifier("FetchAPI"),
-          j.tsTypeQuery(j.tsQualifiedName(j.identifier("globalThis"), j.identifier("fetch"))),
+          j.tsFunctionType.from({
+            parameters: [
+              j.identifier.from({
+                name: "url",
+                typeAnnotation: j.tsTypeAnnotation(j.tsStringKeyword()),
+              }),
+              j.identifier.from({
+                name: "init",
+                optional: true,
+                typeAnnotation: j.tsTypeAnnotation(j.tsTypeReference(j.identifier("RequestInit"))),
+              }),
+            ],
+            typeAnnotation: j.tsTypeAnnotation(
+              j.tsTypeReference(
+                j.identifier("Promise"),
+                j.tsTypeParameterInstantiation([j.tsTypeReference(j.identifier("Response"))]),
+              ),
+            ),
+          }),
         ),
       ),
     )
