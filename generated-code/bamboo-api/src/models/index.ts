@@ -935,7 +935,7 @@ export interface BuildResultsSummary {
      * @type {Set<LinkedJiraIssue>}
      * @memberof BuildResultsSummary
      */
-    fixingJiraIssues?: Set<LinkedJiraIssue>;
+    fixingJiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {number}
@@ -977,13 +977,13 @@ export interface BuildResultsSummary {
      * @type {Set<string>}
      * @memberof BuildResultsSummary
      */
-    jiraIssueKeys?: Set<string>;
+    jiraIssueKeys?: Array<string>;
     /**
      * 
      * @type {Set<LinkedJiraIssue>}
      * @memberof BuildResultsSummary
      */
-    jiraIssues?: Set<LinkedJiraIssue>;
+    jiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {Array<string>}
@@ -1109,7 +1109,7 @@ export interface BuildResultsSummary {
      * @type {Set<LinkedJiraIssue>}
      * @memberof BuildResultsSummary
      */
-    relatedJiraIssues?: Set<LinkedJiraIssue>;
+    relatedJiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {string}
@@ -1211,7 +1211,7 @@ export interface BuildResultsSummary {
      * @type {Set<Author>}
      * @memberof BuildResultsSummary
      */
-    uniqueAuthors?: Set<Author>;
+    uniqueAuthors?: Array<Author>;
     /**
      * 
      * @type {number}
@@ -1457,7 +1457,7 @@ export interface ChainResultsSummary {
      * @type {Set<LinkedJiraIssue>}
      * @memberof ChainResultsSummary
      */
-    fixingJiraIssues?: Set<LinkedJiraIssue>;
+    fixingJiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {number}
@@ -1499,13 +1499,13 @@ export interface ChainResultsSummary {
      * @type {Set<string>}
      * @memberof ChainResultsSummary
      */
-    jiraIssueKeys?: Set<string>;
+    jiraIssueKeys?: Array<string>;
     /**
      * 
      * @type {Set<LinkedJiraIssue>}
      * @memberof ChainResultsSummary
      */
-    jiraIssues?: Set<LinkedJiraIssue>;
+    jiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {Array<string>}
@@ -1637,7 +1637,7 @@ export interface ChainResultsSummary {
      * @type {Set<LinkedJiraIssue>}
      * @memberof ChainResultsSummary
      */
-    relatedJiraIssues?: Set<LinkedJiraIssue>;
+    relatedJiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {string}
@@ -1757,7 +1757,7 @@ export interface ChainResultsSummary {
      * @type {Set<Author>}
      * @memberof ChainResultsSummary
      */
-    uniqueAuthors?: Set<Author>;
+    uniqueAuthors?: Array<Author>;
     /**
      * 
      * @type {number}
@@ -1853,7 +1853,7 @@ export interface ChainStageResult {
      * @type {Set<BuildResultsSummary>}
      * @memberof ChainStageResult
      */
-    buildResults?: Set<BuildResultsSummary>;
+    buildResults?: Array<BuildResultsSummary>;
     /**
      * 
      * @type {ChainResultsSummary}
@@ -3967,7 +3967,7 @@ export interface ImmutableChainStage {
      * @type {Set<ImmutableJob>}
      * @memberof ImmutableChainStage
      */
-    jobs?: Set<ImmutableJob>;
+    jobs?: Array<ImmutableJob>;
     /**
      * 
      * @type {boolean}
@@ -4647,7 +4647,7 @@ export interface ImmutableRequirementSet {
      * @type {Set<ImmutableRequirement>}
      * @memberof ImmutableRequirementSet
      */
-    requirements?: Set<ImmutableRequirement>;
+    requirements?: Array<ImmutableRequirement>;
 }
 /**
  * 
@@ -4786,7 +4786,7 @@ export interface ImmutableResultsSummary {
      * @type {Set<LinkedJiraIssue>}
      * @memberof ImmutableResultsSummary
      */
-    fixingJiraIssues?: Set<LinkedJiraIssue>;
+    fixingJiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {string}
@@ -4822,13 +4822,13 @@ export interface ImmutableResultsSummary {
      * @type {Set<string>}
      * @memberof ImmutableResultsSummary
      */
-    jiraIssueKeys?: Set<string>;
+    jiraIssueKeys?: Array<string>;
     /**
      * 
      * @type {Set<LinkedJiraIssue>}
      * @memberof ImmutableResultsSummary
      */
-    jiraIssues?: Set<LinkedJiraIssue>;
+    jiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {Array<string>}
@@ -4942,7 +4942,7 @@ export interface ImmutableResultsSummary {
      * @type {Set<LinkedJiraIssue>}
      * @memberof ImmutableResultsSummary
      */
-    relatedJiraIssues?: Set<LinkedJiraIssue>;
+    relatedJiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {string}
@@ -5032,7 +5032,7 @@ export interface ImmutableResultsSummary {
      * @type {Set<Author>}
      * @memberof ImmutableResultsSummary
      */
-    uniqueAuthors?: Set<Author>;
+    uniqueAuthors?: Array<Author>;
     /**
      * 
      * @type {Array<VariableContextSnapshot>}
@@ -6800,7 +6800,7 @@ export interface NotificationRecipient {
      * @type {Set<NotificationRecipientScopesEnum>}
      * @memberof NotificationRecipient
      */
-    scopes?: Set<NotificationRecipientScopesEnum>;
+    scopes?: Array<NotificationRecipientScopesEnum>;
     /**
      * 
      * @type {Array<any>}
@@ -6892,7 +6892,7 @@ export interface NotificationSet {
      * @type {Set<NotificationRule>}
      * @memberof NotificationSet
      */
-    notificationRules?: Set<NotificationRule>;
+    notificationRules?: Array<NotificationRule>;
     /**
      * 
      * @type {NotificationSetNotificationSetTypeEnum}
@@ -7853,7 +7853,7 @@ export interface RepositoryChangeset {
      * @type {Set<Commit>}
      * @memberof RepositoryChangeset
      */
-    commits?: Set<Commit>;
+    commits?: Array<Commit>;
     /**
      * 
      * @type {number}
@@ -8118,7 +8118,7 @@ export interface RequirementSet {
      * @type {Set<Requirement>}
      * @memberof RequirementSet
      */
-    requirements?: Set<Requirement>;
+    requirements?: Array<Requirement>;
 }
 /**
  * 
@@ -14216,7 +14216,7 @@ export interface RestRemoteAgentAuthentication {
      * @type {Set<string>}
      * @memberof RestRemoteAgentAuthentication
      */
-    ipPatterns?: Set<string>;
+    ipPatterns?: Array<string>;
     /**
      * 
      * @type {string}
@@ -16255,7 +16255,7 @@ export interface ResultsSummary {
      * @type {Set<LinkedJiraIssue>}
      * @memberof ResultsSummary
      */
-    fixingJiraIssues?: Set<LinkedJiraIssue>;
+    fixingJiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {number}
@@ -16297,13 +16297,13 @@ export interface ResultsSummary {
      * @type {Set<string>}
      * @memberof ResultsSummary
      */
-    jiraIssueKeys?: Set<string>;
+    jiraIssueKeys?: Array<string>;
     /**
      * 
      * @type {Set<LinkedJiraIssue>}
      * @memberof ResultsSummary
      */
-    jiraIssues?: Set<LinkedJiraIssue>;
+    jiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {Array<string>}
@@ -16423,7 +16423,7 @@ export interface ResultsSummary {
      * @type {Set<LinkedJiraIssue>}
      * @memberof ResultsSummary
      */
-    relatedJiraIssues?: Set<LinkedJiraIssue>;
+    relatedJiraIssues?: Array<LinkedJiraIssue>;
     /**
      * 
      * @type {string}
@@ -16519,7 +16519,7 @@ export interface ResultsSummary {
      * @type {Set<Author>}
      * @memberof ResultsSummary
      */
-    uniqueAuthors?: Set<Author>;
+    uniqueAuthors?: Array<Author>;
     /**
      * 
      * @type {number}
@@ -16998,7 +16998,7 @@ export interface TaskConditionConfig {
      * @type {object}
      * @memberof TaskConditionConfig
      */
-    _configuration?: object;
+    configuration?: object;
 }
 /**
  * 
@@ -17017,7 +17017,7 @@ export interface TaskDefinition {
      * @type {object}
      * @memberof TaskDefinition
      */
-    _configuration?: object;
+    configuration?: object;
     /**
      * 
      * @type {boolean}
@@ -17470,7 +17470,7 @@ export interface TestClassResult {
      * @type {Set<TestCaseResult>}
      * @memberof TestClassResult
      */
-    testCaseResultsSet?: Set<TestCaseResult>;
+    testCaseResultsSet?: Array<TestCaseResult>;
     /**
      * 
      * @type {TestClass}
@@ -17593,7 +17593,7 @@ export interface TriggerDefinition {
      * @type {object}
      * @memberof TriggerDefinition
      */
-    _configuration?: object;
+    configuration?: object;
     /**
      * 
      * @type {boolean}
@@ -17629,7 +17629,7 @@ export interface TriggerDefinition {
      * @type {Set<number>}
      * @memberof TriggerDefinition
      */
-    triggeringRepositories?: Set<number>;
+    triggeringRepositories?: Array<number>;
     /**
      * 
      * @type {string}
@@ -18066,7 +18066,7 @@ export interface VcsBambooSpecsDetectionOptions {
      * @type {object}
      * @memberof VcsBambooSpecsDetectionOptions
      */
-    _configuration?: object;
+    configuration?: object;
 }
 /**
  * 
@@ -18129,7 +18129,7 @@ export interface VcsBranchDefinition {
      * @type {object}
      * @memberof VcsBranchDefinition
      */
-    _configuration?: object;
+    configuration?: object;
     /**
      * 
      * @type {VcsBranch}
@@ -18148,7 +18148,7 @@ export interface VcsBranchDetectionOptions {
      * @type {object}
      * @memberof VcsBranchDetectionOptions
      */
-    _configuration?: object;
+    configuration?: object;
 }
 /**
  * 
@@ -18173,7 +18173,7 @@ export interface VcsChangeDetectionOptions {
      * @type {object}
      * @memberof VcsChangeDetectionOptions
      */
-    _configuration?: object;
+    configuration?: object;
     /**
      * 
      * @type {string}
@@ -18264,7 +18264,7 @@ export interface VcsLocationDefinition {
      * @type {object}
      * @memberof VcsLocationDefinition
      */
-    _configuration?: object;
+    configuration?: object;
     /**
      * 
      * @type {string}
@@ -18289,7 +18289,7 @@ export interface VcsRepositoryViewerDefinition {
      * @type {object}
      * @memberof VcsRepositoryViewerDefinition
      */
-    _configuration?: object;
+    configuration?: object;
     /**
      * 
      * @type {string}

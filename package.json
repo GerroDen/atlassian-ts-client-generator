@@ -21,6 +21,7 @@
     "gen": "run-s 'gen:*'",
     "gen:bamboo-api": "run-s 'gen:bamboo-api:*'",
     "gen:bamboo-api:gen": "gen-tool/gen-api.js bamboo-api",
+    "gen:bamboo-api:fix": "jscodeshift -t gen-tool/codemods/fix-common.cjs --parser=ts --extensions=ts generated-code/bamboo-api/src",
     "gen:bamboo-api:lint": "tsgo generated-code/bamboo-api --ignoreConfig --noEmit",
     "gen:bitbucket-api": "run-s 'gen:bitbucket-api:*'",
     "gen:bitbucket-api:gen": "gen-tool/gen-api.js bitbucket-api",
