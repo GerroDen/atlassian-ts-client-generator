@@ -15,7 +15,7 @@
     "fetch:jira-cloud-api": "curl -o jira-cloud-api/swagger.json https://dac-static.atlassian.com/cloud/jira/platform/swagger-v3.v3.json",
     "fetch:jira-cloud-service-management-api": "curl -o jira-cloud-service-management-api/swagger.json https://dac-static.atlassian.com/cloud/jira/service-desk/swagger.v3.json",
     "fetch:jira-software-cloud-api": "curl -o jira-software-cloud-api/swagger.json https://dac-static.atlassian.com/cloud/jira/software/swagger.v3.json",
-    "fetch:migration-api": "curl -o migration-api/swagger.json https://dac-static.atlassian.com/platform/app-migration/swagger.v3.json",
+    "fetch:migration-api": "curl -o migration-api/swagger.json https://dac-static.atlassian.com/platform/app-migration/forge-containers-swagger.v3.json",
     "fetch:teams-cloud-api": "curl -o teams-cloud-api/swagger.json https://dac-static.atlassian.com/platform/teams/swagger-public-api-v1.v3.json",
     "fetch:user-management-cloud-api": "curl -o user-management-cloud-api/swagger.json https://dac-static.atlassian.com/cloud/admin/user-management/swagger.v3.json",
     "gen": "run-s 'gen:*'",
