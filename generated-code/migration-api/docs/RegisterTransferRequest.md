@@ -1,0 +1,19 @@
+
+# RegisterTransferRequest
+
+
+## Properties
+
+Name | Type
+------------ | -------------
+`migrationId` | string
+`cloudAppKey` | string
+`accessScopes` | Set&lt;string&gt;
+`analytics` | [RegisterTransferAnalytics](RegisterTransferAnalytics.md)
+`enableAcceleratedTransfer` | boolean
+`tags` | Set&lt;string&gt;
+
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

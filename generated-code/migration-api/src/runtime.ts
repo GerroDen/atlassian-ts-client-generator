@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * App migration
- * Endpoints available in Jira and Confluence cloud instances to support app migrations
+ * Endpoints available for Forge remote apps once [DC to Forge remotes is available](https://jira.atlassian.com/browse/MIG-2452)
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "http://your-site.atlassian.net/rest/atlassian-connect/1/migration".replace(/\/+$/, "");
+export const BASE_PATH = "https://api.atlassian.com".replace(/\/+$/, "");
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path

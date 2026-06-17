@@ -1,0 +1,19 @@
+
+# GetUploadMutationUrlRequest
+
+
+## Properties
+
+Name | Type
+------------ | -------------
+`uploadId` | string
+`chunkIndex` | string
+`contentLength` | string
+`transferId` | string
+`contentSHA256` | string
+`contentMD5` | string
+
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

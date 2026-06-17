@@ -6,8 +6,8 @@
 
 Name | Type
 ------------ | -------------
-`migrationDetails` | [EnrichedMigrationDetailsDtoV1](EnrichedMigrationDetailsDtoV1.md)
 `transferId` | string
+`migrationDetails` | [EnrichedMigrationDetailsDtoV1](EnrichedMigrationDetailsDtoV1.md)
 `status` | string
 
 

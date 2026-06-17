@@ -6,8 +6,8 @@
 
 Name | Type
 ------------ | -------------
-`status` | string
 `percent` | number
+`status` | string
 `message` | string
 
 
