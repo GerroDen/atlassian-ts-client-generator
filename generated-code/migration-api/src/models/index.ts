@@ -250,7 +250,7 @@ export interface AppsLicenseResponseDto {
      * @type {Set<AppLicenseDetailDto>}
      * @memberof AppsLicenseResponseDto
      */
-    appLicenses?: Set<AppLicenseDetailDto>;
+    appLicenses?: Array<AppLicenseDetailDto>;
 }
 /**
  * 
@@ -319,7 +319,7 @@ export interface CheckupResult {
      * @type {{ [key: string]: Set<string>; }}
      * @memberof CheckupResult
      */
-    webhooks?: { [key: string]: Set<string>; };
+    webhooks?: { [key: string]: Array<string>; };
 }
 /**
  * 
@@ -332,7 +332,7 @@ export interface CloudAppsInstalled {
      * @type {Set<string>}
      * @memberof CloudAppsInstalled
      */
-    cloudAppKeys?: Set<string>;
+    cloudAppKeys?: Array<string>;
 }
 /**
  * 
@@ -436,7 +436,7 @@ export interface ConsentRequest {
      * @type {Set<string>}
      * @memberof ConsentRequest
      */
-    sens?: Set<string>;
+    sens?: Array<string>;
 }
 /**
  * 
@@ -605,7 +605,7 @@ export interface EnrichedMigrationDetailsDtoV1 {
      * @type {Set<string>}
      * @memberof EnrichedMigrationDetailsDtoV1
      */
-    enabledFeatures?: Set<string>;
+    enabledFeatures?: Array<string>;
     /**
      * 
      * @type {EnrichedMigrationDetailsDtoV1ProductEnum}
@@ -1681,7 +1681,7 @@ export interface MessageProgress {
      * @type {Set<string>}
      * @memberof MessageProgress
      */
-    messageIds?: Set<string>;
+    messageIds?: Array<string>;
 }
 
 
@@ -1952,7 +1952,7 @@ export interface OSFinaliseUploadRequest {
      * @type {Set<OSFinaliseUploadPart>}
      * @memberof OSFinaliseUploadRequest
      */
-    parts?: Set<OSFinaliseUploadPart>;
+    parts?: Array<OSFinaliseUploadPart>;
 }
 /**
  * 
@@ -2319,7 +2319,7 @@ export interface RegisterForgeMultiTransferRequest {
      * @type {Set<RegisterTransferDefinition>}
      * @memberof RegisterForgeMultiTransferRequest
      */
-    transfers?: Set<RegisterTransferDefinition>;
+    transfers?: Array<RegisterTransferDefinition>;
 }
 /**
  * 
@@ -2350,7 +2350,7 @@ export interface RegisterForgeTransferRequest {
      * @type {Set<RegisterForgeTransferRequestAccessScopesEnum>}
      * @memberof RegisterForgeTransferRequest
      */
-    accessScopes?: Set<RegisterForgeTransferRequestAccessScopesEnum>;
+    accessScopes?: Array<RegisterForgeTransferRequestAccessScopesEnum>;
     /**
      * 
      * @type {RegisterTransferAnalytics}
@@ -2422,7 +2422,7 @@ export interface RegisterMultiTransferRequest {
      * @type {Set<RegisterTransferDefinition>}
      * @memberof RegisterMultiTransferRequest
      */
-    transfers?: Set<RegisterTransferDefinition>;
+    transfers?: Array<RegisterTransferDefinition>;
 }
 /**
  * 
@@ -2448,7 +2448,7 @@ export interface RegisterTransferDefinition {
      * @type {Set<RegisterTransferDefinitionAccessScopesEnum>}
      * @memberof RegisterTransferDefinition
      */
-    accessScopes?: Set<RegisterTransferDefinitionAccessScopesEnum>;
+    accessScopes?: Array<RegisterTransferDefinitionAccessScopesEnum>;
     /**
      * 
      * @type {RegisterTransferAnalytics}
@@ -2466,7 +2466,7 @@ export interface RegisterTransferDefinition {
      * @type {Set<string>}
      * @memberof RegisterTransferDefinition
      */
-    tags?: Set<string>;
+    tags?: Array<string>;
     /**
      * 
      * @type {string}
@@ -2478,7 +2478,7 @@ export interface RegisterTransferDefinition {
      * @type {Set<string>}
      * @memberof RegisterTransferDefinition
      */
-    dependsOn?: Set<string>;
+    dependsOn?: Array<string>;
     /**
      * 
      * @type {boolean}
@@ -2528,7 +2528,7 @@ export interface RegisterTransferRequest {
      * @type {Set<RegisterTransferRequestAccessScopesEnum>}
      * @memberof RegisterTransferRequest
      */
-    accessScopes?: Set<RegisterTransferRequestAccessScopesEnum>;
+    accessScopes?: Array<RegisterTransferRequestAccessScopesEnum>;
     /**
      * 
      * @type {RegisterTransferAnalytics}
@@ -2546,7 +2546,7 @@ export interface RegisterTransferRequest {
      * @type {Set<string>}
      * @memberof RegisterTransferRequest
      */
-    tags?: Set<string>;
+    tags?: Array<string>;
 }
 
 
@@ -2578,7 +2578,7 @@ export interface RegisterTransferRerunRequest {
      * @type {Set<RegisterTransferRerunRequestAccessScopesEnum>}
      * @memberof RegisterTransferRerunRequest
      */
-    accessScopes?: Set<RegisterTransferRerunRequestAccessScopesEnum>;
+    accessScopes?: Array<RegisterTransferRerunRequestAccessScopesEnum>;
     /**
      * 
      * @type {RegisterTransferAnalytics}
@@ -2767,7 +2767,7 @@ export interface SiteAppsLicenseRequest {
      * @type {Set<string>}
      * @memberof SiteAppsLicenseRequest
      */
-    appKeys?: Set<string>;
+    appKeys?: Array<string>;
 }
 /**
  * 
@@ -2817,7 +2817,7 @@ export interface TransferDetailsDto {
      * @type {Set<string>}
      * @memberof TransferDetailsDto
      */
-    tags?: Set<string>;
+    tags?: Array<string>;
     /**
      * 
      * @type {string}
@@ -3102,7 +3102,7 @@ export interface WebhookCheckRequestDto {
      * @type {Set<string>}
      * @memberof WebhookCheckRequestDto
      */
-    appKeys?: Set<string>;
+    appKeys?: Array<string>;
     /**
      * 
      * @type {string}
@@ -3127,7 +3127,7 @@ export interface WebhookEndpointsDto {
      * @type {Set<string>}
      * @memberof WebhookEndpointsDto
      */
-    endpoints?: Set<string>;
+    endpoints?: Array<string>;
 }
 /**
  * 
@@ -3140,7 +3140,7 @@ export interface WebhookResponseDto {
      * @type {Set<AppWebhookCheckResult>}
      * @memberof WebhookResponseDto
      */
-    appEndpoints?: Set<AppWebhookCheckResult>;
+    appEndpoints?: Array<AppWebhookCheckResult>;
     /**
      * 
      * @type {string}

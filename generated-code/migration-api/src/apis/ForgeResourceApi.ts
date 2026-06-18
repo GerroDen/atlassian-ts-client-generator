@@ -31,7 +31,7 @@ export interface AddLog1Request {
 export interface FindByNamespaceAndKeys2Request {
     transferId: string;
     namespace: string;
-    requestBody: Set<string>;
+    requestBody: Array<string>;
 }
 
 export interface GetAppData2Request {
@@ -447,11 +447,11 @@ export class ForgeResourceApi extends runtime.BaseAPI {
      * Returns all uploaded file keys for a transfer Id
      * @deprecated
      */
-    async getUploadedFiles1Raw(requestParameters: GetUploadedFiles1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Set<ForgeFileMappingDto>>> {
+    async getUploadedFiles1Raw(requestParameters: GetUploadedFiles1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ForgeFileMappingDto>>> {
         const requestOptions = await this.getUploadedFiles1RequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
-        return new runtime.JSONApiResponse(response));
+        return new runtime.JSONApiResponse(response);
     }
 
     /**
@@ -459,7 +459,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
      * Returns all uploaded file keys for a transfer Id
      * @deprecated
      */
-    async getUploadedFiles1(requestParameters: GetUploadedFiles1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Set<ForgeFileMappingDto>> {
+    async getUploadedFiles1(requestParameters: GetUploadedFiles1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ForgeFileMappingDto>> {
         const response = await this.getUploadedFiles1Raw(requestParameters, initOverrides);
         return await response.value();
     }

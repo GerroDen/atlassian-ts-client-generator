@@ -50,6 +50,8 @@
     "gen:jira-software-cloud-api:lint": "tsgo generated-code/jira-software-cloud-api --ignoreConfig --noEmit",
     "gen:migration-api": "run-s 'gen:migration-api:*'",
     "gen:migration-api:gen": "gen-tool/gen-api.js migration-api",
+    "gen:migration-api:pre-fix": "gen-tool/fix-migration-gen.js generated-code/migration-api",
+    "gen:migration-api:fix": "jscodeshift -t gen-tool/codemods/fix-common.cjs --parser=ts --extensions=ts generated-code/migration-api/src",
     "gen:migration-api:lint": "tsgo generated-code/migration-api --ignoreConfig --noEmit",
     "gen:teams-cloud-api": "run-s 'gen:teams-cloud-api:*'",
     "gen:teams-cloud-api:gen": "gen-tool/gen-api.js teams-cloud-api",

@@ -191,14 +191,14 @@ export class BaseAPI {
         return { url, init };
     }
 
-    private fetchApi = async (url: string, init: RequestInit) => {
+    private fetchApi = async (url: string, init?: RequestInit) => {
         let fetchParams = { url, init };
         for (const middleware of this.middleware) {
             if (middleware.pre) {
-                fetchParams = await middleware.pre({
+                fetchParams = (await middleware.pre({
                     fetch: this.fetchApi,
                     ...fetchParams,
-                }) || fetchParams;
+                })) || fetchParams;
             }
         }
         let response: Response | undefined = undefined;
@@ -207,13 +207,13 @@ export class BaseAPI {
         } catch (e) {
             for (const middleware of this.middleware) {
                 if (middleware.onError) {
-                    response = await middleware.onError({
+                    response = (await middleware.onError({
                         fetch: this.fetchApi,
                         url: fetchParams.url,
                         init: fetchParams.init,
                         error: e,
                         response: response ? response.clone() : undefined,
-                    }) || response;
+                    })) || response;
                 }
             }
             if (response === undefined) {
@@ -226,12 +226,12 @@ export class BaseAPI {
         }
         for (const middleware of this.middleware) {
             if (middleware.post) {
-                response = await middleware.post({
+                response = (await middleware.post({
                     fetch: this.fetchApi,
                     url: fetchParams.url,
                     init: fetchParams.init,
                     response: response.clone(),
-                }) || response;
+                })) || response;
             }
         }
         return response;
@@ -247,7 +247,7 @@ export class BaseAPI {
         next.middleware = this.middleware.slice();
         return next;
     }
-};
+}
 
 function isBlob(value: any): value is Blob {
     return typeof Blob !== 'undefined' && value instanceof Blob;
@@ -303,12 +303,13 @@ export const COLLECTION_FORMATS = {
     pipes: "|",
 };
 
-export type FetchAPI = WindowOrWorkerGlobalScope['fetch'];
+export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
+export type RequestCredentials = "omit" | "include" | "same-origin";
 
 export type Json = any;
 export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS' | 'HEAD';
 export type HTTPHeaders = { [key: string]: string };
-export type HTTPQuery = { [key: string]: string | number | null | boolean | Array<string | number | null | boolean> | Set<string | number | null | boolean> | HTTPQuery };
+export type HTTPQuery = { [key: string]: string | number | null | boolean | Array<string | number | null | boolean> | Array<string | number | null | boolean> | HTTPQuery };
 export type HTTPBody = Json | FormData | URLSearchParams;
 export type HTTPRequestInit = { headers?: HTTPHeaders; method: HTTPMethod; credentials?: RequestCredentials; body?: HTTPBody };
 export type ModelPropertyNaming = 'camelCase' | 'snake_case' | 'PascalCase' | 'original';
@@ -335,7 +336,7 @@ export function querystring(params: HTTPQuery, prefix: string = ''): string {
         .join('&');
 }
 
-function querystringSingleKey(key: string, value: string | number | null | undefined | boolean | Array<string | number | null | boolean> | Set<string | number | null | boolean> | HTTPQuery, keyPrefix: string = ''): string {
+function querystringSingleKey(key: string, value: string | number | null | undefined | boolean | Array<string | number | null | boolean> | Array<string | number | null | boolean> | HTTPQuery, keyPrefix: string = ''): string {
     const fullKey = keyPrefix + (keyPrefix.length ? `[${key}]` : key);
     if (value instanceof Array) {
         const multiValue = value.map(singleValue => encodeURIComponent(String(singleValue)))
@@ -377,20 +378,20 @@ export interface Consume {
 export interface RequestContext {
     fetch: FetchAPI;
     url: string;
-    init: RequestInit;
+    init?: RequestInit
 }
 
 export interface ResponseContext {
     fetch: FetchAPI;
     url: string;
-    init: RequestInit;
+    init?: RequestInit
     response: Response;
 }
 
 export interface ErrorContext {
     fetch: FetchAPI;
     url: string;
-    init: RequestInit;
+    init?: RequestInit
     error: unknown;
     response?: Response;
 }
