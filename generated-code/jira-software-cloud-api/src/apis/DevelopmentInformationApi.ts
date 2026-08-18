@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  DevInformation,
-  ErrorMessages,
-  ExistsForPropertiesResponse,
-  Repository,
-  StoreDevinfoResult,
+    DevInformation,
+    ErrorMessages,
+    ExistsForPropertiesResponse,
+    Repository,
+    StoreDevinfoResult,
 } from '../models/index';
 
 export interface DeleteByPropertiesRequest {
@@ -89,6 +88,9 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:dev-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/devinfo/0.10/bulkByProperties`;
 
@@ -168,11 +170,14 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:dev-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/devinfo/0.10/repository/{repositoryId}/{entityType}/{entityId}`;
-        urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
-        urlPath = urlPath.replace(`{${"entityType"}}`, encodeURIComponent(String(requestParameters['entityType'])));
-        urlPath = urlPath.replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters['entityId'])));
+        urlPath = urlPath.replace('{repositoryId}', encodeURIComponent(String(requestParameters['repositoryId'])));
+        urlPath = urlPath.replace('{entityType}', encodeURIComponent(String(requestParameters['entityType'])));
+        urlPath = urlPath.replace('{entityId}', encodeURIComponent(String(requestParameters['entityId'])));
 
         return {
             path: urlPath,
@@ -236,9 +241,12 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:dev-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/devinfo/0.10/repository/{repositoryId}`;
-        urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
+        urlPath = urlPath.replace('{repositoryId}', encodeURIComponent(String(requestParameters['repositoryId'])));
 
         return {
             path: urlPath,
@@ -295,6 +303,9 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:dev-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/devinfo/0.10/existsByProperties`;
 
@@ -357,9 +368,12 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:dev-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/devinfo/0.10/repository/{repositoryId}`;
-        urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
+        urlPath = urlPath.replace('{repositoryId}', encodeURIComponent(String(requestParameters['repositoryId'])));
 
         return {
             path: urlPath,
@@ -422,6 +436,9 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:dev-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/devinfo/0.10/bulk`;
 

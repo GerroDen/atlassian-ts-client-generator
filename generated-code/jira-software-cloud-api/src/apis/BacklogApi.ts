@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  MoveIssuesToBacklogForBoardRequest,
-  MoveIssuesToBacklogRequest,
+    MoveIssuesToBacklogForBoardRequest,
+    MoveIssuesToBacklogRequest,
 } from '../models/index';
 
 export interface MoveIssuesToBacklogOperationRequest {
@@ -55,6 +54,9 @@ export class BacklogApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/backlog/issue`;
 
@@ -115,9 +117,12 @@ export class BacklogApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/backlog/{boardId}/issue`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,

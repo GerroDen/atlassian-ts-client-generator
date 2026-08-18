@@ -33,6 +33,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new IssueApi(config);
 
@@ -72,7 +75,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -86,7 +89,7 @@ example().catch(console.error);
 | **200** | Returns the estimation of the issue and a fieldId of the field that is used for it. |  -  |
 | **400** | Returned if the boardId was not provided, field does not exists or value was in wrong format. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if user does not a have valid license or does not have permission to edit issue. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to edit issue. |  -  |
 | **404** | Returned in these cases:   *  the issue does not exist  *  the user does not have permission to view issue  *  the board does not exist  *  the user does not have permission to view board  *  the issue does not belong to the board |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -114,6 +117,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new IssueApi(config);
 
@@ -156,7 +162,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -170,7 +176,7 @@ example().catch(console.error);
 | **200** | Returns the requested issue. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned in these cases:   *  the issue does not exist  *  the user does not have permission to view issue |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -198,6 +204,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new IssueApi(config);
 
@@ -234,7 +243,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -248,7 +257,7 @@ example().catch(console.error);
 | **200** | Returns the estimation of the issue and a fieldId of the field that is used for it. |  -  |
 | **400** | Returned if the boardId was not provided, field does not exists or value was in wrong format. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if user does not a have valid license or does not have permission to edit issue. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to edit issue. |  -  |
 | **404** | Returned in these cases:   *  the issue does not exist  *  the user does not have permission to view issue  *  the board does not exist  *  the user does not have permission to view board  *  the issue does not belong to the board |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -276,6 +285,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new IssueApi(config);
 
@@ -309,7 +321,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -324,7 +336,7 @@ example().catch(console.error);
 | **207** | Returns the list of issue with status of rank operation. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if user does not a have valid license or does not have permission to rank. To rank issues user has to have schedule issue permission for issues that they want to rank. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to rank. To rank issues user has to have schedule issue permission for issues that they want to rank. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

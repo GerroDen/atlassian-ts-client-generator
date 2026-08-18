@@ -12,22 +12,23 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreateBoardRequest,
-  GetAllBoards200Response,
-  GetAllBoards200ResponseValuesInner,
-  GetAllQuickFilters200Response,
-  GetAllQuickFilters200ResponseValuesInner,
-  GetBoardByFilterId200Response,
-  GetConfiguration200Response,
-  GetFeaturesForBoard200Response,
-  GetReportsForBoard200Response,
-  MoveIssuesToBacklogForBoardRequest,
-  MoveIssuesToBoard207Response,
-  SearchResults,
-  ToggleFeaturesRequest,
+    CreateBoardRequest,
+    GetAllBoards200Response,
+    GetAllBoards200ResponseValuesInner,
+    GetAllQuickFilters200Response,
+    GetAllQuickFilters200ResponseValuesInner,
+    GetBoardByFilterId200Response,
+    GetConfiguration200Response,
+    GetFeaturesForBoard200Response,
+    GetReportsForBoard200Response,
+    IssueCountBean,
+    MoveIssuesToBacklogForBoardRequest,
+    MoveIssuesToBoard207Response,
+    SearchResults,
+    SoftwareIssueResults,
+    ToggleFeaturesRequest,
 } from '../models/index';
 
 export interface CreateBoardOperationRequest {
@@ -46,7 +47,7 @@ export interface DeleteBoardPropertyRequest {
 export interface GetAllBoardsRequest {
     startAt?: number;
     maxResults?: number;
-    type?: "scrum" | "kanban" | "simple";
+    type?: object;
     name?: string;
     projectKeyOrId?: string;
     accountIdLocation?: string;
@@ -79,6 +80,16 @@ export interface GetAllVersionsRequest {
     released?: string;
 }
 
+export interface GetApproximateIssueCountForBacklogRequest {
+    boardId: number;
+    jql?: string;
+}
+
+export interface GetApproximateIssueCountForBoardRequest {
+    boardId: number;
+    jql?: string;
+}
+
 export interface GetBoardRequest {
     boardId: number;
 }
@@ -100,11 +111,35 @@ export interface GetBoardIssuesForEpicRequest {
     expand?: string;
 }
 
+export interface GetBoardIssuesForEpicJSISRequest {
+    boardId: number;
+    epicId: number;
+    nextPageToken?: string;
+    maxResults?: number;
+    reconcileIssues?: Set<number>;
+    jql?: string;
+    validateQuery?: boolean;
+    fields?: Array<object>;
+    expand?: string;
+}
+
 export interface GetBoardIssuesForSprintRequest {
     boardId: number;
     sprintId: number;
     startAt?: number;
     maxResults?: number;
+    jql?: string;
+    validateQuery?: boolean;
+    fields?: Array<object>;
+    expand?: string;
+}
+
+export interface GetBoardIssuesForSprintJSISRequest {
+    boardId: number;
+    sprintId: number;
+    nextPageToken?: string;
+    maxResults?: number;
+    reconcileIssues?: Set<number>;
     jql?: string;
     validateQuery?: boolean;
     fields?: Array<object>;
@@ -145,6 +180,17 @@ export interface GetIssuesForBacklogRequest {
     expand?: string;
 }
 
+export interface GetIssuesForBacklogJSISRequest {
+    boardId: number;
+    nextPageToken?: string;
+    maxResults?: number;
+    reconcileIssues?: Set<number>;
+    jql?: string;
+    validateQuery?: boolean;
+    fields?: Array<object>;
+    expand?: string;
+}
+
 export interface GetIssuesForBoardRequest {
     boardId: number;
     startAt?: number;
@@ -155,10 +201,32 @@ export interface GetIssuesForBoardRequest {
     expand?: string;
 }
 
+export interface GetIssuesForBoardJSISRequest {
+    boardId: number;
+    nextPageToken?: string;
+    maxResults?: number;
+    reconcileIssues?: Set<number>;
+    jql?: string;
+    validateQuery?: boolean;
+    fields?: Array<object>;
+    expand?: string;
+}
+
 export interface GetIssuesWithoutEpicForBoardRequest {
     boardId: number;
     startAt?: number;
     maxResults?: number;
+    jql?: string;
+    validateQuery?: boolean;
+    fields?: Array<object>;
+    expand?: string;
+}
+
+export interface GetIssuesWithoutEpicForBoardJSISRequest {
+    boardId: number;
+    nextPageToken?: string;
+    maxResults?: number;
+    reconcileIssues?: Set<number>;
     jql?: string;
     validateQuery?: boolean;
     fields?: Array<object>;
@@ -227,6 +295,9 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board`;
 
@@ -279,9 +350,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -337,10 +411,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
-        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{propertyKey}', encodeURIComponent(String(requestParameters['propertyKey'])));
 
         return {
             path: urlPath,
@@ -434,6 +511,9 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board`;
 
@@ -493,9 +573,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/quickfilter`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -557,9 +640,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/sprint`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -620,9 +706,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/version`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -652,6 +741,124 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for getApproximateIssueCountForBacklog without sending the request
+     */
+    async getApproximateIssueCountForBacklogRequestOpts(requestParameters: GetApproximateIssueCountForBacklogRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getApproximateIssueCountForBacklog().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/board/{boardId}/backlog/approximate-count`;
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns the approximate count of all issues from the board\'s backlog, for the given board ID. This is equivalent to counting the issues on all pages returned by [Get issues for backlog enhanced](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-software-1-0-board-boardid-backlog-get). Recent updates might not be immediately visible in the returned output. This only includes issues that the user has permission to view.
+     * Get approximate issue count for backlog
+     */
+    async getApproximateIssueCountForBacklogRaw(requestParameters: GetApproximateIssueCountForBacklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueCountBean>> {
+        const requestOptions = await this.getApproximateIssueCountForBacklogRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns the approximate count of all issues from the board\'s backlog, for the given board ID. This is equivalent to counting the issues on all pages returned by [Get issues for backlog enhanced](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-software-1-0-board-boardid-backlog-get). Recent updates might not be immediately visible in the returned output. This only includes issues that the user has permission to view.
+     * Get approximate issue count for backlog
+     */
+    async getApproximateIssueCountForBacklog(requestParameters: GetApproximateIssueCountForBacklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<IssueCountBean> {
+        const response = await this.getApproximateIssueCountForBacklogRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getApproximateIssueCountForBoard without sending the request
+     */
+    async getApproximateIssueCountForBoardRequestOpts(requestParameters: GetApproximateIssueCountForBoardRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getApproximateIssueCountForBoard().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/board/{boardId}/issue/approximate-count`;
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns the approximate count of all issues from a board, for a given board ID. This is equivalent to counting the issues on all pages returned by [Get issues for board enhanced](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-software-1-0-board-boardid-issue-get). Recent updates might not be immediately visible in the returned output. This only includes issues that the user has permission to view.
+     * Get approximate issue count for board
+     */
+    async getApproximateIssueCountForBoardRaw(requestParameters: GetApproximateIssueCountForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueCountBean>> {
+        const requestOptions = await this.getApproximateIssueCountForBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns the approximate count of all issues from a board, for a given board ID. This is equivalent to counting the issues on all pages returned by [Get issues for board enhanced](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-software-1-0-board-boardid-issue-get). Recent updates might not be immediately visible in the returned output. This only includes issues that the user has permission to view.
+     * Get approximate issue count for board
+     */
+    async getApproximateIssueCountForBoard(requestParameters: GetApproximateIssueCountForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<IssueCountBean> {
+        const response = await this.getApproximateIssueCountForBoardRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for getBoard without sending the request
      */
     async getBoardRequestOpts(requestParameters: GetBoardRequest): Promise<runtime.RequestOpts> {
@@ -671,9 +878,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -731,9 +941,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/filter/{filterId}`;
-        urlPath = urlPath.replace(`{${"filterId"}}`, encodeURIComponent(String(requestParameters['filterId'])));
+        urlPath = urlPath.replace('{filterId}', encodeURIComponent(String(requestParameters['filterId'])));
 
         return {
             path: urlPath,
@@ -765,6 +978,7 @@ export class BoardApi extends runtime.BaseAPI {
 
     /**
      * Creates request options for getBoardIssuesForEpic without sending the request
+     * @deprecated
      */
     async getBoardIssuesForEpicRequestOpts(requestParameters: GetBoardIssuesForEpicRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
@@ -814,10 +1028,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/epic/{epicId}/issue`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
-        urlPath = urlPath.replace(`{${"epicId"}}`, encodeURIComponent(String(requestParameters['epicId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{epicId}', encodeURIComponent(String(requestParameters['epicId'])));
 
         return {
             path: urlPath,
@@ -830,6 +1047,7 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Returns all issues that belong to an epic on the board, for the given epic ID and the board ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
      * Get board issues for epic
+     * @deprecated
      */
     async getBoardIssuesForEpicRaw(requestParameters: GetBoardIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const requestOptions = await this.getBoardIssuesForEpicRequestOpts(requestParameters);
@@ -841,13 +1059,106 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Returns all issues that belong to an epic on the board, for the given epic ID and the board ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
      * Get board issues for epic
+     * @deprecated
      */
     async getBoardIssuesForEpic(requestParameters: GetBoardIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getBoardIssuesForEpicRaw(requestParameters, initOverrides);
     }
 
     /**
+     * Creates request options for getBoardIssuesForEpicJSIS without sending the request
+     */
+    async getBoardIssuesForEpicJSISRequestOpts(requestParameters: GetBoardIssuesForEpicJSISRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getBoardIssuesForEpicJSIS().'
+            );
+        }
+
+        if (requestParameters['epicId'] == null) {
+            throw new runtime.RequiredError(
+                'epicId',
+                'Required parameter "epicId" was null or undefined when calling getBoardIssuesForEpicJSIS().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['nextPageToken'] != null) {
+            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        }
+
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
+        }
+
+        if (requestParameters['reconcileIssues'] != null) {
+            queryParameters['reconcileIssues'] = requestParameters['reconcileIssues'];
+        }
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
+        }
+
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
+        }
+
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/board/{boardId}/epic/{epicId}/issue`;
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{epicId}', encodeURIComponent(String(requestParameters['epicId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns all issues that belong to an epic on the board, for the given epic ID and the board ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get board issues for epic (enhanced)
+     */
+    async getBoardIssuesForEpicJSISRaw(requestParameters: GetBoardIssuesForEpicJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareIssueResults>> {
+        const requestOptions = await this.getBoardIssuesForEpicJSISRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all issues that belong to an epic on the board, for the given epic ID and the board ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get board issues for epic (enhanced)
+     */
+    async getBoardIssuesForEpicJSIS(requestParameters: GetBoardIssuesForEpicJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SoftwareIssueResults> {
+        const response = await this.getBoardIssuesForEpicJSISRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for getBoardIssuesForSprint without sending the request
+     * @deprecated
      */
     async getBoardIssuesForSprintRequestOpts(requestParameters: GetBoardIssuesForSprintRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
@@ -897,10 +1208,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/sprint/{sprintId}/issue`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
 
         return {
             path: urlPath,
@@ -913,6 +1227,7 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Get all issues you have access to that belong to the sprint from the board. Issue returned from this resource contains additional fields like: sprint, closedSprints, flagged and epic. Issues are returned ordered by rank. JQL order has higher priority than default rank.
      * Get board issues for sprint
+     * @deprecated
      */
     async getBoardIssuesForSprintRaw(requestParameters: GetBoardIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const requestOptions = await this.getBoardIssuesForSprintRequestOpts(requestParameters);
@@ -924,9 +1239,101 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Get all issues you have access to that belong to the sprint from the board. Issue returned from this resource contains additional fields like: sprint, closedSprints, flagged and epic. Issues are returned ordered by rank. JQL order has higher priority than default rank.
      * Get board issues for sprint
+     * @deprecated
      */
     async getBoardIssuesForSprint(requestParameters: GetBoardIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getBoardIssuesForSprintRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for getBoardIssuesForSprintJSIS without sending the request
+     */
+    async getBoardIssuesForSprintJSISRequestOpts(requestParameters: GetBoardIssuesForSprintJSISRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getBoardIssuesForSprintJSIS().'
+            );
+        }
+
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling getBoardIssuesForSprintJSIS().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['nextPageToken'] != null) {
+            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        }
+
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
+        }
+
+        if (requestParameters['reconcileIssues'] != null) {
+            queryParameters['reconcileIssues'] = requestParameters['reconcileIssues'];
+        }
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
+        }
+
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
+        }
+
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/board/{boardId}/sprint/{sprintId}/issue`;
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get all issues you have access to that belong to the sprint from the board. Result pagination is token-based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource contains additional fields like: sprint, closedSprints, flagged, and epic. Issues are returned ordered by rank. JQL order has higher priority than default rank.
+     * Get board issues for sprint (enhanced)
+     */
+    async getBoardIssuesForSprintJSISRaw(requestParameters: GetBoardIssuesForSprintJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareIssueResults>> {
+        const requestOptions = await this.getBoardIssuesForSprintJSISRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Get all issues you have access to that belong to the sprint from the board. Result pagination is token-based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource contains additional fields like: sprint, closedSprints, flagged, and epic. Issues are returned ordered by rank. JQL order has higher priority than default rank.
+     * Get board issues for sprint (enhanced)
+     */
+    async getBoardIssuesForSprintJSIS(requestParameters: GetBoardIssuesForSprintJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SoftwareIssueResults> {
+        const response = await this.getBoardIssuesForSprintJSISRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -956,10 +1363,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
-        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{propertyKey}', encodeURIComponent(String(requestParameters['propertyKey'])));
 
         return {
             path: urlPath,
@@ -1008,9 +1418,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/properties`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1059,9 +1472,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/configuration`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1123,9 +1539,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/epic`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1174,9 +1593,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/features`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1208,6 +1630,7 @@ export class BoardApi extends runtime.BaseAPI {
 
     /**
      * Creates request options for getIssuesForBacklog without sending the request
+     * @deprecated
      */
     async getIssuesForBacklogRequestOpts(requestParameters: GetIssuesForBacklogRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
@@ -1250,9 +1673,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/backlog`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1265,6 +1691,7 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Returns all issues from the board\'s backlog, for the given board ID. This only includes issues that the user has permission to view. The backlog contains incomplete issues that are not assigned to any future or active sprint. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
      * Get issues for backlog
+     * @deprecated
      */
     async getIssuesForBacklogRaw(requestParameters: GetIssuesForBacklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
         const requestOptions = await this.getIssuesForBacklogRequestOpts(requestParameters);
@@ -1276,6 +1703,7 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Returns all issues from the board\'s backlog, for the given board ID. This only includes issues that the user has permission to view. The backlog contains incomplete issues that are not assigned to any future or active sprint. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
      * Get issues for backlog
+     * @deprecated
      */
     async getIssuesForBacklog(requestParameters: GetIssuesForBacklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchResults> {
         const response = await this.getIssuesForBacklogRaw(requestParameters, initOverrides);
@@ -1283,7 +1711,91 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for getIssuesForBacklogJSIS without sending the request
+     */
+    async getIssuesForBacklogJSISRequestOpts(requestParameters: GetIssuesForBacklogJSISRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getIssuesForBacklogJSIS().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['nextPageToken'] != null) {
+            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        }
+
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
+        }
+
+        if (requestParameters['reconcileIssues'] != null) {
+            queryParameters['reconcileIssues'] = requestParameters['reconcileIssues'];
+        }
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
+        }
+
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
+        }
+
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/board/{boardId}/backlog`;
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns all issues from the board\'s backlog, for the given board ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. The backlog contains incomplete issues that are not assigned to any future or active sprint. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues for backlog (enhanced)
+     */
+    async getIssuesForBacklogJSISRaw(requestParameters: GetIssuesForBacklogJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareIssueResults>> {
+        const requestOptions = await this.getIssuesForBacklogJSISRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all issues from the board\'s backlog, for the given board ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. The backlog contains incomplete issues that are not assigned to any future or active sprint. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues for backlog (enhanced)
+     */
+    async getIssuesForBacklogJSIS(requestParameters: GetIssuesForBacklogJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SoftwareIssueResults> {
+        const response = await this.getIssuesForBacklogJSISRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for getIssuesForBoard without sending the request
+     * @deprecated
      */
     async getIssuesForBoardRequestOpts(requestParameters: GetIssuesForBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
@@ -1326,9 +1838,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/issue`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1341,6 +1856,7 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Returns all issues from a board, for a given board ID. This only includes issues that the user has permission to view. An issue belongs to the board if its status is mapped to the board\'s column. Epic issues do not belongs to the scrum boards. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
      * Get issues for board
+     * @deprecated
      */
     async getIssuesForBoardRaw(requestParameters: GetIssuesForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
         const requestOptions = await this.getIssuesForBoardRequestOpts(requestParameters);
@@ -1352,6 +1868,7 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Returns all issues from a board, for a given board ID. This only includes issues that the user has permission to view. An issue belongs to the board if its status is mapped to the board\'s column. Epic issues do not belongs to the scrum boards. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
      * Get issues for board
+     * @deprecated
      */
     async getIssuesForBoard(requestParameters: GetIssuesForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchResults> {
         const response = await this.getIssuesForBoardRaw(requestParameters, initOverrides);
@@ -1359,7 +1876,91 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for getIssuesForBoardJSIS without sending the request
+     */
+    async getIssuesForBoardJSISRequestOpts(requestParameters: GetIssuesForBoardJSISRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getIssuesForBoardJSIS().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['nextPageToken'] != null) {
+            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        }
+
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
+        }
+
+        if (requestParameters['reconcileIssues'] != null) {
+            queryParameters['reconcileIssues'] = requestParameters['reconcileIssues'];
+        }
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
+        }
+
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
+        }
+
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/board/{boardId}/issue`;
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns all issues from a board, for a given board ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. An issue belongs to the board if its status is mapped to the board\'s column. Epic issues do not belong to scrum boards. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues for board (enhanced)
+     */
+    async getIssuesForBoardJSISRaw(requestParameters: GetIssuesForBoardJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareIssueResults>> {
+        const requestOptions = await this.getIssuesForBoardJSISRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all issues from a board, for a given board ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. An issue belongs to the board if its status is mapped to the board\'s column. Epic issues do not belong to scrum boards. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues for board (enhanced)
+     */
+    async getIssuesForBoardJSIS(requestParameters: GetIssuesForBoardJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SoftwareIssueResults> {
+        const response = await this.getIssuesForBoardJSISRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for getIssuesWithoutEpicForBoard without sending the request
+     * @deprecated
      */
     async getIssuesWithoutEpicForBoardRequestOpts(requestParameters: GetIssuesWithoutEpicForBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
@@ -1402,9 +2003,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/epic/none/issue`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1417,6 +2021,7 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Returns all issues that do not belong to any epic on a board, for a given board ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
      * Get issues without epic for board
+     * @deprecated
      */
     async getIssuesWithoutEpicForBoardRaw(requestParameters: GetIssuesWithoutEpicForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const requestOptions = await this.getIssuesWithoutEpicForBoardRequestOpts(requestParameters);
@@ -1428,9 +2033,93 @@ export class BoardApi extends runtime.BaseAPI {
     /**
      * Returns all issues that do not belong to any epic on a board, for a given board ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
      * Get issues without epic for board
+     * @deprecated
      */
     async getIssuesWithoutEpicForBoard(requestParameters: GetIssuesWithoutEpicForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getIssuesWithoutEpicForBoardRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for getIssuesWithoutEpicForBoardJSIS without sending the request
+     */
+    async getIssuesWithoutEpicForBoardJSISRequestOpts(requestParameters: GetIssuesWithoutEpicForBoardJSISRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getIssuesWithoutEpicForBoardJSIS().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['nextPageToken'] != null) {
+            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        }
+
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
+        }
+
+        if (requestParameters['reconcileIssues'] != null) {
+            queryParameters['reconcileIssues'] = requestParameters['reconcileIssues'];
+        }
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
+        }
+
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
+        }
+
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/board/{boardId}/epic/none/issue`;
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns all issues that do not belong to any epic on a board, for a given board ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues without epic for board (enhanced)
+     */
+    async getIssuesWithoutEpicForBoardJSISRaw(requestParameters: GetIssuesWithoutEpicForBoardJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareIssueResults>> {
+        const requestOptions = await this.getIssuesWithoutEpicForBoardJSISRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all issues that do not belong to any epic on a board, for a given board ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues without epic for board (enhanced)
+     */
+    async getIssuesWithoutEpicForBoardJSIS(requestParameters: GetIssuesWithoutEpicForBoardJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SoftwareIssueResults> {
+        const response = await this.getIssuesWithoutEpicForBoardJSISRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -1461,9 +2150,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/project`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1512,9 +2204,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/project/full`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1570,10 +2265,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/quickfilter/{quickFilterId}`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
-        urlPath = urlPath.replace(`{${"quickFilterId"}}`, encodeURIComponent(String(requestParameters['quickFilterId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{quickFilterId}', encodeURIComponent(String(requestParameters['quickFilterId'])));
 
         return {
             path: urlPath,
@@ -1623,9 +2321,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/reports`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1684,9 +2385,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/issue`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1734,10 +2438,10 @@ export class BoardApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['body'] == null) {
+        if (requestParameters['body'] === undefined) {
             throw new runtime.RequiredError(
                 'body',
-                'Required parameter "body" was null or undefined when calling setBoardProperty().'
+                'Required parameter "body" was undefined when calling setBoardProperty().'
             );
         }
 
@@ -1752,10 +2456,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
-        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{propertyKey}', encodeURIComponent(String(requestParameters['propertyKey'])));
 
         return {
             path: urlPath,
@@ -1819,9 +2526,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope.admin:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/board/{boardId}/features`;
-        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace('{boardId}', encodeURIComponent(String(requestParameters['boardId'])));
 
         return {
             path: urlPath,
@@ -1859,7 +2569,7 @@ export class BoardApi extends runtime.BaseAPI {
  */
 export const GetAllBoardsOrderByEnum = {
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name'
+    Name2: '-name',
+    Name3: '+name'
 } as const;
 export type GetAllBoardsOrderByEnum = typeof GetAllBoardsOrderByEnum[keyof typeof GetAllBoardsOrderByEnum];

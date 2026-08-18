@@ -9,7 +9,7 @@ Name | Type
 ------------ | -------------
 `properties` | { [key: string]: string; }
 `devopsComponents` | [Array&lt;Component&gt;](Component.md)
-`providerMetadata` | [ProviderMetadata6](ProviderMetadata6.md)
+`providerMetadata` | [ProviderMetadata1](ProviderMetadata1.md)
 
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

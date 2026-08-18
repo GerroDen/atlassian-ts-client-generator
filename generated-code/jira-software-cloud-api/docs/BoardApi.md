@@ -11,18 +11,25 @@ All URIs are relative to *https://your-domain.atlassian.net*
 | [**getAllQuickFilters**](BoardApi.md#getallquickfilters) | **GET** /rest/agile/1.0/board/{boardId}/quickfilter | Get all quick filters |
 | [**getAllSprints**](BoardApi.md#getallsprints) | **GET** /rest/agile/1.0/board/{boardId}/sprint | Get all sprints |
 | [**getAllVersions**](BoardApi.md#getallversions) | **GET** /rest/agile/1.0/board/{boardId}/version | Get all versions |
+| [**getApproximateIssueCountForBacklog**](BoardApi.md#getapproximateissuecountforbacklog) | **GET** /rest/software/1.0/board/{boardId}/backlog/approximate-count | Get approximate issue count for backlog |
+| [**getApproximateIssueCountForBoard**](BoardApi.md#getapproximateissuecountforboard) | **GET** /rest/software/1.0/board/{boardId}/issue/approximate-count | Get approximate issue count for board |
 | [**getBoard**](BoardApi.md#getboard) | **GET** /rest/agile/1.0/board/{boardId} | Get board |
 | [**getBoardByFilterId**](BoardApi.md#getboardbyfilterid) | **GET** /rest/agile/1.0/board/filter/{filterId} | Get board by filter id |
 | [**getBoardIssuesForEpic**](BoardApi.md#getboardissuesforepic) | **GET** /rest/agile/1.0/board/{boardId}/epic/{epicId}/issue | Get board issues for epic |
+| [**getBoardIssuesForEpicJSIS**](BoardApi.md#getboardissuesforepicjsis) | **GET** /rest/software/1.0/board/{boardId}/epic/{epicId}/issue | Get board issues for epic (enhanced) |
 | [**getBoardIssuesForSprint**](BoardApi.md#getboardissuesforsprint) | **GET** /rest/agile/1.0/board/{boardId}/sprint/{sprintId}/issue | Get board issues for sprint |
+| [**getBoardIssuesForSprintJSIS**](BoardApi.md#getboardissuesforsprintjsis) | **GET** /rest/software/1.0/board/{boardId}/sprint/{sprintId}/issue | Get board issues for sprint (enhanced) |
 | [**getBoardProperty**](BoardApi.md#getboardproperty) | **GET** /rest/agile/1.0/board/{boardId}/properties/{propertyKey} | Get board property |
 | [**getBoardPropertyKeys**](BoardApi.md#getboardpropertykeys) | **GET** /rest/agile/1.0/board/{boardId}/properties | Get board property keys |
 | [**getConfiguration**](BoardApi.md#getconfiguration) | **GET** /rest/agile/1.0/board/{boardId}/configuration | Get configuration |
 | [**getEpics**](BoardApi.md#getepics) | **GET** /rest/agile/1.0/board/{boardId}/epic | Get epics |
 | [**getFeaturesForBoard**](BoardApi.md#getfeaturesforboard) | **GET** /rest/agile/1.0/board/{boardId}/features | Get features for board |
 | [**getIssuesForBacklog**](BoardApi.md#getissuesforbacklog) | **GET** /rest/agile/1.0/board/{boardId}/backlog | Get issues for backlog |
+| [**getIssuesForBacklogJSIS**](BoardApi.md#getissuesforbacklogjsis) | **GET** /rest/software/1.0/board/{boardId}/backlog | Get issues for backlog (enhanced) |
 | [**getIssuesForBoard**](BoardApi.md#getissuesforboard) | **GET** /rest/agile/1.0/board/{boardId}/issue | Get issues for board |
+| [**getIssuesForBoardJSIS**](BoardApi.md#getissuesforboardjsis) | **GET** /rest/software/1.0/board/{boardId}/issue | Get issues for board (enhanced) |
 | [**getIssuesWithoutEpicForBoard**](BoardApi.md#getissueswithoutepicforboard) | **GET** /rest/agile/1.0/board/{boardId}/epic/none/issue | Get issues without epic for board |
+| [**getIssuesWithoutEpicForBoardJSIS**](BoardApi.md#getissueswithoutepicforboardjsis) | **GET** /rest/software/1.0/board/{boardId}/epic/none/issue | Get issues without epic for board (enhanced) |
 | [**getProjects**](BoardApi.md#getprojects) | **GET** /rest/agile/1.0/board/{boardId}/project | Get projects |
 | [**getProjectsFull**](BoardApi.md#getprojectsfull) | **GET** /rest/agile/1.0/board/{boardId}/project/full | Get projects full |
 | [**getQuickFilter**](BoardApi.md#getquickfilter) | **GET** /rest/agile/1.0/board/{boardId}/quickfilter/{quickFilterId} | Get quick filter |
@@ -55,6 +62,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -88,7 +98,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -102,7 +112,7 @@ example().catch(console.error);
 | **201** | Returns the created board. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -129,6 +139,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -162,7 +175,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -174,7 +187,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Returned if the board has been successfully removed. |  -  |
-| **403** | Returned if the user does not a have valid license, or when the user does not have the permission to delete the board, or when the user tried to delete a next-gen board. The user has to be a Jira Administrator or a board administrator to remove the board. Next-gen boards cannot be deleted, because next-gen software projects must have a board. |  -  |
+| **403** | Returned if the user does not have a valid license, or when the user does not have the permission to delete the board, or when the user tried to delete a next-gen board. The user has to be a Jira Administrator or a board administrator to remove the board. Next-gen boards cannot be deleted, because next-gen software projects must have a board. |  -  |
 | **404** | Returned if a board with the given ID does not exist or the user does not have the permission to view the board. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -202,6 +215,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -238,7 +254,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -279,6 +295,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -348,7 +367,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -389,6 +408,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -428,7 +450,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -442,7 +464,7 @@ example().catch(console.error);
 | **200** | Returns the requested quick filters, at the specified page of the results. Quick filters will be ordered first by position. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -470,6 +492,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -512,7 +537,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -526,7 +551,7 @@ example().catch(console.error);
 | **200** | Returns the requested sprints, at the specified page of the results. Sprints will be ordered first by state (i.e. closed, active, future) then by their position in the backlog. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -554,6 +579,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -596,7 +624,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -610,8 +638,170 @@ example().catch(console.error);
 | **200** | Returns the requested versions, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if board does not exist or the user does not have permission to view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getApproximateIssueCountForBacklog
+
+> IssueCountBean getApproximateIssueCountForBacklog(boardId, jql)
+
+Get approximate issue count for backlog
+
+Returns the approximate count of all issues from the board\&#39;s backlog, for the given board ID. This is equivalent to counting the issues on all pages returned by [Get issues for backlog enhanced](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-software-1-0-board-boardid-backlog-get). Recent updates might not be immediately visible in the returned output. This only includes issues that the user has permission to view.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BoardApi,
+} from 'jira-software-cloud-api';
+import type { GetApproximateIssueCountForBacklogRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new BoardApi(config);
+
+  const body = {
+    // number | The ID of the board that has the backlog containing the requested issues.
+    boardId: 789,
+    // string | Filters results using a JQL query. Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+  } satisfies GetApproximateIssueCountForBacklogRequest;
+
+  try {
+    const data = await api.getApproximateIssueCountForBacklog(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **boardId** | `number` | The ID of the board that has the backlog containing the requested issues. | [Defaults to `undefined`] |
+| **jql** | `string` | Filters results using a JQL query. Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**IssueCountBean**](IssueCountBean.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issue count. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+| **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getApproximateIssueCountForBoard
+
+> IssueCountBean getApproximateIssueCountForBoard(boardId, jql)
+
+Get approximate issue count for board
+
+Returns the approximate count of all issues from a board, for a given board ID. This is equivalent to counting the issues on all pages returned by [Get issues for board enhanced](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-software-1-0-board-boardid-issue-get). Recent updates might not be immediately visible in the returned output. This only includes issues that the user has permission to view.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BoardApi,
+} from 'jira-software-cloud-api';
+import type { GetApproximateIssueCountForBoardRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new BoardApi(config);
+
+  const body = {
+    // number | The ID of the board that contains the requested issues.
+    boardId: 789,
+    // string | Filters results using a JQL query. Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+  } satisfies GetApproximateIssueCountForBoardRequest;
+
+  try {
+    const data = await api.getApproximateIssueCountForBoard(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **boardId** | `number` | The ID of the board that contains the requested issues. | [Defaults to `undefined`] |
+| **jql** | `string` | Filters results using a JQL query. Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**IssueCountBean**](IssueCountBean.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issue count. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+| **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -638,6 +828,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -671,7 +864,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -685,7 +878,7 @@ example().catch(console.error);
 | **200** | Returns the requested board. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -713,6 +906,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -752,7 +948,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -792,6 +988,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -846,7 +1045,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -860,7 +1059,109 @@ example().catch(console.error);
 | **200** | Returns the requested issues, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+| **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getBoardIssuesForEpicJSIS
+
+> SoftwareIssueResults getBoardIssuesForEpicJSIS(boardId, epicId, nextPageToken, maxResults, reconcileIssues, jql, validateQuery, fields, expand)
+
+Get board issues for epic (enhanced)
+
+Returns all issues that belong to an epic on the board, for the given epic ID and the board ID. Result pagination is token based, using &#x60;nextPageToken&#x60; and &#x60;maxResults&#x60;. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BoardApi,
+} from 'jira-software-cloud-api';
+import type { GetBoardIssuesForEpicJSISRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new BoardApi(config);
+
+  const body = {
+    // number | The ID of the board that contains the requested issues.
+    boardId: 789,
+    // number | The ID of the epic that contains the requested issues.
+    epicId: 789,
+    // string | The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.  Note: The `nextPageToken` field is **not included** in the response for the last page, indicating there is no next page. (optional)
+    nextPageToken: nextPageToken_example,
+    // number | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. (optional)
+    maxResults: 56,
+    // Set<number> | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. (optional)
+    reconcileIssues: ...,
+    // string | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+    // boolean | Specifies whether to validate the JQL query or not. Default: true. (optional)
+    validateQuery: true,
+    // Array<object> | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. (optional)
+    fields: ...,
+    // string | A comma-separated list of the parameters to expand. (optional)
+    expand: expand_example,
+  } satisfies GetBoardIssuesForEpicJSISRequest;
+
+  try {
+    const data = await api.getBoardIssuesForEpicJSIS(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **boardId** | `number` | The ID of the board that contains the requested issues. | [Defaults to `undefined`] |
+| **epicId** | `number` | The ID of the epic that contains the requested issues. | [Defaults to `undefined`] |
+| **nextPageToken** | `string` | The token for a page to fetch that is not the first page. The first page has a &#x60;nextPageToken&#x60; of &#x60;null&#x60;. Use the &#x60;nextPageToken&#x60; to fetch the next page of issues.  Note: The &#x60;nextPageToken&#x60; field is **not included** in the response for the last page, indicating there is no next page. | [Optional] [Defaults to `undefined`] |
+| **maxResults** | `number` | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. | [Optional] [Defaults to `undefined`] |
+| **reconcileIssues** | `Set<number>` | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. | [Optional] |
+| **jql** | `string` | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+| **validateQuery** | `boolean` | Specifies whether to validate the JQL query or not. Default: true. | [Optional] [Defaults to `undefined`] |
+| **fields** | `Array<object>` | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. | [Optional] |
+| **expand** | `string` | A comma-separated list of the parameters to expand. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**SoftwareIssueResults**](SoftwareIssueResults.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issues, at the specified page of the results. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -888,6 +1189,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -942,7 +1246,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -956,7 +1260,109 @@ example().catch(console.error);
 | **200** | Returns the requested issues, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+| **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getBoardIssuesForSprintJSIS
+
+> SoftwareIssueResults getBoardIssuesForSprintJSIS(boardId, sprintId, nextPageToken, maxResults, reconcileIssues, jql, validateQuery, fields, expand)
+
+Get board issues for sprint (enhanced)
+
+Get all issues you have access to that belong to the sprint from the board. Result pagination is token-based, using &#x60;nextPageToken&#x60; and &#x60;maxResults&#x60;. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource contains additional fields like: sprint, closedSprints, flagged, and epic. Issues are returned ordered by rank. JQL order has higher priority than default rank.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BoardApi,
+} from 'jira-software-cloud-api';
+import type { GetBoardIssuesForSprintJSISRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new BoardApi(config);
+
+  const body = {
+    // number | The ID of the board that contains the requested issues.
+    boardId: 789,
+    // number | The ID of the sprint that contains the requested issues.
+    sprintId: 789,
+    // string | The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.  Note: The `nextPageToken` field is **not included** in the response for the last page, indicating there is no next page. (optional)
+    nextPageToken: nextPageToken_example,
+    // number | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. (optional)
+    maxResults: 56,
+    // Set<number> | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. (optional)
+    reconcileIssues: ...,
+    // string | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+    // boolean | Specifies whether to validate the JQL query or not. Default: true. (optional)
+    validateQuery: true,
+    // Array<object> | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. (optional)
+    fields: ...,
+    // string | A comma-separated list of the parameters to expand. (optional)
+    expand: expand_example,
+  } satisfies GetBoardIssuesForSprintJSISRequest;
+
+  try {
+    const data = await api.getBoardIssuesForSprintJSIS(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **boardId** | `number` | The ID of the board that contains the requested issues. | [Defaults to `undefined`] |
+| **sprintId** | `number` | The ID of the sprint that contains the requested issues. | [Defaults to `undefined`] |
+| **nextPageToken** | `string` | The token for a page to fetch that is not the first page. The first page has a &#x60;nextPageToken&#x60; of &#x60;null&#x60;. Use the &#x60;nextPageToken&#x60; to fetch the next page of issues.  Note: The &#x60;nextPageToken&#x60; field is **not included** in the response for the last page, indicating there is no next page. | [Optional] [Defaults to `undefined`] |
+| **maxResults** | `number` | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. | [Optional] [Defaults to `undefined`] |
+| **reconcileIssues** | `Set<number>` | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. | [Optional] |
+| **jql** | `string` | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+| **validateQuery** | `boolean` | Specifies whether to validate the JQL query or not. Default: true. | [Optional] [Defaults to `undefined`] |
+| **fields** | `Array<object>` | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. | [Optional] |
+| **expand** | `string` | A comma-separated list of the parameters to expand. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**SoftwareIssueResults**](SoftwareIssueResults.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issues, at the specified page of the results. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -984,6 +1390,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1020,7 +1429,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1061,6 +1470,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1094,7 +1506,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1135,6 +1547,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1168,7 +1583,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1181,7 +1596,7 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Returns the configuration of the board for given boardId. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if board does not exist or the user cannot view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1209,6 +1624,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1251,7 +1669,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1293,6 +1711,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1326,7 +1747,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1364,6 +1785,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1415,7 +1839,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1429,7 +1853,106 @@ example().catch(console.error);
 | **200** | Returns the requested issues, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+| **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getIssuesForBacklogJSIS
+
+> SoftwareIssueResults getIssuesForBacklogJSIS(boardId, nextPageToken, maxResults, reconcileIssues, jql, validateQuery, fields, expand)
+
+Get issues for backlog (enhanced)
+
+Returns all issues from the board\&#39;s backlog, for the given board ID. Result pagination is token based, using &#x60;nextPageToken&#x60; and &#x60;maxResults&#x60;. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. The backlog contains incomplete issues that are not assigned to any future or active sprint. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BoardApi,
+} from 'jira-software-cloud-api';
+import type { GetIssuesForBacklogJSISRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new BoardApi(config);
+
+  const body = {
+    // number | The ID of the board that has the backlog containing the requested issues.
+    boardId: 789,
+    // string | The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.  Note: The `nextPageToken` field is **not included** in the response for the last page, indicating there is no next page. (optional)
+    nextPageToken: nextPageToken_example,
+    // number | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. (optional)
+    maxResults: 56,
+    // Set<number> | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. (optional)
+    reconcileIssues: ...,
+    // string | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+    // boolean | Specifies whether to validate the JQL query or not. Default: true. (optional)
+    validateQuery: true,
+    // Array<object> | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. (optional)
+    fields: ...,
+    // string | A comma-separated list of the parameters to expand. (optional)
+    expand: expand_example,
+  } satisfies GetIssuesForBacklogJSISRequest;
+
+  try {
+    const data = await api.getIssuesForBacklogJSIS(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **boardId** | `number` | The ID of the board that has the backlog containing the requested issues. | [Defaults to `undefined`] |
+| **nextPageToken** | `string` | The token for a page to fetch that is not the first page. The first page has a &#x60;nextPageToken&#x60; of &#x60;null&#x60;. Use the &#x60;nextPageToken&#x60; to fetch the next page of issues.  Note: The &#x60;nextPageToken&#x60; field is **not included** in the response for the last page, indicating there is no next page. | [Optional] [Defaults to `undefined`] |
+| **maxResults** | `number` | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. | [Optional] [Defaults to `undefined`] |
+| **reconcileIssues** | `Set<number>` | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. | [Optional] |
+| **jql** | `string` | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+| **validateQuery** | `boolean` | Specifies whether to validate the JQL query or not. Default: true. | [Optional] [Defaults to `undefined`] |
+| **fields** | `Array<object>` | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. | [Optional] |
+| **expand** | `string` | A comma-separated list of the parameters to expand. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**SoftwareIssueResults**](SoftwareIssueResults.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issues, at the specified page of the results. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1457,6 +1980,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1508,7 +2034,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1522,7 +2048,106 @@ example().catch(console.error);
 | **200** | Returns the requested issues, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+| **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getIssuesForBoardJSIS
+
+> SoftwareIssueResults getIssuesForBoardJSIS(boardId, nextPageToken, maxResults, reconcileIssues, jql, validateQuery, fields, expand)
+
+Get issues for board (enhanced)
+
+Returns all issues from a board, for a given board ID. Result pagination is token based, using &#x60;nextPageToken&#x60; and &#x60;maxResults&#x60;. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. An issue belongs to the board if its status is mapped to the board\&#39;s column. Epic issues do not belong to scrum boards. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BoardApi,
+} from 'jira-software-cloud-api';
+import type { GetIssuesForBoardJSISRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new BoardApi(config);
+
+  const body = {
+    // number | The ID of the board that contains the requested issues.
+    boardId: 789,
+    // string | The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.  Note: The `nextPageToken` field is **not included** in the response for the last page, indicating there is no next page. (optional)
+    nextPageToken: nextPageToken_example,
+    // number | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. (optional)
+    maxResults: 56,
+    // Set<number> | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. (optional)
+    reconcileIssues: ...,
+    // string | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+    // boolean | Specifies whether to validate the JQL query or not. Default: true. (optional)
+    validateQuery: true,
+    // Array<object> | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. (optional)
+    fields: ...,
+    // string | A comma-separated list of the parameters to expand. (optional)
+    expand: expand_example,
+  } satisfies GetIssuesForBoardJSISRequest;
+
+  try {
+    const data = await api.getIssuesForBoardJSIS(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **boardId** | `number` | The ID of the board that contains the requested issues. | [Defaults to `undefined`] |
+| **nextPageToken** | `string` | The token for a page to fetch that is not the first page. The first page has a &#x60;nextPageToken&#x60; of &#x60;null&#x60;. Use the &#x60;nextPageToken&#x60; to fetch the next page of issues.  Note: The &#x60;nextPageToken&#x60; field is **not included** in the response for the last page, indicating there is no next page. | [Optional] [Defaults to `undefined`] |
+| **maxResults** | `number` | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. | [Optional] [Defaults to `undefined`] |
+| **reconcileIssues** | `Set<number>` | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. | [Optional] |
+| **jql** | `string` | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+| **validateQuery** | `boolean` | Specifies whether to validate the JQL query or not. Default: true. | [Optional] [Defaults to `undefined`] |
+| **fields** | `Array<object>` | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. | [Optional] |
+| **expand** | `string` | A comma-separated list of the parameters to expand. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**SoftwareIssueResults**](SoftwareIssueResults.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issues, at the specified page of the results. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1550,6 +2175,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1601,7 +2229,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1615,7 +2243,106 @@ example().catch(console.error);
 | **200** | Returns the requested issues, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+| **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getIssuesWithoutEpicForBoardJSIS
+
+> SoftwareIssueResults getIssuesWithoutEpicForBoardJSIS(boardId, nextPageToken, maxResults, reconcileIssues, jql, validateQuery, fields, expand)
+
+Get issues without epic for board (enhanced)
+
+Returns all issues that do not belong to any epic on a board, for a given board ID. Result pagination is token based, using &#x60;nextPageToken&#x60; and &#x60;maxResults&#x60;. This only includes issues that the user has permission to view. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BoardApi,
+} from 'jira-software-cloud-api';
+import type { GetIssuesWithoutEpicForBoardJSISRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new BoardApi(config);
+
+  const body = {
+    // number | The ID of the board that contains the requested issues.
+    boardId: 789,
+    // string | The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.  Note: The `nextPageToken` field is **not included** in the response for the last page, indicating there is no next page. (optional)
+    nextPageToken: nextPageToken_example,
+    // number | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. (optional)
+    maxResults: 56,
+    // Set<number> | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. (optional)
+    reconcileIssues: ...,
+    // string | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+    // boolean | Specifies whether to validate the JQL query or not. Default: true. (optional)
+    validateQuery: true,
+    // Array<object> | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. (optional)
+    fields: ...,
+    // string | A comma-separated list of the parameters to expand. (optional)
+    expand: expand_example,
+  } satisfies GetIssuesWithoutEpicForBoardJSISRequest;
+
+  try {
+    const data = await api.getIssuesWithoutEpicForBoardJSIS(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **boardId** | `number` | The ID of the board that contains the requested issues. | [Defaults to `undefined`] |
+| **nextPageToken** | `string` | The token for a page to fetch that is not the first page. The first page has a &#x60;nextPageToken&#x60; of &#x60;null&#x60;. Use the &#x60;nextPageToken&#x60; to fetch the next page of issues.  Note: The &#x60;nextPageToken&#x60; field is **not included** in the response for the last page, indicating there is no next page. | [Optional] [Defaults to `undefined`] |
+| **maxResults** | `number` | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. | [Optional] [Defaults to `undefined`] |
+| **reconcileIssues** | `Set<number>` | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. | [Optional] |
+| **jql** | `string` | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+| **validateQuery** | `boolean` | Specifies whether to validate the JQL query or not. Default: true. | [Optional] [Defaults to `undefined`] |
+| **fields** | `Array<object>` | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. | [Optional] |
+| **expand** | `string` | A comma-separated list of the parameters to expand. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**SoftwareIssueResults**](SoftwareIssueResults.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issues, at the specified page of the results. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1643,6 +2370,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1682,7 +2412,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1696,7 +2426,7 @@ example().catch(console.error);
 | **200** | Returns the board\&#39;s projects, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if board does not exist or the user does not have permission to access it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1724,6 +2454,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1757,7 +2490,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1771,7 +2504,7 @@ example().catch(console.error);
 | **200** | Returns the board\&#39;s projects, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if board does not exist or the user does not have permission to access it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1799,6 +2532,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1835,7 +2571,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1848,7 +2584,7 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Returns the requested quick filter. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the board with given id does not exist or if the quick filter with given id is not found or the user doesn\&#39;t have permissions to see it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1876,6 +2612,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1909,7 +2648,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1947,6 +2686,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -1983,7 +2725,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -1998,7 +2740,7 @@ example().catch(console.error);
 | **207** | Returns the list of issue with status of rank operation. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if user does not a have valid license or does not have permission to assign issues. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to assign issues. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -2025,6 +2767,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -2064,7 +2809,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -2106,6 +2851,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BoardApi(config);
 
@@ -2142,7 +2890,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 

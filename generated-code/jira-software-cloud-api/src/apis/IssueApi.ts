@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  EstimateIssueForBoardRequest,
-  MoveIssuesToBacklogForBoardRequest,
+    EstimateIssueForBoardRequest,
+    MoveIssuesToBacklogForBoardRequest,
 } from '../models/index';
 
 export interface EstimateIssueForBoardOperationRequest {
@@ -79,9 +78,12 @@ export class IssueApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:issue:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`;
-        urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
+        urlPath = urlPath.replace('{issueIdOrKey}', encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
         return {
             path: urlPath,
@@ -143,9 +145,12 @@ export class IssueApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:issue:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/issue/{issueIdOrKey}`;
-        urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
+        urlPath = urlPath.replace('{issueIdOrKey}', encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
         return {
             path: urlPath,
@@ -198,9 +203,12 @@ export class IssueApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:issue:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`;
-        urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
+        urlPath = urlPath.replace('{issueIdOrKey}', encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
         return {
             path: urlPath,
@@ -251,6 +259,9 @@ export class IssueApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:issue:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/issue/rank`;
 

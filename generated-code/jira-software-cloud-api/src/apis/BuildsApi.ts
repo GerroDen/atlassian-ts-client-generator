@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  BuildData,
-  ErrorMessage,
-  SubmitBuildsRequest,
-  SubmitBuildsResponse,
+    BuildData,
+    ErrorMessage,
+    SubmitBuildsRequest,
+    SubmitBuildsResponse,
 } from '../models/index';
 
 export interface DeleteBuildByKeyRequest {
@@ -91,10 +90,13 @@ export class BuildsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:build-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}`;
-        urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
-        urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
+        urlPath = urlPath.replace('{pipelineId}', encodeURIComponent(String(requestParameters['pipelineId'])));
+        urlPath = urlPath.replace('{buildNumber}', encodeURIComponent(String(requestParameters['buildNumber'])));
 
         return {
             path: urlPath,
@@ -151,6 +153,9 @@ export class BuildsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:build-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/builds/0.1/bulkByProperties`;
 
@@ -219,10 +224,13 @@ export class BuildsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:build-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}`;
-        urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
-        urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
+        urlPath = urlPath.replace('{pipelineId}', encodeURIComponent(String(requestParameters['pipelineId'])));
+        urlPath = urlPath.replace('{buildNumber}', encodeURIComponent(String(requestParameters['buildNumber'])));
 
         return {
             path: urlPath,
@@ -285,6 +293,9 @@ export class BuildsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:build-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/builds/0.1/bulk`;
 

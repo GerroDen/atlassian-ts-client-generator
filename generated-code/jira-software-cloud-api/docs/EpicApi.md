@@ -6,7 +6,9 @@ All URIs are relative to *https://your-domain.atlassian.net*
 |------------- | ------------- | -------------|
 | [**getEpic**](EpicApi.md#getepic) | **GET** /rest/agile/1.0/epic/{epicIdOrKey} | Get epic |
 | [**getIssuesForEpic**](EpicApi.md#getissuesforepic) | **GET** /rest/agile/1.0/epic/{epicIdOrKey}/issue | Get issues for epic |
+| [**getIssuesForEpicJSIS**](EpicApi.md#getissuesforepicjsis) | **GET** /rest/software/1.0/epic/{epicIdOrKey}/issue | Get issues for epic (enhanced) |
 | [**getIssuesWithoutEpic**](EpicApi.md#getissueswithoutepic) | **GET** /rest/agile/1.0/epic/none/issue | Get issues without epic |
+| [**getIssuesWithoutEpicJSIS**](EpicApi.md#getissueswithoutepicjsis) | **GET** /rest/software/1.0/epic/none/issue | Get issues without epic (enhanced) |
 | [**moveIssuesToEpic**](EpicApi.md#moveissuestoepic) | **POST** /rest/agile/1.0/epic/{epicIdOrKey}/issue | Move issues to epic |
 | [**partiallyUpdateEpic**](EpicApi.md#partiallyupdateepicoperation) | **POST** /rest/agile/1.0/epic/{epicIdOrKey} | Partially update epic |
 | [**rankEpics**](EpicApi.md#rankepicsoperation) | **PUT** /rest/agile/1.0/epic/{epicIdOrKey}/rank | Rank epics |
@@ -36,6 +38,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new EpicApi(config);
 
@@ -69,7 +74,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -82,7 +87,7 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Returns the requested epic. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the epic does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -110,6 +115,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new EpicApi(config);
 
@@ -161,7 +169,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -175,7 +183,106 @@ example().catch(console.error);
 | **200** | Returns the requested issues, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+| **404** | Returned if the epic does not exist or the user does not have permission to view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getIssuesForEpicJSIS
+
+> SoftwareIssueResults getIssuesForEpicJSIS(epicIdOrKey, nextPageToken, maxResults, reconcileIssues, jql, validateQuery, fields, expand)
+
+Get issues for epic (enhanced)
+
+Returns all issues that belong to the epic, for the given epic ID. Result pagination is token based, using &#x60;nextPageToken&#x60; and &#x60;maxResults&#x60;. This only includes issues that the user has permission to view. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a Team Managed project, do not use this operation. Instead, search for issues that belong to an epic by using the [Search for issues using JQL enhanced search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-jql-get) operation in the Jira platform REST API. Build your JQL query using the &#x60;parent&#x60; clause. For more information on the &#x60;parent&#x60; JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EpicApi,
+} from 'jira-software-cloud-api';
+import type { GetIssuesForEpicJSISRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new EpicApi(config);
+
+  const body = {
+    // string | The ID or key of the epic that contains the requested issues.
+    epicIdOrKey: epicIdOrKey_example,
+    // string | The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.  Note: The `nextPageToken` field is **not included** in the response for the last page, indicating there is no next page. (optional)
+    nextPageToken: nextPageToken_example,
+    // number | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. (optional)
+    maxResults: 56,
+    // Set<number> | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. (optional)
+    reconcileIssues: ...,
+    // string | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+    // boolean | Specifies whether to validate the JQL query or not. Default: true. (optional)
+    validateQuery: true,
+    // Array<object> | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. (optional)
+    fields: ...,
+    // string | A comma-separated list of the parameters to expand. (optional)
+    expand: expand_example,
+  } satisfies GetIssuesForEpicJSISRequest;
+
+  try {
+    const data = await api.getIssuesForEpicJSIS(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **epicIdOrKey** | `string` | The ID or key of the epic that contains the requested issues. | [Defaults to `undefined`] |
+| **nextPageToken** | `string` | The token for a page to fetch that is not the first page. The first page has a &#x60;nextPageToken&#x60; of &#x60;null&#x60;. Use the &#x60;nextPageToken&#x60; to fetch the next page of issues.  Note: The &#x60;nextPageToken&#x60; field is **not included** in the response for the last page, indicating there is no next page. | [Optional] [Defaults to `undefined`] |
+| **maxResults** | `number` | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. | [Optional] [Defaults to `undefined`] |
+| **reconcileIssues** | `Set<number>` | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. | [Optional] |
+| **jql** | `string` | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+| **validateQuery** | `boolean` | Specifies whether to validate the JQL query or not. Default: true. | [Optional] [Defaults to `undefined`] |
+| **fields** | `Array<object>` | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. | [Optional] |
+| **expand** | `string` | A comma-separated list of the parameters to expand. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**SoftwareIssueResults**](SoftwareIssueResults.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issues, at the specified page of the results. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the epic does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -203,6 +310,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new EpicApi(config);
 
@@ -251,7 +361,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -265,7 +375,102 @@ example().catch(console.error);
 | **200** | Returns the requested issues, at the specified page of the results. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getIssuesWithoutEpicJSIS
+
+> SoftwareIssueResults getIssuesWithoutEpicJSIS(nextPageToken, maxResults, reconcileIssues, jql, validateQuery, fields, expand)
+
+Get issues without epic (enhanced)
+
+Returns all issues that do not belong to any epic. Result pagination is token based, using &#x60;nextPageToken&#x60; and &#x60;maxResults&#x60;. This only includes issues that the user has permission to view. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a Team Managed project, do not use this operation. Instead, search for issues that don\&#39;t belong to an epic by using the [Search for issues using JQL enhanced search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-jql-get) operation in the Jira platform REST API. Build your JQL query using the &#x60;parent is empty&#x60; clause. For more information on the &#x60;parent&#x60; JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  EpicApi,
+} from 'jira-software-cloud-api';
+import type { GetIssuesWithoutEpicJSISRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new EpicApi(config);
+
+  const body = {
+    // string | The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.  Note: The `nextPageToken` field is **not included** in the response for the last page, indicating there is no next page. (optional)
+    nextPageToken: nextPageToken_example,
+    // number | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. (optional)
+    maxResults: 56,
+    // Set<number> | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. (optional)
+    reconcileIssues: ...,
+    // string | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+    // boolean | Specifies whether to validate the JQL query or not. Default: true. (optional)
+    validateQuery: true,
+    // Array<object> | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. (optional)
+    fields: ...,
+    // string | A comma-separated list of the parameters to expand. (optional)
+    expand: expand_example,
+  } satisfies GetIssuesWithoutEpicJSISRequest;
+
+  try {
+    const data = await api.getIssuesWithoutEpicJSIS(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **nextPageToken** | `string` | The token for a page to fetch that is not the first page. The first page has a &#x60;nextPageToken&#x60; of &#x60;null&#x60;. Use the &#x60;nextPageToken&#x60; to fetch the next page of issues.  Note: The &#x60;nextPageToken&#x60; field is **not included** in the response for the last page, indicating there is no next page. | [Optional] [Defaults to `undefined`] |
+| **maxResults** | `number` | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. | [Optional] [Defaults to `undefined`] |
+| **reconcileIssues** | `Set<number>` | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. | [Optional] |
+| **jql** | `string` | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+| **validateQuery** | `boolean` | Specifies whether to validate the JQL query or not. Default: true. | [Optional] [Defaults to `undefined`] |
+| **fields** | `Array<object>` | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. | [Optional] |
+| **expand** | `string` | A comma-separated list of the parameters to expand. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**SoftwareIssueResults**](SoftwareIssueResults.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issues, at the specified page of the results. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -292,6 +497,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new EpicApi(config);
 
@@ -328,7 +536,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -342,7 +550,7 @@ example().catch(console.error);
 | **204** | Empty response is returned if operation was successful. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license or does not have edit issue permission for all issues to assign or for the epic. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have edit issue permission for all issues to assign or for the epic. |  -  |
 | **404** | Returned if the epic does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -370,6 +578,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new EpicApi(config);
 
@@ -406,7 +617,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -420,7 +631,7 @@ example().catch(console.error);
 | **200** | Updated epic |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license or edit issue permission. |  -  |
+| **403** | Returned if the user does not have a valid license or edit issue permission. |  -  |
 | **404** | Returned if the epic does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -448,6 +659,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new EpicApi(config);
 
@@ -484,7 +698,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -498,7 +712,7 @@ example().catch(console.error);
 | **204** | Empty response is returned if operation was successful. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if user does not a have valid license or does not have permission to rank. To rank issues user have to have schedule issue permission for epics that they want to rank. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to rank. To rank issues user has to have schedule issue permission for epics that they want to rank. |  -  |
 | **404** | Returned when the given epics in the path parameter or the request body do not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -526,6 +740,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new EpicApi(config);
 
@@ -559,7 +776,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -573,7 +790,7 @@ example().catch(console.error);
 | **204** | Empty response is returned if operation was successful. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license or does not have permission to assign issues. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to assign issues. |  -  |
 | **404** | Returned if the epic does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

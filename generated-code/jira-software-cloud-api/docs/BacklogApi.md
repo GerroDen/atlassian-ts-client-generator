@@ -31,6 +31,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BacklogApi(config);
 
@@ -64,7 +67,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -78,7 +81,7 @@ example().catch(console.error);
 | **204** | Empty response is returned if operation was successful. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if user does not a have valid license or does not have permission to assign issues. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to assign issues. |  -  |
 | **404** | Returned if sprint does not exist or the user cannot view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -106,6 +109,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BacklogApi(config);
 
@@ -142,7 +148,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -157,7 +163,7 @@ example().catch(console.error);
 | **207** | Returns the list of issue with status of rank operation. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if user does not a have valid license or does not have permission to assign issues. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to assign issues. |  -  |
 | **404** | Returned if sprint does not exist or the user cannot view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

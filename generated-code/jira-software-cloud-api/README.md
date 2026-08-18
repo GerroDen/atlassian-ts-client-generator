@@ -25,6 +25,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new BacklogApi(config);
 
@@ -63,18 +66,25 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *BoardApi* | [**getAllQuickFilters**](docs/BoardApi.md#getallquickfilters) | **GET** /rest/agile/1.0/board/{boardId}/quickfilter | Get all quick filters
 *BoardApi* | [**getAllSprints**](docs/BoardApi.md#getallsprints) | **GET** /rest/agile/1.0/board/{boardId}/sprint | Get all sprints
 *BoardApi* | [**getAllVersions**](docs/BoardApi.md#getallversions) | **GET** /rest/agile/1.0/board/{boardId}/version | Get all versions
+*BoardApi* | [**getApproximateIssueCountForBacklog**](docs/BoardApi.md#getapproximateissuecountforbacklog) | **GET** /rest/software/1.0/board/{boardId}/backlog/approximate-count | Get approximate issue count for backlog
+*BoardApi* | [**getApproximateIssueCountForBoard**](docs/BoardApi.md#getapproximateissuecountforboard) | **GET** /rest/software/1.0/board/{boardId}/issue/approximate-count | Get approximate issue count for board
 *BoardApi* | [**getBoard**](docs/BoardApi.md#getboard) | **GET** /rest/agile/1.0/board/{boardId} | Get board
 *BoardApi* | [**getBoardByFilterId**](docs/BoardApi.md#getboardbyfilterid) | **GET** /rest/agile/1.0/board/filter/{filterId} | Get board by filter id
 *BoardApi* | [**getBoardIssuesForEpic**](docs/BoardApi.md#getboardissuesforepic) | **GET** /rest/agile/1.0/board/{boardId}/epic/{epicId}/issue | Get board issues for epic
+*BoardApi* | [**getBoardIssuesForEpicJSIS**](docs/BoardApi.md#getboardissuesforepicjsis) | **GET** /rest/software/1.0/board/{boardId}/epic/{epicId}/issue | Get board issues for epic (enhanced)
 *BoardApi* | [**getBoardIssuesForSprint**](docs/BoardApi.md#getboardissuesforsprint) | **GET** /rest/agile/1.0/board/{boardId}/sprint/{sprintId}/issue | Get board issues for sprint
+*BoardApi* | [**getBoardIssuesForSprintJSIS**](docs/BoardApi.md#getboardissuesforsprintjsis) | **GET** /rest/software/1.0/board/{boardId}/sprint/{sprintId}/issue | Get board issues for sprint (enhanced)
 *BoardApi* | [**getBoardProperty**](docs/BoardApi.md#getboardproperty) | **GET** /rest/agile/1.0/board/{boardId}/properties/{propertyKey} | Get board property
 *BoardApi* | [**getBoardPropertyKeys**](docs/BoardApi.md#getboardpropertykeys) | **GET** /rest/agile/1.0/board/{boardId}/properties | Get board property keys
 *BoardApi* | [**getConfiguration**](docs/BoardApi.md#getconfiguration) | **GET** /rest/agile/1.0/board/{boardId}/configuration | Get configuration
 *BoardApi* | [**getEpics**](docs/BoardApi.md#getepics) | **GET** /rest/agile/1.0/board/{boardId}/epic | Get epics
 *BoardApi* | [**getFeaturesForBoard**](docs/BoardApi.md#getfeaturesforboard) | **GET** /rest/agile/1.0/board/{boardId}/features | Get features for board
 *BoardApi* | [**getIssuesForBacklog**](docs/BoardApi.md#getissuesforbacklog) | **GET** /rest/agile/1.0/board/{boardId}/backlog | Get issues for backlog
+*BoardApi* | [**getIssuesForBacklogJSIS**](docs/BoardApi.md#getissuesforbacklogjsis) | **GET** /rest/software/1.0/board/{boardId}/backlog | Get issues for backlog (enhanced)
 *BoardApi* | [**getIssuesForBoard**](docs/BoardApi.md#getissuesforboard) | **GET** /rest/agile/1.0/board/{boardId}/issue | Get issues for board
+*BoardApi* | [**getIssuesForBoardJSIS**](docs/BoardApi.md#getissuesforboardjsis) | **GET** /rest/software/1.0/board/{boardId}/issue | Get issues for board (enhanced)
 *BoardApi* | [**getIssuesWithoutEpicForBoard**](docs/BoardApi.md#getissueswithoutepicforboard) | **GET** /rest/agile/1.0/board/{boardId}/epic/none/issue | Get issues without epic for board
+*BoardApi* | [**getIssuesWithoutEpicForBoardJSIS**](docs/BoardApi.md#getissueswithoutepicforboardjsis) | **GET** /rest/software/1.0/board/{boardId}/epic/none/issue | Get issues without epic for board (enhanced)
 *BoardApi* | [**getProjects**](docs/BoardApi.md#getprojects) | **GET** /rest/agile/1.0/board/{boardId}/project | Get projects
 *BoardApi* | [**getProjectsFull**](docs/BoardApi.md#getprojectsfull) | **GET** /rest/agile/1.0/board/{boardId}/project/full | Get projects full
 *BoardApi* | [**getQuickFilter**](docs/BoardApi.md#getquickfilter) | **GET** /rest/agile/1.0/board/{boardId}/quickfilter/{quickFilterId} | Get quick filter
@@ -103,7 +113,9 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *DevelopmentInformationApi* | [**storeDevelopmentInformation**](docs/DevelopmentInformationApi.md#storedevelopmentinformation) | **POST** /rest/devinfo/0.10/bulk | Store development information
 *EpicApi* | [**getEpic**](docs/EpicApi.md#getepic) | **GET** /rest/agile/1.0/epic/{epicIdOrKey} | Get epic
 *EpicApi* | [**getIssuesForEpic**](docs/EpicApi.md#getissuesforepic) | **GET** /rest/agile/1.0/epic/{epicIdOrKey}/issue | Get issues for epic
+*EpicApi* | [**getIssuesForEpicJSIS**](docs/EpicApi.md#getissuesforepicjsis) | **GET** /rest/software/1.0/epic/{epicIdOrKey}/issue | Get issues for epic (enhanced)
 *EpicApi* | [**getIssuesWithoutEpic**](docs/EpicApi.md#getissueswithoutepic) | **GET** /rest/agile/1.0/epic/none/issue | Get issues without epic
+*EpicApi* | [**getIssuesWithoutEpicJSIS**](docs/EpicApi.md#getissueswithoutepicjsis) | **GET** /rest/software/1.0/epic/none/issue | Get issues without epic (enhanced)
 *EpicApi* | [**moveIssuesToEpic**](docs/EpicApi.md#moveissuestoepic) | **POST** /rest/agile/1.0/epic/{epicIdOrKey}/issue | Move issues to epic
 *EpicApi* | [**partiallyUpdateEpic**](docs/EpicApi.md#partiallyupdateepicoperation) | **POST** /rest/agile/1.0/epic/{epicIdOrKey} | Partially update epic
 *EpicApi* | [**rankEpics**](docs/EpicApi.md#rankepicsoperation) | **PUT** /rest/agile/1.0/epic/{epicIdOrKey}/rank | Rank epics
@@ -141,6 +153,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *SprintApi* | [**deleteProperty**](docs/SprintApi.md#deleteproperty) | **DELETE** /rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey} | Delete property
 *SprintApi* | [**deleteSprint**](docs/SprintApi.md#deletesprint) | **DELETE** /rest/agile/1.0/sprint/{sprintId} | Delete sprint
 *SprintApi* | [**getIssuesForSprint**](docs/SprintApi.md#getissuesforsprint) | **GET** /rest/agile/1.0/sprint/{sprintId}/issue | Get issues for sprint
+*SprintApi* | [**getIssuesForSprintJSIS**](docs/SprintApi.md#getissuesforsprintjsis) | **GET** /rest/software/1.0/sprint/{sprintId}/issue | Get issues for sprint (enhanced)
 *SprintApi* | [**getPropertiesKeys**](docs/SprintApi.md#getpropertieskeys) | **GET** /rest/agile/1.0/sprint/{sprintId}/properties | Get properties keys
 *SprintApi* | [**getProperty**](docs/SprintApi.md#getproperty) | **GET** /rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey} | Get property
 *SprintApi* | [**getSprint**](docs/SprintApi.md#getsprint) | **GET** /rest/agile/1.0/sprint/{sprintId} | Get sprint
@@ -189,7 +202,6 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [CreateBoardRequestLocation](docs/CreateBoardRequestLocation.md)
 - [CreateSprintRequest](docs/CreateSprintRequest.md)
 - [DeploymentData](docs/DeploymentData.md)
-- [DeploymentData1](docs/DeploymentData1.md)
 - [DeploymentDataAssociationsInner](docs/DeploymentDataAssociationsInner.md)
 - [DeploymentKey](docs/DeploymentKey.md)
 - [DevInformation](docs/DevInformation.md)
@@ -269,6 +281,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls](docs/IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls.md)
 - [IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory](docs/IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory.md)
 - [IssueBeanTransitionsInnerToAllOfStatusCategory](docs/IssueBeanTransitionsInnerToAllOfStatusCategory.md)
+- [IssueCountBean](docs/IssueCountBean.md)
 - [IssueIdOrKeysAssociation](docs/IssueIdOrKeysAssociation.md)
 - [IssueIdOrKeysAssociation1](docs/IssueIdOrKeysAssociation1.md)
 - [IssueRankRequestBean](docs/IssueRankRequestBean.md)
@@ -296,11 +309,6 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [ProjectDetails](docs/ProjectDetails.md)
 - [ProviderMetadata](docs/ProviderMetadata.md)
 - [ProviderMetadata1](docs/ProviderMetadata1.md)
-- [ProviderMetadata2](docs/ProviderMetadata2.md)
-- [ProviderMetadata3](docs/ProviderMetadata3.md)
-- [ProviderMetadata4](docs/ProviderMetadata4.md)
-- [ProviderMetadata5](docs/ProviderMetadata5.md)
-- [ProviderMetadata6](docs/ProviderMetadata6.md)
 - [PullRequest](docs/PullRequest.md)
 - [QuickFilterBean](docs/QuickFilterBean.md)
 - [RankEpicsRequest](docs/RankEpicsRequest.md)
@@ -323,6 +331,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [SecurityWorkspaceResponse](docs/SecurityWorkspaceResponse.md)
 - [ServiceIdOrKeysAssociation](docs/ServiceIdOrKeysAssociation.md)
 - [SimpleLink](docs/SimpleLink.md)
+- [SoftwareIssueResults](docs/SoftwareIssueResults.md)
 - [SprintBean](docs/SprintBean.md)
 - [SprintCreateBean](docs/SprintCreateBean.md)
 - [SprintSwapBean](docs/SprintSwapBean.md)
@@ -420,6 +429,9 @@ Authentication schemes defined for the API:
   - `read:remote-link-info:jira`: Read remote link information
   - `write:remote-link-info:jira`: Write remote link information
   - `delete:remote-link-info:jira`: Delete remote link information
+  - `read:security:jira`: Read security information
+  - `write:security:jira`: Write security information
+  - `delete:security:jira`: Delete security information
 <a id="basicAuth"></a>
 #### basicAuth
 
@@ -434,7 +446,7 @@ and is automatically generated by the
 
 - API version: `1001.0.0`
 - Package version: `1001.0.0`
-- Generator version: `7.21.0`
+- Generator version: `7.24.0`
 - Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`
 
 The generated npm module supports the following:

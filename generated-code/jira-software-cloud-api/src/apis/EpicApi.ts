@@ -12,12 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  MoveIssuesToBacklogRequest,
-  PartiallyUpdateEpicRequest,
-  RankEpicsRequest,
+    MoveIssuesToBacklogRequest,
+    PartiallyUpdateEpicRequest,
+    RankEpicsRequest,
+    SoftwareIssueResults,
 } from '../models/index';
 
 export interface GetEpicRequest {
@@ -34,9 +34,30 @@ export interface GetIssuesForEpicRequest {
     expand?: string;
 }
 
+export interface GetIssuesForEpicJSISRequest {
+    epicIdOrKey: string;
+    nextPageToken?: string;
+    maxResults?: number;
+    reconcileIssues?: Set<number>;
+    jql?: string;
+    validateQuery?: boolean;
+    fields?: Array<object>;
+    expand?: string;
+}
+
 export interface GetIssuesWithoutEpicRequest {
     startAt?: number;
     maxResults?: number;
+    jql?: string;
+    validateQuery?: boolean;
+    fields?: Array<object>;
+    expand?: string;
+}
+
+export interface GetIssuesWithoutEpicJSISRequest {
+    nextPageToken?: string;
+    maxResults?: number;
+    reconcileIssues?: Set<number>;
     jql?: string;
     validateQuery?: boolean;
     fields?: Array<object>;
@@ -87,9 +108,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}`;
-        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+        urlPath = urlPath.replace('{epicIdOrKey}', encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
         return {
             path: urlPath,
@@ -120,6 +144,7 @@ export class EpicApi extends runtime.BaseAPI {
 
     /**
      * Creates request options for getIssuesForEpic without sending the request
+     * @deprecated
      */
     async getIssuesForEpicRequestOpts(requestParameters: GetIssuesForEpicRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['epicIdOrKey'] == null) {
@@ -162,9 +187,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}/issue`;
-        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+        urlPath = urlPath.replace('{epicIdOrKey}', encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
         return {
             path: urlPath,
@@ -177,6 +205,7 @@ export class EpicApi extends runtime.BaseAPI {
     /**
      * Returns all issues that belong to the epic, for the given epic ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a next-gen project, do not use this operation. Instead, search for issues that belong to an epic by using the [Search for issues using JQL](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-get) operation in the Jira platform REST API. Build your JQL query using the `parent` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
      * Get issues for epic
+     * @deprecated
      */
     async getIssuesForEpicRaw(requestParameters: GetIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const requestOptions = await this.getIssuesForEpicRequestOpts(requestParameters);
@@ -188,13 +217,98 @@ export class EpicApi extends runtime.BaseAPI {
     /**
      * Returns all issues that belong to the epic, for the given epic ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a next-gen project, do not use this operation. Instead, search for issues that belong to an epic by using the [Search for issues using JQL](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-get) operation in the Jira platform REST API. Build your JQL query using the `parent` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
      * Get issues for epic
+     * @deprecated
      */
     async getIssuesForEpic(requestParameters: GetIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getIssuesForEpicRaw(requestParameters, initOverrides);
     }
 
     /**
+     * Creates request options for getIssuesForEpicJSIS without sending the request
+     */
+    async getIssuesForEpicJSISRequestOpts(requestParameters: GetIssuesForEpicJSISRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['epicIdOrKey'] == null) {
+            throw new runtime.RequiredError(
+                'epicIdOrKey',
+                'Required parameter "epicIdOrKey" was null or undefined when calling getIssuesForEpicJSIS().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['nextPageToken'] != null) {
+            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        }
+
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
+        }
+
+        if (requestParameters['reconcileIssues'] != null) {
+            queryParameters['reconcileIssues'] = requestParameters['reconcileIssues'];
+        }
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
+        }
+
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
+        }
+
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/epic/{epicIdOrKey}/issue`;
+        urlPath = urlPath.replace('{epicIdOrKey}', encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns all issues that belong to the epic, for the given epic ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a Team Managed project, do not use this operation. Instead, search for issues that belong to an epic by using the [Search for issues using JQL enhanced search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-jql-get) operation in the Jira platform REST API. Build your JQL query using the `parent` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
+     * Get issues for epic (enhanced)
+     */
+    async getIssuesForEpicJSISRaw(requestParameters: GetIssuesForEpicJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareIssueResults>> {
+        const requestOptions = await this.getIssuesForEpicJSISRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all issues that belong to the epic, for the given epic ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a Team Managed project, do not use this operation. Instead, search for issues that belong to an epic by using the [Search for issues using JQL enhanced search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-jql-get) operation in the Jira platform REST API. Build your JQL query using the `parent` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
+     * Get issues for epic (enhanced)
+     */
+    async getIssuesForEpicJSIS(requestParameters: GetIssuesForEpicJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SoftwareIssueResults> {
+        const response = await this.getIssuesForEpicJSISRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for getIssuesWithoutEpic without sending the request
+     * @deprecated
      */
     async getIssuesWithoutEpicRequestOpts(requestParameters: GetIssuesWithoutEpicRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
@@ -230,6 +344,9 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/epic/none/issue`;
 
@@ -244,6 +361,7 @@ export class EpicApi extends runtime.BaseAPI {
     /**
      * Returns all issues that do not belong to any epic. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a next-gen project, do not use this operation. Instead, search for issues that don\'t belong to an epic by using the [Search for issues using JQL](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-get) operation in the Jira platform REST API. Build your JQL query using the `parent is empty` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
      * Get issues without epic
+     * @deprecated
      */
     async getIssuesWithoutEpicRaw(requestParameters: GetIssuesWithoutEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const requestOptions = await this.getIssuesWithoutEpicRequestOpts(requestParameters);
@@ -255,9 +373,85 @@ export class EpicApi extends runtime.BaseAPI {
     /**
      * Returns all issues that do not belong to any epic. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a next-gen project, do not use this operation. Instead, search for issues that don\'t belong to an epic by using the [Search for issues using JQL](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-get) operation in the Jira platform REST API. Build your JQL query using the `parent is empty` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
      * Get issues without epic
+     * @deprecated
      */
     async getIssuesWithoutEpic(requestParameters: GetIssuesWithoutEpicRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getIssuesWithoutEpicRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for getIssuesWithoutEpicJSIS without sending the request
+     */
+    async getIssuesWithoutEpicJSISRequestOpts(requestParameters: GetIssuesWithoutEpicJSISRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['nextPageToken'] != null) {
+            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        }
+
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
+        }
+
+        if (requestParameters['reconcileIssues'] != null) {
+            queryParameters['reconcileIssues'] = requestParameters['reconcileIssues'];
+        }
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
+        }
+
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
+        }
+
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/epic/none/issue`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns all issues that do not belong to any epic. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a Team Managed project, do not use this operation. Instead, search for issues that don\'t belong to an epic by using the [Search for issues using JQL enhanced search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-jql-get) operation in the Jira platform REST API. Build your JQL query using the `parent is empty` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
+     * Get issues without epic (enhanced)
+     */
+    async getIssuesWithoutEpicJSISRaw(requestParameters: GetIssuesWithoutEpicJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareIssueResults>> {
+        const requestOptions = await this.getIssuesWithoutEpicJSISRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all issues that do not belong to any epic. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a Team Managed project, do not use this operation. Instead, search for issues that don\'t belong to an epic by using the [Search for issues using JQL enhanced search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-jql-get) operation in the Jira platform REST API. Build your JQL query using the `parent is empty` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
+     * Get issues without epic (enhanced)
+     */
+    async getIssuesWithoutEpicJSIS(requestParameters: GetIssuesWithoutEpicJSISRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SoftwareIssueResults> {
+        const response = await this.getIssuesWithoutEpicJSISRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -289,9 +483,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}/issue`;
-        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+        urlPath = urlPath.replace('{epicIdOrKey}', encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
         return {
             path: urlPath,
@@ -350,9 +547,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}`;
-        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+        urlPath = urlPath.replace('{epicIdOrKey}', encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
         return {
             path: urlPath,
@@ -411,9 +611,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}/rank`;
-        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+        urlPath = urlPath.replace('{epicIdOrKey}', encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
         return {
             path: urlPath,
@@ -465,6 +668,9 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:epic:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/epic/none/issue`;
 

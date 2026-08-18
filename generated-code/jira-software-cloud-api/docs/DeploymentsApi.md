@@ -34,6 +34,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new DeploymentsApi(config);
 
@@ -79,7 +82,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -122,6 +125,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new DeploymentsApi(config);
 
@@ -158,7 +164,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -182,7 +188,7 @@ example().catch(console.error);
 
 ## getDeploymentByKey
 
-> DeploymentData1 getDeploymentByKey(authorization, pipelineId, environmentId, deploymentSequenceNumber)
+> DeploymentData getDeploymentByKey(authorization, pipelineId, environmentId, deploymentSequenceNumber)
 
 Get a deployment by key
 
@@ -202,6 +208,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new DeploymentsApi(config);
 
@@ -240,11 +249,11 @@ example().catch(console.error);
 
 ### Return type
 
-[**DeploymentData1**](DeploymentData1.md)
+[**DeploymentData**](DeploymentData.md)
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -288,6 +297,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new DeploymentsApi(config);
 
@@ -327,7 +339,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -371,6 +383,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new DeploymentsApi(config);
 
@@ -407,7 +422,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 

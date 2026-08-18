@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  RemoteLinkData,
-  SubmitRemoteLinks202Response,
-  SubmitRemoteLinks202ResponseRejectedRemoteLinksValueInner,
-  SubmitRemoteLinksRequest,
+    RemoteLinkData,
+    SubmitRemoteLinks202Response,
+    SubmitRemoteLinks202ResponseRejectedRemoteLinksValueInner,
+    SubmitRemoteLinksRequest,
 } from '../models/index';
 
 export interface DeleteRemoteLinkByIdRequest {
@@ -83,9 +82,12 @@ export class RemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:remote-link-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/remotelinks/1.0/remotelink/{remoteLinkId}`;
-        urlPath = urlPath.replace(`{${"remoteLinkId"}}`, encodeURIComponent(String(requestParameters['remoteLinkId'])));
+        urlPath = urlPath.replace('{remoteLinkId}', encodeURIComponent(String(requestParameters['remoteLinkId'])));
 
         return {
             path: urlPath,
@@ -146,6 +148,9 @@ export class RemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:remote-link-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/remotelinks/1.0/bulkByProperties`;
 
@@ -207,9 +212,12 @@ export class RemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:remote-link-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/remotelinks/1.0/remotelink/{remoteLinkId}`;
-        urlPath = urlPath.replace(`{${"remoteLinkId"}}`, encodeURIComponent(String(requestParameters['remoteLinkId'])));
+        urlPath = urlPath.replace('{remoteLinkId}', encodeURIComponent(String(requestParameters['remoteLinkId'])));
 
         return {
             path: urlPath,
@@ -272,6 +280,9 @@ export class RemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:remote-link-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/remotelinks/1.0/bulk`;
 

@@ -12,13 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreateSprintRequest,
-  MoveIssuesToBacklogForBoardRequest,
-  SwapSprintRequest,
-  UpdateSprintRequest,
+    CreateSprintRequest,
+    MoveIssuesToBacklogForBoardRequest,
+    SoftwareIssueResults,
+    SwapSprintRequest,
+    UpdateSprintRequest,
 } from '../models/index';
 
 export interface CreateSprintOperationRequest {
@@ -38,6 +38,17 @@ export interface GetIssuesForSprintRequest {
     sprintId: number;
     startAt?: number;
     maxResults?: number;
+    jql?: string;
+    validateQuery?: boolean;
+    fields?: Array<object>;
+    expand?: string;
+}
+
+export interface GetIssuesForSprintJSISRequest {
+    sprintId: number;
+    nextPageToken?: string;
+    maxResults?: number;
+    reconcileIssues?: Set<number>;
     jql?: string;
     validateQuery?: boolean;
     fields?: Array<object>;
@@ -110,6 +121,9 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint`;
 
@@ -168,10 +182,13 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
-        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{propertyKey}', encodeURIComponent(String(requestParameters['propertyKey'])));
 
         return {
             path: urlPath,
@@ -220,9 +237,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
 
         return {
             path: urlPath,
@@ -253,6 +273,7 @@ export class SprintApi extends runtime.BaseAPI {
 
     /**
      * Creates request options for getIssuesForSprint without sending the request
+     * @deprecated
      */
     async getIssuesForSprintRequestOpts(requestParameters: GetIssuesForSprintRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
@@ -295,9 +316,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/issue`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
 
         return {
             path: urlPath,
@@ -310,6 +334,7 @@ export class SprintApi extends runtime.BaseAPI {
     /**
      * Returns all issues in a sprint, for a given sprint ID. This only includes issues that the user has permission to view. By default, the returned issues are ordered by rank.
      * Get issues for sprint
+     * @deprecated
      */
     async getIssuesForSprintRaw(requestParameters: GetIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const requestOptions = await this.getIssuesForSprintRequestOpts(requestParameters);
@@ -321,9 +346,93 @@ export class SprintApi extends runtime.BaseAPI {
     /**
      * Returns all issues in a sprint, for a given sprint ID. This only includes issues that the user has permission to view. By default, the returned issues are ordered by rank.
      * Get issues for sprint
+     * @deprecated
      */
     async getIssuesForSprint(requestParameters: GetIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getIssuesForSprintRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for getIssuesForSprintJSIS without sending the request
+     */
+    async getIssuesForSprintJSISRequestOpts(requestParameters: GetIssuesForSprintJSISRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling getIssuesForSprintJSIS().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['nextPageToken'] != null) {
+            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        }
+
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
+        }
+
+        if (requestParameters['reconcileIssues'] != null) {
+            queryParameters['reconcileIssues'] = requestParameters['reconcileIssues'];
+        }
+
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
+        }
+
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
+        }
+
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
+        }
+
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+
+        let urlPath = `/rest/software/1.0/sprint/{sprintId}/issue`;
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns all issues in a sprint, for a given sprint ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues for sprint (enhanced)
+     */
+    async getIssuesForSprintJSISRaw(requestParameters: GetIssuesForSprintJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SoftwareIssueResults>> {
+        const requestOptions = await this.getIssuesForSprintJSISRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all issues in a sprint, for a given sprint ID. Result pagination is token based, using `nextPageToken` and `maxResults`. This only includes issues that the user has permission to view. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues for sprint (enhanced)
+     */
+    async getIssuesForSprintJSIS(requestParameters: GetIssuesForSprintJSISRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SoftwareIssueResults> {
+        const response = await this.getIssuesForSprintJSISRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -346,9 +455,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/properties`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
 
         return {
             path: urlPath,
@@ -404,10 +516,13 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
-        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{propertyKey}', encodeURIComponent(String(requestParameters['propertyKey'])));
 
         return {
             path: urlPath,
@@ -456,9 +571,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
 
         return {
             path: urlPath,
@@ -516,9 +634,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/issue`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
 
         return {
             path: urlPath,
@@ -577,9 +698,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
 
         return {
             path: urlPath,
@@ -627,10 +751,10 @@ export class SprintApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['body'] == null) {
+        if (requestParameters['body'] === undefined) {
             throw new runtime.RequiredError(
                 'body',
-                'Required parameter "body" was null or undefined when calling setProperty().'
+                'Required parameter "body" was undefined when calling setProperty().'
             );
         }
 
@@ -645,10 +769,13 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
-        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{propertyKey}', encodeURIComponent(String(requestParameters['propertyKey'])));
 
         return {
             path: urlPath,
@@ -712,9 +839,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/swap`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
 
         return {
             path: urlPath,
@@ -773,9 +903,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
-        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace('{sprintId}', encodeURIComponent(String(requestParameters['sprintId'])));
 
         return {
             path: urlPath,

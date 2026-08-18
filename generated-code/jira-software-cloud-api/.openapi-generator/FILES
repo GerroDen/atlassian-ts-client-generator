@@ -41,7 +41,6 @@ docs/CreateBoardRequest.md
 docs/CreateBoardRequestLocation.md
 docs/CreateSprintRequest.md
 docs/DeploymentData.md
-docs/DeploymentData1.md
 docs/DeploymentDataAssociationsInner.md
 docs/DeploymentKey.md
 docs/DeploymentsApi.md
@@ -127,6 +126,7 @@ docs/IssueBeanTransitionsInnerToAllOfScopeAllOfProject.md
 docs/IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls.md
 docs/IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory.md
 docs/IssueBeanTransitionsInnerToAllOfStatusCategory.md
+docs/IssueCountBean.md
 docs/IssueIdOrKeysAssociation.md
 docs/IssueIdOrKeysAssociation1.md
 docs/IssueRankRequestBean.md
@@ -155,11 +155,6 @@ docs/Pipeline.md
 docs/ProjectDetails.md
 docs/ProviderMetadata.md
 docs/ProviderMetadata1.md
-docs/ProviderMetadata2.md
-docs/ProviderMetadata3.md
-docs/ProviderMetadata4.md
-docs/ProviderMetadata5.md
-docs/ProviderMetadata6.md
 docs/PullRequest.md
 docs/QuickFilterBean.md
 docs/RankEpicsRequest.md
@@ -184,6 +179,7 @@ docs/SecurityWorkspaceIds.md
 docs/SecurityWorkspaceResponse.md
 docs/ServiceIdOrKeysAssociation.md
 docs/SimpleLink.md
+docs/SoftwareIssueResults.md
 docs/SprintApi.md
 docs/SprintBean.md
 docs/SprintCreateBean.md

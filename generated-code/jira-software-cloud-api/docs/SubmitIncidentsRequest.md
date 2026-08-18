@@ -8,7 +8,7 @@ The payload used to submit (update / insert) Incident data.
 Name | Type
 ------------ | -------------
 `properties` | { [key: string]: string; }
-`providerMetadata` | [ProviderMetadata6](ProviderMetadata6.md)
+`providerMetadata` | [ProviderMetadata1](ProviderMetadata1.md)
 `incidents` | [Array&lt;Incident&gt;](Incident.md)
 `reviews` | [Array&lt;Review&gt;](Review.md)
 

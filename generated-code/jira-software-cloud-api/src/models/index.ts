@@ -79,25 +79,25 @@ export interface AvatarUrlsBean {
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    ["16x16"]?: string;
+    _16x16?: string;
     /**
      * The URL of the item's 24x24 pixel avatar.
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    ["24x24"]?: string;
+    _24x24?: string;
     /**
      * The URL of the item's 32x32 pixel avatar.
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    ["32x32"]?: string;
+    _32x32?: string;
     /**
      * The URL of the item's 48x48 pixel avatar.
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    ["48x48"]?: string;
+    _48x48?: string;
 }
 /**
  * Details about a board.
@@ -860,25 +860,25 @@ export interface ChangelogAuthorAllOfAvatarUrls {
      * @type {string}
      * @memberof ChangelogAuthorAllOfAvatarUrls
      */
-    ["16x16"]?: string;
+    _16x16?: string;
     /**
      * The URL of the item's 24x24 pixel avatar.
      * @type {string}
      * @memberof ChangelogAuthorAllOfAvatarUrls
      */
-    ["24x24"]?: string;
+    _24x24?: string;
     /**
      * The URL of the item's 32x32 pixel avatar.
      * @type {string}
      * @memberof ChangelogAuthorAllOfAvatarUrls
      */
-    ["32x32"]?: string;
+    _32x32?: string;
     /**
      * The URL of the item's 48x48 pixel avatar.
      * @type {string}
      * @memberof ChangelogAuthorAllOfAvatarUrls
      */
-    ["48x48"]?: string;
+    _48x48?: string;
 }
 /**
  * The history metadata associated with the changed.
@@ -1275,7 +1275,7 @@ export interface Commit {
      * @type {Set<CommitFlagsEnum>}
      * @memberof Commit
      */
-    flags?: Array<CommitFlagsEnum>;
+    flags?: Set<CommitFlagsEnum>;
     /**
      * The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.
      * @type {string}
@@ -1364,7 +1364,7 @@ export interface Commit1 {
      * @type {Set<Commit1FlagsEnum>}
      * @memberof Commit1
      */
-    flags?: Array<Commit1FlagsEnum>;
+    flags?: Set<Commit1FlagsEnum>;
     /**
      * The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.
      * @type {string}
@@ -1821,146 +1821,6 @@ export const DeploymentDataSchemaVersionEnum = {
     _10: '1.0'
 } as const;
 export type DeploymentDataSchemaVersionEnum = typeof DeploymentDataSchemaVersionEnum[keyof typeof DeploymentDataSchemaVersionEnum];
-
-/**
- * Data related to a specific deployment in a specific environment that the deployment is present in.
- * Must specify one of `issueKeys` or `associations`.
- * 
- * @export
- * @interface DeploymentData1
- */
-export interface DeploymentData1 {
-    /**
-     * This is the identifier for the deployment. It must be unique for the specified pipeline and environment. It must be a monotonically increasing number, as this is used to sequence the deployments.
-     * 
-     * @type {number}
-     * @memberof DeploymentData1
-     */
-    deploymentSequenceNumber: number;
-    /**
-     * A number used to apply an order to the updates to the deployment, as identified by the deploymentSequenceNumber, in the case of out-of-order receipt of update requests. It must be a monotonically increasing number. For example, epoch time could be one way to generate the updateSequenceNumber.
-     * 
-     * @type {number}
-     * @memberof DeploymentData1
-     */
-    updateSequenceNumber: number;
-    /**
-     * Deprecated. The Jira issue keys to associate the Deployment information with.
-     * Should replace this field with the "associations" field to associate Deployment information with issueKeys or other types of associations.
-     * 
-     * @type {Array<string>}
-     * @memberof DeploymentData1
-     * @deprecated
-     */
-    issueKeys?: Array<string>;
-    /**
-     * The entities to associate the Deployment information with.
-     * 
-     * @type {Array<DeploymentDataAssociationsInner>}
-     * @memberof DeploymentData1
-     */
-    associations?: Array<DeploymentDataAssociationsInner>;
-    /**
-     * The human-readable name for the deployment. Will be shown in the UI.
-     * 
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    displayName: string;
-    /**
-     * A URL users can use to link to this deployment, in this environment.
-     * 
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    url: string;
-    /**
-     * A short description of the deployment
-     * 
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    description: string;
-    /**
-     * The last-updated timestamp to present to the user as a summary of the state of the deployment.
-     * 
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    lastUpdated: string;
-    /**
-     * An (optional) additional label that may be displayed with deployment information. Can be used to display version information etc. for the deployment.
-     * 
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    label?: string;
-    /**
-     * The duration of the deployment (in seconds).
-     * 
-     * @type {number}
-     * @memberof DeploymentData1
-     */
-    duration?: number;
-    /**
-     * The state of the deployment
-     * 
-     * @type {DeploymentData1StateEnum}
-     * @memberof DeploymentData1
-     */
-    state: DeploymentData1StateEnum;
-    /**
-     * 
-     * @type {Pipeline}
-     * @memberof DeploymentData1
-     */
-    pipeline: Pipeline;
-    /**
-     * 
-     * @type {Environment}
-     * @memberof DeploymentData1
-     */
-    environment: Environment;
-    /**
-     * A list of commands to be actioned for this Deployment
-     * 
-     * @type {Array<Command>}
-     * @memberof DeploymentData1
-     */
-    commands?: Array<Command>;
-    /**
-     * The DeploymentData schema version used for this deployment data.
-     * 
-     * Placeholder to support potential schema changes in the future.
-     * 
-     * @type {DeploymentData1SchemaVersionEnum}
-     * @memberof DeploymentData1
-     */
-    schemaVersion?: DeploymentData1SchemaVersionEnum;
-}
-
-
-/**
- * @export
- */
-export const DeploymentData1StateEnum = {
-    Unknown: 'unknown',
-    Pending: 'pending',
-    InProgress: 'in_progress',
-    Cancelled: 'cancelled',
-    Failed: 'failed',
-    RolledBack: 'rolled_back',
-    Successful: 'successful'
-} as const;
-export type DeploymentData1StateEnum = typeof DeploymentData1StateEnum[keyof typeof DeploymentData1StateEnum];
-
-/**
- * @export
- */
-export const DeploymentData1SchemaVersionEnum = {
-    _10: '1.0'
-} as const;
-export type DeploymentData1SchemaVersionEnum = typeof DeploymentData1SchemaVersionEnum[keyof typeof DeploymentData1SchemaVersionEnum];
 
 /**
  * 
@@ -2924,7 +2784,7 @@ export interface FieldMetadata {
      * @type {{ [key: string]: any; }}
      * @memberof FieldMetadata
      */
-    readonly configuration?: { [key: string]: any; };
+    readonly _configuration?: { [key: string]: any; };
     /**
      * The default value of the field.
      * @type {any}
@@ -2979,7 +2839,7 @@ export interface FieldMetadataSchema {
      * @type {{ [key: string]: any; }}
      * @memberof FieldMetadataSchema
      */
-    readonly configuration?: { [key: string]: any; };
+    readonly _configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -3209,25 +3069,25 @@ export interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUr
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
      */
-    ["16x16"]?: string;
+    _16x16?: string;
     /**
      * The URL of the user's 24x24 pixel avatar.
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
      */
-    ["24x24"]?: string;
+    _24x24?: string;
     /**
      * The URL of the user's 32x32 pixel avatar.
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
      */
-    ["32x32"]?: string;
+    _32x32?: string;
     /**
      * The URL of the user's 48x48 pixel avatar.
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
      */
-    ["48x48"]?: string;
+    _48x48?: string;
 }
 /**
  * The container that the board is located in.
@@ -4530,19 +4390,19 @@ export interface IncludedFields {
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    actuallyIncluded?: Array<string>;
+    actuallyIncluded?: Set<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    excluded?: Array<string>;
+    excluded?: Set<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    included?: Array<string>;
+    included?: Set<string>;
 }
 /**
  * 
@@ -4555,7 +4415,7 @@ export interface IssueAssignRequestBean {
      * @type {Set<string>}
      * @memberof IssueAssignRequestBean
      */
-    issues?: Array<string>;
+    issues?: Set<string>;
 }
 /**
  * Details about an issue.
@@ -4758,7 +4618,7 @@ export interface IssueBeanEditmetaAllOfFieldsValue {
      * @type {{ [key: string]: any; }}
      * @memberof IssueBeanEditmetaAllOfFieldsValue
      */
-    readonly configuration?: { [key: string]: any; };
+    readonly _configuration?: { [key: string]: any; };
     /**
      * The default value of the field.
      * @type {any}
@@ -4813,19 +4673,19 @@ export interface IssueBeanFieldsToInclude {
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    actuallyIncluded?: Array<string>;
+    actuallyIncluded?: Set<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    excluded?: Array<string>;
+    excluded?: Set<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    included?: Array<string>;
+    included?: Set<string>;
 }
 /**
  * The schema of a field.
@@ -4838,7 +4698,7 @@ export interface IssueBeanSchemaValue {
      * @type {{ [key: string]: any; }}
      * @memberof IssueBeanSchemaValue
      */
-    readonly configuration?: { [key: string]: any; };
+    readonly _configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -5101,25 +4961,25 @@ export interface IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrl
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
      */
-    ["16x16"]?: string;
+    _16x16?: string;
     /**
      * The URL of the item's 24x24 pixel avatar.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
      */
-    ["24x24"]?: string;
+    _24x24?: string;
     /**
      * The URL of the item's 32x32 pixel avatar.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
      */
-    ["32x32"]?: string;
+    _32x32?: string;
     /**
      * The URL of the item's 48x48 pixel avatar.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
      */
-    ["48x48"]?: string;
+    _48x48?: string;
 }
 /**
  * The category the project belongs to.
@@ -5188,6 +5048,19 @@ export interface IssueBeanTransitionsInnerToAllOfStatusCategory {
      * @memberof IssueBeanTransitionsInnerToAllOfStatusCategory
      */
     readonly self?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IssueCountBean
+ */
+export interface IssueCountBean {
+    /**
+     * Number of issues.
+     * @type {number}
+     * @memberof IssueCountBean
+     */
+    count?: number;
 }
 /**
  * An association type referencing issues in Jira.
@@ -5387,7 +5260,7 @@ export interface JsonTypeBean {
      * @type {{ [key: string]: any; }}
      * @memberof JsonTypeBean
      */
-    readonly configuration?: { [key: string]: any; };
+    readonly _configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -5635,7 +5508,7 @@ export interface MoveIssuesToBacklogRequest {
      * @type {Set<string>}
      * @memberof MoveIssuesToBacklogRequest
      */
-    issues?: Array<string>;
+    issues?: Set<string>;
 }
 /**
  * 
@@ -6052,87 +5925,9 @@ export interface ProviderMetadata {
  */
 export interface ProviderMetadata1 {
     /**
-     * An optional name of the source of the feature flags.
-     * @type {string}
-     * @memberof ProviderMetadata1
-     */
-    product?: string;
-}
-/**
- * Information about the provider. This is useful for auditing, logging, debugging,
- * and other internal uses. It is not considered private information. Hence, it may not contain personally
- * identifiable information.
- * 
- * @export
- * @interface ProviderMetadata2
- */
-export interface ProviderMetadata2 {
-    /**
-     * An optional name of the source of the deployments data.
-     * @type {string}
-     * @memberof ProviderMetadata2
-     */
-    product?: string;
-}
-/**
- * Information about the provider. This is useful for auditing, logging, debugging,
- * and other internal uses. It is not considered private information. Hence, it may not contain personally
- * identifiable information.
- * 
- * @export
- * @interface ProviderMetadata3
- */
-export interface ProviderMetadata3 {
-    /**
-     * An optional name of the source of the builds data.
-     * @type {string}
-     * @memberof ProviderMetadata3
-     */
-    product?: string;
-}
-/**
- * Information about the provider. This is useful for auditing, logging, debugging, and other internal uses. It is
- * not considered private information. Hence, it may not contain personally identifiable information.
- * 
- * @export
- * @interface ProviderMetadata4
- */
-export interface ProviderMetadata4 {
-    /**
-     * An optional name of the source of the Remote Links data.
-     * @type {string}
-     * @memberof ProviderMetadata4
-     */
-    product?: string;
-}
-/**
- * Information about the provider. This is useful for auditing, logging, debugging,
- * and other internal uses. Information in this property is not considered private, so it should not contain personally identifiable information
- * 
- * @export
- * @interface ProviderMetadata5
- */
-export interface ProviderMetadata5 {
-    /**
-     * An optional name of the source of the vulnerabilities.
-     * @type {string}
-     * @memberof ProviderMetadata5
-     */
-    product?: string;
-}
-/**
- * Information about the provider. This is useful for auditing, logging, debugging,
- * and other internal uses. It is not considered private information. Hence, it may not contain personally
- * identifiable information.
- * 
- * @export
- * @interface ProviderMetadata6
- */
-export interface ProviderMetadata6 {
-    /**
      * An optional name of the source of the incidents.
      * @type {string}
-     * @memberof ProviderMetadata6
+     * @memberof ProviderMetadata1
      */
     product?: string;
 }
@@ -7117,6 +6912,55 @@ export interface SimpleLink {
     weight?: number;
 }
 /**
+ * The result of an issue search in Jira Software APIs.
+ * @export
+ * @interface SoftwareIssueResults
+ */
+export interface SoftwareIssueResults {
+    /**
+     * Expand options that include additional search result details in the response.
+     * @type {string}
+     * @memberof SoftwareIssueResults
+     */
+    readonly expand?: string;
+    /**
+     * Indicates whether this is the last page of the paginated response.
+     * @type {boolean}
+     * @memberof SoftwareIssueResults
+     */
+    readonly isLast?: boolean;
+    /**
+     * The list of issues found by the search.
+     * @type {Array<IssueBean>}
+     * @memberof SoftwareIssueResults
+     */
+    readonly issues?: Array<IssueBean>;
+    /**
+     * The ID and name of each field in the search results.
+     * @type {{ [key: string]: string; }}
+     * @memberof SoftwareIssueResults
+     */
+    readonly names?: { [key: string]: string; };
+    /**
+     * Continuation token to fetch the next page. If this result represents the last or only page, this token will be null.
+     * @type {string}
+     * @memberof SoftwareIssueResults
+     */
+    readonly nextPageToken?: string;
+    /**
+     * The schema describing the field types in the search results.
+     * @type {{ [key: string]: JsonTypeBean; }}
+     * @memberof SoftwareIssueResults
+     */
+    readonly schema?: { [key: string]: JsonTypeBean; };
+    /**
+     * Any warnings related to the JQL query.
+     * @type {Array<string>}
+     * @memberof SoftwareIssueResults
+     */
+    readonly warningMessages?: Array<string>;
+}
+/**
  * 
  * @export
  * @interface SprintBean
@@ -7393,10 +7237,10 @@ export interface SubmitBuildsRequest {
     builds: Array<BuildData>;
     /**
      * 
-     * @type {ProviderMetadata3}
+     * @type {ProviderMetadata}
      * @memberof SubmitBuildsRequest
      */
-    providerMetadata?: ProviderMetadata3;
+    providerMetadata?: ProviderMetadata;
 }
 /**
  * The result of a successful `submitBuilds` request.
@@ -7483,10 +7327,10 @@ export interface SubmitDeploymentRequest {
     deployments: Array<DeploymentData>;
     /**
      * 
-     * @type {ProviderMetadata2}
+     * @type {ProviderMetadata}
      * @memberof SubmitDeploymentRequest
      */
-    providerMetadata?: ProviderMetadata2;
+    providerMetadata?: ProviderMetadata;
 }
 /**
  * The result of a successful submitDeployments request.
@@ -7666,10 +7510,10 @@ export interface SubmitDevopsComponentsRequest {
     devopsComponents: Array<Component>;
     /**
      * 
-     * @type {ProviderMetadata6}
+     * @type {ProviderMetadata1}
      * @memberof SubmitDevopsComponentsRequest
      */
-    providerMetadata?: ProviderMetadata6;
+    providerMetadata?: ProviderMetadata1;
 }
 /**
  * The result of a successful submitDevopsComponents request.
@@ -7741,10 +7585,10 @@ export interface SubmitFeatureFlagRequest {
     flags: Array<FeatureFlagData>;
     /**
      * 
-     * @type {ProviderMetadata1}
+     * @type {ProviderMetadata}
      * @memberof SubmitFeatureFlagRequest
      */
-    providerMetadata?: ProviderMetadata1;
+    providerMetadata?: ProviderMetadata;
 }
 /**
  * The result of a successful submitFeatureFlags request.
@@ -7817,10 +7661,10 @@ export interface SubmitIncidentsRequest {
     properties?: { [key: string]: string; };
     /**
      * 
-     * @type {ProviderMetadata6}
+     * @type {ProviderMetadata1}
      * @memberof SubmitIncidentsRequest
      */
-    providerMetadata?: ProviderMetadata6;
+    providerMetadata?: ProviderMetadata1;
     /**
      * 
      * @type {Array<Incident>}
@@ -8020,10 +7864,10 @@ export interface SubmitRemoteLinksRequest {
     remoteLinks: Array<RemoteLinkData>;
     /**
      * 
-     * @type {ProviderMetadata4}
+     * @type {ProviderMetadata}
      * @memberof SubmitRemoteLinksRequest
      */
-    providerMetadata?: ProviderMetadata4;
+    providerMetadata?: ProviderMetadata;
 }
 /**
  * The payload used to submit (update / insert) Security Workspace IDs.
@@ -8071,10 +7915,10 @@ export interface SubmitVulnerabilitiesRequest {
     vulnerabilities: Array<VulnerabilityDetails>;
     /**
      * 
-     * @type {ProviderMetadata5}
+     * @type {ProviderMetadata}
      * @memberof SubmitVulnerabilitiesRequest
      */
-    providerMetadata?: ProviderMetadata5;
+    providerMetadata?: ProviderMetadata;
 }
 
 
@@ -8373,25 +8217,25 @@ export interface UserBeanAvatarUrls {
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
-    ["16x16"]?: string;
+    _16x16?: string;
     /**
      * The URL of the user's 24x24 pixel avatar.
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
-    ["24x24"]?: string;
+    _24x24?: string;
     /**
      * The URL of the user's 32x32 pixel avatar.
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
-    ["32x32"]?: string;
+    _32x32?: string;
     /**
      * The URL of the user's 48x48 pixel avatar.
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
-    ["48x48"]?: string;
+    _48x48?: string;
 }
 /**
  * User details permitted by the user's Atlassian Account privacy settings. However, be aware of these exceptions:

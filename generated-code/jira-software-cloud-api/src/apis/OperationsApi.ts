@@ -12,17 +12,16 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ErrorMessage1,
-  GetIncidentById200Response,
-  GetReviewById200Response,
-  OperationsWorkspaceIds,
-  SubmitIncidentsRequest,
-  SubmitIncidentsResponse,
-  SubmitOperationsWorkspacesRequest,
-  SubmitOperationsWorkspacesResponse,
+    ErrorMessage1,
+    GetIncidentById200Response,
+    GetReviewById200Response,
+    OperationsWorkspaceIds,
+    SubmitIncidentsRequest,
+    SubmitIncidentsResponse,
+    SubmitOperationsWorkspacesRequest,
+    SubmitOperationsWorkspacesResponse,
 } from '../models/index';
 
 export interface DeleteEntityByPropertyRequest {
@@ -149,7 +148,7 @@ export class OperationsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/rest/operations/1.0/incidents/{incidentId}`;
-        urlPath = urlPath.replace(`{${"incidentId"}}`, encodeURIComponent(String(requestParameters['incidentId'])));
+        urlPath = urlPath.replace('{incidentId}', encodeURIComponent(String(requestParameters['incidentId'])));
 
         return {
             path: urlPath,
@@ -206,7 +205,7 @@ export class OperationsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/rest/operations/1.0/post-incident-reviews/{reviewId}`;
-        urlPath = urlPath.replace(`{${"reviewId"}}`, encodeURIComponent(String(requestParameters['reviewId'])));
+        urlPath = urlPath.replace('{reviewId}', encodeURIComponent(String(requestParameters['reviewId'])));
 
         return {
             path: urlPath,
@@ -312,7 +311,7 @@ export class OperationsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/rest/operations/1.0/incidents/{incidentId}`;
-        urlPath = urlPath.replace(`{${"incidentId"}}`, encodeURIComponent(String(requestParameters['incidentId'])));
+        urlPath = urlPath.replace('{incidentId}', encodeURIComponent(String(requestParameters['incidentId'])));
 
         return {
             path: urlPath,
@@ -370,7 +369,7 @@ export class OperationsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/rest/operations/1.0/post-incident-reviews/{reviewId}`;
-        urlPath = urlPath.replace(`{${"reviewId"}}`, encodeURIComponent(String(requestParameters['reviewId'])));
+        urlPath = urlPath.replace('{reviewId}', encodeURIComponent(String(requestParameters['reviewId'])));
 
         return {
             path: urlPath,

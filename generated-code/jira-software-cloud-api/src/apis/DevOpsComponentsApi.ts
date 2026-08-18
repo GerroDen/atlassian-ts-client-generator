@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ErrorMessage1,
-  GetComponentById200Response,
-  SubmitDevopsComponentsRequest,
-  SubmitDevopsComponentsResponse,
+    ErrorMessage1,
+    GetComponentById200Response,
+    SubmitDevopsComponentsRequest,
+    SubmitDevopsComponentsResponse,
 } from '../models/index';
 
 export interface DeleteComponentByIdRequest {
@@ -73,7 +72,7 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/rest/devopscomponents/1.0/devopscomponents/{componentId}`;
-        urlPath = urlPath.replace(`{${"componentId"}}`, encodeURIComponent(String(requestParameters['componentId'])));
+        urlPath = urlPath.replace('{componentId}', encodeURIComponent(String(requestParameters['componentId'])));
 
         return {
             path: urlPath,
@@ -179,7 +178,7 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/rest/devopscomponents/1.0/devopscomponents/{componentId}`;
-        urlPath = urlPath.replace(`{${"componentId"}}`, encodeURIComponent(String(requestParameters['componentId'])));
+        urlPath = urlPath.replace('{componentId}', encodeURIComponent(String(requestParameters['componentId'])));
 
         return {
             path: urlPath,

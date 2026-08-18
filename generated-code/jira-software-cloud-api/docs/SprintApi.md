@@ -8,6 +8,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 | [**deleteProperty**](SprintApi.md#deleteproperty) | **DELETE** /rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey} | Delete property |
 | [**deleteSprint**](SprintApi.md#deletesprint) | **DELETE** /rest/agile/1.0/sprint/{sprintId} | Delete sprint |
 | [**getIssuesForSprint**](SprintApi.md#getissuesforsprint) | **GET** /rest/agile/1.0/sprint/{sprintId}/issue | Get issues for sprint |
+| [**getIssuesForSprintJSIS**](SprintApi.md#getissuesforsprintjsis) | **GET** /rest/software/1.0/sprint/{sprintId}/issue | Get issues for sprint (enhanced) |
 | [**getPropertiesKeys**](SprintApi.md#getpropertieskeys) | **GET** /rest/agile/1.0/sprint/{sprintId}/properties | Get properties keys |
 | [**getProperty**](SprintApi.md#getproperty) | **GET** /rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey} | Get property |
 | [**getSprint**](SprintApi.md#getsprint) | **GET** /rest/agile/1.0/sprint/{sprintId} | Get sprint |
@@ -41,6 +42,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -74,7 +78,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -88,7 +92,7 @@ example().catch(console.error);
 | **201** | Created sprint |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the board does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -116,6 +120,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -152,7 +159,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -194,6 +201,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -227,7 +237,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -240,7 +250,7 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **204** | Returned if the sprint was deleted successfully |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license or does not have permission to delete sprints. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to delete sprints. |  -  |
 | **404** | Returned if the sprint does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -268,6 +278,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -319,7 +332,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -332,8 +345,107 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Returns the requested issues, at the specified page of the results. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if sprint does not exist or the user cannot view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getIssuesForSprintJSIS
+
+> SoftwareIssueResults getIssuesForSprintJSIS(sprintId, nextPageToken, maxResults, reconcileIssues, jql, validateQuery, fields, expand)
+
+Get issues for sprint (enhanced)
+
+Returns all issues in a sprint, for a given sprint ID. Result pagination is token based, using &#x60;nextPageToken&#x60; and &#x60;maxResults&#x60;. This only includes issues that the user has permission to view. Issues returned from this resource include Software project fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SprintApi,
+} from 'jira-software-cloud-api';
+import type { GetIssuesForSprintJSISRequest } from 'jira-software-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-software-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new SprintApi(config);
+
+  const body = {
+    // number | The ID of the sprint that contains the requested issues.
+    sprintId: 789,
+    // string | The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.  Note: The `nextPageToken` field is **not included** in the response for the last page, indicating there is no next page. (optional)
+    nextPageToken: nextPageToken_example,
+    // number | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. (optional)
+    maxResults: 56,
+    // Set<number> | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. (optional)
+    reconcileIssues: ...,
+    // string | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that `username` and `userkey` can\'t be used as search terms for this parameter due to privacy reasons. Use `accountId` instead. (optional)
+    jql: jql_example,
+    // boolean | Specifies whether to validate the JQL query or not. Default: true. (optional)
+    validateQuery: true,
+    // Array<object> | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. (optional)
+    fields: ...,
+    // string | A comma-separated list of the parameters to expand. (optional)
+    expand: expand_example,
+  } satisfies GetIssuesForSprintJSISRequest;
+
+  try {
+    const data = await api.getIssuesForSprintJSIS(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sprintId** | `number` | The ID of the sprint that contains the requested issues. | [Defaults to `undefined`] |
+| **nextPageToken** | `string` | The token for a page to fetch that is not the first page. The first page has a &#x60;nextPageToken&#x60; of &#x60;null&#x60;. Use the &#x60;nextPageToken&#x60; to fetch the next page of issues.  Note: The &#x60;nextPageToken&#x60; field is **not included** in the response for the last page, indicating there is no next page. | [Optional] [Defaults to `undefined`] |
+| **maxResults** | `number` | The maximum number of items to return per page. To manage page size, the API may return fewer items per page where there is a large number of fields or properties returned. It returns max 5000 issues. | [Optional] [Defaults to `undefined`] |
+| **reconcileIssues** | `Set<number>` | Strong consistency issue IDs to be reconciled with search results. Accepts max 50 IDs. This list of IDs should be consistent with each paginated request across different pages. | [Optional] |
+| **jql** | `string` | Filters results using a JQL query. If you define an order in your JQL query, it will override the default order of the returned issues.   Note that &#x60;username&#x60; and &#x60;userkey&#x60; can\&#39;t be used as search terms for this parameter due to privacy reasons. Use &#x60;accountId&#x60; instead. | [Optional] [Defaults to `undefined`] |
+| **validateQuery** | `boolean` | Specifies whether to validate the JQL query or not. Default: true. | [Optional] [Defaults to `undefined`] |
+| **fields** | `Array<object>` | The list of fields to return for each issue. By default, all navigable and Software project fields are returned. | [Optional] |
+| **expand** | `string` | A comma-separated list of the parameters to expand. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**SoftwareIssueResults**](SoftwareIssueResults.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returns the requested issues, at the specified page of the results. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
+| **404** | Returned if the sprint does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -360,6 +472,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -393,7 +508,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -435,6 +550,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -471,7 +589,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -513,6 +631,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -546,7 +667,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -559,7 +680,7 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Returns the requested sprint. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the sprint does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -587,6 +708,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -623,7 +747,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -637,7 +761,7 @@ example().catch(console.error);
 | **204** | Empty response is returned if operation was successful. |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license or does not have permission to assign issues. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to assign issues. |  -  |
 | **404** | Returned if the sprint does not exist or the user does not have permission to view it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -665,6 +789,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -701,7 +828,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -715,7 +842,7 @@ example().catch(console.error);
 | **200** | Updated sprint |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the sprint does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -743,6 +870,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -782,7 +912,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -825,6 +955,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -861,7 +994,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -874,8 +1007,8 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **204** | Returned if the sprint swap was performed successfully |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license or does not have permission to at least one sprint. |  -  |
-| **404** | Returned if at least one sprint does not exist or user does not have permission to view to at least one sprint. |  -  |
+| **403** | Returned if the user does not have a valid license or does not have permission to view at least one sprint. |  -  |
+| **404** | Returned if at least one sprint does not exist or user does not have permission to view at least one sprint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -902,6 +1035,9 @@ async function example() {
   const config = new Configuration({ 
     // To configure OAuth2 access token for authorization: OAuth2 accessCode
     accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
   });
   const api = new SprintApi(config);
 
@@ -938,7 +1074,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -952,7 +1088,7 @@ example().catch(console.error);
 | **200** | Updated sprint |  -  |
 | **400** | Returned if the request is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not a have valid license. |  -  |
+| **403** | Returned if the user does not have a valid license. |  -  |
 | **404** | Returned if the sprint does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

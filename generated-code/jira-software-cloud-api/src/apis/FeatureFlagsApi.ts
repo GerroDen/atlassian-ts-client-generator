@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ErrorMessage1,
-  FeatureFlagData,
-  SubmitFeatureFlagRequest,
-  SubmitFeatureFlagsResponse,
+    ErrorMessage1,
+    FeatureFlagData,
+    SubmitFeatureFlagRequest,
+    SubmitFeatureFlagsResponse,
 } from '../models/index';
 
 export interface DeleteFeatureFlagByIdRequest {
@@ -82,9 +81,12 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:feature-flag-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/featureflags/0.1/flag/{featureFlagId}`;
-        urlPath = urlPath.replace(`{${"featureFlagId"}}`, encodeURIComponent(String(requestParameters['featureFlagId'])));
+        urlPath = urlPath.replace('{featureFlagId}', encodeURIComponent(String(requestParameters['featureFlagId'])));
 
         return {
             path: urlPath,
@@ -141,6 +143,9 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:feature-flag-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/featureflags/0.1/bulkByProperties`;
 
@@ -202,9 +207,12 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:feature-flag-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/featureflags/0.1/flag/{featureFlagId}`;
-        urlPath = urlPath.replace(`{${"featureFlagId"}}`, encodeURIComponent(String(requestParameters['featureFlagId'])));
+        urlPath = urlPath.replace('{featureFlagId}', encodeURIComponent(String(requestParameters['featureFlagId'])));
 
         return {
             path: urlPath,
@@ -267,6 +275,9 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:feature-flag-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/featureflags/0.1/bulk`;
 

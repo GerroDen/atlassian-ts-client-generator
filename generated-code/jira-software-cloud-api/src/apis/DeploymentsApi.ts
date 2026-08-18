@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  DeploymentData1,
-  ErrorMessage1,
-  SubmitDeploymentRequest,
-  SubmitDeploymentsResponse,
-  SubmitDeploymentsResponse1,
+    DeploymentData,
+    ErrorMessage1,
+    SubmitDeploymentRequest,
+    SubmitDeploymentsResponse,
+    SubmitDeploymentsResponse1,
 } from '../models/index';
 
 export interface DeleteDeploymentByKeyRequest {
@@ -107,11 +106,14 @@ export class DeploymentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:deployment-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`;
-        urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
-        urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
-        urlPath = urlPath.replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
+        urlPath = urlPath.replace('{pipelineId}', encodeURIComponent(String(requestParameters['pipelineId'])));
+        urlPath = urlPath.replace('{environmentId}', encodeURIComponent(String(requestParameters['environmentId'])));
+        urlPath = urlPath.replace('{deploymentSequenceNumber}', encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
 
         return {
             path: urlPath,
@@ -168,6 +170,9 @@ export class DeploymentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:deployment-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/deployments/0.1/bulkByProperties`;
 
@@ -243,11 +248,14 @@ export class DeploymentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:deployment-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`;
-        urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
-        urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
-        urlPath = urlPath.replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
+        urlPath = urlPath.replace('{pipelineId}', encodeURIComponent(String(requestParameters['pipelineId'])));
+        urlPath = urlPath.replace('{environmentId}', encodeURIComponent(String(requestParameters['environmentId'])));
+        urlPath = urlPath.replace('{deploymentSequenceNumber}', encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
 
         return {
             path: urlPath,
@@ -261,7 +269,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes. 
      * Get a deployment by key
      */
-    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData1>> {
+    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData>> {
         const requestOptions = await this.getDeploymentByKeyRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
@@ -272,7 +280,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes. 
      * Get a deployment by key
      */
-    async getDeploymentByKey(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeploymentData1> {
+    async getDeploymentByKey(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeploymentData> {
         const response = await this.getDeploymentByKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -311,11 +319,14 @@ export class DeploymentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:deployment-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}/gating-status`;
-        urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
-        urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
-        urlPath = urlPath.replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
+        urlPath = urlPath.replace('{pipelineId}', encodeURIComponent(String(requestParameters['pipelineId'])));
+        urlPath = urlPath.replace('{environmentId}', encodeURIComponent(String(requestParameters['environmentId'])));
+        urlPath = urlPath.replace('{deploymentSequenceNumber}', encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
 
         return {
             path: urlPath,
@@ -378,6 +389,9 @@ export class DeploymentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:deployment-info:jira"]);
         }
 
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
 
         let urlPath = `/rest/deployments/0.1/bulk`;
 
