@@ -7,6 +7,7 @@
   ],
   "type": "module",
   "scripts": {
+    "audit": "yarn npm audit -A -R --severity high",
     "fetch": "run-s 'fetch:*'",
     "fetch:bamboo-api": "curl -o bamboo-api/swagger.json https://dac-static.atlassian.com/server/bamboo/swagger.v3.json",
     "fetch:bitbucket-api": "curl -o bitbucket-api/swagger.json https://dac-static.atlassian.com/server/bitbucket/9.5.swagger.v3.json",
@@ -77,6 +78,11 @@
     "oxlint": "^1.78.0",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"
+  },
+  "resolutions": {
+    "ip-address": "> 10.3.0",
+    "minimatch": "> 10.2.2",
+    "vite": "> 8.0.15"
   },
   "packageManager": "yarn@4.18.0"
 }
