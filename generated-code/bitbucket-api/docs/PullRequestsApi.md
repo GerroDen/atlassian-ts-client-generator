@@ -19,8 +19,8 @@ All URIs are relative to *http://example.com:7990/rest*
 | [**createPullRequestCondition1**](PullRequestsApi.md#createpullrequestcondition1) | **POST** /default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/condition | Create default reviewer condition |
 | [**decline**](PullRequestsApi.md#decline) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/decline | Decline pull request |
 | [**delete3**](PullRequestsApi.md#delete3) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId} | Delete pull request |
-| [**delete6**](PullRequestsApi.md#delete6) | **DELETE** /api/latest/projects/{projectKey}/settings/reviewer-groups/{id} | Delete reviewer group |
-| [**delete7**](PullRequestsApi.md#delete7) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id} | Delete reviewer group |
+| [**delete8**](PullRequestsApi.md#delete8) | **DELETE** /api/latest/projects/{projectKey}/settings/reviewer-groups/{id} | Delete reviewer group |
+| [**delete9**](PullRequestsApi.md#delete9) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id} | Delete reviewer group |
 | [**deleteComment1**](PullRequestsApi.md#deletecomment1) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments/{commentId} | Delete pull request comment |
 | [**deleteComment2**](PullRequestsApi.md#deletecomment2) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} | Delete a pull request comment |
 | [**deletePullRequestCondition**](PullRequestsApi.md#deletepullrequestcondition) | **DELETE** /default-reviewers/latest/projects/{projectKey}/condition/{id} | Delete default reviewer condition |
@@ -1239,9 +1239,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## delete6
+## delete8
 
-> delete6(projectKey, id)
+> delete8(projectKey, id)
 
 Delete reviewer group
 
@@ -1254,7 +1254,7 @@ import {
   Configuration,
   PullRequestsApi,
 } from 'bitbucket-api';
-import type { Delete6Request } from 'bitbucket-api';
+import type { Delete8Request } from 'bitbucket-api';
 
 async function example() {
   console.log("🚀 Testing bitbucket-api SDK...");
@@ -1265,10 +1265,10 @@ async function example() {
     projectKey: projectKey_example,
     // string | The ID of the reviewer group to be deleted
     id: id_example,
-  } satisfies Delete6Request;
+  } satisfies Delete8Request;
 
   try {
-    const data = await api.delete6(body);
+    const data = await api.delete8(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -1311,9 +1311,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## delete7
+## delete9
 
-> delete7(projectKey, id, repositorySlug)
+> delete9(projectKey, id, repositorySlug)
 
 Delete reviewer group
 
@@ -1326,7 +1326,7 @@ import {
   Configuration,
   PullRequestsApi,
 } from 'bitbucket-api';
-import type { Delete7Request } from 'bitbucket-api';
+import type { Delete9Request } from 'bitbucket-api';
 
 async function example() {
   console.log("🚀 Testing bitbucket-api SDK...");
@@ -1339,10 +1339,10 @@ async function example() {
     id: id_example,
     // string | The repository slug.
     repositorySlug: repositorySlug_example,
-  } satisfies Delete7Request;
+  } satisfies Delete9Request;
 
   try {
-    const data = await api.delete7(body);
+    const data = await api.delete9(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -1855,7 +1855,7 @@ No authorization required
 
 ## get3
 
-> RestPullRequest get3(projectKey, pullRequestId, repositorySlug)
+> RestPullRequest get3(projectKey, pullRequestId, repositorySlug, withProperties)
 
 Get pull request
 
@@ -1881,6 +1881,8 @@ async function example() {
     pullRequestId: pullRequestId_example,
     // string | The repository slug.
     repositorySlug: repositorySlug_example,
+    // string | (optional) defaults to false, whether to return additional pull request properties (optional)
+    withProperties: withProperties_example,
   } satisfies Get3Request;
 
   try {
@@ -1903,6 +1905,7 @@ example().catch(console.error);
 | **projectKey** | `string` | The project key. | [Defaults to `undefined`] |
 | **pullRequestId** | `string` | The ID of the pull request within the repository | [Defaults to `undefined`] |
 | **repositorySlug** | `string` | The repository slug. | [Defaults to `undefined`] |
+| **withProperties** | `string` | (optional) defaults to false, whether to return additional pull request properties | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -5018,7 +5021,7 @@ No authorization required
 
 Update pull request metadata
 
-Update the title, description, reviewers, destination branch or draft status of an existing pull request.   **Note:** the &lt;em&gt;reviewers&lt;/em&gt; list may be updated using this resource. However the &lt;em&gt;author&lt;/em&gt; and &lt;em&gt;participants&lt;/em&gt; list may not.   The authenticated user must either:   - be the author of the pull request and have the &lt;strong&gt;REPO_READ&lt;/strong&gt; permission for the repository that this pull request targets; or - have the &lt;strong&gt;REPO_WRITE&lt;/strong&gt; permission for the repository that this pull request targets   to call this resource.
+Update the title, description, author, reviewers, destination branch or draft status of an existing pull request.   **Note:** the &lt;em&gt;reviewers&lt;/em&gt; list may be updated using this resource. However the &lt;em&gt;participants&lt;/em&gt; list may not.   The authenticated user must either:   - be the author of the pull request and have the &lt;strong&gt;REPO_READ&lt;/strong&gt; permission for the repository that this pull request targets; or - have the &lt;strong&gt;REPO_WRITE&lt;/strong&gt; permission for the repository that this pull request targets   to call this resource.
 
 ### Example
 

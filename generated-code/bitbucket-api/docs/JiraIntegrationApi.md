@@ -5,9 +5,13 @@ All URIs are relative to *http://example.com:7990/rest*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**createIssue**](JiraIntegrationApi.md#createissue) | **POST** /jira/latest/comments/{commentId}/issues | Create Jira Issue |
+| [**getBackfillSyncReport**](JiraIntegrationApi.md#getbackfillsyncreport) | **GET** /jira-dev/latest/devinfo-backfill/report | Get repository backfill tasks that failed and their associated errors |
+| [**getBackfillSyncStatus**](JiraIntegrationApi.md#getbackfillsyncstatus) | **GET** /jira-dev/latest/devinfo-backfill/status | Get Jira development information backfill status |
 | [**getCommitsByIssueKey**](JiraIntegrationApi.md#getcommitsbyissuekey) | **GET** /jira/latest/issues/{issueKey}/commits | Get changesets for issue key |
 | [**getEnhancedEntityLinkForProject**](JiraIntegrationApi.md#getenhancedentitylinkforproject) | **GET** /jira/latest/projects/{projectKey}/primary-enhanced-entitylink | Get entity link |
 | [**getIssueKeysForPullRequest**](JiraIntegrationApi.md#getissuekeysforpullrequest) | **GET** /jira/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/issues | Get issues for a pull request |
+| [**startBackfillSync**](JiraIntegrationApi.md#startbackfillsync) | **POST** /jira-dev/latest/devinfo-backfill | Start a Jira development information backfill sync |
+| [**stopBackfillSync**](JiraIntegrationApi.md#stopbackfillsync) | **DELETE** /jira-dev/latest/devinfo-backfill | Stop a Jira development information backfill sync |
 
 
 
@@ -82,6 +86,128 @@ No authorization required
 | **200** | The created Jira issue key and the associated comment ID |  -  |
 | **400** | The specified application link ID does not match any linked Jira instance. |  -  |
 | **401** | Authentication with the Jira instance is required. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getBackfillSyncReport
+
+> RestJiraBackfillReport getBackfillSyncReport()
+
+Get repository backfill tasks that failed and their associated errors
+
+Get the list of repositories that failed the latest backfill task and their associated errors  The user must have the global **SYS_ADMIN** permission.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  JiraIntegrationApi,
+} from 'bitbucket-api';
+import type { GetBackfillSyncReportRequest } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new JiraIntegrationApi();
+
+  try {
+    const data = await api.getBackfillSyncReport();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**RestJiraBackfillReport**](RestJiraBackfillReport.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json;charset=UTF-8`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The current report of repositories that have failed to backfill. |  -  |
+| **401** | The currently authenticated user has insufficient permissions to perform this operation. |  -  |
+| **409** | The feature is disabled. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getBackfillSyncStatus
+
+> RestJiraBackfillStatus getBackfillSyncStatus()
+
+Get Jira development information backfill status
+
+Returns the status of the Jira development information backfill task, either the one currently running or the most recently completed. The response shows aggregated counts per status for repositories to sync. Possible statuses: NOT_STARTED, QUEUED, SYNCING, SYNCED, CANCELED and ERROR.   The user must have the global **SYS_ADMIN** permission.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  JiraIntegrationApi,
+} from 'bitbucket-api';
+import type { GetBackfillSyncStatusRequest } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new JiraIntegrationApi();
+
+  try {
+    const data = await api.getBackfillSyncStatus();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**RestJiraBackfillStatus**](RestJiraBackfillStatus.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json;charset=UTF-8`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The current status of the Jira development information backfill task. |  -  |
+| **401** | The currently authenticated user has insufficient permissions to view Jira development information backfill task status. |  -  |
+| **409** | The feature is disabled. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -298,6 +424,138 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | A list of Jira issues keys for the pull request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## startBackfillSync
+
+> startBackfillSync(restJiraDevInfoBackfillRequest)
+
+Start a Jira development information backfill sync
+
+Starts an asynchronous repository data backfill to the provided Jira sites. The backfilled data will be available when viewing issues in Jira. Providing a list of repositories or Jira site IDs are optional. If no repositories are provided then all repositories will be backfilled. If no Jira site IDs are provided then data will be sent to all currently configured Jira sites.   The user must have the global **SYS_ADMIN** permission.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  JiraIntegrationApi,
+} from 'bitbucket-api';
+import type { StartBackfillSyncRequest } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new JiraIntegrationApi();
+
+  const body = {
+    // RestJiraDevInfoBackfillRequest | Jira development information backfill sync request (optional)
+    restJiraDevInfoBackfillRequest: ...,
+  } satisfies StartBackfillSyncRequest;
+
+  try {
+    const data = await api.startBackfillSync(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **restJiraDevInfoBackfillRequest** | [RestJiraDevInfoBackfillRequest](RestJiraDevInfoBackfillRequest.md) | Jira development information backfill sync request | [Optional] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json;charset=UTF-8`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The backfill task successfully started. |  -  |
+| **400** | The request was malformed. |  -  |
+| **401** | The currently authenticated user has insufficient permissions to start a Jira development information backfill task. |  -  |
+| **404** | Unable to find any of the supplied projects or repositories. |  -  |
+| **409** | The backfill process is already running, or the feature is disabled. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## stopBackfillSync
+
+> stopBackfillSync()
+
+Stop a Jira development information backfill sync
+
+Interrupts an asynchronous repository data backfill if it is running. There could be a delay before processing stops while signal propagates to asynchronous tasks.   The user must have the global **SYS_ADMIN** permission.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  JiraIntegrationApi,
+} from 'bitbucket-api';
+import type { StopBackfillSyncRequest } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new JiraIntegrationApi();
+
+  try {
+    const data = await api.stopBackfillSync();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | The backfill task successfully stopped, or no backfill was in progress. |  -  |
+| **401** | The currently authenticated user has insufficient permissions to stop Jira development information backfill tasks. |  -  |
+| **409** | The feature is disabled. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

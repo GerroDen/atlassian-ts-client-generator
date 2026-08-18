@@ -1,4 +1,4 @@
-# bitbucket-api@9.5
+# bitbucket-api@10.4
 
 A TypeScript SDK client for the example.com API.
 
@@ -139,6 +139,7 @@ All URIs are relative to *http://example.com:7990/rest*
 *BuildsAndDeploymentsApi* | [**updateRequiredBuildsMergeCheck**](docs/BuildsAndDeploymentsApi.md#updaterequiredbuildsmergecheck) | **PUT** /required-builds/latest/projects/{projectKey}/repos/{repositorySlug}/condition/{id} | Update a required builds merge check
 *CapabilitiesApi* | [**getCapabilities**](docs/CapabilitiesApi.md#getcapabilities) | **GET** /api/latest/build/capabilities | Get build capabilities
 *CapabilitiesApi* | [**getCapabilities1**](docs/CapabilitiesApi.md#getcapabilities1) | **GET** /api/latest/deployment/capabilities | Get deployment capabilities
+*ContentSecurityPolicyApi* | [**settings**](docs/ContentSecurityPolicyApi.md#settings) | **PUT** /csp/latest/settings | Change CSP strictness setting
 *DashboardApi* | [**getPullRequestSuggestions**](docs/DashboardApi.md#getpullrequestsuggestions) | **GET** /api/latest/dashboard/pull-request-suggestions | Get pull request suggestions
 *DashboardApi* | [**getPullRequests1**](docs/DashboardApi.md#getpullrequests1) | **GET** /api/latest/dashboard/pull-requests | Get pull requests for a user
 *DefaultApi* | [**getPullRequestCount**](docs/DefaultApi.md#getpullrequestcount) | **GET** /api/latest/inbox/pull-requests/count | Get total number of pull requests in inbox
@@ -156,9 +157,13 @@ All URIs are relative to *http://example.com:7990/rest*
 *DeprecatedApi* | [**unassignParticipantRole1**](docs/DeprecatedApi.md#unassignparticipantrole1) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants | Unassign pull request participant
 *DeprecatedApi* | [**withdrawApproval**](docs/DeprecatedApi.md#withdrawapproval) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve | Unapprove pull request
 *JiraIntegrationApi* | [**createIssue**](docs/JiraIntegrationApi.md#createissue) | **POST** /jira/latest/comments/{commentId}/issues | Create Jira Issue
+*JiraIntegrationApi* | [**getBackfillSyncReport**](docs/JiraIntegrationApi.md#getbackfillsyncreport) | **GET** /jira-dev/latest/devinfo-backfill/report | Get repository backfill tasks that failed and their associated errors
+*JiraIntegrationApi* | [**getBackfillSyncStatus**](docs/JiraIntegrationApi.md#getbackfillsyncstatus) | **GET** /jira-dev/latest/devinfo-backfill/status | Get Jira development information backfill status
 *JiraIntegrationApi* | [**getCommitsByIssueKey**](docs/JiraIntegrationApi.md#getcommitsbyissuekey) | **GET** /jira/latest/issues/{issueKey}/commits | Get changesets for issue key
 *JiraIntegrationApi* | [**getEnhancedEntityLinkForProject**](docs/JiraIntegrationApi.md#getenhancedentitylinkforproject) | **GET** /jira/latest/projects/{projectKey}/primary-enhanced-entitylink | Get entity link
 *JiraIntegrationApi* | [**getIssueKeysForPullRequest**](docs/JiraIntegrationApi.md#getissuekeysforpullrequest) | **GET** /jira/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/issues | Get issues for a pull request
+*JiraIntegrationApi* | [**startBackfillSync**](docs/JiraIntegrationApi.md#startbackfillsync) | **POST** /jira-dev/latest/devinfo-backfill | Start a Jira development information backfill sync
+*JiraIntegrationApi* | [**stopBackfillSync**](docs/JiraIntegrationApi.md#stopbackfillsync) | **DELETE** /jira-dev/latest/devinfo-backfill | Stop a Jira development information backfill sync
 *MarkupApi* | [**preview**](docs/MarkupApi.md#preview) | **POST** /api/latest/markup/preview | Preview markdown render
 *MirroringMirrorApi* | [**endRollingUpgrade**](docs/MirroringMirrorApi.md#endrollingupgrade) | **POST** /mirroring/latest/zdu/end | End ZDU upgrade on mirror farm
 *MirroringMirrorApi* | [**getDelayedSyncRepositories**](docs/MirroringMirrorApi.md#getdelayedsyncrepositories) | **GET** /mirroring/latest/mirrorRepos/delayed-sync | Get delayed sync repositories
@@ -250,8 +255,9 @@ All URIs are relative to *http://example.com:7990/rest*
 *ProjectApi* | [**createRepository**](docs/ProjectApi.md#createrepository) | **POST** /api/latest/projects/{projectKey}/repos | Create repository
 *ProjectApi* | [**createRestrictions**](docs/ProjectApi.md#createrestrictions) | **POST** /branch-permissions/latest/projects/{projectKey}/restrictions | Create multiple ref restrictions
 *ProjectApi* | [**createWebhook**](docs/ProjectApi.md#createwebhook) | **POST** /api/latest/projects/{projectKey}/webhooks | Create webhook
+*ProjectApi* | [**delete11**](docs/ProjectApi.md#delete11) | **DELETE** /api/latest/projects/{projectKey}/settings-restriction | Stop enforcing project restriction
 *ProjectApi* | [**delete4**](docs/ProjectApi.md#delete4) | **DELETE** /api/latest/projects/{projectKey}/settings/auto-merge | Delete pull request auto-merge settings
-*ProjectApi* | [**delete9**](docs/ProjectApi.md#delete9) | **DELETE** /api/latest/projects/{projectKey}/settings-restriction | Stop enforcing project restriction
+*ProjectApi* | [**delete6**](docs/ProjectApi.md#delete6) | **DELETE** /api/latest/projects/{projectKey}/settings/change-author | Delete pull request change-author settings
 *ProjectApi* | [**deleteAllDefaultTasks**](docs/ProjectApi.md#deletealldefaulttasks) | **DELETE** /default-tasks/latest/projects/{projectKey}/tasks | Deletes all default tasks for the project
 *ProjectApi* | [**deleteAutoDeclineSettings**](docs/ProjectApi.md#deleteautodeclinesettings) | **DELETE** /api/latest/projects/{projectKey}/settings/auto-decline | Delete auto decline settings
 *ProjectApi* | [**deleteDefaultTask**](docs/ProjectApi.md#deletedefaulttask) | **DELETE** /default-tasks/latest/projects/{projectKey}/tasks/{taskId} | Delete a specific default task
@@ -264,7 +270,8 @@ All URIs are relative to *http://example.com:7990/rest*
 *ProjectApi* | [**findWebhooks**](docs/ProjectApi.md#findwebhooks) | **GET** /api/latest/projects/{projectKey}/webhooks | Find webhooks
 *ProjectApi* | [**forkRepository**](docs/ProjectApi.md#forkrepository) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug} | Fork repository
 *ProjectApi* | [**get4**](docs/ProjectApi.md#get4) | **GET** /api/latest/projects/{projectKey}/settings/auto-merge | Get pull request auto-merge settings
-*ProjectApi* | [**get7**](docs/ProjectApi.md#get7) | **GET** /api/latest/projects/{projectKey}/settings-restriction | Get enforcing project setting
+*ProjectApi* | [**get6**](docs/ProjectApi.md#get6) | **GET** /api/latest/projects/{projectKey}/settings/change-author | Get pull request change-author settings
+*ProjectApi* | [**get9**](docs/ProjectApi.md#get9) | **GET** /api/latest/projects/{projectKey}/settings-restriction | Get enforcing project setting
 *ProjectApi* | [**getAll**](docs/ProjectApi.md#getall) | **GET** /api/latest/projects/{projectKey}/settings-restriction/all | Get all enforcing project settings
 *ProjectApi* | [**getAutoDeclineSettings**](docs/ProjectApi.md#getautodeclinesettings) | **GET** /api/latest/projects/{projectKey}/settings/auto-decline | Get auto decline settings
 *ProjectApi* | [**getAvatar**](docs/ProjectApi.md#getavatar) | **GET** /api/latest/hooks/{hookKey}/avatar | Get project avatar
@@ -301,6 +308,7 @@ All URIs are relative to *http://example.com:7990/rest*
 *ProjectApi* | [**revokePermissionsForUser1**](docs/ProjectApi.md#revokepermissionsforuser1) | **DELETE** /api/latest/projects/{projectKey}/permissions/users | Revoke user project permission
 *ProjectApi* | [**searchPermissions**](docs/ProjectApi.md#searchpermissions) | **GET** /api/latest/projects/{projectKey}/permissions/search | Search project permissions
 *ProjectApi* | [**set**](docs/ProjectApi.md#set) | **PUT** /api/latest/projects/{projectKey}/settings/auto-merge | Create or update the pull request auto-merge settings
+*ProjectApi* | [**set2**](docs/ProjectApi.md#set2) | **PUT** /api/latest/projects/{projectKey}/settings/change-author | Create or update the pull request change-author settings
 *ProjectApi* | [**setAutoDeclineSettings**](docs/ProjectApi.md#setautodeclinesettings) | **PUT** /api/latest/projects/{projectKey}/settings/auto-decline | Create/Update auto decline settings
 *ProjectApi* | [**setConfiguration**](docs/ProjectApi.md#setconfiguration) | **PUT** /api/latest/projects/{projectKey}/hook-scripts/{scriptId} | Create/update a hook script
 *ProjectApi* | [**setDefaultBranch2**](docs/ProjectApi.md#setdefaultbranch2) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/default-branch | Update default branch for repository
@@ -332,8 +340,8 @@ All URIs are relative to *http://example.com:7990/rest*
 *PullRequestsApi* | [**createPullRequestCondition1**](docs/PullRequestsApi.md#createpullrequestcondition1) | **POST** /default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/condition | Create default reviewer condition
 *PullRequestsApi* | [**decline**](docs/PullRequestsApi.md#decline) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/decline | Decline pull request
 *PullRequestsApi* | [**delete3**](docs/PullRequestsApi.md#delete3) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId} | Delete pull request
-*PullRequestsApi* | [**delete6**](docs/PullRequestsApi.md#delete6) | **DELETE** /api/latest/projects/{projectKey}/settings/reviewer-groups/{id} | Delete reviewer group
-*PullRequestsApi* | [**delete7**](docs/PullRequestsApi.md#delete7) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id} | Delete reviewer group
+*PullRequestsApi* | [**delete8**](docs/PullRequestsApi.md#delete8) | **DELETE** /api/latest/projects/{projectKey}/settings/reviewer-groups/{id} | Delete reviewer group
+*PullRequestsApi* | [**delete9**](docs/PullRequestsApi.md#delete9) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id} | Delete reviewer group
 *PullRequestsApi* | [**deleteComment1**](docs/PullRequestsApi.md#deletecomment1) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments/{commentId} | Delete pull request comment
 *PullRequestsApi* | [**deleteComment2**](docs/PullRequestsApi.md#deletecomment2) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} | Delete a pull request comment
 *PullRequestsApi* | [**deletePullRequestCondition**](docs/PullRequestsApi.md#deletepullrequestcondition) | **DELETE** /default-reviewers/latest/projects/{projectKey}/condition/{id} | Delete default reviewer condition
@@ -399,6 +407,7 @@ All URIs are relative to *http://example.com:7990/rest*
 *RepositoryApi* | [**createTagForRepository**](docs/RepositoryApi.md#createtagforrepository) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug}/tags | Create tag
 *RepositoryApi* | [**createWebhook1**](docs/RepositoryApi.md#createwebhook1) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug}/webhooks | Create webhook
 *RepositoryApi* | [**delete5**](docs/RepositoryApi.md#delete5) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/auto-merge | Delete pull request auto-merge settings
+*RepositoryApi* | [**delete7**](docs/RepositoryApi.md#delete7) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/change-author | Delete pull request change-author settings
 *RepositoryApi* | [**deleteAllDefaultTasks1**](docs/RepositoryApi.md#deletealldefaulttasks1) | **DELETE** /default-tasks/latest/projects/{projectKey}/repos/{repositorySlug}/tasks | Deletes all default tasks for the repository
 *RepositoryApi* | [**deleteAttachment**](docs/RepositoryApi.md#deleteattachment) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/attachments/{attachmentId} | Delete an attachment
 *RepositoryApi* | [**deleteAttachmentMetadata**](docs/RepositoryApi.md#deleteattachmentmetadata) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/attachments/{attachmentId}/metadata | Delete attachment metadata
@@ -417,6 +426,7 @@ All URIs are relative to *http://example.com:7990/rest*
 *RepositoryApi* | [**findByCommit**](docs/RepositoryApi.md#findbycommit) | **GET** /branch-utils/latest/projects/{projectKey}/repos/{repositorySlug}/branches/info/{commitId} | Get branch
 *RepositoryApi* | [**findWebhooks1**](docs/RepositoryApi.md#findwebhooks1) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/webhooks | Find webhooks
 *RepositoryApi* | [**get5**](docs/RepositoryApi.md#get5) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/auto-merge | Get pull request auto-merge settings
+*RepositoryApi* | [**get7**](docs/RepositoryApi.md#get7) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/change-author | Get pull request change-author settings
 *RepositoryApi* | [**getAllLabelsForRepository**](docs/RepositoryApi.md#getalllabelsforrepository) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/labels | Get repository labels
 *RepositoryApi* | [**getArchive**](docs/RepositoryApi.md#getarchive) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/archive | Stream archive of repository
 *RepositoryApi* | [**getAttachment**](docs/RepositoryApi.md#getattachment) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/attachments/{attachmentId} | Get an attachment
@@ -459,6 +469,7 @@ All URIs are relative to *http://example.com:7990/rest*
 *RepositoryApi* | [**saveAttachmentMetadata**](docs/RepositoryApi.md#saveattachmentmetadata) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/attachments/{attachmentId}/metadata | Save attachment metadata
 *RepositoryApi* | [**searchWebhooks**](docs/RepositoryApi.md#searchwebhooks) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/webhooks/search | Search webhooks
 *RepositoryApi* | [**set1**](docs/RepositoryApi.md#set1) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/auto-merge | Create or update the pull request auto-merge settings
+*RepositoryApi* | [**set3**](docs/RepositoryApi.md#set3) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/change-author | Create or update the pull request change-author settings
 *RepositoryApi* | [**setAutoDeclineSettings1**](docs/RepositoryApi.md#setautodeclinesettings1) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/auto-decline | Create auto decline settings
 *RepositoryApi* | [**setConfiguration1**](docs/RepositoryApi.md#setconfiguration1) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/hook-scripts/{scriptId} | Create/update a hook script
 *RepositoryApi* | [**setDefaultBranch1**](docs/RepositoryApi.md#setdefaultbranch1) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default | Update default branch
@@ -487,6 +498,16 @@ All URIs are relative to *http://example.com:7990/rest*
 *RepositoryApi* | [**updateWebhook1**](docs/RepositoryApi.md#updatewebhook1) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/webhooks/{webhookId} | Update webhook
 *RepositoryApi* | [**watch**](docs/RepositoryApi.md#watch) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/watch | Watch commit
 *RepositoryApi* | [**watch2**](docs/RepositoryApi.md#watch2) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug}/watch | Watch repository
+*SAMLCertificateConfigurationApi* | [**getSamlCertificate**](docs/SAMLCertificateConfigurationApi.md#getsamlcertificate) | **GET** /authconfig/latest/saml/certificate | 
+*SAMLCertificateConfigurationApi* | [**regenerateCertificate**](docs/SAMLCertificateConfigurationApi.md#regeneratecertificate) | **POST** /authconfig/latest/saml/certificate/reset | 
+*SearchApi* | [**getBrokenIndexStatusRepos**](docs/SearchApi.md#getbrokenindexstatusrepos) | **GET** /indexing/latest/support-info/broken-index-status-repos | Retrieve a paged list of repositories which have exceeded the configured maximum indexing retries.
+*SearchApi* | [**getDetails**](docs/SearchApi.md#getdetails) | **GET** /indexing/latest/projects/{projectKey}/repos/{repositorySlug} | Get repository search indexing details.
+*SearchApi* | [**getIndexingThreadSnapshot**](docs/SearchApi.md#getindexingthreadsnapshot) | **GET** /indexing/latest/support-info/indexing-thread-snapshot | Retrieve a snapshot of the indexing thread details.
+*SearchApi* | [**getQueueDetails**](docs/SearchApi.md#getqueuedetails) | **GET** /indexing/latest/projects/{projectKey}/repos/{repositorySlug}/indexing-queue-details | Retrieve detailed queue information for a repository
+*SearchApi* | [**indexingQueuedStatus**](docs/SearchApi.md#indexingqueuedstatus) | **GET** /indexing/latest/projects/{projectKey}/repos/{repositorySlug}/indexing-queued-status | Checks if a repository has been queued for indexing.
+*SearchApi* | [**reindexRepositories**](docs/SearchApi.md#reindexrepositories) | **POST** /indexing/latest/reindex | Re-indexes the search index of the provided list of repositories
+*SearchApi* | [**restartIndexingThreadWorker**](docs/SearchApi.md#restartindexingthreadworker) | **POST** /indexing/latest/restart | Restarts the search indexing worker thread
+*SearchApi* | [**setWorkerThreadCount**](docs/SearchApi.md#setworkerthreadcount) | **PUT** /indexing/latest/threads | Sets the desired number of indexing worker threads
 *SecurityApi* | [**addExemptRepo**](docs/SecurityApi.md#addexemptrepo) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt | Exempt a repo from secret scanning
 *SecurityApi* | [**addKey**](docs/SecurityApi.md#addkey) | **POST** /gpg/latest/keys | Create a GPG key
 *SecurityApi* | [**bulkAddExemptRepositories**](docs/SecurityApi.md#bulkaddexemptrepositories) | **POST** /api/latest/secret-scanning/exempt | Bulk exempt repos from secret scanning
@@ -539,15 +560,15 @@ All URIs are relative to *http://example.com:7990/rest*
 *SystemMaintenanceApi* | [**clearSenderAddress**](docs/SystemMaintenanceApi.md#clearsenderaddress) | **DELETE** /api/latest/admin/mail-server/sender-address | Update mail configuration
 *SystemMaintenanceApi* | [**connectivity**](docs/SystemMaintenanceApi.md#connectivity) | **GET** /api/latest/admin/git/mesh/diagnostics/connectivity | Generate Mesh connectivity report
 *SystemMaintenanceApi* | [**createHookScript**](docs/SystemMaintenanceApi.md#createhookscript) | **POST** /api/latest/hook-scripts | Create a new hook script
+*SystemMaintenanceApi* | [**delete10**](docs/SystemMaintenanceApi.md#delete10) | **DELETE** /api/latest/admin/rate-limit/settings/users/{userSlug} | Delete user specific rate limit settings
 *SystemMaintenanceApi* | [**delete2**](docs/SystemMaintenanceApi.md#delete2) | **DELETE** /api/latest/admin/git/mesh/nodes/{id} | Delete Mesh node
-*SystemMaintenanceApi* | [**delete8**](docs/SystemMaintenanceApi.md#delete8) | **DELETE** /api/latest/admin/rate-limit/settings/users/{userSlug} | Delete user specific rate limit settings
 *SystemMaintenanceApi* | [**deleteAvatar**](docs/SystemMaintenanceApi.md#deleteavatar) | **DELETE** /api/latest/users/{userSlug}/avatar.png | Delete user avatar
 *SystemMaintenanceApi* | [**deleteBanner**](docs/SystemMaintenanceApi.md#deletebanner) | **DELETE** /api/latest/admin/banner | Delete announcement banner
 *SystemMaintenanceApi* | [**deleteHookScript**](docs/SystemMaintenanceApi.md#deletehookscript) | **DELETE** /api/latest/hook-scripts/{scriptId} | Delete a hook script.
 *SystemMaintenanceApi* | [**deleteMailConfig**](docs/SystemMaintenanceApi.md#deletemailconfig) | **DELETE** /api/latest/admin/mail-server | Delete mail configuration
 *SystemMaintenanceApi* | [**dismissRetentionConfigReviewNotification**](docs/SystemMaintenanceApi.md#dismissretentionconfigreviewnotification) | **DELETE** /audit/latest/notification-settings/retention-config-review | Dismiss retention config notification
 *SystemMaintenanceApi* | [**get2**](docs/SystemMaintenanceApi.md#get2) | **GET** /api/latest/admin/license | Get license details
-*SystemMaintenanceApi* | [**get6**](docs/SystemMaintenanceApi.md#get6) | **GET** /api/latest/admin/rate-limit/settings/users/{userSlug} | Get user specific rate limit settings
+*SystemMaintenanceApi* | [**get8**](docs/SystemMaintenanceApi.md#get8) | **GET** /api/latest/admin/rate-limit/settings/users/{userSlug} | Get user specific rate limit settings
 *SystemMaintenanceApi* | [**getActiveMeshMigrationSummary**](docs/SystemMaintenanceApi.md#getactivemeshmigrationsummary) | **GET** /api/latest/migration/mesh/summary | Get summary for Mesh migration job
 *SystemMaintenanceApi* | [**getAllMeshMigrationSummaries**](docs/SystemMaintenanceApi.md#getallmeshmigrationsummaries) | **GET** /api/latest/migration/mesh/summaries | Get all Mesh migration job summaries
 *SystemMaintenanceApi* | [**getAllRateLimitSettings**](docs/SystemMaintenanceApi.md#getallratelimitsettings) | **GET** /api/latest/admin/rate-limit/settings/users | Get rate limit settings for user
@@ -590,8 +611,8 @@ All URIs are relative to *http://example.com:7990/rest*
 *SystemMaintenanceApi* | [**read**](docs/SystemMaintenanceApi.md#read) | **GET** /api/latest/hook-scripts/{scriptId}/content | Get hook script content
 *SystemMaintenanceApi* | [**registerNewMeshNode**](docs/SystemMaintenanceApi.md#registernewmeshnode) | **POST** /api/latest/admin/git/mesh/nodes | Register new Mesh node
 *SystemMaintenanceApi* | [**searchMeshMigrationRepos**](docs/SystemMaintenanceApi.md#searchmeshmigrationrepos) | **GET** /api/latest/migration/mesh/repos | Find repositories by Mesh migration state
-*SystemMaintenanceApi* | [**set2**](docs/SystemMaintenanceApi.md#set2) | **POST** /api/latest/admin/rate-limit/settings/users | Set rate limit settings for users
-*SystemMaintenanceApi* | [**set3**](docs/SystemMaintenanceApi.md#set3) | **PUT** /api/latest/admin/rate-limit/settings/users/{userSlug} | Set rate limit settings for user
+*SystemMaintenanceApi* | [**set4**](docs/SystemMaintenanceApi.md#set4) | **POST** /api/latest/admin/rate-limit/settings/users | Set rate limit settings for users
+*SystemMaintenanceApi* | [**set5**](docs/SystemMaintenanceApi.md#set5) | **PUT** /api/latest/admin/rate-limit/settings/users/{userSlug} | Set rate limit settings for user
 *SystemMaintenanceApi* | [**setBanner**](docs/SystemMaintenanceApi.md#setbanneroperation) | **PUT** /api/latest/admin/banner | Update/Set announcement banner
 *SystemMaintenanceApi* | [**setDefaultBranch**](docs/SystemMaintenanceApi.md#setdefaultbranchoperation) | **PUT** /api/latest/admin/default-branch | Update/Set default branch
 *SystemMaintenanceApi* | [**setLevel**](docs/SystemMaintenanceApi.md#setlevel) | **PUT** /api/latest/logs/logger/{loggerName}/{levelName} | Set log level
@@ -632,6 +653,7 @@ All URIs are relative to *http://example.com:7990/rest*
 - [ConversationDTO](docs/ConversationDTO.md)
 - [Credentials](docs/Credentials.md)
 - [CredentialsCheckFailedDTO](docs/CredentialsCheckFailedDTO.md)
+- [DismissRetentionConfigReviewNotification401Response](docs/DismissRetentionConfigReviewNotification401Response.md)
 - [ElevationMethodRestDTO](docs/ElevationMethodRestDTO.md)
 - [EnrichedRepository](docs/EnrichedRepository.md)
 - [EnrichedRepositoryProperties](docs/EnrichedRepositoryProperties.md)
@@ -651,11 +673,11 @@ All URIs are relative to *http://example.com:7990/rest*
 - [GetActivities200Response](docs/GetActivities200Response.md)
 - [GetAll200Response](docs/GetAll200Response.md)
 - [GetAllAccessTokens200Response](docs/GetAllAccessTokens200Response.md)
-- [GetAllAccessTokens401Response](docs/GetAllAccessTokens401Response.md)
 - [GetAllMeshMigrationSummaries200Response](docs/GetAllMeshMigrationSummaries200Response.md)
 - [GetAllRateLimitSettings200Response](docs/GetAllRateLimitSettings200Response.md)
 - [GetAllReposForProject200Response](docs/GetAllReposForProject200Response.md)
 - [GetBranches200Response](docs/GetBranches200Response.md)
+- [GetBrokenIndexStatusRepos200Response](docs/GetBrokenIndexStatusRepos200Response.md)
 - [GetBuildStatus200Response](docs/GetBuildStatus200Response.md)
 - [GetChanges1200Response](docs/GetChanges1200Response.md)
 - [GetComments200Response](docs/GetComments200Response.md)
@@ -736,6 +758,9 @@ All URIs are relative to *http://example.com:7990/rest*
 - [RestBranch](docs/RestBranch.md)
 - [RestBranchCreateRequest](docs/RestBranchCreateRequest.md)
 - [RestBranchDeleteRequest](docs/RestBranchDeleteRequest.md)
+- [RestBrokenIndexStatusRepository](docs/RestBrokenIndexStatusRepository.md)
+- [RestBrokenIndexStatusRepositoryDetails](docs/RestBrokenIndexStatusRepositoryDetails.md)
+- [RestBrokenIndexStatusRepositoryRepository](docs/RestBrokenIndexStatusRepositoryRepository.md)
 - [RestBuildCapabilities](docs/RestBuildCapabilities.md)
 - [RestBuildStats](docs/RestBuildStats.md)
 - [RestBuildStatus](docs/RestBuildStatus.md)
@@ -747,12 +772,12 @@ All URIs are relative to *http://example.com:7990/rest*
 - [RestChange](docs/RestChange.md)
 - [RestChangeConflict](docs/RestChangeConflict.md)
 - [RestChangeConflictOurChange](docs/RestChangeConflictOurChange.md)
+- [RestChangePullRequestAuthorProjectSettingsRequest](docs/RestChangePullRequestAuthorProjectSettingsRequest.md)
+- [RestChangePullRequestAuthorRestrictedSettings](docs/RestChangePullRequestAuthorRestrictedSettings.md)
+- [RestChangePullRequestAuthorSettingsRequest](docs/RestChangePullRequestAuthorSettingsRequest.md)
 - [RestChangeset](docs/RestChangeset.md)
 - [RestChangesetChanges](docs/RestChangesetChanges.md)
 - [RestChangesetFromCommit](docs/RestChangesetFromCommit.md)
-- [RestChangesetRepository](docs/RestChangesetRepository.md)
-- [RestChangesetRepositoryOrigin](docs/RestChangesetRepositoryOrigin.md)
-- [RestChangesetRepositoryOriginProject](docs/RestChangesetRepositoryOriginProject.md)
 - [RestChangesetToCommit](docs/RestChangesetToCommit.md)
 - [RestChangesetToCommitAuthor](docs/RestChangesetToCommitAuthor.md)
 - [RestClusterInformation](docs/RestClusterInformation.md)
@@ -768,6 +793,9 @@ All URIs are relative to *http://example.com:7990/rest*
 - [RestCommentAnchorPullRequestAuthor](docs/RestCommentAnchorPullRequestAuthor.md)
 - [RestCommentAnchorPullRequestAuthorUser](docs/RestCommentAnchorPullRequestAuthorUser.md)
 - [RestCommentAnchorPullRequestFromRef](docs/RestCommentAnchorPullRequestFromRef.md)
+- [RestCommentAnchorPullRequestFromRefRepository](docs/RestCommentAnchorPullRequestFromRefRepository.md)
+- [RestCommentAnchorPullRequestFromRefRepositoryOrigin](docs/RestCommentAnchorPullRequestFromRefRepositoryOrigin.md)
+- [RestCommentAnchorPullRequestFromRefRepositoryOriginProject](docs/RestCommentAnchorPullRequestFromRefRepositoryOriginProject.md)
 - [RestCommentAuthor](docs/RestCommentAuthor.md)
 - [RestCommentJiraIssue](docs/RestCommentJiraIssue.md)
 - [RestCommentParent](docs/RestCommentParent.md)
@@ -779,6 +807,7 @@ All URIs are relative to *http://example.com:7990/rest*
 - [RestConnectivitySummary](docs/RestConnectivitySummary.md)
 - [RestCreateBranchRequest](docs/RestCreateBranchRequest.md)
 - [RestCreateTagRequest](docs/RestCreateTagRequest.md)
+- [RestCspSettings](docs/RestCspSettings.md)
 - [RestDefaultBranch](docs/RestDefaultBranch.md)
 - [RestDefaultReviewersRequest](docs/RestDefaultReviewersRequest.md)
 - [RestDefaultTask](docs/RestDefaultTask.md)
@@ -811,10 +840,24 @@ All URIs are relative to *http://example.com:7990/rest*
 - [RestHookScriptConfigScript](docs/RestHookScriptConfigScript.md)
 - [RestHookScriptTriggers](docs/RestHookScriptTriggers.md)
 - [RestImportRequest](docs/RestImportRequest.md)
+- [RestIndexEvent](docs/RestIndexEvent.md)
+- [RestIndexingIsRepositoryQueued](docs/RestIndexingIsRepositoryQueued.md)
+- [RestIndexingProcess](docs/RestIndexingProcess.md)
+- [RestIndexingProcessEvent](docs/RestIndexingProcessEvent.md)
+- [RestIndexingThreadDetails](docs/RestIndexingThreadDetails.md)
+- [RestIndexingThreadDetailsCurrentProcess](docs/RestIndexingThreadDetailsCurrentProcess.md)
+- [RestIndexingThreadDetailsState](docs/RestIndexingThreadDetailsState.md)
+- [RestIndexingThreadState](docs/RestIndexingThreadState.md)
+- [RestIndexingWorkerRestartRequest](docs/RestIndexingWorkerRestartRequest.md)
+- [RestIndexingWorkerThreadsRequest](docs/RestIndexingWorkerThreadsRequest.md)
 - [RestInsightAnnotation](docs/RestInsightAnnotation.md)
 - [RestInsightAnnotationsResponse](docs/RestInsightAnnotationsResponse.md)
 - [RestInsightReport](docs/RestInsightReport.md)
 - [RestInsightReportData](docs/RestInsightReportData.md)
+- [RestJiraBackfillError](docs/RestJiraBackfillError.md)
+- [RestJiraBackfillReport](docs/RestJiraBackfillReport.md)
+- [RestJiraBackfillStatus](docs/RestJiraBackfillStatus.md)
+- [RestJiraDevInfoBackfillRequest](docs/RestJiraDevInfoBackfillRequest.md)
 - [RestJiraIssue](docs/RestJiraIssue.md)
 - [RestJob](docs/RestJob.md)
 - [RestJobMessage](docs/RestJobMessage.md)
@@ -906,6 +949,8 @@ All URIs are relative to *http://example.com:7990/rest*
 - [RestRepository](docs/RestRepository.md)
 - [RestRepositoryHook](docs/RestRepositoryHook.md)
 - [RestRepositoryHookVeto](docs/RestRepositoryHookVeto.md)
+- [RestRepositoryIndexingDetails](docs/RestRepositoryIndexingDetails.md)
+- [RestRepositoryIndexingQueueDetails](docs/RestRepositoryIndexingQueueDetails.md)
 - [RestRepositoryLockOwner](docs/RestRepositoryLockOwner.md)
 - [RestRepositoryMirrorEvent](docs/RestRepositoryMirrorEvent.md)
 - [RestRepositoryPolicy](docs/RestRepositoryPolicy.md)
@@ -967,7 +1012,6 @@ All URIs are relative to *http://example.com:7990/rest*
 - [SsoConfigEntity](docs/SsoConfigEntity.md)
 - [SsoManagementStatusDTO](docs/SsoManagementStatusDTO.md)
 - [StartMeshMigrationRequest](docs/StartMeshMigrationRequest.md)
-- [StartMeshMigrationRequestMaxBytesPerSecond](docs/StartMeshMigrationRequestMaxBytesPerSecond.md)
 - [StatusDTO](docs/StatusDTO.md)
 - [StreamFiles200Response](docs/StreamFiles200Response.md)
 - [TotpCodeVerificationDTO](docs/TotpCodeVerificationDTO.md)
@@ -1002,9 +1046,9 @@ This TypeScript SDK client supports the [Fetch API](https://fetch.spec.whatwg.or
 and is automatically generated by the
 [OpenAPI Generator](https://openapi-generator.tech) project:
 
-- API version: `9.5`
-- Package version: `9.5`
-- Generator version: `7.21.0`
+- API version: `10.4`
+- Package version: `10.4`
+- Generator version: `7.24.0`
 - Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`
 
 The generated npm module supports the following:

@@ -10,8 +10,9 @@ All URIs are relative to *http://example.com:7990/rest*
 | [**createRepository**](ProjectApi.md#createrepository) | **POST** /api/latest/projects/{projectKey}/repos | Create repository |
 | [**createRestrictions**](ProjectApi.md#createrestrictions) | **POST** /branch-permissions/latest/projects/{projectKey}/restrictions | Create multiple ref restrictions |
 | [**createWebhook**](ProjectApi.md#createwebhook) | **POST** /api/latest/projects/{projectKey}/webhooks | Create webhook |
+| [**delete11**](ProjectApi.md#delete11) | **DELETE** /api/latest/projects/{projectKey}/settings-restriction | Stop enforcing project restriction |
 | [**delete4**](ProjectApi.md#delete4) | **DELETE** /api/latest/projects/{projectKey}/settings/auto-merge | Delete pull request auto-merge settings |
-| [**delete9**](ProjectApi.md#delete9) | **DELETE** /api/latest/projects/{projectKey}/settings-restriction | Stop enforcing project restriction |
+| [**delete6**](ProjectApi.md#delete6) | **DELETE** /api/latest/projects/{projectKey}/settings/change-author | Delete pull request change-author settings |
 | [**deleteAllDefaultTasks**](ProjectApi.md#deletealldefaulttasks) | **DELETE** /default-tasks/latest/projects/{projectKey}/tasks | Deletes all default tasks for the project |
 | [**deleteAutoDeclineSettings**](ProjectApi.md#deleteautodeclinesettings) | **DELETE** /api/latest/projects/{projectKey}/settings/auto-decline | Delete auto decline settings |
 | [**deleteDefaultTask**](ProjectApi.md#deletedefaulttask) | **DELETE** /default-tasks/latest/projects/{projectKey}/tasks/{taskId} | Delete a specific default task |
@@ -24,7 +25,8 @@ All URIs are relative to *http://example.com:7990/rest*
 | [**findWebhooks**](ProjectApi.md#findwebhooks) | **GET** /api/latest/projects/{projectKey}/webhooks | Find webhooks |
 | [**forkRepository**](ProjectApi.md#forkrepository) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug} | Fork repository |
 | [**get4**](ProjectApi.md#get4) | **GET** /api/latest/projects/{projectKey}/settings/auto-merge | Get pull request auto-merge settings |
-| [**get7**](ProjectApi.md#get7) | **GET** /api/latest/projects/{projectKey}/settings-restriction | Get enforcing project setting |
+| [**get6**](ProjectApi.md#get6) | **GET** /api/latest/projects/{projectKey}/settings/change-author | Get pull request change-author settings |
+| [**get9**](ProjectApi.md#get9) | **GET** /api/latest/projects/{projectKey}/settings-restriction | Get enforcing project setting |
 | [**getAll**](ProjectApi.md#getall) | **GET** /api/latest/projects/{projectKey}/settings-restriction/all | Get all enforcing project settings |
 | [**getAutoDeclineSettings**](ProjectApi.md#getautodeclinesettings) | **GET** /api/latest/projects/{projectKey}/settings/auto-decline | Get auto decline settings |
 | [**getAvatar**](ProjectApi.md#getavatar) | **GET** /api/latest/hooks/{hookKey}/avatar | Get project avatar |
@@ -61,6 +63,7 @@ All URIs are relative to *http://example.com:7990/rest*
 | [**revokePermissionsForUser1**](ProjectApi.md#revokepermissionsforuser1) | **DELETE** /api/latest/projects/{projectKey}/permissions/users | Revoke user project permission |
 | [**searchPermissions**](ProjectApi.md#searchpermissions) | **GET** /api/latest/projects/{projectKey}/permissions/search | Search project permissions |
 | [**set**](ProjectApi.md#set) | **PUT** /api/latest/projects/{projectKey}/settings/auto-merge | Create or update the pull request auto-merge settings |
+| [**set2**](ProjectApi.md#set2) | **PUT** /api/latest/projects/{projectKey}/settings/change-author | Create or update the pull request change-author settings |
 | [**setAutoDeclineSettings**](ProjectApi.md#setautodeclinesettings) | **PUT** /api/latest/projects/{projectKey}/settings/auto-decline | Create/Update auto decline settings |
 | [**setConfiguration**](ProjectApi.md#setconfiguration) | **PUT** /api/latest/projects/{projectKey}/hook-scripts/{scriptId} | Create/update a hook script |
 | [**setDefaultBranch2**](ProjectApi.md#setdefaultbranch2) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/default-branch | Update default branch for repository |
@@ -515,6 +518,85 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## delete11
+
+> delete11(projectKey, namespace, featureKey, componentKey)
+
+Stop enforcing project restriction
+
+Delete a specified project settings restriction.  If a restriction does not exist for the specified project, namespace, featureKey, and componentKey, the request will be ignored and a 204 response will be returned.  The authenticated user must have **PROJECT_ADMIN** permission for the target project to delete a settings restriction.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProjectApi,
+} from 'bitbucket-api';
+import type { Delete11Request } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new ProjectApi();
+
+  const body = {
+    // string | The project key.
+    projectKey: projectKey_example,
+    // string | A namespace used to identify the provider of the feature
+    namespace: namespace_example,
+    // string | A key to uniquely identify the feature within the provided namespace
+    featureKey: featureKey_example,
+    // string | A key to uniquely identify individually restrictable subcomponents of a feature within the provided feature key and namespace (optional)
+    componentKey: componentKey_example,
+  } satisfies Delete11Request;
+
+  try {
+    const data = await api.delete11(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **projectKey** | `string` | The project key. | [Defaults to `undefined`] |
+| **namespace** | `string` | A namespace used to identify the provider of the feature | [Defaults to `undefined`] |
+| **featureKey** | `string` | A key to uniquely identify the feature within the provided namespace | [Defaults to `undefined`] |
+| **componentKey** | `string` | A key to uniquely identify individually restrictable subcomponents of a feature within the provided feature key and namespace | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | The specified settings restriction was successfully deleted or there were no existing restrictions that match the specified criteria. |  -  |
+| **400** | The settings restriction was not deleted because the request was invalid. Possible issues include:  - The namespace was not provided, or longer than 255 characters - The featureKey was not provided, or longer than 255 characters - The provided componentKey was fewer than 2 characters, or longer than 255 characters |  -  |
+| **401** | The currently authenticated user has insufficient permissions to delete a settings restriction |  -  |
+| **404** | The specified project does not exist |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## delete4
 
 > delete4(projectKey)
@@ -584,13 +666,13 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## delete9
+## delete6
 
-> delete9(projectKey, namespace, featureKey, componentKey)
+> delete6(projectKey)
 
-Stop enforcing project restriction
+Delete pull request change-author settings
 
-Delete a specified project settings restriction.  If a restriction does not exist for the specified project, namespace, featureKey, and componentKey, the request will be ignored and a 204 response will be returned.  The authenticated user must have **PROJECT_ADMIN** permission for the target project to delete a settings restriction.
+Deletes pull request change-author settings for the supplied project.  The authenticated user must have &lt;strong&gt;PROJECT_ADMIN&lt;/strong&gt; permission for this project to call the resource.
 
 ### Example
 
@@ -599,25 +681,19 @@ import {
   Configuration,
   ProjectApi,
 } from 'bitbucket-api';
-import type { Delete9Request } from 'bitbucket-api';
+import type { Delete6Request } from 'bitbucket-api';
 
 async function example() {
   console.log("🚀 Testing bitbucket-api SDK...");
   const api = new ProjectApi();
 
   const body = {
-    // string | The project key.
+    // string | The project key
     projectKey: projectKey_example,
-    // string | A namespace used to identify the provider of the feature
-    namespace: namespace_example,
-    // string | A key to uniquely identify the feature within the provided namespace
-    featureKey: featureKey_example,
-    // string | A key to uniquely identify individually restrictable subcomponents of a feature within the provided feature key and namespace (optional)
-    componentKey: componentKey_example,
-  } satisfies Delete9Request;
+  } satisfies Delete6Request;
 
   try {
-    const data = await api.delete9(body);
+    const data = await api.delete6(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -633,10 +709,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **projectKey** | `string` | The project key. | [Defaults to `undefined`] |
-| **namespace** | `string` | A namespace used to identify the provider of the feature | [Defaults to `undefined`] |
-| **featureKey** | `string` | A key to uniquely identify the feature within the provided namespace | [Defaults to `undefined`] |
-| **componentKey** | `string` | A key to uniquely identify individually restrictable subcomponents of a feature within the provided feature key and namespace | [Optional] [Defaults to `undefined`] |
+| **projectKey** | `string` | The project key | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -655,10 +728,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **204** | The specified settings restriction was successfully deleted or there were no existing restrictions that match the specified criteria. |  -  |
-| **400** | The settings restriction was not deleted because the request was invalid. Possible issues include:  - The namespace was not provided, or longer than 255 characters - The featureKey was not provided, or longer than 255 characters - The provided componentKey was fewer than 2 characters, or longer than 255 characters |  -  |
-| **401** | The currently authenticated user has insufficient permissions to delete a settings restriction |  -  |
-| **404** | The specified project does not exist |  -  |
+| **204** | The pull request change-author settings |  -  |
+| **401** | The currently authenticated user has insufficient permissions to delete the pull request change-author settings. |  -  |
+| **404** | The specified project does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -1527,9 +1599,78 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## get7
+## get6
 
-> RestProjectSettingsRestriction get7(projectKey, namespace, featureKey, componentKey)
+> RestChangePullRequestAuthorRestrictedSettings get6(projectKey)
+
+Get pull request change-author settings
+
+Retrieves the pull request change-author settings for the supplied project. Default settings will be returned if no explicit settings have been set for the project.  The authenticated user must have &lt;strong&gt;PROJECT_VIEW&lt;/strong&gt; permission for this project to call the resource.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProjectApi,
+} from 'bitbucket-api';
+import type { Get6Request } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new ProjectApi();
+
+  const body = {
+    // string | The project key
+    projectKey: projectKey_example,
+  } satisfies Get6Request;
+
+  try {
+    const data = await api.get6(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **projectKey** | `string` | The project key | [Defaults to `undefined`] |
+
+### Return type
+
+[**RestChangePullRequestAuthorRestrictedSettings**](RestChangePullRequestAuthorRestrictedSettings.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json;charset=UTF-8`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The pull request change-author settings |  -  |
+| **401** | The currently authenticated user has insufficient permissions to retrieve the pull request change-author settings. |  -  |
+| **404** | The specified project does not exist. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## get9
+
+> RestProjectSettingsRestriction get9(projectKey, namespace, featureKey, componentKey)
 
 Get enforcing project setting
 
@@ -1542,7 +1683,7 @@ import {
   Configuration,
   ProjectApi,
 } from 'bitbucket-api';
-import type { Get7Request } from 'bitbucket-api';
+import type { Get9Request } from 'bitbucket-api';
 
 async function example() {
   console.log("🚀 Testing bitbucket-api SDK...");
@@ -1557,10 +1698,10 @@ async function example() {
     featureKey: featureKey_example,
     // string | The component key to uniquely identify individually restrictable subcomponents of a feature within the provided feature key and namespace (optional)
     componentKey: componentKey_example,
-  } satisfies Get7Request;
+  } satisfies Get9Request;
 
   try {
-    const data = await api.get7(body);
+    const data = await api.get9(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -2658,11 +2799,11 @@ No authorization required
 
 ## getRelatedRepositories
 
-> GetRepositoriesRecentlyAccessed200Response getRelatedRepositories(projectKey, repositorySlug, start, limit)
+> GetRepositoriesRecentlyAccessed200Response getRelatedRepositories(projectKey, repositorySlug, permission, start, limit)
 
 Get related repository
 
-Retrieve repositories which are related to this one. Related repositories are from the same Repository#getHierarchyId() hierarchy as this repository.   Only repositories to which the authenticated user has &lt;b&gt;REPO_READ&lt;/b&gt; permission will be included, even if more repositories are part of this repository\&#39;s hierarchy.
+Retrieve repositories which are related to this one. Related repositories are from the same Repository#getHierarchyId() hierarchy as this repository.   Only repositories to which the authenticated user has the requested permission will be included, even if more repositories are part of this repository\&#39;s hierarchy. When the permission parameter is not specified, repositories visible to the requesting user are included.   Use of REPO_READ permission also implies access to public repositories
 
 ### Example
 
@@ -2682,6 +2823,8 @@ async function example() {
     projectKey: projectKey_example,
     // string | The repository slug.
     repositorySlug: repositorySlug_example,
+    // 'REPO_READ' | 'REPO_WRITE' | 'REPO_ADMIN' | If specified, only repositories for which the authenticated user has the supplied permission will be returned. (optional)
+    permission: permission_example,
     // number | Start number for the page (inclusive). If not passed, first page is assumed. (optional)
     start: 0,
     // number | Number of items to return. If not passed, a page size of 25 is used. (optional)
@@ -2707,6 +2850,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **projectKey** | `string` | The project key. | [Defaults to `undefined`] |
 | **repositorySlug** | `string` | The repository slug. | [Defaults to `undefined`] |
+| **permission** | `REPO_READ`, `REPO_WRITE`, `REPO_ADMIN` | If specified, only repositories for which the authenticated user has the supplied permission will be returned. | [Optional] [Defaults to `undefined`] [Enum: REPO_READ, REPO_WRITE, REPO_ADMIN] |
 | **start** | `number` | Start number for the page (inclusive). If not passed, first page is assumed. | [Optional] [Defaults to `undefined`] |
 | **limit** | `number` | Number of items to return. If not passed, a page size of 25 is used. | [Optional] [Defaults to `undefined`] |
 
@@ -2728,6 +2872,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | A page of repositories related to the request repository. |  -  |
+| **400** | The permission level is unknown or not applicable to repositories. |  -  |
 | **401** | The currently authenticated user has insufficient permissions to see the request repository. |  -  |
 | **404** | The request repository does not exist. |  -  |
 
@@ -4302,6 +4447,79 @@ No authorization required
 | **200** | The pull request auto-merge settings |  -  |
 | **400** | The \&#39;enabled\&#39; and \&#39;restrictionAction\&#39; fields were not provided correctly. |  -  |
 | **401** | The currently authenticated user has insufficient permissions to create or update the pull request auto-merge settings. |  -  |
+| **404** | The specified project does not exist. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## set2
+
+> RestChangePullRequestAuthorRestrictedSettings set2(projectKey, restChangePullRequestAuthorProjectSettingsRequest)
+
+Create or update the pull request change-author settings
+
+Creates or updates the pull request change-author settings for the supplied project, and applies the restriction action specified in the request.  The authenticated user must have &lt;strong&gt;PROJECT_ADMIN&lt;/strong&gt; permission for this project to call the resource.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProjectApi,
+} from 'bitbucket-api';
+import type { Set2Request } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new ProjectApi();
+
+  const body = {
+    // string | The project key
+    projectKey: projectKey_example,
+    // RestChangePullRequestAuthorProjectSettingsRequest | The settings to create or update (optional)
+    restChangePullRequestAuthorProjectSettingsRequest: ...,
+  } satisfies Set2Request;
+
+  try {
+    const data = await api.set2(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **projectKey** | `string` | The project key | [Defaults to `undefined`] |
+| **restChangePullRequestAuthorProjectSettingsRequest** | [RestChangePullRequestAuthorProjectSettingsRequest](RestChangePullRequestAuthorProjectSettingsRequest.md) | The settings to create or update | [Optional] |
+
+### Return type
+
+[**RestChangePullRequestAuthorRestrictedSettings**](RestChangePullRequestAuthorRestrictedSettings.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json;charset=UTF-8`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The pull request change-author settings |  -  |
+| **400** | The \&#39;enabled\&#39; and \&#39;restrictionAction\&#39; fields were not provided correctly. |  -  |
+| **401** | The currently authenticated user has insufficient permissions to create or update the pull request change-author settings. |  -  |
 | **404** | The specified project does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

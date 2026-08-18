@@ -9,7 +9,7 @@ Name | Type
 `displayId` | string
 `id` | string
 `latestCommit` | string
-`repository` | [RestChangesetRepository](RestChangesetRepository.md)
+`repository` | [RestCommentAnchorPullRequestFromRefRepository](RestCommentAnchorPullRequestFromRefRepository.md)
 `type` | string
 
 

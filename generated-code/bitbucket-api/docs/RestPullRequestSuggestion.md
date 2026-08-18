@@ -9,7 +9,7 @@ Name | Type
 `changeTme` | number
 `fromRef` | [RestPullRequestRebaseResultRefChangeRef](RestPullRequestRebaseResultRefChangeRef.md)
 `refChange` | [RestPullRequestRebaseResultRefChange](RestPullRequestRebaseResultRefChange.md)
-`repository` | [RestChangesetRepository](RestChangesetRepository.md)
+`repository` | [RestCommentAnchorPullRequestFromRefRepository](RestCommentAnchorPullRequestFromRefRepository.md)
 `toRef` | [RestPullRequestRebaseResultRefChangeRef](RestPullRequestRebaseResultRefChangeRef.md)
 
 

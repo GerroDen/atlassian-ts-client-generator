@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `configFormKey` | string
+`configFormView` | string
 `description` | string
 `key` | string
 `name` | string

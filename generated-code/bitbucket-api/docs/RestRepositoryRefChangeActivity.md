@@ -9,7 +9,7 @@ Name | Type
 `createdDate` | number
 `id` | number
 `refChange` | [RestRepositoryRefChangeActivityRefChange](RestRepositoryRefChangeActivityRefChange.md)
-`repository` | [RestChangesetRepository](RestChangesetRepository.md)
+`repository` | [RestCommentAnchorPullRequestFromRefRepository](RestCommentAnchorPullRequestFromRefRepository.md)
 `trigger` | string
 `user` | [RestCommentAnchorPullRequestAuthorUser](RestCommentAnchorPullRequestAuthorUser.md)
 

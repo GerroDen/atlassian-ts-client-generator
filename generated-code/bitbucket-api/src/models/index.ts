@@ -269,25 +269,25 @@ export interface Comment {
      * @type {CommentThreadDiffAnchor}
      * @memberof Comment
      */
-    anchor?: CommentThreadDiffAnchor;
+    anchor: CommentThreadDiffAnchor;
     /**
      * 
      * @type {ApplicationUser}
      * @memberof Comment
      */
-    author?: ApplicationUser;
+    author: ApplicationUser;
     /**
      * 
      * @type {Array<Comment>}
      * @memberof Comment
      */
-    comments?: Array<Comment>;
+    comments: Array<Comment>;
     /**
      * 
      * @type {string}
      * @memberof Comment
      */
-    createdDate?: string;
+    createdDate: string;
     /**
      * 
      * @type {number}
@@ -299,13 +299,13 @@ export interface Comment {
      * @type {CommentOperations}
      * @memberof Comment
      */
-    permittedOperations?: CommentOperations;
+    permittedOperations: CommentOperations;
     /**
      * 
      * @type {object}
      * @memberof Comment
      */
-    properties?: object;
+    properties: object;
     /**
      * 
      * @type {string}
@@ -323,31 +323,31 @@ export interface Comment {
      * @type {CommentSeverityEnum}
      * @memberof Comment
      */
-    severity?: CommentSeverityEnum;
+    severity: CommentSeverityEnum;
     /**
      * 
      * @type {CommentStateEnum}
      * @memberof Comment
      */
-    state?: CommentStateEnum;
+    state: CommentStateEnum;
     /**
      * 
      * @type {string}
      * @memberof Comment
      */
-    text?: string;
+    text: string;
     /**
      * 
      * @type {CommentThread}
      * @memberof Comment
      */
-    thread?: CommentThread;
+    thread: CommentThread;
     /**
      * 
      * @type {string}
      * @memberof Comment
      */
-    updatedDate?: string;
+    updatedDate: string;
     /**
      * 
      * @type {number}
@@ -412,7 +412,7 @@ export interface CommentThread {
      * @type {CommentThreadDiffAnchor}
      * @memberof CommentThread
      */
-    anchor?: CommentThreadDiffAnchor;
+    anchor: CommentThreadDiffAnchor;
     /**
      * 
      * @type {boolean}
@@ -424,13 +424,13 @@ export interface CommentThread {
      * @type {object}
      * @memberof CommentThread
      */
-    commentable?: object;
+    commentable: object;
     /**
      * 
      * @type {string}
      * @memberof CommentThread
      */
-    createdDate?: string;
+    createdDate: string;
     /**
      * 
      * @type {number}
@@ -460,13 +460,13 @@ export interface CommentThread {
      * @type {Comment}
      * @memberof CommentThread
      */
-    rootComment?: Comment;
+    rootComment: Comment;
     /**
      * 
      * @type {string}
      * @memberof CommentThread
      */
-    updatedDate?: string;
+    updatedDate: string;
 }
 /**
  * 
@@ -479,7 +479,7 @@ export interface CommentThreadDiffAnchor {
      * @type {CommentThreadDiffAnchorDiffTypeEnum}
      * @memberof CommentThreadDiffAnchor
      */
-    diffType?: CommentThreadDiffAnchorDiffTypeEnum;
+    diffType: CommentThreadDiffAnchorDiffTypeEnum;
     /**
      * 
      * @type {boolean}
@@ -491,13 +491,13 @@ export interface CommentThreadDiffAnchor {
      * @type {CommentThreadDiffAnchorFileTypeEnum}
      * @memberof CommentThreadDiffAnchor
      */
-    fileType?: CommentThreadDiffAnchorFileTypeEnum;
+    fileType: CommentThreadDiffAnchorFileTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof CommentThreadDiffAnchor
      */
-    fromHash?: string;
+    fromHash: string;
     /**
      * 
      * @type {number}
@@ -515,7 +515,7 @@ export interface CommentThreadDiffAnchor {
      * @type {CommentThreadDiffAnchorLineTypeEnum}
      * @memberof CommentThreadDiffAnchor
      */
-    lineType?: CommentThreadDiffAnchorLineTypeEnum;
+    lineType: CommentThreadDiffAnchorLineTypeEnum;
     /**
      * 
      * @type {boolean}
@@ -527,25 +527,25 @@ export interface CommentThreadDiffAnchor {
      * @type {LineNumberRange}
      * @memberof CommentThreadDiffAnchor
      */
-    multilineDestinationRange?: LineNumberRange;
+    multilineDestinationRange: LineNumberRange;
     /**
      * 
      * @type {LineNumberRange}
      * @memberof CommentThreadDiffAnchor
      */
-    multilineSourceRange?: LineNumberRange;
+    multilineSourceRange: LineNumberRange;
     /**
      * 
      * @type {number}
      * @memberof CommentThreadDiffAnchor
      */
-    multilineStartLine?: number;
+    multilineStartLine: number;
     /**
      * 
      * @type {CommentThreadDiffAnchorMultilineStartLineTypeEnum}
      * @memberof CommentThreadDiffAnchor
      */
-    multilineStartLineType?: CommentThreadDiffAnchorMultilineStartLineTypeEnum;
+    multilineStartLineType: CommentThreadDiffAnchorMultilineStartLineTypeEnum;
     /**
      * 
      * @type {boolean}
@@ -557,19 +557,19 @@ export interface CommentThreadDiffAnchor {
      * @type {string}
      * @memberof CommentThreadDiffAnchor
      */
-    path?: string;
+    path: string;
     /**
      * 
      * @type {string}
      * @memberof CommentThreadDiffAnchor
      */
-    srcPath?: string;
+    srcPath: string;
     /**
      * 
      * @type {string}
      * @memberof CommentThreadDiffAnchor
      */
-    toHash?: string;
+    toHash: string;
 }
 
 
@@ -658,10 +658,29 @@ export interface CredentialsCheckFailedDTO {
     captchaRequired?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof CredentialsCheckFailedDTO
+     */
+    expiredCredentials?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof CredentialsCheckFailedDTO
      */
     message?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DismissRetentionConfigReviewNotification401Response
+ */
+export interface DismissRetentionConfigReviewNotification401Response {
+    /**
+     * 
+     * @type {Array<RestErrorMessage>}
+     * @memberof DismissRetentionConfigReviewNotification401Response
+     */
+    errors?: Array<RestErrorMessage>;
 }
 /**
  * 
@@ -743,10 +762,10 @@ export interface EnrichedRepository {
     name?: string;
     /**
      * 
-     * @type {RestChangesetRepositoryOrigin}
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOrigin}
      * @memberof EnrichedRepository
      */
-    origin?: RestChangesetRepositoryOrigin;
+    origin?: RestCommentAnchorPullRequestFromRefRepositoryOrigin;
     /**
      * 
      * @type {number}
@@ -755,10 +774,10 @@ export interface EnrichedRepository {
     readonly partition?: number;
     /**
      * 
-     * @type {RestChangesetRepositoryOriginProject}
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
      * @memberof EnrichedRepository
      */
-    project?: RestChangesetRepositoryOriginProject;
+    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
     /**
      * 
      * @type {EnrichedRepositoryProperties}
@@ -1315,19 +1334,6 @@ export interface GetAllAccessTokens200Response {
 /**
  * 
  * @export
- * @interface GetAllAccessTokens401Response
- */
-export interface GetAllAccessTokens401Response {
-    /**
-     * 
-     * @type {Array<RestErrorMessage>}
-     * @memberof GetAllAccessTokens401Response
-     */
-    errors?: Array<RestErrorMessage>;
-}
-/**
- * 
- * @export
  * @interface GetAllMeshMigrationSummaries200Response
  */
 export interface GetAllMeshMigrationSummaries200Response {
@@ -1496,6 +1502,49 @@ export interface GetBranches200Response {
      * @memberof GetBranches200Response
      */
     values?: Array<RestBranch>;
+}
+/**
+ * 
+ * @export
+ * @interface GetBrokenIndexStatusRepos200Response
+ */
+export interface GetBrokenIndexStatusRepos200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetBrokenIndexStatusRepos200Response
+     */
+    isLastPage?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetBrokenIndexStatusRepos200Response
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetBrokenIndexStatusRepos200Response
+     */
+    nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetBrokenIndexStatusRepos200Response
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetBrokenIndexStatusRepos200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {Array<RestBrokenIndexStatusRepository>}
+     * @memberof GetBrokenIndexStatusRepos200Response
+     */
+    values?: Array<RestBrokenIndexStatusRepository>;
 }
 /**
  * 
@@ -3065,6 +3114,24 @@ export interface IdpConfigEntity {
     name?: string;
     /**
      * 
+     * @type {IdpConfigEntityNameIdPolicyEnum}
+     * @memberof IdpConfigEntity
+     */
+    nameIdPolicy?: IdpConfigEntityNameIdPolicyEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IdpConfigEntity
+     */
+    signAuthnrequest?: boolean;
+    /**
+     * 
+     * @type {IdpConfigEntitySignatureAlgorithmEnum}
+     * @memberof IdpConfigEntity
+     */
+    signatureAlgorithm?: IdpConfigEntitySignatureAlgorithmEnum;
+    /**
+     * 
      * @type {string}
      * @memberof IdpConfigEntity
      */
@@ -3116,6 +3183,33 @@ export const IdpConfigEntityIdpTypeEnum = {
     Crowd: 'CROWD'
 } as const;
 export type IdpConfigEntityIdpTypeEnum = typeof IdpConfigEntityIdpTypeEnum[keyof typeof IdpConfigEntityIdpTypeEnum];
+
+/**
+ * @export
+ */
+export const IdpConfigEntityNameIdPolicyEnum = {
+    None: 'NONE',
+    Unspecified: 'UNSPECIFIED',
+    EmailAddress: 'EMAIL_ADDRESS',
+    Encrypted: 'ENCRYPTED',
+    Entity: 'ENTITY',
+    Kerberos: 'KERBEROS',
+    Persistent: 'PERSISTENT',
+    Transient: 'TRANSIENT',
+    WindowsDomainQualifiedName: 'WINDOWS_DOMAIN_QUALIFIED_NAME',
+    X509SubjectName: 'X509_SUBJECT_NAME'
+} as const;
+export type IdpConfigEntityNameIdPolicyEnum = typeof IdpConfigEntityNameIdPolicyEnum[keyof typeof IdpConfigEntityNameIdPolicyEnum];
+
+/**
+ * @export
+ */
+export const IdpConfigEntitySignatureAlgorithmEnum = {
+    RsaSha256: 'RSA_SHA256',
+    RsaSha384: 'RSA_SHA384',
+    RsaSha512: 'RSA_SHA512'
+} as const;
+export type IdpConfigEntitySignatureAlgorithmEnum = typeof IdpConfigEntitySignatureAlgorithmEnum[keyof typeof IdpConfigEntitySignatureAlgorithmEnum];
 
 /**
  * @export
@@ -3406,6 +3500,12 @@ export interface MethodStateDTO {
     enabledAt?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof MethodStateDTO
+     */
+    enforced?: boolean;
+    /**
+     * 
      * @type {MethodStateDTOTypeEnum}
      * @memberof MethodStateDTO
      */
@@ -3524,7 +3624,7 @@ export interface Project {
      * @type {ProjectTypeEnum}
      * @memberof Project
      */
-    type?: ProjectTypeEnum;
+    type: ProjectTypeEnum;
 }
 
 
@@ -3548,7 +3648,7 @@ export interface PullRequest {
      * @type {PullRequestParticipant}
      * @memberof PullRequest
      */
-    author?: PullRequestParticipant;
+    author: PullRequestParticipant;
     /**
      * 
      * @type {boolean}
@@ -3566,7 +3666,13 @@ export interface PullRequest {
      * @type {string}
      * @memberof PullRequest
      */
-    createdDate?: string;
+    createdDate: string;
+    /**
+     * 
+     * @type {PullRequestParticipant}
+     * @memberof PullRequest
+     */
+    creator: PullRequestParticipant;
     /**
      * 
      * @type {boolean}
@@ -3590,7 +3696,7 @@ export interface PullRequest {
      * @type {PullRequestRef}
      * @memberof PullRequest
      */
-    fromRef?: PullRequestRef;
+    fromRef: PullRequestRef;
     /**
      * 
      * @type {number}
@@ -3614,43 +3720,43 @@ export interface PullRequest {
      * @type {Set<PullRequestParticipant>}
      * @memberof PullRequest
      */
-    participants?: Array<PullRequestParticipant>;
+    participants: Array<PullRequestParticipant>;
     /**
      * 
      * @type {object}
      * @memberof PullRequest
      */
-    properties?: object;
+    properties: object;
     /**
      * 
      * @type {Set<PullRequestParticipant>}
      * @memberof PullRequest
      */
-    reviewers?: Array<PullRequestParticipant>;
+    reviewers: Array<PullRequestParticipant>;
     /**
      * 
      * @type {PullRequestStateEnum}
      * @memberof PullRequest
      */
-    state?: PullRequestStateEnum;
+    state: PullRequestStateEnum;
     /**
      * 
      * @type {string}
      * @memberof PullRequest
      */
-    title?: string;
+    title: string;
     /**
      * 
      * @type {PullRequestRef}
      * @memberof PullRequest
      */
-    toRef?: PullRequestRef;
+    toRef: PullRequestRef;
     /**
      * 
      * @type {string}
      * @memberof PullRequest
      */
-    updatedDate?: string;
+    updatedDate: string;
     /**
      * 
      * @type {number}
@@ -3693,25 +3799,25 @@ export interface PullRequestParticipant {
      * @type {PullRequest}
      * @memberof PullRequestParticipant
      */
-    pullRequest?: PullRequest;
+    pullRequest: PullRequest;
     /**
      * 
      * @type {PullRequestParticipantRoleEnum}
      * @memberof PullRequestParticipant
      */
-    role?: PullRequestParticipantRoleEnum;
+    role: PullRequestParticipantRoleEnum;
     /**
      * 
      * @type {PullRequestParticipantStatusEnum}
      * @memberof PullRequestParticipant
      */
-    status?: PullRequestParticipantStatusEnum;
+    status: PullRequestParticipantStatusEnum;
     /**
      * 
      * @type {ApplicationUser}
      * @memberof PullRequestParticipant
      */
-    user?: ApplicationUser;
+    user: ApplicationUser;
 }
 
 
@@ -3721,7 +3827,8 @@ export interface PullRequestParticipant {
 export const PullRequestParticipantRoleEnum = {
     Author: 'AUTHOR',
     Reviewer: 'REVIEWER',
-    Participant: 'PARTICIPANT'
+    Participant: 'PARTICIPANT',
+    Creator: 'CREATOR'
 } as const;
 export type PullRequestParticipantRoleEnum = typeof PullRequestParticipantRoleEnum[keyof typeof PullRequestParticipantRoleEnum];
 
@@ -3746,31 +3853,31 @@ export interface PullRequestRef {
      * @type {string}
      * @memberof PullRequestRef
      */
-    displayId?: string;
+    displayId: string;
     /**
      * 
      * @type {string}
      * @memberof PullRequestRef
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof PullRequestRef
      */
-    latestCommit?: string;
+    latestCommit: string;
     /**
      * 
      * @type {Repository}
      * @memberof PullRequestRef
      */
-    repository?: Repository;
+    repository: Repository;
     /**
      * 
      * @type {any}
      * @memberof PullRequestRef
      */
-    type?: any | null;
+    type: any | null;
 }
 /**
  * 
@@ -3807,7 +3914,7 @@ export interface Repository {
      * @type {string}
      * @memberof Repository
      */
-    hierarchyId?: string;
+    hierarchyId: string;
     /**
      * 
      * @type {number}
@@ -3825,7 +3932,7 @@ export interface Repository {
      * @type {string}
      * @memberof Repository
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {boolean}
@@ -3849,7 +3956,7 @@ export interface Repository {
      * @type {Project}
      * @memberof Repository
      */
-    project?: Project;
+    project: Project;
     /**
      * 
      * @type {boolean}
@@ -3873,25 +3980,25 @@ export interface Repository {
      * @type {string}
      * @memberof Repository
      */
-    scmId?: string;
+    scmId: string;
     /**
      * 
      * @type {string}
      * @memberof Repository
      */
-    slug?: string;
+    slug: string;
     /**
      * 
      * @type {RepositoryStateEnum}
      * @memberof Repository
      */
-    state?: RepositoryStateEnum;
+    state: RepositoryStateEnum;
     /**
      * 
      * @type {string}
      * @memberof Repository
      */
-    statusMessage?: string;
+    statusMessage: string;
 }
 
 
@@ -3918,6 +4025,12 @@ export interface RepositoryHookDetails {
      * @memberof RepositoryHookDetails
      */
     configFormKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RepositoryHookDetails
+     */
+    configFormView?: string;
     /**
      * 
      * @type {string}
@@ -4025,7 +4138,7 @@ export interface RestAccessTokenRequest {
      * @type {Set<string>}
      * @memberof RestAccessTokenRequest
      */
-    permissions?: Array<string>;
+    permissions: Array<string>;
 }
 /**
  * 
@@ -4305,7 +4418,7 @@ export interface RestApplySuggestionRequest {
      * @type {number}
      * @memberof RestApplySuggestionRequest
      */
-    commentVersion?: number;
+    commentVersion: number;
     /**
      * 
      * @type {string}
@@ -4317,13 +4430,13 @@ export interface RestApplySuggestionRequest {
      * @type {number}
      * @memberof RestApplySuggestionRequest
      */
-    pullRequestVersion?: number;
+    pullRequestVersion: number;
     /**
      * 
      * @type {number}
      * @memberof RestApplySuggestionRequest
      */
-    suggestionIndex?: number;
+    suggestionIndex: number;
 }
 /**
  * 
@@ -4477,6 +4590,12 @@ export interface RestAutoMergeProcessingResultPullRequest {
      * @memberof RestAutoMergeProcessingResultPullRequest
      */
     createdDate?: number;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestAuthor}
+     * @memberof RestAutoMergeProcessingResultPullRequest
+     */
+    creator?: RestCommentAnchorPullRequestAuthor;
     /**
      * 
      * @type {string}
@@ -4708,13 +4827,13 @@ export interface RestAutoMergeRestrictedSettingsScope {
      * @type {number}
      * @memberof RestAutoMergeRestrictedSettingsScope
      */
-    resourceId?: number;
+    resourceId: number;
     /**
      * 
      * @type {RestAutoMergeRestrictedSettingsScopeTypeEnum}
      * @memberof RestAutoMergeRestrictedSettingsScope
      */
-    type?: RestAutoMergeRestrictedSettingsScopeTypeEnum;
+    type: RestAutoMergeRestrictedSettingsScopeTypeEnum;
 }
 
 
@@ -4957,6 +5076,209 @@ export interface RestBranchDeleteRequest {
      */
     name?: string;
 }
+/**
+ * 
+ * @export
+ * @interface RestBrokenIndexStatusRepository
+ */
+export interface RestBrokenIndexStatusRepository {
+    /**
+     * 
+     * @type {RestBrokenIndexStatusRepositoryDetails}
+     * @memberof RestBrokenIndexStatusRepository
+     */
+    details?: RestBrokenIndexStatusRepositoryDetails;
+    /**
+     * 
+     * @type {RestBrokenIndexStatusRepositoryRepository}
+     * @memberof RestBrokenIndexStatusRepository
+     */
+    repository?: RestBrokenIndexStatusRepositoryRepository;
+}
+/**
+ * Details about the last index attempt for the given repository
+ * @export
+ * @interface RestBrokenIndexStatusRepositoryDetails
+ */
+export interface RestBrokenIndexStatusRepositoryDetails {
+    /**
+     * Additional detail about the <b>BROKEN</b> status if available, meant for informational purposes only. This nullable, free-form text field should not be used for automation; rely on status instead.
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryDetails
+     */
+    readonly indexingError?: string;
+    /**
+     * The commit hash of the last indexed commit in the repository.
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryDetails
+     */
+    lastIndexedCommitId?: string;
+    /**
+     * The timestamp in epoch milliseconds of the last time the repository successfully was indexed
+     * @type {number}
+     * @memberof RestBrokenIndexStatusRepositoryDetails
+     */
+    lastIndexedTimestamp?: number;
+    /**
+     * The project key that the repository belongs to
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryDetails
+     */
+    projectKey: string;
+    /**
+     * The repository slug
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryDetails
+     */
+    repositorySlug: string;
+    /**
+     * The current indexing status of the repository.
+     * @type {RestBrokenIndexStatusRepositoryDetailsStatusEnum}
+     * @memberof RestBrokenIndexStatusRepositoryDetails
+     */
+    status: RestBrokenIndexStatusRepositoryDetailsStatusEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestBrokenIndexStatusRepositoryDetailsStatusEnum = {
+    Broken: 'BROKEN',
+    Indexed: 'INDEXED',
+    Indexing: 'INDEXING',
+    Unknown: 'UNKNOWN'
+} as const;
+export type RestBrokenIndexStatusRepositoryDetailsStatusEnum = typeof RestBrokenIndexStatusRepositoryDetailsStatusEnum[keyof typeof RestBrokenIndexStatusRepositoryDetailsStatusEnum];
+
+/**
+ * The repository which has entered a broken status
+ * @export
+ * @interface RestBrokenIndexStatusRepositoryRepository
+ */
+export interface RestBrokenIndexStatusRepositoryRepository {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly archived?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    defaultBranch?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly description?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly forkable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly hierarchyId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    name?: string;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOrigin}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    origin?: RestCommentAnchorPullRequestFromRefRepositoryOrigin;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly public?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly scope?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    slug?: string;
+    /**
+     * 
+     * @type {RestBrokenIndexStatusRepositoryRepositoryStateEnum}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly state?: RestBrokenIndexStatusRepositoryRepositoryStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBrokenIndexStatusRepositoryRepository
+     */
+    readonly statusMessage?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestBrokenIndexStatusRepositoryRepositoryStateEnum = {
+    Available: 'AVAILABLE',
+    InitialisationFailed: 'INITIALISATION_FAILED',
+    Initialising: 'INITIALISING',
+    Offline: 'OFFLINE'
+} as const;
+export type RestBrokenIndexStatusRepositoryRepositoryStateEnum = typeof RestBrokenIndexStatusRepositoryRepositoryStateEnum[keyof typeof RestBrokenIndexStatusRepositoryRepositoryStateEnum];
+
 /**
  * 
  * @export
@@ -5254,7 +5576,7 @@ export interface RestBulkUserRateLimitSettingsUpdateRequest {
      * @type {Set<string>}
      * @memberof RestBulkUserRateLimitSettingsUpdateRequest
      */
-    usernames?: Array<string>;
+    usernames: Array<string>;
     /**
      * 
      * @type {boolean}
@@ -5441,6 +5763,87 @@ export type RestChangeConflictOurChangeTypeEnum = typeof RestChangeConflictOurCh
 /**
  * 
  * @export
+ * @interface RestChangePullRequestAuthorProjectSettingsRequest
+ */
+export interface RestChangePullRequestAuthorProjectSettingsRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangePullRequestAuthorProjectSettingsRequest
+     */
+    enabled?: boolean;
+    /**
+     * The restriction action to apply to repositories in this project.
+     * @type {RestChangePullRequestAuthorProjectSettingsRequestRestrictionActionEnum}
+     * @memberof RestChangePullRequestAuthorProjectSettingsRequest
+     */
+    restrictionAction?: RestChangePullRequestAuthorProjectSettingsRequestRestrictionActionEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestChangePullRequestAuthorProjectSettingsRequestRestrictionActionEnum = {
+    Create: 'CREATE',
+    Delete: 'DELETE',
+    None: 'NONE'
+} as const;
+export type RestChangePullRequestAuthorProjectSettingsRequestRestrictionActionEnum = typeof RestChangePullRequestAuthorProjectSettingsRequestRestrictionActionEnum[keyof typeof RestChangePullRequestAuthorProjectSettingsRequestRestrictionActionEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestChangePullRequestAuthorRestrictedSettings
+ */
+export interface RestChangePullRequestAuthorRestrictedSettings {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangePullRequestAuthorRestrictedSettings
+     */
+    enabled?: boolean;
+    /**
+     * The restriction state of this scope's project.
+     * @type {RestChangePullRequestAuthorRestrictedSettingsRestrictionStateEnum}
+     * @memberof RestChangePullRequestAuthorRestrictedSettings
+     */
+    restrictionState?: RestChangePullRequestAuthorRestrictedSettingsRestrictionStateEnum;
+    /**
+     * 
+     * @type {RestAutoMergeRestrictedSettingsScope}
+     * @memberof RestChangePullRequestAuthorRestrictedSettings
+     */
+    scope?: RestAutoMergeRestrictedSettingsScope;
+}
+
+
+/**
+ * @export
+ */
+export const RestChangePullRequestAuthorRestrictedSettingsRestrictionStateEnum = {
+    None: 'NONE',
+    RestrictedUnmodifiable: 'RESTRICTED_UNMODIFIABLE',
+    RestrictedModifiable: 'RESTRICTED_MODIFIABLE'
+} as const;
+export type RestChangePullRequestAuthorRestrictedSettingsRestrictionStateEnum = typeof RestChangePullRequestAuthorRestrictedSettingsRestrictionStateEnum[keyof typeof RestChangePullRequestAuthorRestrictedSettingsRestrictionStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestChangePullRequestAuthorSettingsRequest
+ */
+export interface RestChangePullRequestAuthorSettingsRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangePullRequestAuthorSettingsRequest
+     */
+    enabled?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface RestChangeset
  */
 export interface RestChangeset {
@@ -5464,10 +5867,10 @@ export interface RestChangeset {
     links?: object;
     /**
      * 
-     * @type {RestChangesetRepository}
+     * @type {RestCommentAnchorPullRequestFromRefRepository}
      * @memberof RestChangeset
      */
-    repository?: RestChangesetRepository;
+    repository?: RestCommentAnchorPullRequestFromRefRepository;
     /**
      * 
      * @type {RestChangesetToCommit}
@@ -5537,334 +5940,6 @@ export interface RestChangesetFromCommit {
      */
     id?: string;
 }
-/**
- * 
- * @export
- * @interface RestChangesetRepository
- */
-export interface RestChangesetRepository {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestChangesetRepository
-     */
-    readonly archived?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    defaultBranch?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    readonly description?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestChangesetRepository
-     */
-    readonly forkable?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    readonly hierarchyId?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestChangesetRepository
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestChangesetRepository
-     */
-    links?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    name?: string;
-    /**
-     * 
-     * @type {RestChangesetRepositoryOrigin}
-     * @memberof RestChangesetRepository
-     */
-    origin?: RestChangesetRepositoryOrigin;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestChangesetRepository
-     */
-    readonly partition?: number;
-    /**
-     * 
-     * @type {RestChangesetRepositoryOriginProject}
-     * @memberof RestChangesetRepository
-     */
-    project?: RestChangesetRepositoryOriginProject;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestChangesetRepository
-     */
-    readonly public?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestChangesetRepository
-     */
-    readonly relatedLinks?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    scmId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {RestChangesetRepositoryStateEnum}
-     * @memberof RestChangesetRepository
-     */
-    readonly state?: RestChangesetRepositoryStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    readonly statusMessage?: string;
-}
-
-
-/**
- * @export
- */
-export const RestChangesetRepositoryStateEnum = {
-    Available: 'AVAILABLE',
-    InitialisationFailed: 'INITIALISATION_FAILED',
-    Initialising: 'INITIALISING',
-    Offline: 'OFFLINE'
-} as const;
-export type RestChangesetRepositoryStateEnum = typeof RestChangesetRepositoryStateEnum[keyof typeof RestChangesetRepositoryStateEnum];
-
-/**
- * 
- * @export
- * @interface RestChangesetRepositoryOrigin
- */
-export interface RestChangesetRepositoryOrigin {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly archived?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    defaultBranch?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly description?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly forkable?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly hierarchyId?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    links?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly partition?: number;
-    /**
-     * 
-     * @type {RestChangesetRepositoryOriginProject}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    project?: RestChangesetRepositoryOriginProject;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly public?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly relatedLinks?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    scmId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {RestChangesetRepositoryOriginStateEnum}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly state?: RestChangesetRepositoryOriginStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOrigin
-     */
-    readonly statusMessage?: string;
-}
-
-
-/**
- * @export
- */
-export const RestChangesetRepositoryOriginStateEnum = {
-    Available: 'AVAILABLE',
-    InitialisationFailed: 'INITIALISATION_FAILED',
-    Initialising: 'INITIALISING',
-    Offline: 'OFFLINE'
-} as const;
-export type RestChangesetRepositoryOriginStateEnum = typeof RestChangesetRepositoryOriginStateEnum[keyof typeof RestChangesetRepositoryOriginStateEnum];
-
-/**
- * 
- * @export
- * @interface RestChangesetRepositoryOriginProject
- */
-export interface RestChangesetRepositoryOriginProject {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    avatar?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    avatarUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    readonly description?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    key: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    links?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    readonly name?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    readonly public?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {RestChangesetRepositoryOriginProjectTypeEnum}
-     * @memberof RestChangesetRepositoryOriginProject
-     */
-    readonly type?: RestChangesetRepositoryOriginProjectTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const RestChangesetRepositoryOriginProjectTypeEnum = {
-    Normal: 'NORMAL',
-    Personal: 'PERSONAL'
-} as const;
-export type RestChangesetRepositoryOriginProjectTypeEnum = typeof RestChangesetRepositoryOriginProjectTypeEnum[keyof typeof RestChangesetRepositoryOriginProjectTypeEnum];
-
 /**
  * 
  * @export
@@ -5943,7 +6018,7 @@ export interface RestChangesetToCommitAuthor {
      * @type {string}
      * @memberof RestChangesetToCommitAuthor
      */
-    name?: string;
+    name: string;
 }
 /**
  * 
@@ -5981,31 +6056,31 @@ export interface RestClusterInformationLocalNode {
      * @type {RestClusterNodeAddress}
      * @memberof RestClusterInformationLocalNode
      */
-    address?: RestClusterNodeAddress;
+    address: RestClusterNodeAddress;
     /**
      * 
      * @type {string}
      * @memberof RestClusterInformationLocalNode
      */
-    buildVersion?: string;
+    buildVersion: string;
     /**
      * 
      * @type {string}
      * @memberof RestClusterInformationLocalNode
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {boolean}
      * @memberof RestClusterInformationLocalNode
      */
-    local?: boolean;
+    local: boolean;
     /**
      * 
      * @type {string}
      * @memberof RestClusterInformationLocalNode
      */
-    name?: string;
+    name: string;
 }
 /**
  * 
@@ -6092,7 +6167,7 @@ export interface RestComment {
      * @type {Array<RestComment>}
      * @memberof RestComment
      */
-    readonly comments?: Array<RestComment>;
+    comments?: Array<RestComment>;
     /**
      * 
      * @type {number}
@@ -6342,25 +6417,25 @@ export interface RestCommentAnchorMultilineSpan {
      * @type {number}
      * @memberof RestCommentAnchorMultilineSpan
      */
-    readonly dstSpanEnd?: number;
+    readonly dstSpanEnd: number;
     /**
      * The line number of the first line on the right-hand side of the diff that the comment spans
      * @type {number}
      * @memberof RestCommentAnchorMultilineSpan
      */
-    readonly dstSpanStart?: number;
+    readonly dstSpanStart: number;
     /**
      * The line number of the last line on the left-hand side of the diff that the comment spans
      * @type {number}
      * @memberof RestCommentAnchorMultilineSpan
      */
-    readonly srcSpanEnd?: number;
+    readonly srcSpanEnd: number;
     /**
      * The line number of the first line on the left-hand side of the diff that the comment spans
      * @type {number}
      * @memberof RestCommentAnchorMultilineSpan
      */
-    readonly srcSpanStart?: number;
+    readonly srcSpanStart: number;
 }
 /**
  * 
@@ -6423,6 +6498,12 @@ export interface RestCommentAnchorPullRequest {
      * @memberof RestCommentAnchorPullRequest
      */
     createdDate?: number;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestAuthor}
+     * @memberof RestCommentAnchorPullRequest
+     */
+    creator?: RestCommentAnchorPullRequestAuthor;
     /**
      * 
      * @type {string}
@@ -6577,7 +6658,8 @@ export interface RestCommentAnchorPullRequestAuthor {
 export const RestCommentAnchorPullRequestAuthorRoleEnum = {
     Author: 'AUTHOR',
     Reviewer: 'REVIEWER',
-    Participant: 'PARTICIPANT'
+    Participant: 'PARTICIPANT',
+    Creator: 'CREATOR'
 } as const;
 export type RestCommentAnchorPullRequestAuthorRoleEnum = typeof RestCommentAnchorPullRequestAuthorRoleEnum[keyof typeof RestCommentAnchorPullRequestAuthorRoleEnum];
 
@@ -6614,7 +6696,7 @@ export interface RestCommentAnchorPullRequestAuthorUser {
      * @type {string}
      * @memberof RestCommentAnchorPullRequestAuthorUser
      */
-    displayName?: string;
+    displayName: string;
     /**
      * 
      * @type {string}
@@ -6638,19 +6720,19 @@ export interface RestCommentAnchorPullRequestAuthorUser {
      * @type {string}
      * @memberof RestCommentAnchorPullRequestAuthorUser
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof RestCommentAnchorPullRequestAuthorUser
      */
-    slug?: string;
+    slug: string;
     /**
      * 
      * @type {RestCommentAnchorPullRequestAuthorUserTypeEnum}
      * @memberof RestCommentAnchorPullRequestAuthorUser
      */
-    type?: RestCommentAnchorPullRequestAuthorUserTypeEnum;
+    type: RestCommentAnchorPullRequestAuthorUserTypeEnum;
 }
 
 
@@ -6674,25 +6756,25 @@ export interface RestCommentAnchorPullRequestFromRef {
      * @type {string}
      * @memberof RestCommentAnchorPullRequestFromRef
      */
-    displayId?: string;
+    displayId: string;
     /**
      * 
      * @type {string}
      * @memberof RestCommentAnchorPullRequestFromRef
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof RestCommentAnchorPullRequestFromRef
      */
-    latestCommit?: string;
+    latestCommit: string;
     /**
      * 
-     * @type {RestChangesetRepository}
+     * @type {RestCommentAnchorPullRequestFromRefRepository}
      * @memberof RestCommentAnchorPullRequestFromRef
      */
-    repository?: RestChangesetRepository;
+    repository?: RestCommentAnchorPullRequestFromRefRepository;
     /**
      * 
      * @type {RestCommentAnchorPullRequestFromRefTypeEnum}
@@ -6710,6 +6792,334 @@ export const RestCommentAnchorPullRequestFromRefTypeEnum = {
     Tag: 'TAG'
 } as const;
 export type RestCommentAnchorPullRequestFromRefTypeEnum = typeof RestCommentAnchorPullRequestFromRefTypeEnum[keyof typeof RestCommentAnchorPullRequestFromRefTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestCommentAnchorPullRequestFromRefRepository
+ */
+export interface RestCommentAnchorPullRequestFromRefRepository {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly archived?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    defaultBranch?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly description?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly forkable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly hierarchyId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    name?: string;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOrigin}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    origin?: RestCommentAnchorPullRequestFromRefRepositoryOrigin;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly public?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly scope?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    slug?: string;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryStateEnum}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly state?: RestCommentAnchorPullRequestFromRefRepositoryStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepository
+     */
+    readonly statusMessage?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestCommentAnchorPullRequestFromRefRepositoryStateEnum = {
+    Available: 'AVAILABLE',
+    InitialisationFailed: 'INITIALISATION_FAILED',
+    Initialising: 'INITIALISING',
+    Offline: 'OFFLINE'
+} as const;
+export type RestCommentAnchorPullRequestFromRefRepositoryStateEnum = typeof RestCommentAnchorPullRequestFromRefRepositoryStateEnum[keyof typeof RestCommentAnchorPullRequestFromRefRepositoryStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestCommentAnchorPullRequestFromRefRepositoryOrigin
+ */
+export interface RestCommentAnchorPullRequestFromRefRepositoryOrigin {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly archived?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    defaultBranch?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly description?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly forkable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly hierarchyId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly public?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly scope?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    slug?: string;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly state?: RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
+     */
+    readonly statusMessage?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum = {
+    Available: 'AVAILABLE',
+    InitialisationFailed: 'INITIALISATION_FAILED',
+    Initialising: 'INITIALISING',
+    Offline: 'OFFLINE'
+} as const;
+export type RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum = typeof RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum[keyof typeof RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+ */
+export interface RestCommentAnchorPullRequestFromRefRepositoryOriginProject {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    avatar?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    readonly description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    key: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    readonly name: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    readonly public?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    readonly scope?: string;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum}
+     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
+     */
+    readonly type: RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum = {
+    Normal: 'NORMAL',
+    Personal: 'PERSONAL'
+} as const;
+export type RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum = typeof RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum[keyof typeof RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum];
 
 /**
  * 
@@ -6734,7 +7144,7 @@ export interface RestCommentAuthor {
      * @type {string}
      * @memberof RestCommentAuthor
      */
-    displayName?: string;
+    displayName: string;
     /**
      * 
      * @type {string}
@@ -6758,19 +7168,19 @@ export interface RestCommentAuthor {
      * @type {string}
      * @memberof RestCommentAuthor
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof RestCommentAuthor
      */
-    slug?: string;
+    slug: string;
     /**
      * 
      * @type {RestCommentAuthorTypeEnum}
      * @memberof RestCommentAuthor
      */
-    type?: RestCommentAuthorTypeEnum;
+    type: RestCommentAuthorTypeEnum;
 }
 
 
@@ -6831,7 +7241,7 @@ export interface RestCommentParent {
      * @type {Array<RestComment>}
      * @memberof RestCommentParent
      */
-    readonly comments?: Array<RestComment>;
+    comments?: Array<RestComment>;
     /**
      * 
      * @type {number}
@@ -7244,6 +7654,31 @@ export interface RestCreateTagRequest {
 /**
  * 
  * @export
+ * @interface RestCspSettings
+ */
+export interface RestCspSettings {
+    /**
+     * 
+     * @type {RestCspSettingsStrictnessEnum}
+     * @memberof RestCspSettings
+     */
+    strictness?: RestCspSettingsStrictnessEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestCspSettingsStrictnessEnum = {
+    Strict: 'STRICT',
+    ReportOnly: 'REPORT_ONLY',
+    Default: 'DEFAULT'
+} as const;
+export type RestCspSettingsStrictnessEnum = typeof RestCspSettingsStrictnessEnum[keyof typeof RestCspSettingsStrictnessEnum];
+
+/**
+ * 
+ * @export
  * @interface RestDefaultBranch
  */
 export interface RestDefaultBranch {
@@ -7286,10 +7721,10 @@ export interface RestDefaultReviewersRequest {
     sourceMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
     /**
      * 
-     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
+     * @type {RestRefMatcher}
      * @memberof RestDefaultReviewersRequest
      */
-    targetMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    targetMatcher?: RestRefMatcher;
 }
 /**
  * 
@@ -7327,7 +7762,7 @@ export interface RestDefaultTaskRequest {
      * @type {string}
      * @memberof RestDefaultTaskRequest
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {UpdatePullRequestCondition1RequestSourceMatcher}
@@ -7336,10 +7771,10 @@ export interface RestDefaultTaskRequest {
     sourceMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
     /**
      * 
-     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
+     * @type {RestRefMatcher}
      * @memberof RestDefaultTaskRequest
      */
-    targetMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    targetMatcher?: RestRefMatcher;
 }
 /**
  * 
@@ -7352,19 +7787,19 @@ export interface RestDelayedSyncRepository {
      * @type {string}
      * @memberof RestDelayedSyncRepository
      */
-    projectKey?: string;
+    projectKey: string;
     /**
      * 
      * @type {string}
      * @memberof RestDelayedSyncRepository
      */
-    repositoryId?: string;
+    repositoryId: string;
     /**
      * 
      * @type {string}
      * @memberof RestDelayedSyncRepository
      */
-    repositorySlug?: string;
+    repositorySlug: string;
 }
 /**
  * 
@@ -7416,10 +7851,10 @@ export interface RestDeployment {
     lastUpdated?: number;
     /**
      * 
-     * @type {RestChangesetRepository}
+     * @type {RestCommentAnchorPullRequestFromRefRepository}
      * @memberof RestDeployment
      */
-    repository?: RestChangesetRepository;
+    repository?: RestCommentAnchorPullRequestFromRefRepository;
     /**
      * 
      * @type {RestDeploymentStateEnum}
@@ -7668,6 +8103,12 @@ export interface RestDetailedUser {
      * @memberof RestDetailedUser
      */
     avatarUrl?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDetailedUser
+     */
+    createdTimestamp?: number;
     /**
      * 
      * @type {boolean}
@@ -8407,7 +8848,7 @@ export interface RestHookScriptTriggers {
      * @type {Set<string>}
      * @memberof RestHookScriptTriggers
      */
-    triggerIds?: Array<string>;
+    triggerIds: Array<string>;
 }
 /**
  * 
@@ -8421,6 +8862,268 @@ export interface RestImportRequest {
      * @memberof RestImportRequest
      */
     archivePath?: string;
+}
+/**
+ * The event that is currently being processed by the indexing worker.
+ * @export
+ * @interface RestIndexEvent
+ */
+export interface RestIndexEvent {
+    /**
+     * Retrieves the metadata associated with the index event. The content of this metadata is variable and depends on the event type. It may include identifiers such as repository ID, project ID, or user ID, among other relevant details.
+     * @type {object}
+     * @memberof RestIndexEvent
+     */
+    readonly eventMetadata?: object;
+    /**
+     * Retrieves the type of the event, indicating the entity (such as project, repository, or user) that triggered the indexing operation.
+     * @type {RestIndexEventEventTypeEnum}
+     * @memberof RestIndexEvent
+     */
+    eventType: RestIndexEventEventTypeEnum;
+    /**
+     * Retrieves the count of how many times this event has been retried due to previous failures or exceptions.
+     * @type {number}
+     * @memberof RestIndexEvent
+     */
+    retries: number;
+}
+
+
+/**
+ * @export
+ */
+export const RestIndexEventEventTypeEnum = {
+    Project: 'PROJECT',
+    Repository: 'REPOSITORY',
+    User: 'USER',
+    Other: 'OTHER'
+} as const;
+export type RestIndexEventEventTypeEnum = typeof RestIndexEventEventTypeEnum[keyof typeof RestIndexEventEventTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestIndexingIsRepositoryQueued
+ */
+export interface RestIndexingIsRepositoryQueued {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestIndexingIsRepositoryQueued
+     */
+    queued?: boolean;
+}
+/**
+ * A snapshot of the current process being executed by the indexing worker.
+ * @export
+ * @interface RestIndexingProcess
+ */
+export interface RestIndexingProcess {
+    /**
+     * The current task description that the indexing worker is executing.
+     * @type {string}
+     * @memberof RestIndexingProcess
+     */
+    currentTask: string;
+    /**
+     * 
+     * @type {RestIndexingProcessEvent}
+     * @memberof RestIndexingProcess
+     */
+    event: RestIndexingProcessEvent;
+}
+/**
+ * The event that is currently being processed by the indexing worker.
+ * @export
+ * @interface RestIndexingProcessEvent
+ */
+export interface RestIndexingProcessEvent {
+    /**
+     * Retrieves the metadata associated with the index event. The content of this metadata is variable and depends on the event type. It may include identifiers such as repository ID, project ID, or user ID, among other relevant details.
+     * @type {object}
+     * @memberof RestIndexingProcessEvent
+     */
+    readonly eventMetadata?: object;
+    /**
+     * Retrieves the type of the event, indicating the entity (such as project, repository, or user) that triggered the indexing operation.
+     * @type {RestIndexingProcessEventEventTypeEnum}
+     * @memberof RestIndexingProcessEvent
+     */
+    eventType: RestIndexingProcessEventEventTypeEnum;
+    /**
+     * Retrieves the count of how many times this event has been retried due to previous failures or exceptions.
+     * @type {number}
+     * @memberof RestIndexingProcessEvent
+     */
+    retries: number;
+}
+
+
+/**
+ * @export
+ */
+export const RestIndexingProcessEventEventTypeEnum = {
+    Project: 'PROJECT',
+    Repository: 'REPOSITORY',
+    User: 'USER',
+    Other: 'OTHER'
+} as const;
+export type RestIndexingProcessEventEventTypeEnum = typeof RestIndexingProcessEventEventTypeEnum[keyof typeof RestIndexingProcessEventEventTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestIndexingThreadDetails
+ */
+export interface RestIndexingThreadDetails {
+    /**
+     * Returns the timestamp indicating when the current thread details were captured.
+     * @type {number}
+     * @memberof RestIndexingThreadDetails
+     */
+    capturedAt: number;
+    /**
+     * 
+     * @type {RestIndexingThreadDetailsCurrentProcess}
+     * @memberof RestIndexingThreadDetails
+     */
+    currentProcess?: RestIndexingThreadDetailsCurrentProcess;
+    /**
+     * The number of items in the delayed queue. This queue contains retries that have been scheduled with an exponential backoff delay. The retries are for operations that previously failed in the main queue.
+     * @type {number}
+     * @memberof RestIndexingThreadDetails
+     */
+    delayedQueueSize: number;
+    /**
+     * The number of items currently in the main queue.
+     * @type {number}
+     * @memberof RestIndexingThreadDetails
+     */
+    queueSize: number;
+    /**
+     * 
+     * @type {RestIndexingThreadDetailsState}
+     * @memberof RestIndexingThreadDetails
+     */
+    state: RestIndexingThreadDetailsState;
+}
+/**
+ * A snapshot of the current process being executed by the indexing worker.
+ * @export
+ * @interface RestIndexingThreadDetailsCurrentProcess
+ */
+export interface RestIndexingThreadDetailsCurrentProcess {
+    /**
+     * The current task description that the indexing worker is executing.
+     * @type {string}
+     * @memberof RestIndexingThreadDetailsCurrentProcess
+     */
+    currentTask: string;
+    /**
+     * 
+     * @type {RestIndexingProcessEvent}
+     * @memberof RestIndexingThreadDetailsCurrentProcess
+     */
+    event: RestIndexingProcessEvent;
+}
+/**
+ * Represents the state of an indexing thread.
+ * @export
+ * @interface RestIndexingThreadDetailsState
+ */
+export interface RestIndexingThreadDetailsState {
+    /**
+     * The current code representing the state of the indexing thread
+     * @type {RestIndexingThreadDetailsStateCodeEnum}
+     * @memberof RestIndexingThreadDetailsState
+     */
+    code: RestIndexingThreadDetailsStateCodeEnum;
+    /**
+     * Additional detail about the current state, meant for informational purposes only.
+     * @type {string}
+     * @memberof RestIndexingThreadDetailsState
+     */
+    description?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestIndexingThreadDetailsStateCodeEnum = {
+    Broken: 'BROKEN',
+    Idle: 'IDLE',
+    Processing: 'PROCESSING',
+    Stopped: 'STOPPED',
+    Unknown: 'UNKNOWN'
+} as const;
+export type RestIndexingThreadDetailsStateCodeEnum = typeof RestIndexingThreadDetailsStateCodeEnum[keyof typeof RestIndexingThreadDetailsStateCodeEnum];
+
+/**
+ * Represents the state of an indexing thread.
+ * @export
+ * @interface RestIndexingThreadState
+ */
+export interface RestIndexingThreadState {
+    /**
+     * The current code representing the state of the indexing thread
+     * @type {RestIndexingThreadStateCodeEnum}
+     * @memberof RestIndexingThreadState
+     */
+    code: RestIndexingThreadStateCodeEnum;
+    /**
+     * Additional detail about the current state, meant for informational purposes only.
+     * @type {string}
+     * @memberof RestIndexingThreadState
+     */
+    description?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestIndexingThreadStateCodeEnum = {
+    Broken: 'BROKEN',
+    Idle: 'IDLE',
+    Processing: 'PROCESSING',
+    Stopped: 'STOPPED',
+    Unknown: 'UNKNOWN'
+} as const;
+export type RestIndexingThreadStateCodeEnum = typeof RestIndexingThreadStateCodeEnum[keyof typeof RestIndexingThreadStateCodeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestIndexingWorkerRestartRequest
+ */
+export interface RestIndexingWorkerRestartRequest {
+    /**
+     * Should the indexing thread terminate immediately
+     * @type {boolean}
+     * @memberof RestIndexingWorkerRestartRequest
+     */
+    gracefulShutdown?: boolean;
+    /**
+     * Should the response wait until the worker has been restarted
+     * @type {boolean}
+     * @memberof RestIndexingWorkerRestartRequest
+     */
+    waitForRestart?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface RestIndexingWorkerThreadsRequest
+ */
+export interface RestIndexingWorkerThreadsRequest {
+    /**
+     * The desired number of indexing worker threads
+     * @type {number}
+     * @memberof RestIndexingWorkerThreadsRequest
+     */
+    desiredCount: number;
 }
 /**
  * 
@@ -8586,6 +9289,88 @@ export interface RestInsightReportData {
      * @memberof RestInsightReportData
      */
     value?: object;
+}
+/**
+ * 
+ * @export
+ * @interface RestJiraBackfillError
+ */
+export interface RestJiraBackfillError {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestJiraBackfillError
+     */
+    error?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestJiraBackfillError
+     */
+    projectKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestJiraBackfillError
+     */
+    repoSlug?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RestJiraBackfillReport
+ */
+export interface RestJiraBackfillReport {
+    /**
+     * 
+     * @type {Array<RestJiraBackfillError>}
+     * @memberof RestJiraBackfillReport
+     */
+    errors: Array<RestJiraBackfillError>;
+}
+/**
+ * 
+ * @export
+ * @interface RestJiraBackfillStatus
+ */
+export interface RestJiraBackfillStatus {
+    /**
+     * Map of backfill state names to their counts
+     * @type {object}
+     * @memberof RestJiraBackfillStatus
+     */
+    states: object;
+}
+/**
+ * 
+ * @export
+ * @interface RestJiraDevInfoBackfillRequest
+ */
+export interface RestJiraDevInfoBackfillRequest {
+    /**
+     * The starting timestamp in milliseconds for looking for backfill items, non-inclusive
+     * @type {number}
+     * @memberof RestJiraDevInfoBackfillRequest
+     */
+    fromDate?: number;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof RestJiraDevInfoBackfillRequest
+     */
+    jiraSiteIds: Array<number>;
+    /**
+     * 
+     * @type {Array<RestRepositorySelector>}
+     * @memberof RestJiraDevInfoBackfillRequest
+     */
+    repositories: Array<RestRepositorySelector>;
+    /**
+     * The ending timestamp in milliseconds for looking for backfill items, non-inclusive
+     * @type {number}
+     * @memberof RestJiraDevInfoBackfillRequest
+     */
+    toDate?: number;
 }
 /**
  * 
@@ -8829,10 +9614,10 @@ export interface RestLabelable {
     name?: string;
     /**
      * 
-     * @type {RestChangesetRepositoryOrigin}
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOrigin}
      * @memberof RestLabelable
      */
-    origin?: RestChangesetRepositoryOrigin;
+    origin?: RestCommentAnchorPullRequestFromRefRepositoryOrigin;
     /**
      * 
      * @type {number}
@@ -8841,10 +9626,10 @@ export interface RestLabelable {
     readonly partition?: number;
     /**
      * 
-     * @type {RestChangesetRepositoryOriginProject}
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
      * @memberof RestLabelable
      */
-    project?: RestChangesetRepositoryOriginProject;
+    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
     /**
      * 
      * @type {boolean}
@@ -8949,10 +9734,22 @@ export interface RestLoggingSettings {
 export interface RestMailConfiguration {
     /**
      * 
+     * @type {RestMailConfigurationAuthTypeEnum}
+     * @memberof RestMailConfiguration
+     */
+    authType?: RestMailConfigurationAuthTypeEnum;
+    /**
+     * 
      * @type {string}
      * @memberof RestMailConfiguration
      */
     hostname?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMailConfiguration
+     */
+    oauth2ProviderId?: string;
     /**
      * 
      * @type {string}
@@ -8985,6 +9782,12 @@ export interface RestMailConfiguration {
     senderAddress?: string;
     /**
      * 
+     * @type {string}
+     * @memberof RestMailConfiguration
+     */
+    tokenId?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof RestMailConfiguration
      */
@@ -8997,6 +9800,15 @@ export interface RestMailConfiguration {
     username?: string;
 }
 
+
+/**
+ * @export
+ */
+export const RestMailConfigurationAuthTypeEnum = {
+    Basic: 'BASIC',
+    Oauth2: 'OAUTH2'
+} as const;
+export type RestMailConfigurationAuthTypeEnum = typeof RestMailConfigurationAuthTypeEnum[keyof typeof RestMailConfigurationAuthTypeEnum];
 
 /**
  * @export
@@ -9047,22 +9859,16 @@ export interface RestMeshMigrationRequest {
     all?: boolean;
     /**
      * 
-     * @type {StartMeshMigrationRequestMaxBytesPerSecond}
+     * @type {Set<number>}
      * @memberof RestMeshMigrationRequest
      */
-    maxBytesPerSecond?: StartMeshMigrationRequestMaxBytesPerSecond;
+    projectIds: Array<number>;
     /**
      * 
      * @type {Set<number>}
      * @memberof RestMeshMigrationRequest
      */
-    projectIds?: Array<number>;
-    /**
-     * 
-     * @type {Set<number>}
-     * @memberof RestMeshMigrationRequest
-     */
-    repositoryIds?: Array<number>;
+    repositoryIds: Array<number>;
 }
 /**
  * 
@@ -9082,12 +9888,6 @@ export interface RestMeshMigrationSummary {
      * @memberof RestMeshMigrationSummary
      */
     jobId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestMeshMigrationSummary
-     */
-    maxBandwidth?: number;
     /**
      * 
      * @type {number}
@@ -9196,10 +9996,10 @@ export interface RestMigrationRepository {
     migrationState?: RestMigrationRepositoryMigrationStateEnum;
     /**
      * 
-     * @type {RestChangesetRepository}
+     * @type {RestCommentAnchorPullRequestFromRefRepository}
      * @memberof RestMigrationRepository
      */
-    repository?: RestChangesetRepository;
+    repository?: RestCommentAnchorPullRequestFromRefRepository;
 }
 
 
@@ -9357,13 +10157,13 @@ export interface RestMirrorRepositorySynchronizationStatusHashes {
      * @type {string}
      * @memberof RestMirrorRepositorySynchronizationStatusHashes
      */
-    content?: string;
+    content: string;
     /**
      * 
      * @type {string}
      * @memberof RestMirrorRepositorySynchronizationStatusHashes
      */
-    metadata?: string;
+    metadata: string;
 }
 /**
  * 
@@ -9537,7 +10337,7 @@ export interface RestMirroredRepositoryDescriptorMirrorServer {
      * @type {string}
      * @memberof RestMirroredRepositoryDescriptorMirrorServer
      */
-    baseUrl?: string;
+    baseUrl: string;
     /**
      * 
      * @type {boolean}
@@ -9549,7 +10349,7 @@ export interface RestMirroredRepositoryDescriptorMirrorServer {
      * @type {string}
      * @memberof RestMirroredRepositoryDescriptorMirrorServer
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
@@ -9561,19 +10361,19 @@ export interface RestMirroredRepositoryDescriptorMirrorServer {
      * @type {RestMirroredRepositoryDescriptorMirrorServerMirrorTypeEnum}
      * @memberof RestMirroredRepositoryDescriptorMirrorServer
      */
-    mirrorType?: RestMirroredRepositoryDescriptorMirrorServerMirrorTypeEnum;
+    mirrorType: RestMirroredRepositoryDescriptorMirrorServerMirrorTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof RestMirroredRepositoryDescriptorMirrorServer
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof RestMirroredRepositoryDescriptorMirrorServer
      */
-    productVersion?: string;
+    productVersion: string;
 }
 
 
@@ -9803,19 +10603,19 @@ export interface RestNodeConnectivityReportNode {
      * @type {string}
      * @memberof RestNodeConnectivityReportNode
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof RestNodeConnectivityReportNode
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {RestNodeConnectivityReportNodeTypeEnum}
      * @memberof RestNodeConnectivityReportNode
      */
-    type?: RestNodeConnectivityReportNodeTypeEnum;
+    type: RestNodeConnectivityReportNodeTypeEnum;
 }
 
 
@@ -10260,10 +11060,10 @@ export interface RestProjectSettingsRestriction {
     processedState?: RestProjectSettingsRestrictionProcessedStateEnum;
     /**
      * 
-     * @type {RestChangesetRepositoryOriginProject}
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
      * @memberof RestProjectSettingsRestriction
      */
-    project?: RestChangesetRepositoryOriginProject;
+    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
 }
 
 
@@ -10358,6 +11158,12 @@ export interface RestPullRequest {
      * @memberof RestPullRequest
      */
     createdDate?: number;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestAuthor}
+     * @memberof RestPullRequest
+     */
+    creator?: RestCommentAnchorPullRequestAuthor;
     /**
      * 
      * @type {string}
@@ -10519,7 +11325,9 @@ export const RestPullRequestActivityActionEnum = {
     ReviewFinished: 'REVIEW_FINISHED',
     Reviewed: 'REVIEWED',
     Unapproved: 'UNAPPROVED',
-    Updated: 'UPDATED'
+    Updated: 'UPDATED',
+    MergeQueueAdded: 'MERGE_QUEUE_ADDED',
+    MergeQueueEjected: 'MERGE_QUEUE_EJECTED'
 } as const;
 export type RestPullRequestActivityActionEnum = typeof RestPullRequestActivityActionEnum[keyof typeof RestPullRequestActivityActionEnum];
 
@@ -10550,7 +11358,8 @@ export interface RestPullRequestAssignParticipantRoleRequest {
 export const RestPullRequestAssignParticipantRoleRequestRoleEnum = {
     Author: 'AUTHOR',
     Reviewer: 'REVIEWER',
-    Participant: 'PARTICIPANT'
+    Participant: 'PARTICIPANT',
+    Creator: 'CREATOR'
 } as const;
 export type RestPullRequestAssignParticipantRoleRequestRoleEnum = typeof RestPullRequestAssignParticipantRoleRequestRoleEnum[keyof typeof RestPullRequestAssignParticipantRoleRequestRoleEnum];
 
@@ -10664,13 +11473,13 @@ export interface RestPullRequestConditionScope {
      * @type {number}
      * @memberof RestPullRequestConditionScope
      */
-    resourceId?: number;
+    resourceId: number;
     /**
      * 
      * @type {RestPullRequestConditionScopeTypeEnum}
      * @memberof RestPullRequestConditionScope
      */
-    type?: RestPullRequestConditionScopeTypeEnum;
+    type: RestPullRequestConditionScopeTypeEnum;
 }
 
 
@@ -10789,13 +11598,13 @@ export interface RestPullRequestMergeConfigCommitMessageTemplate {
      * @type {string}
      * @memberof RestPullRequestMergeConfigCommitMessageTemplate
      */
-    body?: string;
+    body: string;
     /**
      * 
      * @type {string}
      * @memberof RestPullRequestMergeConfigCommitMessageTemplate
      */
-    title?: string;
+    title: string;
 }
 /**
  * 
@@ -10820,7 +11629,7 @@ export interface RestPullRequestMergeConfigDefaultStrategy {
      * @type {string}
      * @memberof RestPullRequestMergeConfigDefaultStrategy
      */
-    readonly flag?: string;
+    readonly flag: string;
     /**
      * 
      * @type {string}
@@ -10858,6 +11667,12 @@ export interface RestPullRequestMergeRequest {
      * @memberof RestPullRequestMergeRequest
      */
     autoSubject?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPullRequestMergeRequest
+     */
+    bypassMergeQueue?: boolean;
     /**
      * 
      * @type {string}
@@ -11002,7 +11817,8 @@ export interface RestPullRequestParticipant {
 export const RestPullRequestParticipantRoleEnum = {
     Author: 'AUTHOR',
     Reviewer: 'REVIEWER',
-    Participant: 'PARTICIPANT'
+    Participant: 'PARTICIPANT',
+    Creator: 'CREATOR'
 } as const;
 export type RestPullRequestParticipantRoleEnum = typeof RestPullRequestParticipantRoleEnum[keyof typeof RestPullRequestParticipantRoleEnum];
 
@@ -11102,19 +11918,19 @@ export interface RestPullRequestRebaseResultRefChangeRef {
      * @type {string}
      * @memberof RestPullRequestRebaseResultRefChangeRef
      */
-    displayId?: string;
+    displayId: string;
     /**
      * 
      * @type {string}
      * @memberof RestPullRequestRebaseResultRefChangeRef
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {RestPullRequestRebaseResultRefChangeRefTypeEnum}
      * @memberof RestPullRequestRebaseResultRefChangeRef
      */
-    type?: RestPullRequestRebaseResultRefChangeRefTypeEnum;
+    type: RestPullRequestRebaseResultRefChangeRefTypeEnum;
 }
 
 
@@ -11166,10 +11982,10 @@ export interface RestPullRequestRef {
     latestCommit?: string;
     /**
      * 
-     * @type {RestChangesetRepository}
+     * @type {RestCommentAnchorPullRequestFromRefRepository}
      * @memberof RestPullRequestRef
      */
-    repository?: RestChangesetRepository;
+    repository?: RestCommentAnchorPullRequestFromRefRepository;
     /**
      * 
      * @type {RestPullRequestRefTypeEnum}
@@ -11243,7 +12059,7 @@ export interface RestPullRequestSettingsMergeConfig {
      * @type {Array<RestPullRequestMergeStrategy>}
      * @memberof RestPullRequestSettingsMergeConfig
      */
-    strategies?: Array<RestPullRequestMergeStrategy>;
+    strategies: Array<RestPullRequestMergeStrategy>;
     /**
      * 
      * @type {string}
@@ -11277,10 +12093,10 @@ export interface RestPullRequestSuggestion {
     refChange?: RestPullRequestRebaseResultRefChange;
     /**
      * 
-     * @type {RestChangesetRepository}
+     * @type {RestCommentAnchorPullRequestFromRefRepository}
      * @memberof RestPullRequestSuggestion
      */
-    repository?: RestChangesetRepository;
+    repository?: RestCommentAnchorPullRequestFromRefRepository;
     /**
      * 
      * @type {RestPullRequestRebaseResultRefChangeRef}
@@ -11571,7 +12387,7 @@ export interface RestRefSyncQueue {
      * @type {Array<RestFarmSynchronizationRequest>}
      * @memberof RestRefSyncQueue
      */
-    values?: Array<RestFarmSynchronizationRequest>;
+    values: Array<RestFarmSynchronizationRequest>;
 }
 /**
  * 
@@ -11664,13 +12480,13 @@ export interface RestRefSyncStatusAheadRefs {
      * @type {string}
      * @memberof RestRefSyncStatusAheadRefs
      */
-    displayId?: string;
+    displayId: string;
     /**
      * 
      * @type {string}
      * @memberof RestRefSyncStatusAheadRefs
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {RestRefSyncStatusAheadRefsStateEnum}
@@ -11688,7 +12504,7 @@ export interface RestRefSyncStatusAheadRefs {
      * @type {RestRefSyncStatusAheadRefsTypeEnum}
      * @memberof RestRefSyncStatusAheadRefs
      */
-    type?: RestRefSyncStatusAheadRefsTypeEnum;
+    type: RestRefSyncStatusAheadRefsTypeEnum;
 }
 
 
@@ -11838,10 +12654,10 @@ export interface RestRepository {
     name?: string;
     /**
      * 
-     * @type {RestChangesetRepositoryOrigin}
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOrigin}
      * @memberof RestRepository
      */
-    origin?: RestChangesetRepositoryOrigin;
+    origin?: RestCommentAnchorPullRequestFromRefRepositoryOrigin;
     /**
      * 
      * @type {number}
@@ -11850,10 +12666,10 @@ export interface RestRepository {
     readonly partition?: number;
     /**
      * 
-     * @type {RestChangesetRepositoryOriginProject}
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
      * @memberof RestRepository
      */
-    project?: RestChangesetRepositoryOriginProject;
+    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
     /**
      * 
      * @type {boolean}
@@ -11963,6 +12779,93 @@ export interface RestRepositoryHookVeto {
 /**
  * 
  * @export
+ * @interface RestRepositoryIndexingDetails
+ */
+export interface RestRepositoryIndexingDetails {
+    /**
+     * Additional detail about the <b>BROKEN</b> status if available, meant for informational purposes only. This nullable, free-form text field should not be used for automation; rely on status instead.
+     * @type {string}
+     * @memberof RestRepositoryIndexingDetails
+     */
+    readonly indexingError?: string;
+    /**
+     * The commit hash of the last indexed commit in the repository.
+     * @type {string}
+     * @memberof RestRepositoryIndexingDetails
+     */
+    lastIndexedCommitId?: string;
+    /**
+     * The timestamp in epoch milliseconds of the last time the repository successfully was indexed
+     * @type {number}
+     * @memberof RestRepositoryIndexingDetails
+     */
+    lastIndexedTimestamp?: number;
+    /**
+     * The project key that the repository belongs to
+     * @type {string}
+     * @memberof RestRepositoryIndexingDetails
+     */
+    projectKey?: string;
+    /**
+     * The repository slug
+     * @type {string}
+     * @memberof RestRepositoryIndexingDetails
+     */
+    repositorySlug?: string;
+    /**
+     * The current indexing status of the repository.
+     * @type {RestRepositoryIndexingDetailsStatusEnum}
+     * @memberof RestRepositoryIndexingDetails
+     */
+    status?: RestRepositoryIndexingDetailsStatusEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestRepositoryIndexingDetailsStatusEnum = {
+    Broken: 'BROKEN',
+    Indexed: 'INDEXED',
+    Indexing: 'INDEXING',
+    Unknown: 'UNKNOWN'
+} as const;
+export type RestRepositoryIndexingDetailsStatusEnum = typeof RestRepositoryIndexingDetailsStatusEnum[keyof typeof RestRepositoryIndexingDetailsStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestRepositoryIndexingQueueDetails
+ */
+export interface RestRepositoryIndexingQueueDetails {
+    /**
+     * The timestamp indicating when the current queue details were captured.
+     * @type {number}
+     * @memberof RestRepositoryIndexingQueueDetails
+     */
+    capturedAt?: number;
+    /**
+     * The ID of the node associated with the indexing queue.
+     * @type {string}
+     * @memberof RestRepositoryIndexingQueueDetails
+     */
+    nodeId?: string;
+    /**
+     * Indicates whether the repository is currently queued for indexing.
+     * @type {boolean}
+     * @memberof RestRepositoryIndexingQueueDetails
+     */
+    queued?: boolean;
+    /**
+     * Gets the time at which the repository was added to the indexing queue. If the repository is not present in the queue, this will be empty.
+     * @type {number}
+     * @memberof RestRepositoryIndexingQueueDetails
+     */
+    queuedAt?: number;
+}
+/**
+ * 
+ * @export
  * @interface RestRepositoryLockOwner
  */
 export interface RestRepositoryLockOwner {
@@ -12014,13 +12917,13 @@ export interface RestRepositoryMirrorEvent {
      * @type {RestRepositoryMirrorEventTypeEnum}
      * @memberof RestRepositoryMirrorEvent
      */
-    type?: RestRepositoryMirrorEventTypeEnum;
+    type: RestRepositoryMirrorEventTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof RestRepositoryMirrorEvent
      */
-    upstreamRepoId?: string;
+    upstreamRepoId: string;
 }
 
 
@@ -12153,10 +13056,10 @@ export interface RestRepositoryRefChangeActivity {
     refChange?: RestRepositoryRefChangeActivityRefChange;
     /**
      * 
-     * @type {RestChangesetRepository}
+     * @type {RestCommentAnchorPullRequestFromRefRepository}
      * @memberof RestRepositoryRefChangeActivity
      */
-    repository?: RestChangesetRepository;
+    repository?: RestCommentAnchorPullRequestFromRefRepository;
     /**
      * 
      * @type {string}
@@ -12247,13 +13150,13 @@ export interface RestRepositorySelector {
      * @type {string}
      * @memberof RestRepositorySelector
      */
-    projectKey?: string;
+    projectKey: string;
     /**
      * 
      * @type {string}
      * @memberof RestRepositorySelector
      */
-    slug?: string;
+    slug: string;
 }
 /**
  * 
@@ -12285,6 +13188,18 @@ export interface RestRequiredBuildCondition {
      * @memberof RestRequiredBuildCondition
      */
     refMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    /**
+     * Indicates whether this required build condition is enforced for merges via the merge queue.
+     * @type {boolean}
+     * @memberof RestRequiredBuildCondition
+     */
+    requiredForMergeQueue?: boolean;
+    /**
+     * Indicates whether this required build condition is enforced for pull requests.
+     * @type {boolean}
+     * @memberof RestRequiredBuildCondition
+     */
+    requiredForPullRequest?: boolean;
 }
 /**
  * 
@@ -12310,6 +13225,18 @@ export interface RestRequiredBuildConditionSetRequest {
      * @memberof RestRequiredBuildConditionSetRequest
      */
     refMatcher: RestRefMatcher;
+    /**
+     * Indicates whether this required build condition is enforced for merges via the merge queue. If not specified, defaults to true.
+     * @type {boolean}
+     * @memberof RestRequiredBuildConditionSetRequest
+     */
+    requiredForMergeQueue?: boolean;
+    /**
+     * Indicates whether this required build condition is enforced for pull requests. If not specified, defaults to true.
+     * @type {boolean}
+     * @memberof RestRequiredBuildConditionSetRequest
+     */
+    requiredForPullRequest?: boolean;
 }
 /**
  * 
@@ -12322,7 +13249,7 @@ export interface RestRestrictionRequest {
      * @type {Array<number>}
      * @memberof RestRestrictionRequest
      */
-    accessKeyIds?: Array<number>;
+    accessKeyIds: Array<number>;
     /**
      * 
      * @type {Array<RestSshAccessKey>}
@@ -12334,7 +13261,7 @@ export interface RestRestrictionRequest {
      * @type {Array<string>}
      * @memberof RestRestrictionRequest
      */
-    groupNames?: Array<string>;
+    groupNames: Array<string>;
     /**
      * 
      * @type {Array<string>}
@@ -12370,7 +13297,7 @@ export interface RestRestrictionRequest {
      * @type {Array<string>}
      * @memberof RestRestrictionRequest
      */
-    userSlugs?: Array<string>;
+    userSlugs: Array<string>;
     /**
      * 
      * @type {Array<RestApplicationUser>}
@@ -12432,13 +13359,13 @@ export interface RestReviewerGroupScope {
      * @type {number}
      * @memberof RestReviewerGroupScope
      */
-    resourceId?: number;
+    resourceId: number;
     /**
      * 
      * @type {RestReviewerGroupScopeTypeEnum}
      * @memberof RestReviewerGroupScope
      */
-    type?: RestReviewerGroupScopeTypeEnum;
+    type: RestReviewerGroupScopeTypeEnum;
 }
 
 
@@ -12625,13 +13552,13 @@ export interface RestSecretScanningRuleScope {
      * @type {number}
      * @memberof RestSecretScanningRuleScope
      */
-    resourceId?: number;
+    resourceId: number;
     /**
      * 
      * @type {RestSecretScanningRuleScopeTypeEnum}
      * @memberof RestSecretScanningRuleScope
      */
-    type?: RestSecretScanningRuleScopeTypeEnum;
+    type: RestSecretScanningRuleScopeTypeEnum;
 }
 
 
@@ -12800,16 +13727,16 @@ export interface RestSshAccessKey {
     permission?: RestSshAccessKeyPermissionEnum;
     /**
      * 
-     * @type {RestChangesetRepositoryOriginProject}
+     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
      * @memberof RestSshAccessKey
      */
-    project?: RestChangesetRepositoryOriginProject;
+    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
     /**
      * 
-     * @type {RestChangesetRepository}
+     * @type {RestCommentAnchorPullRequestFromRefRepository}
      * @memberof RestSshAccessKey
      */
-    repository?: RestChangesetRepository;
+    repository?: RestCommentAnchorPullRequestFromRefRepository;
 }
 
 
@@ -12875,7 +13802,7 @@ export interface RestSshCredentials {
      * @type {string}
      * @memberof RestSshCredentials
      */
-    username?: string;
+    username: string;
 }
 /**
  * 
@@ -13359,7 +14286,7 @@ export interface RestUserReactionComment {
      * @type {Array<RestComment>}
      * @memberof RestUserReactionComment
      */
-    readonly comments?: Array<RestComment>;
+    comments?: Array<RestComment>;
     /**
      * 
      * @type {number}
@@ -13655,13 +14582,13 @@ export interface Scope {
      * @type {number}
      * @memberof Scope
      */
-    resourceId?: number;
+    resourceId: number;
     /**
      * 
      * @type {ScopeTypeEnum}
      * @memberof Scope
      */
-    type?: ScopeTypeEnum;
+    type: ScopeTypeEnum;
 }
 
 
@@ -13861,10 +14788,22 @@ export interface SetDefaultBranchRequest {
 export interface SetMailConfigRequest {
     /**
      * 
+     * @type {SetMailConfigRequestAuthTypeEnum}
+     * @memberof SetMailConfigRequest
+     */
+    authType?: SetMailConfigRequestAuthTypeEnum;
+    /**
+     * 
      * @type {string}
      * @memberof SetMailConfigRequest
      */
     hostname?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SetMailConfigRequest
+     */
+    oauth2ProviderId?: string;
     /**
      * 
      * @type {string}
@@ -13897,6 +14836,12 @@ export interface SetMailConfigRequest {
     senderAddress?: string;
     /**
      * 
+     * @type {string}
+     * @memberof SetMailConfigRequest
+     */
+    tokenId?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof SetMailConfigRequest
      */
@@ -13909,6 +14854,15 @@ export interface SetMailConfigRequest {
     username?: string;
 }
 
+
+/**
+ * @export
+ */
+export const SetMailConfigRequestAuthTypeEnum = {
+    Basic: 'BASIC',
+    Oauth2: 'OAUTH2'
+} as const;
+export type SetMailConfigRequestAuthTypeEnum = typeof SetMailConfigRequestAuthTypeEnum[keyof typeof SetMailConfigRequestAuthTypeEnum];
 
 /**
  * @export
@@ -14021,41 +14975,16 @@ export interface StartMeshMigrationRequest {
     all?: boolean;
     /**
      * 
-     * @type {StartMeshMigrationRequestMaxBytesPerSecond}
+     * @type {Set<number>}
      * @memberof StartMeshMigrationRequest
      */
-    maxBytesPerSecond?: StartMeshMigrationRequestMaxBytesPerSecond;
+    projectIds: Array<number>;
     /**
      * 
      * @type {Set<number>}
      * @memberof StartMeshMigrationRequest
      */
-    projectIds?: Array<number>;
-    /**
-     * 
-     * @type {Set<number>}
-     * @memberof StartMeshMigrationRequest
-     */
-    repositoryIds?: Array<number>;
-}
-/**
- * 
- * @export
- * @interface StartMeshMigrationRequestMaxBytesPerSecond
- */
-export interface StartMeshMigrationRequestMaxBytesPerSecond {
-    /**
-     * 
-     * @type {number}
-     * @memberof StartMeshMigrationRequestMaxBytesPerSecond
-     */
-    asLong?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StartMeshMigrationRequestMaxBytesPerSecond
-     */
-    present?: boolean;
+    repositoryIds: Array<number>;
 }
 /**
  * 
@@ -14252,10 +15181,10 @@ export interface UpdatePullRequestCondition1Request {
     sourceMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
     /**
      * 
-     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
+     * @type {RestRefMatcher}
      * @memberof UpdatePullRequestCondition1Request
      */
-    targetMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    targetMatcher?: RestRefMatcher;
 }
 /**
  * 
@@ -14293,13 +15222,13 @@ export interface UpdatePullRequestCondition1RequestSourceMatcherType {
      * @type {UpdatePullRequestCondition1RequestSourceMatcherTypeIdEnum}
      * @memberof UpdatePullRequestCondition1RequestSourceMatcherType
      */
-    id?: UpdatePullRequestCondition1RequestSourceMatcherTypeIdEnum;
+    id: UpdatePullRequestCondition1RequestSourceMatcherTypeIdEnum;
     /**
      * 
      * @type {string}
      * @memberof UpdatePullRequestCondition1RequestSourceMatcherType
      */
-    name?: string;
+    name: string;
 }
 
 

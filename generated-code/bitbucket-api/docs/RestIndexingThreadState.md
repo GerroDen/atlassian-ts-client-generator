@@ -1,12 +1,14 @@
 
-# GetAllAccessTokens401Response
+# RestIndexingThreadState
 
+Represents the state of an indexing thread.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`errors` | [Array&lt;RestErrorMessage&gt;](RestErrorMessage.md)
+`code` | string
+`description` | string
 
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

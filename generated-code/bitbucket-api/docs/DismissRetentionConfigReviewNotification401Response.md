@@ -1,13 +1,12 @@
 
-# StartMeshMigrationRequestMaxBytesPerSecond
+# DismissRetentionConfigReviewNotification401Response
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`asLong` | number
-`present` | boolean
+`errors` | [Array&lt;RestErrorMessage&gt;](RestErrorMessage.md)
 
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

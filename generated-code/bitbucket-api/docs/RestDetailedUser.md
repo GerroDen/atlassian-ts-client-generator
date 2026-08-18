@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `active` | boolean
 `avatarUrl` | string
+`createdTimestamp` | number
 `deletable` | boolean
 `directoryName` | string
 `displayName` | string

@@ -14,9 +14,9 @@ Name | Type
 `id` | number
 `links` | object
 `name` | string
-`origin` | [RestChangesetRepositoryOrigin](RestChangesetRepositoryOrigin.md)
+`origin` | [RestCommentAnchorPullRequestFromRefRepositoryOrigin](RestCommentAnchorPullRequestFromRefRepositoryOrigin.md)
 `partition` | number
-`project` | [RestChangesetRepositoryOriginProject](RestChangesetRepositoryOriginProject.md)
+`project` | [RestCommentAnchorPullRequestFromRefRepositoryOriginProject](RestCommentAnchorPullRequestFromRefRepositoryOriginProject.md)
 `_public` | boolean
 `relatedLinks` | object
 `scmId` | string

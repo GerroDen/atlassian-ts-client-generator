@@ -13,7 +13,7 @@ Name | Type
 `fromCommit` | [RestChangesetFromCommit](RestChangesetFromCommit.md)
 `key` | string
 `lastUpdated` | number
-`repository` | [RestChangesetRepository](RestChangesetRepository.md)
+`repository` | [RestCommentAnchorPullRequestFromRefRepository](RestCommentAnchorPullRequestFromRefRepository.md)
 `state` | string
 `toCommit` | [RestChangesetFromCommit](RestChangesetFromCommit.md)
 `url` | string

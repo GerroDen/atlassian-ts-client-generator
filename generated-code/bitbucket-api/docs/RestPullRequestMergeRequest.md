@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `autoMerge` | boolean
 `autoSubject` | string
+`bypassMergeQueue` | boolean
 `message` | string
 `strategyId` | string
 `version` | number

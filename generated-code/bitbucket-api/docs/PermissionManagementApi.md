@@ -634,7 +634,7 @@ No authorization required
 
 Remove user
 
-Deletes the specified user, removing them from the system. This also removes any permissions that may have been granted to the user.  A user may not delete themselves, and a user with &lt;strong&gt;ADMIN&lt;/strong&gt; permissions may not delete a user with &lt;strong&gt;SYS_ADMIN&lt;/strong&gt;permissions.  The authenticated user must have the &lt;strong&gt;ADMIN&lt;/strong&gt; permission to call this resource.
+Deletes the specified user, removing them from the system. This also removes any permissions that may have been granted to the user.  A user may not delete themselves, and a user with &lt;strong&gt;ADMIN&lt;/strong&gt; permissions may not delete a user with &lt;strong&gt;SYS_ADMIN&lt;/strong&gt; permissions.  The authenticated user must have the &lt;strong&gt;ADMIN&lt;/strong&gt; permission to call this resource.  Note: The permission removal process occurs 7 days after the user deletion.
 
 ### Example
 

@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `captchaRequired` | boolean
+`expiredCredentials` | boolean
 `message` | string
 
 

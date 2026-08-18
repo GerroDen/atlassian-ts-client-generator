@@ -23,6 +23,9 @@ Name | Type
 `jitConfiguration` | [JitConfigEntity](JitConfigEntity.md)
 `lastUpdated` | string
 `name` | string
+`nameIdPolicy` | string
+`signAuthnrequest` | boolean
+`signatureAlgorithm` | string
 `ssoIssuer` | string
 `ssoType` | string
 `ssoUrl` | string

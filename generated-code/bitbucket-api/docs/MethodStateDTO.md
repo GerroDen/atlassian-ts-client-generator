@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `enabled` | boolean
 `enabledAt` | string
+`enforced` | boolean
 `type` | string
 
 

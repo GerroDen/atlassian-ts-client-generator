@@ -10,6 +10,7 @@ Name | Type
 `closed` | boolean
 `closedDate` | string
 `createdDate` | string
+`creator` | [PullRequestParticipant](PullRequestParticipant.md)
 `crossRepository` | boolean
 `description` | string
 `draft` | boolean

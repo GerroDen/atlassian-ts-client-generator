@@ -10,6 +10,7 @@ Name | Type
 `closed` | boolean
 `closedDate` | number
 `createdDate` | number
+`creator` | [RestCommentAnchorPullRequestAuthor](RestCommentAnchorPullRequestAuthor.md)
 `description` | string
 `descriptionAsHtml` | string
 `draft` | boolean

@@ -14,6 +14,7 @@ All URIs are relative to *http://example.com:7990/rest*
 | [**createTagForRepository**](RepositoryApi.md#createtagforrepository) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug}/tags | Create tag |
 | [**createWebhook1**](RepositoryApi.md#createwebhook1) | **POST** /api/latest/projects/{projectKey}/repos/{repositorySlug}/webhooks | Create webhook |
 | [**delete5**](RepositoryApi.md#delete5) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/auto-merge | Delete pull request auto-merge settings |
+| [**delete7**](RepositoryApi.md#delete7) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/change-author | Delete pull request change-author settings |
 | [**deleteAllDefaultTasks1**](RepositoryApi.md#deletealldefaulttasks1) | **DELETE** /default-tasks/latest/projects/{projectKey}/repos/{repositorySlug}/tasks | Deletes all default tasks for the repository |
 | [**deleteAttachment**](RepositoryApi.md#deleteattachment) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/attachments/{attachmentId} | Delete an attachment |
 | [**deleteAttachmentMetadata**](RepositoryApi.md#deleteattachmentmetadata) | **DELETE** /api/latest/projects/{projectKey}/repos/{repositorySlug}/attachments/{attachmentId}/metadata | Delete attachment metadata |
@@ -32,6 +33,7 @@ All URIs are relative to *http://example.com:7990/rest*
 | [**findByCommit**](RepositoryApi.md#findbycommit) | **GET** /branch-utils/latest/projects/{projectKey}/repos/{repositorySlug}/branches/info/{commitId} | Get branch |
 | [**findWebhooks1**](RepositoryApi.md#findwebhooks1) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/webhooks | Find webhooks |
 | [**get5**](RepositoryApi.md#get5) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/auto-merge | Get pull request auto-merge settings |
+| [**get7**](RepositoryApi.md#get7) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/change-author | Get pull request change-author settings |
 | [**getAllLabelsForRepository**](RepositoryApi.md#getalllabelsforrepository) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/labels | Get repository labels |
 | [**getArchive**](RepositoryApi.md#getarchive) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/archive | Stream archive of repository |
 | [**getAttachment**](RepositoryApi.md#getattachment) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/attachments/{attachmentId} | Get an attachment |
@@ -74,6 +76,7 @@ All URIs are relative to *http://example.com:7990/rest*
 | [**saveAttachmentMetadata**](RepositoryApi.md#saveattachmentmetadata) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/attachments/{attachmentId}/metadata | Save attachment metadata |
 | [**searchWebhooks**](RepositoryApi.md#searchwebhooks) | **GET** /api/latest/projects/{projectKey}/repos/{repositorySlug}/webhooks/search | Search webhooks |
 | [**set1**](RepositoryApi.md#set1) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/auto-merge | Create or update the pull request auto-merge settings |
+| [**set3**](RepositoryApi.md#set3) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/change-author | Create or update the pull request change-author settings |
 | [**setAutoDeclineSettings1**](RepositoryApi.md#setautodeclinesettings1) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/auto-decline | Create auto decline settings |
 | [**setConfiguration1**](RepositoryApi.md#setconfiguration1) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/hook-scripts/{scriptId} | Create/update a hook script |
 | [**setDefaultBranch1**](RepositoryApi.md#setdefaultbranch1) | **PUT** /api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default | Update default branch |
@@ -860,6 +863,79 @@ No authorization required
 | **204** | The pull request auto-merge settings |  -  |
 | **401** | The currently authenticated user has insufficient permissions to delete the pull request auto-merge settings. |  -  |
 | **403** | The pull request auto-merge settings cannot be modified due to a restriction enforced by the supplied repository\&#39;s project. |  -  |
+| **404** | The specified repository does not exist. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## delete7
+
+> delete7(projectKey, repositorySlug)
+
+Delete pull request change-author settings
+
+Deletes pull request change-author settings for the supplied repository.  The authenticated user must have &lt;strong&gt;REPO_ADMIN&lt;/strong&gt; permission for this repository to call the resource.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RepositoryApi,
+} from 'bitbucket-api';
+import type { Delete7Request } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new RepositoryApi();
+
+  const body = {
+    // string | The project key
+    projectKey: projectKey_example,
+    // string | The repository slug
+    repositorySlug: repositorySlug_example,
+  } satisfies Delete7Request;
+
+  try {
+    const data = await api.delete7(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **projectKey** | `string` | The project key | [Defaults to `undefined`] |
+| **repositorySlug** | `string` | The repository slug | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | The pull request change-author settings |  -  |
+| **401** | The currently authenticated user has insufficient permissions to delete the pull request change-author settings. |  -  |
+| **403** | The pull request change-author settings cannot be modified due to a restriction enforced by the supplied repository\&#39;s project. |  -  |
 | **404** | The specified repository does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -2250,6 +2326,78 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## get7
+
+> RestChangePullRequestAuthorRestrictedSettings get7(projectKey, repositorySlug)
+
+Get pull request change-author settings
+
+Retrieves the pull request change-author settings for the supplied repository. Project settings will be returned if no explicit settings have been set for the repository. In the case that there are no project settings, the default settings will be returned. If the repository\&#39;s project has restricted its change-author settings, then the settings of the project will be returned.  The authenticated user must have &lt;strong&gt;REPO_READ&lt;/strong&gt; permission for this repository to call the resource.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RepositoryApi,
+} from 'bitbucket-api';
+import type { Get7Request } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new RepositoryApi();
+
+  const body = {
+    // string | The project key
+    projectKey: projectKey_example,
+    // string | The repository slug
+    repositorySlug: repositorySlug_example,
+  } satisfies Get7Request;
+
+  try {
+    const data = await api.get7(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **projectKey** | `string` | The project key | [Defaults to `undefined`] |
+| **repositorySlug** | `string` | The repository slug | [Defaults to `undefined`] |
+
+### Return type
+
+[**RestChangePullRequestAuthorRestrictedSettings**](RestChangePullRequestAuthorRestrictedSettings.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json;charset=UTF-8`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The pull request change-author settings |  -  |
+| **401** | The currently authenticated user has insufficient permissions to retrieve the pull request change-author settings. |  -  |
+| **404** | The specified repository does not exist. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## getAllLabelsForRepository
 
 > RestLabel getAllLabelsForRepository(projectKey, repositorySlug)
@@ -2352,7 +2500,7 @@ async function example() {
     path: path_example,
     // string | A filename to include the \"Content-Disposition\" header (optional)
     filename: filename_example,
-    // string | The commit to stream an archive of; if not supplied, an archive of the default branch is streamed (optional)
+    // string | The commit hash or fully-qualified ref name (e.g. refs/tags/example) to stream an archive of; if not supplied, an archive of the default branch is streamed (optional)
     at: at_example,
     // string | A prefix to apply to all entries in the streamed archive; if the supplied prefix does not end with a trailing /, one will be added automatically (optional)
     prefix: prefix_example,
@@ -2381,7 +2529,7 @@ example().catch(console.error);
 | **repositorySlug** | `string` | The repository slug. | [Defaults to `undefined`] |
 | **path** | `string` | Paths to include in the streamed archive; may be repeated to include multiple paths | [Optional] [Defaults to `undefined`] |
 | **filename** | `string` | A filename to include the \&quot;Content-Disposition\&quot; header | [Optional] [Defaults to `undefined`] |
-| **at** | `string` | The commit to stream an archive of; if not supplied, an archive of the default branch is streamed | [Optional] [Defaults to `undefined`] |
+| **at** | `string` | The commit hash or fully-qualified ref name (e.g. refs/tags/example) to stream an archive of; if not supplied, an archive of the default branch is streamed | [Optional] [Defaults to `undefined`] |
 | **prefix** | `string` | A prefix to apply to all entries in the streamed archive; if the supplied prefix does not end with a trailing /, one will be added automatically | [Optional] [Defaults to `undefined`] |
 | **format** | `string` | The format to stream the archive in; must be one of: zip, tar, tar.gz or tgz | [Optional] [Defaults to `undefined`] |
 
@@ -5652,6 +5800,83 @@ No authorization required
 | **400** | The \&#39;enabled\&#39; field was not provided correctly. |  -  |
 | **401** | The currently authenticated user has insufficient permissions to create or update the pull request auto-merge settings. |  -  |
 | **403** | The pull request auto-merge settings cannot be modified due to a restriction enforced by the supplied repository\&#39;s project. |  -  |
+| **404** | The specified repository does not exist. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## set3
+
+> RestChangePullRequestAuthorRestrictedSettings set3(projectKey, repositorySlug, restChangePullRequestAuthorSettingsRequest)
+
+Create or update the pull request change-author settings
+
+Creates or updates the pull request change-author settings for the supplied repository.  The authenticated user must have &lt;strong&gt;REPO_ADMIN&lt;/strong&gt; permission for this repository to call the resource.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RepositoryApi,
+} from 'bitbucket-api';
+import type { Set3Request } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new RepositoryApi();
+
+  const body = {
+    // string | The project key
+    projectKey: projectKey_example,
+    // string | The repository slug
+    repositorySlug: repositorySlug_example,
+    // RestChangePullRequestAuthorSettingsRequest | The settings to create or update (optional)
+    restChangePullRequestAuthorSettingsRequest: ...,
+  } satisfies Set3Request;
+
+  try {
+    const data = await api.set3(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **projectKey** | `string` | The project key | [Defaults to `undefined`] |
+| **repositorySlug** | `string` | The repository slug | [Defaults to `undefined`] |
+| **restChangePullRequestAuthorSettingsRequest** | [RestChangePullRequestAuthorSettingsRequest](RestChangePullRequestAuthorSettingsRequest.md) | The settings to create or update | [Optional] |
+
+### Return type
+
+[**RestChangePullRequestAuthorRestrictedSettings**](RestChangePullRequestAuthorRestrictedSettings.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json;charset=UTF-8`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The pull request change-author settings |  -  |
+| **400** | The \&#39;enabled\&#39; field was not provided correctly. |  -  |
+| **401** | The currently authenticated user has insufficient permissions to create or update the pull request change-author settings. |  -  |
+| **403** | The pull request change-author settings cannot be modified due to a restriction enforced by the supplied repository\&#39;s project. |  -  |
 | **404** | The specified repository does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

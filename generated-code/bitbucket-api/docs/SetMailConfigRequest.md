@@ -6,12 +6,15 @@
 
 Name | Type
 ------------ | -------------
+`authType` | string
 `hostname` | string
+`oauth2ProviderId` | string
 `password` | string
 `port` | number
 `protocol` | string
 `requireStartTls` | boolean
 `senderAddress` | string
+`tokenId` | string
 `useStartTls` | boolean
 `username` | string
 

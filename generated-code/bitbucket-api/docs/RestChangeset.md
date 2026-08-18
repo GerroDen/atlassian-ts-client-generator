@@ -9,7 +9,7 @@ Name | Type
 `changes` | [RestChangesetChanges](RestChangesetChanges.md)
 `fromCommit` | [RestChangesetFromCommit](RestChangesetFromCommit.md)
 `links` | object
-`repository` | [RestChangesetRepository](RestChangesetRepository.md)
+`repository` | [RestCommentAnchorPullRequestFromRefRepository](RestCommentAnchorPullRequestFromRefRepository.md)
 `toCommit` | [RestChangesetToCommit](RestChangesetToCommit.md)
 
 

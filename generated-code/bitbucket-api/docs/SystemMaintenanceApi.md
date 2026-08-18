@@ -11,15 +11,15 @@ All URIs are relative to *http://example.com:7990/rest*
 | [**clearSenderAddress**](SystemMaintenanceApi.md#clearsenderaddress) | **DELETE** /api/latest/admin/mail-server/sender-address | Update mail configuration |
 | [**connectivity**](SystemMaintenanceApi.md#connectivity) | **GET** /api/latest/admin/git/mesh/diagnostics/connectivity | Generate Mesh connectivity report |
 | [**createHookScript**](SystemMaintenanceApi.md#createhookscript) | **POST** /api/latest/hook-scripts | Create a new hook script |
+| [**delete10**](SystemMaintenanceApi.md#delete10) | **DELETE** /api/latest/admin/rate-limit/settings/users/{userSlug} | Delete user specific rate limit settings |
 | [**delete2**](SystemMaintenanceApi.md#delete2) | **DELETE** /api/latest/admin/git/mesh/nodes/{id} | Delete Mesh node |
-| [**delete8**](SystemMaintenanceApi.md#delete8) | **DELETE** /api/latest/admin/rate-limit/settings/users/{userSlug} | Delete user specific rate limit settings |
 | [**deleteAvatar**](SystemMaintenanceApi.md#deleteavatar) | **DELETE** /api/latest/users/{userSlug}/avatar.png | Delete user avatar |
 | [**deleteBanner**](SystemMaintenanceApi.md#deletebanner) | **DELETE** /api/latest/admin/banner | Delete announcement banner |
 | [**deleteHookScript**](SystemMaintenanceApi.md#deletehookscript) | **DELETE** /api/latest/hook-scripts/{scriptId} | Delete a hook script. |
 | [**deleteMailConfig**](SystemMaintenanceApi.md#deletemailconfig) | **DELETE** /api/latest/admin/mail-server | Delete mail configuration |
 | [**dismissRetentionConfigReviewNotification**](SystemMaintenanceApi.md#dismissretentionconfigreviewnotification) | **DELETE** /audit/latest/notification-settings/retention-config-review | Dismiss retention config notification |
 | [**get2**](SystemMaintenanceApi.md#get2) | **GET** /api/latest/admin/license | Get license details |
-| [**get6**](SystemMaintenanceApi.md#get6) | **GET** /api/latest/admin/rate-limit/settings/users/{userSlug} | Get user specific rate limit settings |
+| [**get8**](SystemMaintenanceApi.md#get8) | **GET** /api/latest/admin/rate-limit/settings/users/{userSlug} | Get user specific rate limit settings |
 | [**getActiveMeshMigrationSummary**](SystemMaintenanceApi.md#getactivemeshmigrationsummary) | **GET** /api/latest/migration/mesh/summary | Get summary for Mesh migration job |
 | [**getAllMeshMigrationSummaries**](SystemMaintenanceApi.md#getallmeshmigrationsummaries) | **GET** /api/latest/migration/mesh/summaries | Get all Mesh migration job summaries |
 | [**getAllRateLimitSettings**](SystemMaintenanceApi.md#getallratelimitsettings) | **GET** /api/latest/admin/rate-limit/settings/users | Get rate limit settings for user |
@@ -62,8 +62,8 @@ All URIs are relative to *http://example.com:7990/rest*
 | [**read**](SystemMaintenanceApi.md#read) | **GET** /api/latest/hook-scripts/{scriptId}/content | Get hook script content |
 | [**registerNewMeshNode**](SystemMaintenanceApi.md#registernewmeshnode) | **POST** /api/latest/admin/git/mesh/nodes | Register new Mesh node |
 | [**searchMeshMigrationRepos**](SystemMaintenanceApi.md#searchmeshmigrationrepos) | **GET** /api/latest/migration/mesh/repos | Find repositories by Mesh migration state |
-| [**set2**](SystemMaintenanceApi.md#set2) | **POST** /api/latest/admin/rate-limit/settings/users | Set rate limit settings for users |
-| [**set3**](SystemMaintenanceApi.md#set3) | **PUT** /api/latest/admin/rate-limit/settings/users/{userSlug} | Set rate limit settings for user |
+| [**set4**](SystemMaintenanceApi.md#set4) | **POST** /api/latest/admin/rate-limit/settings/users | Set rate limit settings for users |
+| [**set5**](SystemMaintenanceApi.md#set5) | **PUT** /api/latest/admin/rate-limit/settings/users/{userSlug} | Set rate limit settings for user |
 | [**setBanner**](SystemMaintenanceApi.md#setbanneroperation) | **PUT** /api/latest/admin/banner | Update/Set announcement banner |
 | [**setDefaultBranch**](SystemMaintenanceApi.md#setdefaultbranchoperation) | **PUT** /api/latest/admin/default-branch | Update/Set default branch |
 | [**setLevel**](SystemMaintenanceApi.md#setlevel) | **PUT** /api/latest/logs/logger/{loggerName}/{levelName} | Set log level |
@@ -556,6 +556,75 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## delete10
+
+> delete10(userSlug)
+
+Delete user specific rate limit settings
+
+Deletes the user-specific rate limit settings for the given user.  The authenticated user must have &lt;strong&gt;ADMIN&lt;/strong&gt; permission to call this resource.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SystemMaintenanceApi,
+} from 'bitbucket-api';
+import type { Delete10Request } from 'bitbucket-api';
+
+async function example() {
+  console.log("🚀 Testing bitbucket-api SDK...");
+  const api = new SystemMaintenanceApi();
+
+  const body = {
+    // string | The user slug.
+    userSlug: userSlug_example,
+  } satisfies Delete10Request;
+
+  try {
+    const data = await api.delete10(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userSlug** | `string` | The user slug. | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | An empty response indicating that the user settings have been deleted. |  -  |
+| **401** | The currently authenticated user has insufficient permissions to retrieve rate limit settings. |  -  |
+| **404** | The specified user does not exist, or has no settings. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## delete2
 
 > delete2(id, force)
@@ -622,75 +691,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **0** | default response |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-
-## delete8
-
-> delete8(userSlug)
-
-Delete user specific rate limit settings
-
-Deletes the user-specific rate limit settings for the given user.  The authenticated user must have &lt;strong&gt;ADMIN&lt;/strong&gt; permission to call this resource.
-
-### Example
-
-```ts
-import {
-  Configuration,
-  SystemMaintenanceApi,
-} from 'bitbucket-api';
-import type { Delete8Request } from 'bitbucket-api';
-
-async function example() {
-  console.log("🚀 Testing bitbucket-api SDK...");
-  const api = new SystemMaintenanceApi();
-
-  const body = {
-    // string | The user slug.
-    userSlug: userSlug_example,
-  } satisfies Delete8Request;
-
-  try {
-    const data = await api.delete8(body);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Run the test
-example().catch(console.error);
-```
-
-### Parameters
-
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userSlug** | `string` | The user slug. | [Defaults to `undefined`] |
-
-### Return type
-
-`void` (Empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | An empty response indicating that the user settings have been deleted. |  -  |
-| **401** | The currently authenticated user has insufficient permissions to retrieve rate limit settings. |  -  |
-| **404** | The specified user does not exist, or has no settings. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -1074,9 +1074,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## get6
+## get8
 
-> RestUserRateLimitSettings get6(userSlug)
+> RestUserRateLimitSettings get8(userSlug)
 
 Get user specific rate limit settings
 
@@ -1089,7 +1089,7 @@ import {
   Configuration,
   SystemMaintenanceApi,
 } from 'bitbucket-api';
-import type { Get6Request } from 'bitbucket-api';
+import type { Get8Request } from 'bitbucket-api';
 
 async function example() {
   console.log("🚀 Testing bitbucket-api SDK...");
@@ -1098,10 +1098,10 @@ async function example() {
   const body = {
     // string | The user slug.
     userSlug: userSlug_example,
-  } satisfies Get6Request;
+  } satisfies Get8Request;
 
   try {
-    const data = await api.get6(body);
+    const data = await api.get8(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -3984,9 +3984,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## set2
+## set4
 
-> RestUserRateLimitSettings set2(restBulkUserRateLimitSettingsUpdateRequest)
+> RestUserRateLimitSettings set4(restBulkUserRateLimitSettingsUpdateRequest)
 
 Set rate limit settings for users
 
@@ -3999,7 +3999,7 @@ import {
   Configuration,
   SystemMaintenanceApi,
 } from 'bitbucket-api';
-import type { Set2Request } from 'bitbucket-api';
+import type { Set4Request } from 'bitbucket-api';
 
 async function example() {
   console.log("🚀 Testing bitbucket-api SDK...");
@@ -4008,10 +4008,10 @@ async function example() {
   const body = {
     // RestBulkUserRateLimitSettingsUpdateRequest (optional)
     restBulkUserRateLimitSettingsUpdateRequest: ...,
-  } satisfies Set2Request;
+  } satisfies Set4Request;
 
   try {
-    const data = await api.set2(body);
+    const data = await api.set4(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -4053,9 +4053,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## set3
+## set5
 
-> RestUserRateLimitSettings set3(userSlug, restUserRateLimitSettingsUpdateRequest)
+> RestUserRateLimitSettings set5(userSlug, restUserRateLimitSettingsUpdateRequest)
 
 Set rate limit settings for user
 
@@ -4068,7 +4068,7 @@ import {
   Configuration,
   SystemMaintenanceApi,
 } from 'bitbucket-api';
-import type { Set3Request } from 'bitbucket-api';
+import type { Set5Request } from 'bitbucket-api';
 
 async function example() {
   console.log("🚀 Testing bitbucket-api SDK...");
@@ -4079,10 +4079,10 @@ async function example() {
     userSlug: userSlug_example,
     // RestUserRateLimitSettingsUpdateRequest (optional)
     restUserRateLimitSettingsUpdateRequest: ...,
-  } satisfies Set3Request;
+  } satisfies Set5Request;
 
   try {
-    const data = await api.set3(body);
+    const data = await api.set5(body);
     console.log(data);
   } catch (error) {
     console.error(error);

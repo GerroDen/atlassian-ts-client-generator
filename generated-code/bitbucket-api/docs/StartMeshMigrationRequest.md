@@ -7,7 +7,6 @@
 Name | Type
 ------------ | -------------
 `all` | boolean
-`maxBytesPerSecond` | [StartMeshMigrationRequestMaxBytesPerSecond](StartMeshMigrationRequestMaxBytesPerSecond.md)
 `projectIds` | Set&lt;number&gt;
 `repositoryIds` | Set&lt;number&gt;
 

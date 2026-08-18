@@ -8,7 +8,6 @@ Name | Type
 ------------ | -------------
 `endTime` | number
 `jobId` | number
-`maxBandwidth` | number
 `progress` | number
 `queue` | object
 `startTime` | number
