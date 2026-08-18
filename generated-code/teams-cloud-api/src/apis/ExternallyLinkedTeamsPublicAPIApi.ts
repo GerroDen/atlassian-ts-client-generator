@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Teams API
- * Teams API
+ * Teams API  Note: This REST API is not feature complete. New Teams capabilities are being built in GraphQL. For the full set of features, see the [Teams GraphQL API](https://developer.atlassian.com/platform/teams/teams-graphql-api/introduction/).
  *
  * The version of the OpenAPI document: 4.0
  * 
@@ -12,13 +12,14 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  PublicApiExternalTeamCreationPayload,
-  PublicApiLinkTeamToExternalSourcePayload,
-  PublicApiOverallCodedError,
-  PublicApiTeamResponse,
+    PublicApiBulkOperationRequest,
+    PublicApiBulkOperationResponse,
+    PublicApiExternalTeamCreationPayload,
+    PublicApiLinkTeamToExternalSourcePayload,
+    PublicApiOverallCodedError,
+    PublicApiTeamResponse,
 } from '../models/index';
 
 export interface CreateExternalLinkedTeamRequest {
@@ -30,6 +31,11 @@ export interface LinkTeamToExternalSourceRequest {
     orgId: string;
     teamId: string;
     publicApiLinkTeamToExternalSourcePayload: PublicApiLinkTeamToExternalSourcePayload;
+}
+
+export interface UnlinkTeamsFromExternalSourceRequest {
+    orgId: string;
+    publicApiBulkOperationRequest: PublicApiBulkOperationRequest;
 }
 
 /**
@@ -63,7 +69,7 @@ export class ExternallyLinkedTeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/external`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
 
         return {
             path: urlPath,
@@ -127,8 +133,8 @@ export class ExternallyLinkedTeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/{teamId}/external/link`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
-        urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{teamId}', encodeURIComponent(String(requestParameters['teamId'])));
 
         return {
             path: urlPath,
@@ -156,6 +162,63 @@ export class ExternallyLinkedTeamsPublicAPIApi extends runtime.BaseAPI {
      */
     async linkTeamToExternalSource(requestParameters: LinkTeamToExternalSourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.linkTeamToExternalSourceRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for unlinkTeamsFromExternalSource without sending the request
+     */
+    async unlinkTeamsFromExternalSourceRequestOpts(requestParameters: UnlinkTeamsFromExternalSourceRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling unlinkTeamsFromExternalSource().'
+            );
+        }
+
+        if (requestParameters['publicApiBulkOperationRequest'] == null) {
+            throw new runtime.RequiredError(
+                'publicApiBulkOperationRequest',
+                'Required parameter "publicApiBulkOperationRequest" was null or undefined when calling unlinkTeamsFromExternalSource().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/public/teams/v1/org/{orgId}/teams/external/bulk/unlink`;
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['publicApiBulkOperationRequest'],
+        };
+    }
+
+    /**
+     * Unlinks managed teams from their external references in bulk. Each team\'s membership setting will be transitioned from EXTERNAL to ORG_ADMIN_MANAGED.
+     * Unlink managed teams from their external references in bulk.
+     */
+    async unlinkTeamsFromExternalSourceRaw(requestParameters: UnlinkTeamsFromExternalSourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiBulkOperationResponse>> {
+        const requestOptions = await this.unlinkTeamsFromExternalSourceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Unlinks managed teams from their external references in bulk. Each team\'s membership setting will be transitioned from EXTERNAL to ORG_ADMIN_MANAGED.
+     * Unlink managed teams from their external references in bulk.
+     */
+    async unlinkTeamsFromExternalSource(requestParameters: UnlinkTeamsFromExternalSourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicApiBulkOperationResponse> {
+        const response = await this.unlinkTeamsFromExternalSourceRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
 }

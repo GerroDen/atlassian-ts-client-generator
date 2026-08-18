@@ -8,7 +8,7 @@ docs/PublicApiBulkOperationResponse.md
 docs/PublicApiBulkTeamOperationError.md
 docs/PublicApiExternalReference.md
 docs/PublicApiExternalTeamCreationPayload.md
-docs/PublicApiFetchResponsePublicApiMembershipAccountId.md
+docs/PublicApiFetchResponsePublicApiMembershipString.md
 docs/PublicApiLinkTeamToExternalSourcePayload.md
 docs/PublicApiMembership.md
 docs/PublicApiMembershipAddPayload.md
@@ -18,9 +18,10 @@ docs/PublicApiMembershipFetchPayload.md
 docs/PublicApiMembershipRemovePayload.md
 docs/PublicApiMembershipRemoveResponse.md
 docs/PublicApiOverallCodedError.md
-docs/PublicApiPageInfoAccountId.md
+docs/PublicApiPageInfoString.md
 docs/PublicApiTeam.md
 docs/PublicApiTeamCreationPayload.md
+docs/PublicApiTeamExternalReference.md
 docs/PublicApiTeamPaginationResult.md
 docs/PublicApiTeamResponse.md
 docs/PublicApiTeamResponseWithMembers.md

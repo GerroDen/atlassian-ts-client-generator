@@ -105,28 +105,28 @@ export interface PublicApiExternalTeamCreationPayload {
      */
     externalReference: PublicApiExternalReference;
     /**
-     * 
+     * [Deprecated] Omitting siteId is deprecated. With the introduction of Units, orgId alone is no longer sufficient to resolve the scope of teams. Always provide a valid siteId to ensure this operation continues to work in the future.
      * @type {string}
      * @memberof PublicApiExternalTeamCreationPayload
      */
-    siteId?: string;
+    siteId?: string | null;
 }
 /**
  * 
  * @export
- * @interface PublicApiFetchResponsePublicApiMembershipAccountId
+ * @interface PublicApiFetchResponsePublicApiMembershipString
  */
-export interface PublicApiFetchResponsePublicApiMembershipAccountId {
+export interface PublicApiFetchResponsePublicApiMembershipString {
     /**
      * 
-     * @type {PublicApiPageInfoAccountId}
-     * @memberof PublicApiFetchResponsePublicApiMembershipAccountId
+     * @type {PublicApiPageInfoString}
+     * @memberof PublicApiFetchResponsePublicApiMembershipString
      */
-    pageInfo: PublicApiPageInfoAccountId;
+    pageInfo: PublicApiPageInfoString;
     /**
      * 
      * @type {Array<PublicApiMembership>}
-     * @memberof PublicApiFetchResponsePublicApiMembershipAccountId
+     * @memberof PublicApiFetchResponsePublicApiMembershipString
      */
     results: Array<PublicApiMembership>;
 }
@@ -143,11 +143,11 @@ export interface PublicApiLinkTeamToExternalSourcePayload {
      */
     externalReference: PublicApiExternalReference;
     /**
-     * The siteId to help locate the externalReference. For example, when the externalReference is a group belonging to a site.
+     * The siteId to help locate the externalReference. For example, when the externalReference is a group belonging to a site. [Deprecated] Omitting siteId is deprecated. With the introduction of Units, orgId alone is no longer sufficient to resolve the scope of teams. Always provide a valid siteId to ensure this operation continues to work in the future.
      * @type {string}
      * @memberof PublicApiLinkTeamToExternalSourcePayload
      */
-    siteId?: string;
+    siteId?: string | null;
 }
 /**
  * 
@@ -230,7 +230,7 @@ export interface PublicApiMembershipFetchPayload {
      * @type {string}
      * @memberof PublicApiMembershipFetchPayload
      */
-    after?: string;
+    after?: string | null;
     /**
      * Maximum number of members to be returned
      * @type {number}
@@ -286,19 +286,19 @@ export interface PublicApiOverallCodedError {
 /**
  * 
  * @export
- * @interface PublicApiPageInfoAccountId
+ * @interface PublicApiPageInfoString
  */
-export interface PublicApiPageInfoAccountId {
+export interface PublicApiPageInfoString {
     /**
      * 
      * @type {string}
-     * @memberof PublicApiPageInfoAccountId
+     * @memberof PublicApiPageInfoString
      */
-    endCursor?: string;
+    endCursor?: string | null;
     /**
      * 
      * @type {boolean}
-     * @memberof PublicApiPageInfoAccountId
+     * @memberof PublicApiPageInfoString
      */
     hasNextPage: boolean;
 }
@@ -313,7 +313,7 @@ export interface PublicApiTeam {
      * @type {string}
      * @memberof PublicApiTeam
      */
-    creatorId?: string;
+    creatorId?: string | null;
     /**
      * 
      * @type {string}
@@ -326,6 +326,12 @@ export interface PublicApiTeam {
      * @memberof PublicApiTeam
      */
     displayName: string;
+    /**
+     * 
+     * @type {PublicApiTeamExternalReference}
+     * @memberof PublicApiTeam
+     */
+    externalReference?: PublicApiTeamExternalReference | null;
     /**
      * 
      * @type {string}
@@ -392,11 +398,11 @@ export interface PublicApiTeamCreationPayload {
      */
     displayName: string;
     /**
-     * If the org mandates site-scoped teams, a site ID must be provided or the operation will fail. [Deprecated] We have deprecated the empty siteId since it only works for org-scoped teams and teams are moving to unit-scope. It's recommended to always provide a valid siteId to ensure this operation continues to work in the future.
+     * If the org mandates site-scoped teams, a site ID must be provided or the operation will fail. [Deprecated] Omitting siteId is deprecated. With the introduction of Units, orgId alone is no longer sufficient to resolve the scope of teams. Always provide a valid siteId to ensure this operation continues to work in the future.
      * @type {string}
      * @memberof PublicApiTeamCreationPayload
      */
-    siteId?: string;
+    siteId?: string | null;
     /**
      * 
      * @type {PublicApiTeamCreationPayloadTeamTypeEnum}
@@ -418,6 +424,36 @@ export const PublicApiTeamCreationPayloadTeamTypeEnum = {
 export type PublicApiTeamCreationPayloadTeamTypeEnum = typeof PublicApiTeamCreationPayloadTeamTypeEnum[keyof typeof PublicApiTeamCreationPayloadTeamTypeEnum];
 
 /**
+ * 
+ * @export
+ * @interface PublicApiTeamExternalReference
+ */
+export interface PublicApiTeamExternalReference {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeamExternalReference
+     */
+    id: string;
+    /**
+     * 
+     * @type {PublicApiTeamExternalReferenceSourceEnum}
+     * @memberof PublicApiTeamExternalReference
+     */
+    source: PublicApiTeamExternalReferenceSourceEnum;
+}
+
+
+/**
+ * @export
+ */
+export const PublicApiTeamExternalReferenceSourceEnum = {
+    AtlassianGroup: 'ATLASSIAN_GROUP',
+    Hris: 'HRIS'
+} as const;
+export type PublicApiTeamExternalReferenceSourceEnum = typeof PublicApiTeamExternalReferenceSourceEnum[keyof typeof PublicApiTeamExternalReferenceSourceEnum];
+
+/**
  * Cursor pagination result for PublicApiTeam
  * @export
  * @interface PublicApiTeamPaginationResult
@@ -428,7 +464,7 @@ export interface PublicApiTeamPaginationResult {
      * @type {string}
      * @memberof PublicApiTeamPaginationResult
      */
-    cursor?: string;
+    cursor?: string | null;
     /**
      * The list of teams
      * @type {Array<PublicApiTeam>}
@@ -447,7 +483,7 @@ export interface PublicApiTeamResponse {
      * @type {string}
      * @memberof PublicApiTeamResponse
      */
-    creatorId?: string;
+    creatorId?: string | null;
     /**
      * 
      * @type {string}
@@ -460,6 +496,12 @@ export interface PublicApiTeamResponse {
      * @memberof PublicApiTeamResponse
      */
     displayName: string;
+    /**
+     * 
+     * @type {PublicApiTeamExternalReference}
+     * @memberof PublicApiTeamResponse
+     */
+    externalReference?: PublicApiTeamExternalReference;
     /**
      * 
      * @type {string}
@@ -524,7 +566,7 @@ export interface PublicApiTeamResponseWithMembers {
      * @type {string}
      * @memberof PublicApiTeamResponseWithMembers
      */
-    creatorId?: string;
+    creatorId?: string | null;
     /**
      * 
      * @type {string}
@@ -537,6 +579,12 @@ export interface PublicApiTeamResponseWithMembers {
      * @memberof PublicApiTeamResponseWithMembers
      */
     displayName: string;
+    /**
+     * 
+     * @type {PublicApiTeamExternalReference}
+     * @memberof PublicApiTeamResponseWithMembers
+     */
+    externalReference?: PublicApiTeamExternalReference;
     /**
      * 
      * @type {Set<PublicApiMembership>}
@@ -607,13 +655,13 @@ export interface PublicApiTeamUpdatePayload {
      * @type {string}
      * @memberof PublicApiTeamUpdatePayload
      */
-    description?: string;
+    description?: string | null;
     /**
      * 
      * @type {string}
      * @memberof PublicApiTeamUpdatePayload
      */
-    displayName?: string;
+    displayName?: string | null;
 }
 /**
  * 

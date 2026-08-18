@@ -9,6 +9,7 @@ Name | Type
 `creatorId` | string
 `description` | string
 `displayName` | string
+`externalReference` | [PublicApiTeamExternalReference](PublicApiTeamExternalReference.md)
 `members` | [Set&lt;PublicApiMembership&gt;](PublicApiMembership.md)
 `organizationId` | string
 `state` | string

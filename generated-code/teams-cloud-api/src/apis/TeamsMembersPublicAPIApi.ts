@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Teams API
- * Teams API
+ * Teams API  Note: This REST API is not feature complete. New Teams capabilities are being built in GraphQL. For the full set of features, see the [Teams GraphQL API](https://developer.atlassian.com/platform/teams/teams-graphql-api/introduction/).
  *
  * The version of the OpenAPI document: 4.0
  * 
@@ -12,16 +12,15 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  PublicApiFetchResponsePublicApiMembershipAccountId,
-  PublicApiMembershipAddPayload,
-  PublicApiMembershipAddResponse,
-  PublicApiMembershipFetchPayload,
-  PublicApiMembershipRemovePayload,
-  PublicApiMembershipRemoveResponse,
-  PublicApiOverallCodedError,
+    PublicApiFetchResponsePublicApiMembershipString,
+    PublicApiMembershipAddPayload,
+    PublicApiMembershipAddResponse,
+    PublicApiMembershipFetchPayload,
+    PublicApiMembershipRemovePayload,
+    PublicApiMembershipRemoveResponse,
+    PublicApiOverallCodedError,
 } from '../models/index';
 
 export interface AddMembersRequest {
@@ -81,8 +80,8 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/{teamId}/members/add`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
-        urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{teamId}', encodeURIComponent(String(requestParameters['teamId'])));
 
         return {
             path: urlPath,
@@ -143,8 +142,8 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/{teamId}/members`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
-        urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{teamId}', encodeURIComponent(String(requestParameters['teamId'])));
 
         return {
             path: urlPath,
@@ -159,7 +158,7 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
      * Returns a set of account IDs who are members of the team, alongside a pagination cursor to retrieve the next page (if available).
      * Fetch a set of membership(s).
      */
-    async fetchMembersRaw(requestParameters: FetchMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiFetchResponsePublicApiMembershipAccountId>> {
+    async fetchMembersRaw(requestParameters: FetchMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiFetchResponsePublicApiMembershipString>> {
         const requestOptions = await this.fetchMembersRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
@@ -170,7 +169,7 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
      * Returns a set of account IDs who are members of the team, alongside a pagination cursor to retrieve the next page (if available).
      * Fetch a set of membership(s).
      */
-    async fetchMembers(requestParameters: FetchMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicApiFetchResponsePublicApiMembershipAccountId> {
+    async fetchMembers(requestParameters: FetchMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicApiFetchResponsePublicApiMembershipString> {
         const response = await this.fetchMembersRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -208,8 +207,8 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/{teamId}/members/remove`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
-        urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{teamId}', encodeURIComponent(String(requestParameters['teamId'])));
 
         return {
             path: urlPath,

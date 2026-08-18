@@ -5,7 +5,7 @@ All URIs are relative to *https://api.atlassian.com*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**archiveTeams**](TeamsPublicAPIApi.md#archiveteams) | **POST** /public/teams/v1/org/{orgId}/teams/archive | Archive teams in bulk. |
-| [**createTeam**](TeamsPublicAPIApi.md#createteam) | **POST** /public/teams/v1/org/{orgId}/teams/ | Create a team. |
+| [**createTeam**](TeamsPublicAPIApi.md#createteam) | **POST** /public/teams/v1/org/{orgId}/teams | Create a team. |
 | [**deleteTeam**](TeamsPublicAPIApi.md#deleteteam) | **DELETE** /public/teams/v1/org/{orgId}/teams/{teamId} | Delete a team. |
 | [**getTeam**](TeamsPublicAPIApi.md#getteam) | **GET** /public/teams/v1/org/{orgId}/teams/{teamId} | Get a single team. |
 | [**queryTeams**](TeamsPublicAPIApi.md#queryteams) | **GET** /public/teams/v1/org/{orgId}/teams | Get a list of teams. |
@@ -254,7 +254,7 @@ async function example() {
     orgId: orgId_example,
     // string | The ID of the team to be retrieved.
     teamId: teamId_example,
-    // string | [Optional] The ID of the site to retrieve teams which are site scoped. Please note that if the org is site-scoped, teams will not be included in response if siteId is not provided. [Deprecated] We have deprecated the empty siteId since it only works for org-scoped teams and teams are moving to unit-scope. It\'s recommended to always provide a valid siteId to ensure this operation continues to work in the future. (optional)
+    // string | [Optional] The ID of the site to retrieve teams which are site scoped. Please note that if the org is site-scoped, teams will not be included in response if siteId is not provided. [Deprecated] Omitting siteId is deprecated. With the introduction of Units, orgId alone is no longer sufficient to resolve the scope of teams. Always provide a valid siteId to ensure this operation continues to work in the future. (optional)
     siteId: siteId_example,
   } satisfies GetTeamRequest;
 
@@ -277,7 +277,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | `string` | The ID of the organisation the team is to be retrieved from. | [Defaults to `undefined`] |
 | **teamId** | `string` | The ID of the team to be retrieved. | [Defaults to `undefined`] |
-| **siteId** | `string` | [Optional] The ID of the site to retrieve teams which are site scoped. Please note that if the org is site-scoped, teams will not be included in response if siteId is not provided. [Deprecated] We have deprecated the empty siteId since it only works for org-scoped teams and teams are moving to unit-scope. It\&#39;s recommended to always provide a valid siteId to ensure this operation continues to work in the future. | [Optional] [Defaults to `undefined`] |
+| **siteId** | `string` | [Optional] The ID of the site to retrieve teams which are site scoped. Please note that if the org is site-scoped, teams will not be included in response if siteId is not provided. [Deprecated] Omitting siteId is deprecated. With the introduction of Units, orgId alone is no longer sufficient to resolve the scope of teams. Always provide a valid siteId to ensure this operation continues to work in the future. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -329,7 +329,7 @@ async function example() {
   const body = {
     // string | The ID of the organisation the teams are to be retrieved from.
     orgId: orgId_example,
-    // string | [Optional] The ID of the site to retrieve teams which are site scoped. Please note that if the org is site-scoped, teams will not be included in response if siteId is not provided. [Deprecated] We have deprecated the empty siteId since it only works for org-scoped teams and teams are moving to unit-scope. It\'s recommended to always provide a valid siteId to ensure this operation continues to work in the future. (optional)
+    // string | [Optional] The ID of the site to retrieve teams which are site scoped. Please note that if the org is site-scoped, teams will not be included in response if siteId is not provided. [Deprecated] Omitting siteId is deprecated. With the introduction of Units, orgId alone is no longer sufficient to resolve the scope of teams. Always provide a valid siteId to ensure this operation continues to work in the future. (optional)
     siteId: siteId_example,
     // number | The page size for the number of teams to return (max 300) (optional)
     size: 56,
@@ -355,7 +355,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | `string` | The ID of the organisation the teams are to be retrieved from. | [Defaults to `undefined`] |
-| **siteId** | `string` | [Optional] The ID of the site to retrieve teams which are site scoped. Please note that if the org is site-scoped, teams will not be included in response if siteId is not provided. [Deprecated] We have deprecated the empty siteId since it only works for org-scoped teams and teams are moving to unit-scope. It\&#39;s recommended to always provide a valid siteId to ensure this operation continues to work in the future. | [Optional] [Defaults to `undefined`] |
+| **siteId** | `string` | [Optional] The ID of the site to retrieve teams which are site scoped. Please note that if the org is site-scoped, teams will not be included in response if siteId is not provided. [Deprecated] Omitting siteId is deprecated. With the introduction of Units, orgId alone is no longer sufficient to resolve the scope of teams. Always provide a valid siteId to ensure this operation continues to work in the future. | [Optional] [Defaults to `undefined`] |
 | **size** | `number` | The page size for the number of teams to return (max 300) | [Optional] [Defaults to `50`] |
 | **cursor** | `string` | An optional cursor token. Leave off for the first request. | [Optional] [Defaults to `undefined`] |
 

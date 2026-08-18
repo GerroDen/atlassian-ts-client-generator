@@ -1,13 +1,13 @@
 
-# PublicApiFetchResponsePublicApiMembershipAccountId
+# PublicApiPageInfoString
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`pageInfo` | [PublicApiPageInfoAccountId](PublicApiPageInfoAccountId.md)
-`results` | [Array&lt;PublicApiMembership&gt;](PublicApiMembership.md)
+`endCursor` | string
+`hasNextPage` | boolean
 
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

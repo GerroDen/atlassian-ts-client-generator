@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Teams API
- * Teams API
+ * Teams API  Note: This REST API is not feature complete. New Teams capabilities are being built in GraphQL. For the full set of features, see the [Teams GraphQL API](https://developer.atlassian.com/platform/teams/teams-graphql-api/introduction/).
  *
  * The version of the OpenAPI document: 4.0
  * 
@@ -11,7 +11,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
 
 export const BASE_PATH = "https://api.atlassian.com".replace(/\/+$/, "");
 
@@ -91,7 +90,7 @@ export const DefaultConfig = new Configuration();
  */
 export class BaseAPI {
 
-    private static readonly jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
+    private static readonly jsonRegex = /^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$/i;
     private middleware: Middleware[];
 
     constructor(protected configuration = DefaultConfig) {
@@ -363,7 +362,7 @@ export function exists(json: any, key: string) {
 
 export function canConsumeForm(consumes: Consume[]): boolean {
     for (const consume of consumes) {
-        if ('multipart/form-data' === consume.contentType) {
+        if (consume.contentType?.startsWith('multipart/form-data') == true) {
             return true;
         }
     }

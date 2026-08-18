@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Teams API
- * Teams API
+ * Teams API  Note: This REST API is not feature complete. New Teams capabilities are being built in GraphQL. For the full set of features, see the [Teams GraphQL API](https://developer.atlassian.com/platform/teams/teams-graphql-api/introduction/).
  *
  * The version of the OpenAPI document: 4.0
  * 
@@ -12,17 +12,16 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  PublicApiBulkOperationRequest,
-  PublicApiBulkOperationResponse,
-  PublicApiOverallCodedError,
-  PublicApiTeamCreationPayload,
-  PublicApiTeamPaginationResult,
-  PublicApiTeamResponse,
-  PublicApiTeamResponseWithMembers,
-  PublicApiTeamUpdatePayload,
+    PublicApiBulkOperationRequest,
+    PublicApiBulkOperationResponse,
+    PublicApiOverallCodedError,
+    PublicApiTeamCreationPayload,
+    PublicApiTeamPaginationResult,
+    PublicApiTeamResponse,
+    PublicApiTeamResponseWithMembers,
+    PublicApiTeamUpdatePayload,
 } from '../models/index';
 
 export interface ArchiveTeamsRequest {
@@ -105,7 +104,7 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/archive`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
 
         return {
             path: urlPath,
@@ -159,8 +158,8 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
 
-        let urlPath = `/public/teams/v1/org/{orgId}/teams/`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
+        let urlPath = `/public/teams/v1/org/{orgId}/teams`;
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
 
         return {
             path: urlPath,
@@ -215,8 +214,8 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/{teamId}`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
-        urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{teamId}', encodeURIComponent(String(requestParameters['teamId'])));
 
         return {
             path: urlPath,
@@ -271,8 +270,8 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/{teamId}`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
-        urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{teamId}', encodeURIComponent(String(requestParameters['teamId'])));
 
         return {
             path: urlPath,
@@ -329,7 +328,7 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
 
         return {
             path: urlPath,
@@ -383,8 +382,8 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/{teamId}/restore`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
-        urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{teamId}', encodeURIComponent(String(requestParameters['teamId'])));
 
         return {
             path: urlPath,
@@ -437,7 +436,7 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/unarchive`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
 
         return {
             path: urlPath,
@@ -499,8 +498,8 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/org/{orgId}/teams/{teamId}`;
-        urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
-        urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{teamId}', encodeURIComponent(String(requestParameters['teamId'])));
 
         return {
             path: urlPath,
@@ -575,7 +574,7 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
 
 
         let urlPath = `/public/teams/v1/{teamId}/cover-photo`;
-        urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
+        urlPath = urlPath.replace('{teamId}', encodeURIComponent(String(requestParameters['teamId'])));
 
         return {
             path: urlPath,

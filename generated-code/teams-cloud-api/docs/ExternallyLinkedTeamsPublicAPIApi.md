@@ -6,6 +6,7 @@ All URIs are relative to *https://api.atlassian.com*
 |------------- | ------------- | -------------|
 | [**createExternalLinkedTeam**](ExternallyLinkedTeamsPublicAPIApi.md#createexternallinkedteam) | **POST** /public/teams/v1/org/{orgId}/teams/external | Create an external linked team. |
 | [**linkTeamToExternalSource**](ExternallyLinkedTeamsPublicAPIApi.md#linkteamtoexternalsource) | **POST** /public/teams/v1/org/{orgId}/teams/{teamId}/external/link | Link an existing team to an external reference. |
+| [**unlinkTeamsFromExternalSource**](ExternallyLinkedTeamsPublicAPIApi.md#unlinkteamsfromexternalsource) | **POST** /public/teams/v1/org/{orgId}/teams/external/bulk/unlink | Unlink managed teams from their external references in bulk. |
 
 
 
@@ -153,6 +154,78 @@ No authorization required
 | **400** | One or more values that were provided were invalid. |  -  |
 | **403** | Forbidden. |  -  |
 | **404** | The team cannot be found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## unlinkTeamsFromExternalSource
+
+> PublicApiBulkOperationResponse unlinkTeamsFromExternalSource(orgId, publicApiBulkOperationRequest)
+
+Unlink managed teams from their external references in bulk.
+
+Unlinks managed teams from their external references in bulk. Each team\&#39;s membership setting will be transitioned from EXTERNAL to ORG_ADMIN_MANAGED.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ExternallyLinkedTeamsPublicAPIApi,
+} from 'teams-cloud-api';
+import type { UnlinkTeamsFromExternalSourceRequest } from 'teams-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing teams-cloud-api SDK...");
+  const api = new ExternallyLinkedTeamsPublicAPIApi();
+
+  const body = {
+    // string | The ID of the organisation that owns the managed teams to unlink.
+    orgId: orgId_example,
+    // PublicApiBulkOperationRequest | The list of team IDs to unlink from their external references. All IDs must belong to the organisation specified in the path.
+    publicApiBulkOperationRequest: ...,
+  } satisfies UnlinkTeamsFromExternalSourceRequest;
+
+  try {
+    const data = await api.unlinkTeamsFromExternalSource(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | `string` | The ID of the organisation that owns the managed teams to unlink. | [Defaults to `undefined`] |
+| **publicApiBulkOperationRequest** | [PublicApiBulkOperationRequest](PublicApiBulkOperationRequest.md) | The list of team IDs to unlink from their external references. All IDs must belong to the organisation specified in the path. | |
+
+### Return type
+
+[**PublicApiBulkOperationResponse**](PublicApiBulkOperationResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Bulk unlink processed. Completed team IDs appear in \&#39;successfulTeamIds\&#39;; any failures are listed in \&#39;errors\&#39;. |  -  |
+| **400** | One or more values that were provided were invalid. |  -  |
+| **403** | Forbidden. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

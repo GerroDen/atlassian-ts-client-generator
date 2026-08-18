@@ -89,7 +89,7 @@ No authorization required
 
 ## fetchMembers
 
-> PublicApiFetchResponsePublicApiMembershipAccountId fetchMembers(orgId, teamId, siteId, publicApiMembershipFetchPayload)
+> PublicApiFetchResponsePublicApiMembershipString fetchMembers(orgId, teamId, siteId, publicApiMembershipFetchPayload)
 
 Fetch a set of membership(s).
 
@@ -113,7 +113,7 @@ async function example() {
     orgId: orgId_example,
     // string | The ID of the team you are fetching members for.
     teamId: teamId_example,
-    // string | [Optional] The ID of the site you are fetching members for. [Deprecated] We have deprecated the empty siteId since it only works for org-scoped teams and teams are moving to unit-scope. It\'s recommended to always provide a valid siteId to ensure this operation continues to work in the future. (optional)
+    // string | [Optional] The ID of the site you are fetching members for. [Deprecated] Omitting siteId is deprecated. With the introduction of Units, orgId alone is no longer sufficient to resolve the scope of teams. Always provide a valid siteId to ensure this operation continues to work in the future. (optional)
     siteId: siteId_example,
     // PublicApiMembershipFetchPayload | Optional Relay-style pagination controls. Can be omitted if empty. (optional)
     publicApiMembershipFetchPayload: ...,
@@ -138,12 +138,12 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | `string` | The ID of the organisation of the team you are fetching members for. | [Defaults to `undefined`] |
 | **teamId** | `string` | The ID of the team you are fetching members for. | [Defaults to `undefined`] |
-| **siteId** | `string` | [Optional] The ID of the site you are fetching members for. [Deprecated] We have deprecated the empty siteId since it only works for org-scoped teams and teams are moving to unit-scope. It\&#39;s recommended to always provide a valid siteId to ensure this operation continues to work in the future. | [Optional] [Defaults to `undefined`] |
+| **siteId** | `string` | [Optional] The ID of the site you are fetching members for. [Deprecated] Omitting siteId is deprecated. With the introduction of Units, orgId alone is no longer sufficient to resolve the scope of teams. Always provide a valid siteId to ensure this operation continues to work in the future. | [Optional] [Defaults to `undefined`] |
 | **publicApiMembershipFetchPayload** | [PublicApiMembershipFetchPayload](PublicApiMembershipFetchPayload.md) | Optional Relay-style pagination controls. Can be omitted if empty. | [Optional] |
 
 ### Return type
 
-[**PublicApiFetchResponsePublicApiMembershipAccountId**](PublicApiFetchResponsePublicApiMembershipAccountId.md)
+[**PublicApiFetchResponsePublicApiMembershipString**](PublicApiFetchResponsePublicApiMembershipString.md)
 
 ### Authorization
 
