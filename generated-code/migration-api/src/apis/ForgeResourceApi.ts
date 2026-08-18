@@ -12,15 +12,14 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ContainerByPageResponse,
-  ForgeAppLog,
-  ForgeFileMappingDto,
-  ForgeFileMetadataDtoPage,
-  MessageProgress,
-  MigrationMappingDto,
+    ContainerByPageResponse,
+    ForgeAppLog,
+    ForgeFileMappingDto,
+    ForgeFileMetadataDtoPage,
+    MessageProgress,
+    MigrationMappingDto,
 } from '../models/index';
 
 export interface AddLog1Request {
@@ -102,7 +101,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/migration/forge/v1/log/{transferId}`;
-        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+        urlPath = urlPath.replace('{transferId}', encodeURIComponent(String(requestParameters['transferId'])));
 
         return {
             path: urlPath,
@@ -167,7 +166,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/migration/forge/v1/mapping/{transferId}/find`;
-        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+        urlPath = urlPath.replace('{transferId}', encodeURIComponent(String(requestParameters['transferId'])));
 
         return {
             path: urlPath,
@@ -213,7 +212,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/migration/forge/v1/data/{fileKey}`;
-        urlPath = urlPath.replace(`{${"fileKey"}}`, encodeURIComponent(String(requestParameters['fileKey'])));
+        urlPath = urlPath.replace('{fileKey}', encodeURIComponent(String(requestParameters['fileKey'])));
 
         return {
             path: urlPath,
@@ -258,7 +257,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/migration/forge/v1/data/{fileKey}/payload`;
-        urlPath = urlPath.replace(`{${"fileKey"}}`, encodeURIComponent(String(requestParameters['fileKey'])));
+        urlPath = urlPath.replace('{fileKey}', encodeURIComponent(String(requestParameters['fileKey'])));
 
         return {
             path: urlPath,
@@ -322,7 +321,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/migration/forge/v1/container/{transferId}/page`;
-        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+        urlPath = urlPath.replace('{transferId}', encodeURIComponent(String(requestParameters['transferId'])));
 
         return {
             path: urlPath,
@@ -386,7 +385,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/migration/forge/v1/mapping/{transferId}/page`;
-        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+        urlPath = urlPath.replace('{transferId}', encodeURIComponent(String(requestParameters['transferId'])));
 
         return {
             path: urlPath,
@@ -432,7 +431,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/migration/forge/v1/data/{transferId}/all`;
-        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+        urlPath = urlPath.replace('{transferId}', encodeURIComponent(String(requestParameters['transferId'])));
 
         return {
             path: urlPath,
@@ -489,7 +488,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/migration/forge/v1/data/{transferId}/page`;
-        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+        urlPath = urlPath.replace('{transferId}', encodeURIComponent(String(requestParameters['transferId'])));
 
         return {
             path: urlPath,
@@ -543,7 +542,7 @@ export class ForgeResourceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/migration/forge/v1/message/{transferId}/status`;
-        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+        urlPath = urlPath.replace('{transferId}', encodeURIComponent(String(requestParameters['transferId'])));
 
         return {
             path: urlPath,
