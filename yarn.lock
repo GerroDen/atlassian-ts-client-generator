@@ -1236,6 +1236,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^24.13.3":
+  version: 24.13.3
+  resolution: "@types/node@npm:24.13.3"
+  dependencies:
+    undici-types: "npm:~7.18.0"
+  checksum: 10c0/a5bc08f49b9581dcdca90e02cd77197a3c799840807664942e5cd5161a553d4d2ae8064f7e3294410d748d7d098b5c1848be7fa50c06f29c4193ab16be4e59eb
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.4
   resolution: "@types/normalize-package-data@npm:2.4.4"
@@ -1536,8 +1545,8 @@ __metadata:
   dependencies:
     "@openapitools/openapi-generator-cli": "npm:^2.31.1"
     "@types/jscodeshift": "npm:^17.3.0"
+    "@types/node": "npm:^24.13.3"
     "@typescript/native-preview": "npm:^7.0.0-dev.20260421.2"
-    exec-sh: "npm:^0.4.0"
     fast-glob: "npm:^3.3.3"
     jscodeshift: "npm:^17.3.0"
     npm-run-all-next: "npm:^1.3.0"
@@ -2237,13 +2246,6 @@ __metadata:
   version: 2.0.3
   resolution: "esutils@npm:2.0.3"
   checksum: 10c0/9a2fe69a41bfdade834ba7c42de4723c97ec776e40656919c62cbd13607c45e127a003f05f724a1ea55e5029a4cf2de444b13009f2af71271e42d93a637137c7
-  languageName: node
-  linkType: hard
-
-"exec-sh@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "exec-sh@npm:0.4.0"
-  checksum: 10c0/53c52a7be4d3843cc323abd1459ee7cb384366d075241cff7fbea5a99d1dd8996d8b4d35e1699e9f0412dac3bc16a041cdd8ac9e0f8966f05238cc7072689be6
   languageName: node
   linkType: hard
 
@@ -4879,6 +4881,13 @@ __metadata:
   version: 6.21.0
   resolution: "undici-types@npm:6.21.0"
   checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~7.18.0":
+  version: 7.18.2
+  resolution: "undici-types@npm:7.18.2"
+  checksum: 10c0/85a79189113a238959d7a647368e4f7c5559c3a404ebdb8fc4488145ce9426fcd82252a844a302798dfc0e37e6fb178ff481ed03bc4caf634c5757d9ef43521d
   languageName: node
   linkType: hard
 

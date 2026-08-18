@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import execSh from "exec-sh";
-import fs from "fs/promises";
+import { spawn, spawnSync } from "node:child_process";
+import { readFile, rm, writeFile } from "node:fs/promises";
 
 const [, scriptName, dir] = process.argv;
 if (!dir) {
@@ -19,14 +19,13 @@ const generatorParameter = additionalProperties({
   withoutRuntimeChecks: true,
 });
 
-await fs.rm(`generated-code/${dir}`, { recursive: true, force: true });
+await rm(`generated-code/${dir}`, { recursive: true, force: true });
 try {
-  await execSh.promise(
+  spawnSync(
     `npx @openapitools/openapi-generator-cli generate -i ${dir}/swagger.json -g ${generator} -o generated-code/${dir} -p ${generatorParameter} --skip-validate-spec`,
+    { stdio: "inherit", shell: true },
   );
-  const fileContent = await fs.readFile(`generated-code/${dir}/package.json`, {
-    encoding: "utf8",
-  });
+  const fileContent = await readFile(`generated-code/${dir}/package.json`, { encoding: "utf8" });
   const { name, version, description, author } = JSON.parse(fileContent.toString());
   const packageJson = {
     name,
@@ -36,7 +35,7 @@ try {
     private: true,
     main: "src/index.ts",
   };
-  await fs.writeFile(
+  await writeFile(
     `generated-code/${dir}/package.json`,
     JSON.stringify(packageJson, null, 2) + "\n",
   );
