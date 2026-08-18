@@ -12,15 +12,14 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ConflictLifecycleErrors,
-  NotFoundAccount,
-  ResultMessage,
-  Unauthorized,
-  UsersAccountIdManageApiTokensGet403Response,
-  UsersAccountIdManageLifecycleDisablePostRequest,
+    ConflictLifecycleErrors,
+    NotFoundAccount,
+    ResultMessage,
+    Unauthorized,
+    UsersAccountIdManageApiTokensGet403Response,
+    UsersAccountIdManageLifecycleDisablePostRequest,
 } from '../models/index';
 
 export interface UsersAccountIdManageLifecycleCancelDeletePostRequest {
@@ -70,7 +69,7 @@ export class LifecycleApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage/lifecycle/cancel-delete`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
 
         return {
             path: urlPath,
@@ -125,7 +124,7 @@ export class LifecycleApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage/lifecycle/delete`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
 
         return {
             path: urlPath,
@@ -189,7 +188,7 @@ export class LifecycleApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage/lifecycle/disable`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
 
         return {
             path: urlPath,
@@ -244,7 +243,7 @@ export class LifecycleApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage/lifecycle/enable`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
 
         return {
             path: urlPath,

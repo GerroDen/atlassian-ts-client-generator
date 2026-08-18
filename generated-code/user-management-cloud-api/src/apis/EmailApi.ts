@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  NotFoundAccount,
-  Unauthorized,
-  UsersAccountIdManageEmailPut403Response,
-  UsersAccountIdManageEmailPutRequest,
-  UsersAccountIdManageProfilePatch400Response,
+    NotFoundAccount,
+    Unauthorized,
+    UsersAccountIdManageEmailPut403Response,
+    UsersAccountIdManageEmailPutRequest,
+    UsersAccountIdManageProfilePatch400Response,
 } from '../models/index';
 
 export interface UsersAccountIdManageEmailPutOperationRequest {
@@ -66,7 +65,7 @@ export class EmailApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage/email`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
 
         return {
             path: urlPath,

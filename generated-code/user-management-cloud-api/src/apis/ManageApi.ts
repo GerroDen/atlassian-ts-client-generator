@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  NotFoundAccount,
-  Unauthorized,
-  UsersAccountIdManageGet200Response,
-  UsersAccountIdManageGet403Response,
+    NotFoundAccount,
+    Unauthorized,
+    UsersAccountIdManageGet200Response,
+    UsersAccountIdManageGet403Response,
 } from '../models/index';
 
 export interface UsersAccountIdManageGetRequest {
@@ -60,7 +59,7 @@ export class ManageApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
 
         return {
             path: urlPath,

@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ApiTokenModel,
-  NotFoundAccount,
-  Unauthorized,
-  UsersAccountIdManageApiTokensGet403Response,
-  UsersAccountIdManageProfilePatch400Response,
+    ApiTokenModel,
+    NotFoundAccount,
+    Unauthorized,
+    UsersAccountIdManageApiTokensGet403Response,
+    UsersAccountIdManageProfilePatch400Response,
 } from '../models/index';
 
 export interface UsersAccountIdManageApiTokensGetRequest {
@@ -61,7 +60,7 @@ export class ApiTokensApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage/api-tokens`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
 
         return {
             path: urlPath,
@@ -123,8 +122,8 @@ export class ApiTokensApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage/api-tokens/{tokenId}`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
-        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{tokenId}', encodeURIComponent(String(requestParameters['tokenId'])));
 
         return {
             path: urlPath,

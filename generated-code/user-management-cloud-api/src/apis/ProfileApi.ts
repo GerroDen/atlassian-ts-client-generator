@@ -12,16 +12,15 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AtlassianAccountUser,
-  NotFoundAccount,
-  Unauthorized,
-  UsersAccountIdManageGet403Response,
-  UsersAccountIdManageProfileGet200Response,
-  UsersAccountIdManageProfilePatch400Response,
-  UsersAccountIdManageProfilePatch403Response,
+    AtlassianAccountUser,
+    NotFoundAccount,
+    Unauthorized,
+    UsersAccountIdManageGet403Response,
+    UsersAccountIdManageProfileGet200Response,
+    UsersAccountIdManageProfilePatch400Response,
+    UsersAccountIdManageProfilePatch403Response,
 } from '../models/index';
 
 export interface UsersAccountIdManageProfileGetRequest {
@@ -63,7 +62,7 @@ export class ProfileApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage/profile`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
 
         return {
             path: urlPath,
@@ -127,7 +126,7 @@ export class ProfileApi extends runtime.BaseAPI {
         }
 
         let urlPath = `/users/{account_id}/manage/profile`;
-        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace('{account_id}', encodeURIComponent(String(requestParameters['accountId'])));
 
         return {
             path: urlPath,
