@@ -39,6 +39,7 @@ Name | Type
 `jiraIssueKeys` | Set&lt;string&gt;
 `jiraIssues` | [Set&lt;LinkedJiraIssue&gt;](LinkedJiraIssue.md)
 `labelNames` | Array&lt;string&gt;
+`labellings` | [Array&lt;Labelling&gt;](Labelling.md)
 `lifeCycleState` | string
 `logSize` | number
 `manuallyOverriddenVariables` | [Array&lt;VariableSubstitution&gt;](VariableSubstitution.md)

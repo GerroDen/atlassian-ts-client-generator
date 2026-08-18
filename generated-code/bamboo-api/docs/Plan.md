@@ -17,7 +17,6 @@ Name | Type
 `currentStatus` | string
 `databaseId` | number
 `description` | string
-`effectiveVariables` | [Array&lt;VariableDefinition&gt;](VariableDefinition.md)
 `entityType` | string
 `executing` | boolean
 `firstBuildNumber` | number
@@ -36,9 +35,9 @@ Name | Type
 `planKey` | [PlanKey](PlanKey.md)
 `planType` | string
 `project` | [Project](Project.md)
+`relatedLabellings` | [Array&lt;Labelling&gt;](Labelling.md)
 `suspendedFromBuilding` | boolean
 `type` | string
-`variables` | [Array&lt;VariableDefinition&gt;](VariableDefinition.md)
 `version` | number
 
 

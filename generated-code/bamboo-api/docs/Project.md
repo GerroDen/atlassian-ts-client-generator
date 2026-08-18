@@ -10,11 +10,9 @@ Name | Type
 `entityType` | string
 `id` | number
 `key` | string
-`labellings` | [Array&lt;Labelling&gt;](Labelling.md)
 `markedForDeletion` | boolean
 `name` | string
 `oid` | [BambooEntityOid](BambooEntityOid.md)
-`relatedLabellings` | [Array&lt;Labelling&gt;](Labelling.md)
 `vcsBambooSpecsSource` | [VcsBambooSpecsSource](VcsBambooSpecsSource.md)
 
 

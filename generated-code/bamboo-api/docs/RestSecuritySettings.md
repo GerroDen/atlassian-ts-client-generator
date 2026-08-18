@@ -7,11 +7,14 @@
 Name | Type
 ------------ | -------------
 `agentAssignmentModificationByUsersAllowed` | boolean
+`allowVariableTaskToModifyGlobalVariables` | boolean
 `bruteForceProtection` | [RestBruteForceProtection](RestBruteForceProtection.md)
 `displayContactDetailsEnabled` | boolean
+`inlineScriptInScriptTaskDisabled` | boolean
 `manageAcceptedSshHostKeys` | boolean
 `manualEncryptionConfiguration` | [RestManualEncryptionConfiguration](RestManualEncryptionConfiguration.md)
 `personalAccessTokensExpirationConfiguration` | [RestPersonalAccessTokensExpirationConfiguration](RestPersonalAccessTokensExpirationConfiguration.md)
+`repositoryDataSecurityValidationEnabled` | boolean
 `resolveArtifactsContentTypeByExtensionEnabled` | boolean
 `restrictedAdministratorRoleEnabled` | boolean
 `rssSecurityConfiguration` | [RestRssSecurityConfiguration](RestRssSecurityConfiguration.md)

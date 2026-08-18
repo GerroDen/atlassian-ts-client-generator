@@ -992,6 +992,12 @@ export interface BuildResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
+     * @type {Array<Labelling>}
+     * @memberof BuildResultsSummary
+     */
+    labellings?: Array<Labelling>;
+    /**
+     * 
      * @type {BuildResultsSummaryLifeCycleStateEnum}
      * @memberof BuildResultsSummary
      */
@@ -1313,6 +1319,12 @@ export interface ChainResultsSummary {
      * @type {Array<ArtifactLink>}
      * @memberof ChainResultsSummary
      */
+    artifactLinks?: Array<ArtifactLink>;
+    /**
+     * 
+     * @type {Array<ArtifactLink>}
+     * @memberof ChainResultsSummary
+     */
     artifactLinksThatExist?: Array<ArtifactLink>;
     /**
      * 
@@ -1512,6 +1524,12 @@ export interface ChainResultsSummary {
      * @memberof ChainResultsSummary
      */
     labelNames?: Array<string>;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof ChainResultsSummary
+     */
+    labellings?: Array<Labelling>;
     /**
      * 
      * @type {ChainResultsSummaryLifeCycleStateEnum}
@@ -4837,6 +4855,12 @@ export interface ImmutableResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
+     * @type {Array<Labelling>}
+     * @memberof ImmutableResultsSummary
+     */
+    labellings?: Array<Labelling>;
+    /**
+     * 
      * @type {ImmutableResultsSummaryLifeCycleStateEnum}
      * @memberof ImmutableResultsSummary
      */
@@ -7237,12 +7261,6 @@ export interface Plan {
     description?: string;
     /**
      * 
-     * @type {Array<VariableDefinition>}
-     * @memberof Plan
-     */
-    effectiveVariables?: Array<VariableDefinition>;
-    /**
-     * 
      * @type {PlanEntityTypeEnum}
      * @memberof Plan
      */
@@ -7351,6 +7369,12 @@ export interface Plan {
     project?: Project;
     /**
      * 
+     * @type {Array<Labelling>}
+     * @memberof Plan
+     */
+    relatedLabellings?: Array<Labelling>;
+    /**
+     * 
      * @type {boolean}
      * @memberof Plan
      */
@@ -7361,12 +7385,6 @@ export interface Plan {
      * @memberof Plan
      */
     type?: string;
-    /**
-     * 
-     * @type {Array<VariableDefinition>}
-     * @memberof Plan
-     */
-    variables?: Array<VariableDefinition>;
     /**
      * 
      * @type {number}
@@ -7731,12 +7749,6 @@ export interface Project {
     key?: string;
     /**
      * 
-     * @type {Array<Labelling>}
-     * @memberof Project
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
      * @type {boolean}
      * @memberof Project
      */
@@ -7753,12 +7765,6 @@ export interface Project {
      * @memberof Project
      */
     oid?: BambooEntityOid;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof Project
-     */
-    relatedLabellings?: Array<Labelling>;
     /**
      * 
      * @type {VcsBambooSpecsSource}
@@ -14876,6 +14882,12 @@ export interface RestSecuritySettings {
     agentAssignmentModificationByUsersAllowed?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof RestSecuritySettings
+     */
+    allowVariableTaskToModifyGlobalVariables?: boolean;
+    /**
+     * 
      * @type {RestBruteForceProtection}
      * @memberof RestSecuritySettings
      */
@@ -14886,6 +14898,12 @@ export interface RestSecuritySettings {
      * @memberof RestSecuritySettings
      */
     displayContactDetailsEnabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestSecuritySettings
+     */
+    inlineScriptInScriptTaskDisabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -14904,6 +14922,12 @@ export interface RestSecuritySettings {
      * @memberof RestSecuritySettings
      */
     personalAccessTokensExpirationConfiguration?: RestPersonalAccessTokensExpirationConfiguration;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestSecuritySettings
+     */
+    repositoryDataSecurityValidationEnabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -16310,6 +16334,12 @@ export interface ResultsSummary {
      * @memberof ResultsSummary
      */
     labelNames?: Array<string>;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof ResultsSummary
+     */
+    labellings?: Array<Labelling>;
     /**
      * 
      * @type {ResultsSummaryLifeCycleStateEnum}
