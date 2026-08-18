@@ -10,7 +10,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 
 ## findUsersAndGroups
 
-> FoundUsersAndGroups findUsersAndGroups(query, maxResults, showAvatar, fieldId, projectId, issueTypeId, avatarSize, caseInsensitive, excludeConnectAddons)
+> FoundUsersAndGroups findUsersAndGroups(query, maxResults, showAvatar, fieldId, projectId, issueTypeId, avatarSize, caseInsensitive, excludeConnectAddons, includeAiAgents)
 
 Find users and groups
 
@@ -55,6 +55,8 @@ async function example() {
     caseInsensitive: true,
     // boolean | Whether Connect app users and groups should be excluded from the search results. If an invalid value is provided, the default value is used. (optional)
     excludeConnectAddons: true,
+    // boolean | Whether AI Agents should be included in the search results. If an invalid value is provided, the default value is used. (optional)
+    includeAiAgents: true,
   } satisfies FindUsersAndGroupsRequest;
 
   try {
@@ -83,6 +85,7 @@ example().catch(console.error);
 | **avatarSize** | `xsmall`, `xsmall@2x`, `xsmall@3x`, `small`, `small@2x`, `small@3x`, `medium`, `medium@2x`, `medium@3x`, `large`, `large@2x`, `large@3x`, `xlarge`, `xlarge@2x`, `xlarge@3x`, `xxlarge`, `xxlarge@2x`, `xxlarge@3x`, `xxxlarge`, `xxxlarge@2x`, `xxxlarge@3x` | The size of the avatar to return. If an invalid value is provided, the default value is used. | [Optional] [Defaults to `&#39;xsmall&#39;`] [Enum: xsmall, xsmall@2x, xsmall@3x, small, small@2x, small@3x, medium, medium@2x, medium@3x, large, large@2x, large@3x, xlarge, xlarge@2x, xlarge@3x, xxlarge, xxlarge@2x, xxlarge@3x, xxxlarge, xxxlarge@2x, xxxlarge@3x] |
 | **caseInsensitive** | `boolean` | Whether the search for groups should be case insensitive. | [Optional] [Defaults to `false`] |
 | **excludeConnectAddons** | `boolean` | Whether Connect app users and groups should be excluded from the search results. If an invalid value is provided, the default value is used. | [Optional] [Defaults to `false`] |
+| **includeAiAgents** | `boolean` | Whether AI Agents should be included in the search results. If an invalid value is provided, the default value is used. | [Optional] [Defaults to `false`] |
 
 ### Return type
 

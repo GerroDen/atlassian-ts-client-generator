@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`entitiesBreachingLimit` | { [key: string]: { [key: string]: Array&lt;number&gt;; }; }
 `issuesApproachingLimit` | { [key: string]: { [key: string]: number; }; }
 `issuesBreachingLimit` | { [key: string]: { [key: string]: number; }; }
 `limits` | { [key: string]: number; }

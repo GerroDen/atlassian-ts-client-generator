@@ -13,7 +13,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 
 ## addScreenTabField
 
-> ScreenableField addScreenTabField(screenId, tabId, addFieldBean)
+> ScreenableField addScreenTabField(screenId, tabId, addFieldBean, skipFieldAssociation)
 
 Add screen tab field
 
@@ -46,6 +46,8 @@ async function example() {
     tabId: 789,
     // AddFieldBean
     addFieldBean: {"fieldId":"summary"},
+    // boolean (optional)
+    skipFieldAssociation: true,
   } satisfies AddScreenTabFieldRequest;
 
   try {
@@ -68,6 +70,7 @@ example().catch(console.error);
 | **screenId** | `number` | The ID of the screen. | [Defaults to `undefined`] |
 | **tabId** | `number` | The ID of the screen tab. | [Defaults to `undefined`] |
 | **addFieldBean** | [AddFieldBean](AddFieldBean.md) |  | |
+| **skipFieldAssociation** | `boolean` |  | [Optional] [Defaults to `false`] |
 
 ### Return type
 

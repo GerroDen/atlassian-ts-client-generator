@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`contentAsByteArray` | Array&lt;string&gt;
 `description` | string
 `file` | Blob
 `filename` | string

@@ -7,6 +7,7 @@ The default value for a multiple version picker custom field.
 
 Name | Type
 ------------ | -------------
+`contextId` | string
 `type` | string
 `versionIds` | Set&lt;string&gt;
 `versionOrder` | string

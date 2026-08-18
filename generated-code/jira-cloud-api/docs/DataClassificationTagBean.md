@@ -10,6 +10,7 @@ Name | Type
 `color` | string
 `description` | string
 `guideline` | string
+`guidelineADF` | string
 `id` | string
 `name` | string
 `rank` | number

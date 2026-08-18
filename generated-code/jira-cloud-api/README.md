@@ -1,4 +1,4 @@
-# jira-cloud-api@1001.0.0-SNAPSHOT-21695d0ffb3094632d6272be3e6600848f05a23b
+# jira-cloud-api@1001.0.0-SNAPSHOT-e54f3aeddae545dd970b98a1ac06d32cf9f54b1a
 
 A TypeScript SDK client for the your-domain.atlassian.net API.
 
@@ -100,6 +100,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *DynamicModulesApi* | [**dynamicModulesResourceRegisterModulesPost**](docs/DynamicModulesApi.md#dynamicmodulesresourceregistermodulespost) | **POST** /rest/atlassian-connect/1/app/module/dynamic | Register modules
 *DynamicModulesApi* | [**dynamicModulesResourceRemoveModulesDelete**](docs/DynamicModulesApi.md#dynamicmodulesresourceremovemodulesdelete) | **DELETE** /rest/atlassian-connect/1/app/module/dynamic | Remove modules
 *FieldSchemesApi* | [**associateProjectsToFieldAssociationSchemes**](docs/FieldSchemesApi.md#associateprojectstofieldassociationschemes) | **PUT** /rest/api/3/config/fieldschemes/projects | Associate projects to field schemes
+*FieldSchemesApi* | [**cloneFieldAssociationScheme**](docs/FieldSchemesApi.md#clonefieldassociationscheme) | **POST** /rest/api/3/config/fieldschemes/{id}/clone | Clone field scheme
 *FieldSchemesApi* | [**createFieldAssociationScheme**](docs/FieldSchemesApi.md#createfieldassociationschemeoperation) | **POST** /rest/api/3/config/fieldschemes | Create field scheme
 *FieldSchemesApi* | [**deleteFieldAssociationScheme**](docs/FieldSchemesApi.md#deletefieldassociationscheme) | **DELETE** /rest/api/3/config/fieldschemes/{id} | Delete a field scheme
 *FieldSchemesApi* | [**getFieldAssociationSchemeById**](docs/FieldSchemesApi.md#getfieldassociationschemebyid) | **GET** /rest/api/3/config/fieldschemes/{id} | Get field scheme
@@ -177,6 +178,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *IssueCustomFieldContextsApi* | [**assignProjectsToCustomFieldContext**](docs/IssueCustomFieldContextsApi.md#assignprojectstocustomfieldcontext) | **PUT** /rest/api/3/field/{fieldId}/context/{contextId}/project | Assign custom field context to projects
 *IssueCustomFieldContextsApi* | [**createCustomFieldContext**](docs/IssueCustomFieldContextsApi.md#createcustomfieldcontext) | **POST** /rest/api/3/field/{fieldId}/context | Create custom field context
 *IssueCustomFieldContextsApi* | [**deleteCustomFieldContext**](docs/IssueCustomFieldContextsApi.md#deletecustomfieldcontext) | **DELETE** /rest/api/3/field/{fieldId}/context/{contextId} | Delete custom field context
+*IssueCustomFieldContextsApi* | [**getContextDefaultValues**](docs/IssueCustomFieldContextsApi.md#getcontextdefaultvalues) | **GET** /rest/api/3/field/{fieldId}/context/defaultValues | Get default values for a custom field grouped by context and issue type
 *IssueCustomFieldContextsApi* | [**getContextsForField**](docs/IssueCustomFieldContextsApi.md#getcontextsforfield) | **GET** /rest/api/3/field/{fieldId}/context | Get custom field contexts
 *IssueCustomFieldContextsApi* | [**getCustomFieldContextsForProjectsAndIssueTypes**](docs/IssueCustomFieldContextsApi.md#getcustomfieldcontextsforprojectsandissuetypes) | **POST** /rest/api/3/field/{fieldId}/context/mapping | Get custom field contexts for projects and issue types
 *IssueCustomFieldContextsApi* | [**getDefaultValues**](docs/IssueCustomFieldContextsApi.md#getdefaultvalues) | **GET** /rest/api/3/field/{fieldId}/context/defaultValue | Get custom field contexts default values
@@ -221,6 +223,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *IssueFieldsApi* | [**createCustomField**](docs/IssueFieldsApi.md#createcustomfield) | **POST** /rest/api/3/field | Create custom field
 *IssueFieldsApi* | [**deleteCustomField**](docs/IssueFieldsApi.md#deletecustomfield) | **DELETE** /rest/api/3/field/{id} | Delete custom field
 *IssueFieldsApi* | [**getContextsForFieldDeprecated**](docs/IssueFieldsApi.md#getcontextsforfielddeprecated) | **GET** /rest/api/3/field/{fieldId}/contexts | Get contexts for a field
+*IssueFieldsApi* | [**getFieldProjectAssociations**](docs/IssueFieldsApi.md#getfieldprojectassociations) | **GET** /rest/api/3/field/{fieldId}/association/project | Get field project associations
 *IssueFieldsApi* | [**getFields**](docs/IssueFieldsApi.md#getfields) | **GET** /rest/api/3/field | Get fields
 *IssueFieldsApi* | [**getFieldsPaginated**](docs/IssueFieldsApi.md#getfieldspaginated) | **GET** /rest/api/3/field/search | Get fields paginated
 *IssueFieldsApi* | [**getProjectFields**](docs/IssueFieldsApi.md#getprojectfields) | **GET** /rest/api/3/projects/fields | Get fields for projects
@@ -246,6 +249,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *IssueNotificationSchemesApi* | [**getNotificationSchemes**](docs/IssueNotificationSchemesApi.md#getnotificationschemes) | **GET** /rest/api/3/notificationscheme | Get notification schemes paginated
 *IssueNotificationSchemesApi* | [**removeNotificationFromNotificationScheme**](docs/IssueNotificationSchemesApi.md#removenotificationfromnotificationscheme) | **DELETE** /rest/api/3/notificationscheme/{notificationSchemeId}/notification/{notificationId} | Remove notification from notification scheme
 *IssueNotificationSchemesApi* | [**updateNotificationScheme**](docs/IssueNotificationSchemesApi.md#updatenotificationscheme) | **PUT** /rest/api/3/notificationscheme/{id} | Update notification scheme
+*IssuePanelsApi* | [**bulkPinUnpinProjectsAsync**](docs/IssuePanelsApi.md#bulkpinunpinprojectsasync) | **POST** /rest/api/3/forge/panel/action/bulk/async | Bulk pin or unpin issue panel to projects
 *IssuePrioritiesApi* | [**createPriority**](docs/IssuePrioritiesApi.md#createpriority) | **POST** /rest/api/3/priority | Create priority
 *IssuePrioritiesApi* | [**deletePriority**](docs/IssuePrioritiesApi.md#deletepriority) | **DELETE** /rest/api/3/priority/{id} | Delete priority
 *IssuePrioritiesApi* | [**getPriorities**](docs/IssuePrioritiesApi.md#getpriorities) | **GET** /rest/api/3/priority | Get priorities
@@ -376,6 +380,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *IssuesApi* | [**getEditIssueMeta**](docs/IssuesApi.md#geteditissuemeta) | **GET** /rest/api/3/issue/{issueIdOrKey}/editmeta | Get edit issue metadata
 *IssuesApi* | [**getEvents**](docs/IssuesApi.md#getevents) | **GET** /rest/api/3/events | Get events
 *IssuesApi* | [**getIssue**](docs/IssuesApi.md#getissue) | **GET** /rest/api/3/issue/{issueIdOrKey} | Get issue
+*IssuesApi* | [**getIssueAdfLimitReport**](docs/IssuesApi.md#getissueadflimitreport) | **GET** /rest/api/3/issue/limit/adf/report | Get issue adf limit report
 *IssuesApi* | [**getIssueLimitReport**](docs/IssuesApi.md#getissuelimitreport) | **GET** /rest/api/3/issue/limit/report | Get issue limit report
 *IssuesApi* | [**getTransitions**](docs/IssuesApi.md#gettransitions) | **GET** /rest/api/3/issue/{issueIdOrKey}/transitions | Get transitions
 *IssuesApi* | [**notify**](docs/IssuesApi.md#notify) | **POST** /rest/api/3/issue/{issueIdOrKey}/notify | Send notification for issue
@@ -401,6 +406,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *LicenseMetricsApi* | [**getApproximateLicenseCount**](docs/LicenseMetricsApi.md#getapproximatelicensecount) | **GET** /rest/api/3/license/approximateLicenseCount | Get approximate license count
 *LicenseMetricsApi* | [**getLicense**](docs/LicenseMetricsApi.md#getlicense) | **GET** /rest/api/3/instance/license | Get license
 *MigrationOfConnectModulesToForgeApi* | [**connectToForgeMigrationFetchTaskResourceFetchMigrationTaskGet**](docs/MigrationOfConnectModulesToForgeApi.md#connecttoforgemigrationfetchtaskresourcefetchmigrationtaskget) | **GET** /rest/atlassian-connect/1/migration/{connectKey}/{jiraIssueFieldsKey}/task | Get Connect issue field migration task
+*MigrationOfConnectModulesToForgeApi* | [**connectToForgeMigrationTaskSubmissionResourceSubmitTaskPost**](docs/MigrationOfConnectModulesToForgeApi.md#connecttoforgemigrationtasksubmissionresourcesubmittaskpost) | **POST** /rest/atlassian-connect/1/migration/{connectKey}/{jiraIssueFieldsKey}/task | Submit Connect issue field migration task
 *MyselfApi* | [**getCurrentUser**](docs/MyselfApi.md#getcurrentuser) | **GET** /rest/api/3/myself | Get current user
 *MyselfApi* | [**getLocale**](docs/MyselfApi.md#getlocale) | **GET** /rest/api/3/mypreferences/locale | Get locale
 *MyselfApi* | [**getPreference**](docs/MyselfApi.md#getpreference) | **GET** /rest/api/3/mypreferences | Get preference
@@ -445,6 +451,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *ProjectCategoriesApi* | [**removeProjectCategory**](docs/ProjectCategoriesApi.md#removeprojectcategory) | **DELETE** /rest/api/3/projectCategory/{id} | Delete project category
 *ProjectCategoriesApi* | [**updateProjectCategory**](docs/ProjectCategoriesApi.md#updateprojectcategory) | **PUT** /rest/api/3/projectCategory/{id} | Update project category
 *ProjectClassificationLevelsApi* | [**getDefaultProjectClassification**](docs/ProjectClassificationLevelsApi.md#getdefaultprojectclassification) | **GET** /rest/api/3/project/{projectIdOrKey}/classification-level/default | Get the default data classification level of a project
+*ProjectClassificationLevelsApi* | [**getProjectClassificationConfig**](docs/ProjectClassificationLevelsApi.md#getprojectclassificationconfig) | **GET** /rest/api/3/project/{projectIdOrKey}/classification-config | Get the classification configuration for a project
 *ProjectClassificationLevelsApi* | [**removeDefaultProjectClassification**](docs/ProjectClassificationLevelsApi.md#removedefaultprojectclassification) | **DELETE** /rest/api/3/project/{projectIdOrKey}/classification-level/default | Remove the default data classification level from a project
 *ProjectClassificationLevelsApi* | [**updateDefaultProjectClassification**](docs/ProjectClassificationLevelsApi.md#updatedefaultprojectclassification) | **PUT** /rest/api/3/project/{projectIdOrKey}/classification-level/default | Update the default data classification level of a project
 *ProjectComponentsApi* | [**createComponent**](docs/ProjectComponentsApi.md#createcomponent) | **POST** /rest/api/3/component | Create component
@@ -643,17 +650,11 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *WorkflowStatusCategoriesApi* | [**getStatusCategory**](docs/WorkflowStatusCategoriesApi.md#getstatuscategory) | **GET** /rest/api/3/statuscategory/{idOrKey} | Get status category
 *WorkflowStatusesApi* | [**getStatus**](docs/WorkflowStatusesApi.md#getstatus) | **GET** /rest/api/3/status/{idOrName} | Get status
 *WorkflowStatusesApi* | [**getStatuses**](docs/WorkflowStatusesApi.md#getstatuses) | **GET** /rest/api/3/status | Get all statuses
-*WorkflowTransitionPropertiesApi* | [**createWorkflowTransitionProperty**](docs/WorkflowTransitionPropertiesApi.md#createworkflowtransitionproperty) | **POST** /rest/api/3/workflow/transitions/{transitionId}/properties | Create workflow transition property
-*WorkflowTransitionPropertiesApi* | [**deleteWorkflowTransitionProperty**](docs/WorkflowTransitionPropertiesApi.md#deleteworkflowtransitionproperty) | **DELETE** /rest/api/3/workflow/transitions/{transitionId}/properties | Delete workflow transition property
-*WorkflowTransitionPropertiesApi* | [**getWorkflowTransitionProperties**](docs/WorkflowTransitionPropertiesApi.md#getworkflowtransitionproperties) | **GET** /rest/api/3/workflow/transitions/{transitionId}/properties | Get workflow transition properties
-*WorkflowTransitionPropertiesApi* | [**updateWorkflowTransitionProperty**](docs/WorkflowTransitionPropertiesApi.md#updateworkflowtransitionproperty) | **PUT** /rest/api/3/workflow/transitions/{transitionId}/properties | Update workflow transition property
 *WorkflowTransitionRulesApi* | [**deleteWorkflowTransitionRuleConfigurations**](docs/WorkflowTransitionRulesApi.md#deleteworkflowtransitionruleconfigurations) | **PUT** /rest/api/3/workflow/rule/config/delete | Delete workflow transition rule configurations
 *WorkflowTransitionRulesApi* | [**getWorkflowTransitionRuleConfigurations**](docs/WorkflowTransitionRulesApi.md#getworkflowtransitionruleconfigurations) | **GET** /rest/api/3/workflow/rule/config | Get workflow transition rule configurations
 *WorkflowTransitionRulesApi* | [**updateWorkflowTransitionRuleConfigurations**](docs/WorkflowTransitionRulesApi.md#updateworkflowtransitionruleconfigurations) | **PUT** /rest/api/3/workflow/rule/config | Update workflow transition rule configurations
-*WorkflowsApi* | [**createWorkflow**](docs/WorkflowsApi.md#createworkflow) | **POST** /rest/api/3/workflow | Create workflow
 *WorkflowsApi* | [**createWorkflows**](docs/WorkflowsApi.md#createworkflows) | **POST** /rest/api/3/workflows/create | Bulk create workflows
 *WorkflowsApi* | [**deleteInactiveWorkflow**](docs/WorkflowsApi.md#deleteinactiveworkflow) | **DELETE** /rest/api/3/workflow/{entityId} | Delete inactive workflow
-*WorkflowsApi* | [**getAllWorkflows**](docs/WorkflowsApi.md#getallworkflows) | **GET** /rest/api/3/workflow | Get all workflows
 *WorkflowsApi* | [**getDefaultEditor**](docs/WorkflowsApi.md#getdefaulteditor) | **GET** /rest/api/3/workflows/defaultEditor | Get the user\&#39;s default workflow editor
 *WorkflowsApi* | [**getProjectUsagesForWorkflow**](docs/WorkflowsApi.md#getprojectusagesforworkflow) | **GET** /rest/api/3/workflow/{workflowId}/projectUsages | Get projects using a given workflow
 *WorkflowsApi* | [**getWorkflowProjectIssueTypeUsages**](docs/WorkflowsApi.md#getworkflowprojectissuetypeusages) | **GET** /rest/api/3/workflow/{workflowId}/project/{projectId}/issueTypeUsages | Get issue types in a project that are using a given workflow
@@ -717,6 +718,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [Avatars](docs/Avatars.md)
 - [BoardColumnPayload](docs/BoardColumnPayload.md)
 - [BoardFeaturePayload](docs/BoardFeaturePayload.md)
+- [BoardFeaturesPayload](docs/BoardFeaturesPayload.md)
 - [BoardPayload](docs/BoardPayload.md)
 - [BoardsPayload](docs/BoardsPayload.md)
 - [BulkChangeOwnerDetails](docs/BulkChangeOwnerDetails.md)
@@ -775,6 +777,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [ContainerOfWorkflowSchemeAssociations](docs/ContainerOfWorkflowSchemeAssociations.md)
 - [ContentItem](docs/ContentItem.md)
 - [Context](docs/Context.md)
+- [ContextDefaultValues](docs/ContextDefaultValues.md)
 - [ContextForProjectAndIssueType](docs/ContextForProjectAndIssueType.md)
 - [ContextualConfiguration](docs/ContextualConfiguration.md)
 - [ConvertedJQLQueries](docs/ConvertedJQLQueries.md)
@@ -800,13 +803,6 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [CreateSchedulingRequest](docs/CreateSchedulingRequest.md)
 - [CreateUiModificationDetails](docs/CreateUiModificationDetails.md)
 - [CreateUpdateRoleRequestBean](docs/CreateUpdateRoleRequestBean.md)
-- [CreateWorkflowCondition](docs/CreateWorkflowCondition.md)
-- [CreateWorkflowDetails](docs/CreateWorkflowDetails.md)
-- [CreateWorkflowStatusDetails](docs/CreateWorkflowStatusDetails.md)
-- [CreateWorkflowTransitionDetails](docs/CreateWorkflowTransitionDetails.md)
-- [CreateWorkflowTransitionRule](docs/CreateWorkflowTransitionRule.md)
-- [CreateWorkflowTransitionRulesDetails](docs/CreateWorkflowTransitionRulesDetails.md)
-- [CreateWorkflowTransitionScreenDetails](docs/CreateWorkflowTransitionScreenDetails.md)
 - [CreatedIssue](docs/CreatedIssue.md)
 - [CreatedIssues](docs/CreatedIssues.md)
 - [CustomContextVariable](docs/CustomContextVariable.md)
@@ -873,7 +869,6 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [DefaultWorkflowEditorResponse](docs/DefaultWorkflowEditorResponse.md)
 - [DeleteAndReplaceVersionBean](docs/DeleteAndReplaceVersionBean.md)
 - [DeleteFieldAssociationSchemeResponse](docs/DeleteFieldAssociationSchemeResponse.md)
-- [DeprecatedWorkflow](docs/DeprecatedWorkflow.md)
 - [DetailedErrorCollection](docs/DetailedErrorCollection.md)
 - [DocumentVersion](docs/DocumentVersion.md)
 - [DuplicatePlanRequest](docs/DuplicatePlanRequest.md)
@@ -890,6 +885,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [FailedWebhook](docs/FailedWebhook.md)
 - [FailedWebhooks](docs/FailedWebhooks.md)
 - [Field](docs/Field.md)
+- [FieldAssociationItemPayload](docs/FieldAssociationItemPayload.md)
 - [FieldAssociationParameters](docs/FieldAssociationParameters.md)
 - [FieldAssociationSchemeFieldSearchResult](docs/FieldAssociationSchemeFieldSearchResult.md)
 - [FieldAssociationSchemeLinks](docs/FieldAssociationSchemeLinks.md)
@@ -917,7 +913,9 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [FieldLayoutPayload](docs/FieldLayoutPayload.md)
 - [FieldLayoutSchemePayload](docs/FieldLayoutSchemePayload.md)
 - [FieldMetadata](docs/FieldMetadata.md)
+- [FieldProjectAssociation](docs/FieldProjectAssociation.md)
 - [FieldReferenceData](docs/FieldReferenceData.md)
+- [FieldSchemePayload](docs/FieldSchemePayload.md)
 - [FieldSchemeToFieldsPartialFailure](docs/FieldSchemeToFieldsPartialFailure.md)
 - [FieldSchemeToFieldsResponse](docs/FieldSchemeToFieldsResponse.md)
 - [FieldSchemeToProjectsPartialFailure](docs/FieldSchemeToProjectsPartialFailure.md)
@@ -933,6 +931,8 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [FilterDetails](docs/FilterDetails.md)
 - [FilterSubscription](docs/FilterSubscription.md)
 - [FilterSubscriptionsList](docs/FilterSubscriptionsList.md)
+- [ForgePanelProjectPinAsyncResponse](docs/ForgePanelProjectPinAsyncResponse.md)
+- [ForgePanelProjectPinRequest](docs/ForgePanelProjectPinRequest.md)
 - [FoundGroup](docs/FoundGroup.md)
 - [FoundGroups](docs/FoundGroups.md)
 - [FoundUsers](docs/FoundUsers.md)
@@ -1017,6 +1017,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [IssueTransition](docs/IssueTransition.md)
 - [IssueTransitionStatus](docs/IssueTransitionStatus.md)
 - [IssueTypeCreateBean](docs/IssueTypeCreateBean.md)
+- [IssueTypeDefaultValue](docs/IssueTypeDefaultValue.md)
 - [IssueTypeDetails](docs/IssueTypeDetails.md)
 - [IssueTypeHierarchyPayload](docs/IssueTypeHierarchyPayload.md)
 - [IssueTypeIds](docs/IssueTypeIds.md)
@@ -1145,6 +1146,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [License](docs/License.md)
 - [LicenseMetric](docs/LicenseMetric.md)
 - [LicensedApplication](docs/LicensedApplication.md)
+- [LimitExceededResponseBean](docs/LimitExceededResponseBean.md)
 - [LinkGroup](docs/LinkGroup.md)
 - [LinkIssueRequestJsonBean](docs/LinkIssueRequestJsonBean.md)
 - [LinkedIssue](docs/LinkedIssue.md)
@@ -1197,6 +1199,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [PageBeanComment](docs/PageBeanComment.md)
 - [PageBeanComponentWithIssueCount](docs/PageBeanComponentWithIssueCount.md)
 - [PageBeanContext](docs/PageBeanContext.md)
+- [PageBeanContextDefaultValues](docs/PageBeanContextDefaultValues.md)
 - [PageBeanContextForProjectAndIssueType](docs/PageBeanContextForProjectAndIssueType.md)
 - [PageBeanContextualConfiguration](docs/PageBeanContextualConfiguration.md)
 - [PageBeanCustomFieldContext](docs/PageBeanCustomFieldContext.md)
@@ -1210,6 +1213,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [PageBeanFieldConfigurationItem](docs/PageBeanFieldConfigurationItem.md)
 - [PageBeanFieldConfigurationScheme](docs/PageBeanFieldConfigurationScheme.md)
 - [PageBeanFieldConfigurationSchemeProjects](docs/PageBeanFieldConfigurationSchemeProjects.md)
+- [PageBeanFieldProjectAssociation](docs/PageBeanFieldProjectAssociation.md)
 - [PageBeanFilterDetails](docs/PageBeanFilterDetails.md)
 - [PageBeanGroupDetails](docs/PageBeanGroupDetails.md)
 - [PageBeanIssueFieldOption](docs/PageBeanIssueFieldOption.md)
@@ -1314,6 +1318,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [ProjectLandingPageInfo](docs/ProjectLandingPageInfo.md)
 - [ProjectPayload](docs/ProjectPayload.md)
 - [ProjectPermissions](docs/ProjectPermissions.md)
+- [ProjectPinAction](docs/ProjectPinAction.md)
 - [ProjectRole](docs/ProjectRole.md)
 - [ProjectRoleActorsUpdateBean](docs/ProjectRoleActorsUpdateBean.md)
 - [ProjectRoleDetails](docs/ProjectRoleDetails.md)
@@ -1382,6 +1387,8 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [SearchResultFieldParameters](docs/SearchResultFieldParameters.md)
 - [SearchResultWorkTypeParameters](docs/SearchResultWorkTypeParameters.md)
 - [SearchResults](docs/SearchResults.md)
+- [SearchWarning](docs/SearchWarning.md)
+- [SearchWarningLimitDetails](docs/SearchWarningLimitDetails.md)
 - [SecurityLevel](docs/SecurityLevel.md)
 - [SecurityLevelMember](docs/SecurityLevelMember.md)
 - [SecurityLevelMemberPayload](docs/SecurityLevelMemberPayload.md)
@@ -1549,7 +1556,6 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [WorkflowHistoryListResponseDTO](docs/WorkflowHistoryListResponseDTO.md)
 - [WorkflowHistoryReadRequest](docs/WorkflowHistoryReadRequest.md)
 - [WorkflowHistoryReadResponseDTO](docs/WorkflowHistoryReadResponseDTO.md)
-- [WorkflowIDs](docs/WorkflowIDs.md)
 - [WorkflowId](docs/WorkflowId.md)
 - [WorkflowLayout](docs/WorkflowLayout.md)
 - [WorkflowMetadataAndIssueTypeRestModel](docs/WorkflowMetadataAndIssueTypeRestModel.md)
@@ -1600,7 +1606,6 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [WorkflowStatusUpdate](docs/WorkflowStatusUpdate.md)
 - [WorkflowTransition](docs/WorkflowTransition.md)
 - [WorkflowTransitionLinks](docs/WorkflowTransitionLinks.md)
-- [WorkflowTransitionProperty](docs/WorkflowTransitionProperty.md)
 - [WorkflowTransitionRule](docs/WorkflowTransitionRule.md)
 - [WorkflowTransitionRules](docs/WorkflowTransitionRules.md)
 - [WorkflowTransitionRulesDetails](docs/WorkflowTransitionRulesDetails.md)
@@ -1834,9 +1839,9 @@ This TypeScript SDK client supports the [Fetch API](https://fetch.spec.whatwg.or
 and is automatically generated by the
 [OpenAPI Generator](https://openapi-generator.tech) project:
 
-- API version: `1001.0.0-SNAPSHOT-21695d0ffb3094632d6272be3e6600848f05a23b`
-- Package version: `1001.0.0-SNAPSHOT-21695d0ffb3094632d6272be3e6600848f05a23b`
-- Generator version: `7.21.0`
+- API version: `1001.0.0-SNAPSHOT-e54f3aeddae545dd970b98a1ac06d32cf9f54b1a`
+- Package version: `1001.0.0-SNAPSHOT-e54f3aeddae545dd970b98a1ac06d32cf9f54b1a`
+- Generator version: `7.24.0`
 - Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`
 
 The generated npm module supports the following:

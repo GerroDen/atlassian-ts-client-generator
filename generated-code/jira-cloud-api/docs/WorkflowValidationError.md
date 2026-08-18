@@ -7,6 +7,7 @@ The details about a workflow validation error.
 
 Name | Type
 ------------ | -------------
+`additionalDetails` | string
 `code` | string
 `elementReference` | [WorkflowElementReference](WorkflowElementReference.md)
 `level` | string

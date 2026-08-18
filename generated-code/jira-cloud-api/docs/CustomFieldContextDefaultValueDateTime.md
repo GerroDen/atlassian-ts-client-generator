@@ -7,6 +7,7 @@ The default value for a date time custom field.
 
 Name | Type
 ------------ | -------------
+`contextId` | string
 `dateTime` | string
 `type` | string
 `useCurrent` | boolean

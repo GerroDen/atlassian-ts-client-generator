@@ -8,6 +8,7 @@ Response object for getting a field association scheme by ID.
 Name | Type
 ------------ | -------------
 `description` | string
+`fieldsCount` | number
 `id` | string
 `isDefault` | boolean
 `links` | [FieldAssociationSchemeLinks](FieldAssociationSchemeLinks.md)

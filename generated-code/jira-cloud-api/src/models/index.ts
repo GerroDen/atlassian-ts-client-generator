@@ -1564,6 +1564,19 @@ export const BoardFeaturePayloadFeatureKeyEnum = {
 export type BoardFeaturePayloadFeatureKeyEnum = typeof BoardFeaturePayloadFeatureKeyEnum[keyof typeof BoardFeaturePayloadFeatureKeyEnum];
 
 /**
+ * Configuration of features for one or more boards. Replaces the deprecated features field on BoardPayload
+ * @export
+ * @interface BoardFeaturesPayload
+ */
+export interface BoardFeaturesPayload {
+    /**
+     * A map of board PCRIs to the list of features to enable on each board.
+     * @type {{ [key: string]: Array<BoardFeaturePayload>; }}
+     * @memberof BoardFeaturesPayload
+     */
+    boardFeatures?: { [key: string]: Array<BoardFeaturePayload>; };
+}
+/**
  * The payload for creating a board
  * @export
  * @interface BoardPayload
@@ -1600,9 +1613,16 @@ export interface BoardPayload {
      */
     columns?: Array<BoardColumnPayload>;
     /**
-     * Feature settings for the board
+     * Whether to enable the card cover option on this board
+     * @type {boolean}
+     * @memberof BoardPayload
+     */
+    enableCardCover?: boolean;
+    /**
+     * Feature settings for the board. Deprecated: use boardFeatures capability instead.
      * @type {Array<BoardFeaturePayload>}
      * @memberof BoardPayload
+     * @deprecated
      */
     features?: Array<BoardFeaturePayload>;
     /**
@@ -1945,6 +1965,8 @@ export interface BulkFetchIssueRequestBean {
      *  *  `editmeta` Returns information about how each field can be edited.
      *  *  `changelog` Returns a list of recent updates to an issue, sorted by date, starting from the most recent. This returns a maximum of 40 changelogs. If you require more, please refer to [Bulk fetch changelogs](#api-rest-api-3-changelog-bulkfetch-post).
      *  *  `versionedRepresentations` Instead of `fields`, returns `versionedRepresentations` a JSON array containing each version of a field's value, with the highest numbered item representing the most recent version.
+     * 
+     * To request up to 1000 issues in a single call, do not include `changelog`, `editmeta`, `operations`, `renderedFields`, `transitions`, or `versionedRepresentations` in `expand`. Requests that include any of these can include at most 100 issues; larger requests are rejected with a 400 error.
      * @type {Array<string>}
      * @memberof BulkFetchIssueRequestBean
      */
@@ -1967,6 +1989,8 @@ export interface BulkFetchIssueRequestBean {
      * Multiple `fields` parameters can be included in a request.
      * 
      * Note: All navigable fields are returned by default. This differs from [GET issue](#api-rest-api-3-issue-issueIdOrKey-get) where the default is all fields.
+     * 
+     * To request up to 1000 issues in a single call, explicitly list the fields you need: at least one field must be a positive include (a request containing only exclusions is not eligible), the `*all` and `*navigable` wildcards and the default navigable field set are not eligible for the higher limit, no more than 100 fields may be listed, and none of the included fields returns multiple values (for example `comment`, `worklog`, or `attachment`). Requests that do not meet these conditions can include at most 100 issues; larger requests are rejected with a 400 error.
      * @type {Array<string>}
      * @memberof BulkFetchIssueRequestBean
      */
@@ -1978,7 +2002,7 @@ export interface BulkFetchIssueRequestBean {
      */
     fieldsByKeys?: boolean;
     /**
-     * An array of issue IDs or issue keys to fetch. You can mix issue IDs and keys in the same query.
+     * An array of issue IDs or issue keys to fetch. You can mix issue IDs and keys in the same query. You can request up to 100 issues per call. Requests can include up to 1000 issues per call when they meet all of the conditions described for the `fields` and `expand` parameters. Requests that exceed the applicable limit are rejected with a 400 error.
      * @type {Array<string>}
      * @memberof BulkFetchIssueRequestBean
      */
@@ -3308,6 +3332,25 @@ export interface Context {
     scope?: Scope;
 }
 /**
+ * Default values grouped by custom field context.
+ * @export
+ * @interface ContextDefaultValues
+ */
+export interface ContextDefaultValues {
+    /**
+     * The ID of the context.
+     * @type {number}
+     * @memberof ContextDefaultValues
+     */
+    contextId: number;
+    /**
+     * Per-issue-type default values for this context. May contain a single entry for unconverted contexts, or one entry per issue type for converted contexts.
+     * @type {Array<IssueTypeDefaultValue>}
+     * @memberof ContextDefaultValues
+     */
+    defaultValues?: Array<IssueTypeDefaultValue>;
+}
+/**
  * The project and issue type mapping with a matching custom field context.
  * @export
  * @interface ContextForProjectAndIssueType
@@ -4007,11 +4050,18 @@ export interface CreateProjectDetails {
      */
     description?: string;
     /**
-     * The ID of the field configuration scheme for the project. Use the [Get all field configuration schemes](#api-rest-api-3-fieldconfigurationscheme-get) operation to get a list of field configuration scheme IDs. If you specify the field configuration scheme you cannot specify the project template key.
+     * Deprecated use [fieldScheme](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-field-schemes/#api-group-field-schemes) instead. The ID of the field configuration scheme for the project. Use the [Get all field configuration schemes](#api-rest-api-3-fieldconfigurationscheme-get) operation to get a list of field configuration scheme IDs. If you specify the field configuration scheme you cannot specify the project template key.
+     * @type {number}
+     * @memberof CreateProjectDetails
+     * @deprecated
+     */
+    fieldConfigurationScheme?: number;
+    /**
+     * The ID of the field scheme for the project. Use the [Get field schemes](#api-rest-api-3-config-fieldschemes-get) operation to get a list of field scheme IDs. If you specify the field scheme you cannot specify the project template key.
      * @type {number}
      * @memberof CreateProjectDetails
      */
-    fieldConfigurationScheme?: number;
+    fieldScheme?: number;
     /**
      * The ID of the issue security scheme for the project, which enables you to control who can and cannot view issues. Use the [Get issue security schemes](#api-rest-api-3-issuesecurityschemes-get) resource to get all issue security scheme IDs.
      * @type {number}
@@ -4116,7 +4166,6 @@ export const CreateProjectDetailsProjectTemplateKeyEnum = {
     ComAtlassianServicedeskSimplifiedItServiceManagement: 'com.atlassian.servicedesk:simplified-it-service-management',
     ComAtlassianServicedeskSimplifiedItServiceManagementBasic: 'com.atlassian.servicedesk:simplified-it-service-management-basic',
     ComAtlassianServicedeskSimplifiedItServiceManagementOperations: 'com.atlassian.servicedesk:simplified-it-service-management-operations',
-    ComAtlassianServicedeskSimplifiedGeneralServiceDesk: 'com.atlassian.servicedesk:simplified-general-service-desk',
     ComAtlassianServicedeskSimplifiedInternalServiceDesk: 'com.atlassian.servicedesk:simplified-internal-service-desk',
     ComAtlassianServicedeskSimplifiedExternalServiceDesk: 'com.atlassian.servicedesk:simplified-external-service-desk',
     ComAtlassianServicedeskSimplifiedHrServiceDesk: 'com.atlassian.servicedesk:simplified-hr-service-desk',
@@ -4133,11 +4182,13 @@ export const CreateProjectDetailsProjectTemplateKeyEnum = {
     ComAtlassianServicedeskNextGenLegalServiceDesk: 'com.atlassian.servicedesk:next-gen-legal-service-desk',
     ComAtlassianServicedeskNextGenMarketingServiceDesk: 'com.atlassian.servicedesk:next-gen-marketing-service-desk',
     ComAtlassianServicedeskNextGenFacilitiesServiceDesk: 'com.atlassian.servicedesk:next-gen-facilities-service-desk',
-    ComAtlassianServicedeskNextGenGeneralServiceDesk: 'com.atlassian.servicedesk:next-gen-general-service-desk',
     ComAtlassianServicedeskNextGenAnalyticsServiceDesk: 'com.atlassian.servicedesk:next-gen-analytics-service-desk',
     ComAtlassianServicedeskNextGenFinanceServiceDesk: 'com.atlassian.servicedesk:next-gen-finance-service-desk',
     ComAtlassianServicedeskNextGenDesignServiceDesk: 'com.atlassian.servicedesk:next-gen-design-service-desk',
     ComAtlassianServicedeskNextGenSalesServiceDesk: 'com.atlassian.servicedesk:next-gen-sales-service-desk',
+    ComAtlassianServicedeskCompanyManagedBlankServiceProject: 'com.atlassian.servicedesk:company-managed-blank-service-project',
+    ComAtlassianServicedeskCompanyManagedGeneralServiceProject: 'com.atlassian.servicedesk:company-managed-general-service-project',
+    ComAtlassianServicedeskTeamManagedGeneralServiceProject: 'com.atlassian.servicedesk:team-managed-general-service-project',
     ComAtlassianJiraCoreProjectTemplatesJiraCoreSimplifiedContentManagement: 'com.atlassian.jira-core-project-templates:jira-core-simplified-content-management',
     ComAtlassianJiraCoreProjectTemplatesJiraCoreSimplifiedDocumentApproval: 'com.atlassian.jira-core-project-templates:jira-core-simplified-document-approval',
     ComAtlassianJiraCoreProjectTemplatesJiraCoreSimplifiedLeadTracking: 'com.atlassian.jira-core-project-templates:jira-core-simplified-lead-tracking',
@@ -4145,7 +4196,8 @@ export const CreateProjectDetailsProjectTemplateKeyEnum = {
     ComAtlassianJiraCoreProjectTemplatesJiraCoreSimplifiedProcurement: 'com.atlassian.jira-core-project-templates:jira-core-simplified-procurement',
     ComAtlassianJiraCoreProjectTemplatesJiraCoreSimplifiedProjectManagement: 'com.atlassian.jira-core-project-templates:jira-core-simplified-project-management',
     ComAtlassianJiraCoreProjectTemplatesJiraCoreSimplifiedRecruitment: 'com.atlassian.jira-core-project-templates:jira-core-simplified-recruitment',
-    ComAtlassianJiraCoreProjectTemplatesJiraCoreSimplifiedTask: 'com.atlassian.jira-core-project-templates:jira-core-simplified-task-'
+    ComAtlassianJiraCoreProjectTemplatesJiraCoreSimplifiedTask: 'com.atlassian.jira-core-project-templates:jira-core-simplified-task-',
+    ComAtlassianJcsCustomerServiceManagement: 'com.atlassian.jcs:customer-service-management'
 } as const;
 export type CreateProjectDetailsProjectTemplateKeyEnum = typeof CreateProjectDetailsProjectTemplateKeyEnum[keyof typeof CreateProjectDetailsProjectTemplateKeyEnum];
 
@@ -4296,289 +4348,6 @@ export interface CreateUpdateRoleRequestBean {
      * @memberof CreateUpdateRoleRequestBean
      */
     name?: string;
-}
-/**
- * A workflow transition condition.
- * @export
- * @interface CreateWorkflowCondition
- */
-export interface CreateWorkflowCondition {
-    /**
-     * The list of workflow conditions.
-     * @type {Array<CreateWorkflowCondition>}
-     * @memberof CreateWorkflowCondition
-     */
-    conditions?: Array<CreateWorkflowCondition>;
-    /**
-     * EXPERIMENTAL. The configuration of the transition rule.
-     * @type {{ [key: string]: any; }}
-     * @memberof CreateWorkflowCondition
-     */
-    configuration?: { [key: string]: any; };
-    /**
-     * The compound condition operator.
-     * @type {CreateWorkflowConditionOperatorEnum}
-     * @memberof CreateWorkflowCondition
-     */
-    operator?: CreateWorkflowConditionOperatorEnum;
-    /**
-     * The type of the transition rule.
-     * @type {string}
-     * @memberof CreateWorkflowCondition
-     */
-    type?: string;
-}
-
-
-/**
- * @export
- */
-export const CreateWorkflowConditionOperatorEnum = {
-    And: 'AND',
-    Or: 'OR'
-} as const;
-export type CreateWorkflowConditionOperatorEnum = typeof CreateWorkflowConditionOperatorEnum[keyof typeof CreateWorkflowConditionOperatorEnum];
-
-/**
- * The details of a workflow.
- * @export
- * @interface CreateWorkflowDetails
- */
-export interface CreateWorkflowDetails {
-    /**
-     * The description of the workflow. The maximum length is 1000 characters.
-     * @type {string}
-     * @memberof CreateWorkflowDetails
-     */
-    description?: string;
-    /**
-     * The name of the workflow. The name must be unique. The maximum length is 255 characters. Characters can be separated by a whitespace but the name cannot start or end with a whitespace.
-     * @type {string}
-     * @memberof CreateWorkflowDetails
-     */
-    name: string;
-    /**
-     * The statuses of the workflow. Any status that does not include a transition is added to the workflow without a transition.
-     * @type {Set<CreateWorkflowStatusDetails>}
-     * @memberof CreateWorkflowDetails
-     */
-    statuses: Array<CreateWorkflowStatusDetails>;
-    /**
-     * The transitions of the workflow. For the request to be valid, these transitions must:
-     * 
-     *  *  include one *initial* transition.
-     *  *  not use the same name for a *global* and *directed* transition.
-     *  *  have a unique name for each *global* transition.
-     *  *  have a unique 'to' status for each *global* transition.
-     *  *  have unique names for each transition from a status.
-     *  *  not have a 'from' status on *initial* and *global* transitions.
-     *  *  have a 'from' status on *directed* transitions.
-     * 
-     * All the transition statuses must be included in `statuses`.
-     * @type {Array<CreateWorkflowTransitionDetails>}
-     * @memberof CreateWorkflowDetails
-     */
-    transitions: Array<CreateWorkflowTransitionDetails>;
-}
-/**
- * The details of a transition status.
- * @export
- * @interface CreateWorkflowStatusDetails
- */
-export interface CreateWorkflowStatusDetails {
-    /**
-     * The ID of the status.
-     * @type {string}
-     * @memberof CreateWorkflowStatusDetails
-     */
-    id: string;
-    /**
-     * The properties of the status.
-     * @type {{ [key: string]: string; }}
-     * @memberof CreateWorkflowStatusDetails
-     */
-    properties?: { [key: string]: string; };
-}
-/**
- * The details of a workflow transition.
- * @export
- * @interface CreateWorkflowTransitionDetails
- */
-export interface CreateWorkflowTransitionDetails {
-    /**
-     * The description of the transition. The maximum length is 1000 characters.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionDetails
-     */
-    description?: string;
-    /**
-     * The statuses the transition can start from.
-     * @type {Array<string>}
-     * @memberof CreateWorkflowTransitionDetails
-     */
-    from?: Array<string>;
-    /**
-     * The name of the transition. The maximum length is 60 characters.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionDetails
-     */
-    name: string;
-    /**
-     * The properties of the transition.
-     * @type {{ [key: string]: string; }}
-     * @memberof CreateWorkflowTransitionDetails
-     */
-    properties?: { [key: string]: string; };
-    /**
-     * The rules of the transition.
-     * @type {CreateWorkflowTransitionRulesDetails}
-     * @memberof CreateWorkflowTransitionDetails
-     */
-    rules?: CreateWorkflowTransitionRulesDetails;
-    /**
-     * The screen of the transition.
-     * @type {CreateWorkflowTransitionScreenDetails}
-     * @memberof CreateWorkflowTransitionDetails
-     */
-    screen?: CreateWorkflowTransitionScreenDetails;
-    /**
-     * The status the transition goes to.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionDetails
-     */
-    to: string;
-    /**
-     * The type of the transition.
-     * @type {CreateWorkflowTransitionDetailsTypeEnum}
-     * @memberof CreateWorkflowTransitionDetails
-     */
-    type: CreateWorkflowTransitionDetailsTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const CreateWorkflowTransitionDetailsTypeEnum = {
-    Global: 'global',
-    Initial: 'initial',
-    Directed: 'directed'
-} as const;
-export type CreateWorkflowTransitionDetailsTypeEnum = typeof CreateWorkflowTransitionDetailsTypeEnum[keyof typeof CreateWorkflowTransitionDetailsTypeEnum];
-
-/**
- * A workflow transition rule.
- * @export
- * @interface CreateWorkflowTransitionRule
- */
-export interface CreateWorkflowTransitionRule {
-    /**
-     * EXPERIMENTAL. The configuration of the transition rule.
-     * @type {{ [key: string]: any; }}
-     * @memberof CreateWorkflowTransitionRule
-     */
-    configuration?: { [key: string]: any; };
-    /**
-     * The type of the transition rule.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionRule
-     */
-    type: string;
-}
-/**
- * The details of a workflow transition rules.
- * @export
- * @interface CreateWorkflowTransitionRulesDetails
- */
-export interface CreateWorkflowTransitionRulesDetails {
-    /**
-     * The workflow conditions.
-     * @type {CreateWorkflowCondition}
-     * @memberof CreateWorkflowTransitionRulesDetails
-     */
-    conditions?: CreateWorkflowCondition;
-    /**
-     * The workflow post functions.
-     * 
-     * **Note:** The default post functions are always added to the *initial* transition, as in:
-     * 
-     *     "postFunctions": [
-     *         {
-     *             "type": "IssueCreateFunction"
-     *         },
-     *         {
-     *             "type": "IssueReindexFunction"
-     *         },
-     *         {
-     *             "type": "FireIssueEventFunction",
-     *             "configuration": {
-     *                 "event": {
-     *                     "id": "1",
-     *                     "name": "issue_created"
-     *                 }
-     *             }
-     *         }
-     *     ]
-     * 
-     * **Note:** The default post functions are always added to the *global* and *directed* transitions, as in:
-     * 
-     *     "postFunctions": [
-     *         {
-     *             "type": "UpdateIssueStatusFunction"
-     *         },
-     *         {
-     *             "type": "CreateCommentFunction"
-     *         },
-     *         {
-     *             "type": "GenerateChangeHistoryFunction"
-     *         },
-     *         {
-     *             "type": "IssueReindexFunction"
-     *         },
-     *         {
-     *             "type": "FireIssueEventFunction",
-     *             "configuration": {
-     *                 "event": {
-     *                     "id": "13",
-     *                     "name": "issue_generic"
-     *                 }
-     *             }
-     *         }
-     *     ]
-     * @type {Array<CreateWorkflowTransitionRule>}
-     * @memberof CreateWorkflowTransitionRulesDetails
-     */
-    postFunctions?: Array<CreateWorkflowTransitionRule>;
-    /**
-     * The workflow validators.
-     * 
-     * **Note:** The default permission validator is always added to the *initial* transition, as in:
-     * 
-     *     "validators": [
-     *         {
-     *             "type": "PermissionValidator",
-     *             "configuration": {
-     *                 "permissionKey": "CREATE_ISSUES"
-     *             }
-     *         }
-     *     ]
-     * @type {Array<CreateWorkflowTransitionRule>}
-     * @memberof CreateWorkflowTransitionRulesDetails
-     */
-    validators?: Array<CreateWorkflowTransitionRule>;
-}
-/**
- * The details of a transition screen.
- * @export
- * @interface CreateWorkflowTransitionScreenDetails
- */
-export interface CreateWorkflowTransitionScreenDetails {
-    /**
-     * The ID of the screen.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionScreenDetails
-     */
-    id: string;
 }
 /**
  * Details about a created issue or subtask.
@@ -4736,6 +4505,12 @@ export interface CustomFieldContextDefaultValueCascadingOption {
  */
 export interface CustomFieldContextDefaultValueDate {
     /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueDate
+     */
+    contextId: string;
+    /**
      * The default date in ISO format. Ignored if `useCurrent` is true.
      * @type {string}
      * @memberof CustomFieldContextDefaultValueDate
@@ -4761,6 +4536,12 @@ export interface CustomFieldContextDefaultValueDate {
  */
 export interface CustomFieldContextDefaultValueDateTime {
     /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueDateTime
+     */
+    contextId: string;
+    /**
      * The default date-time in ISO format. Ignored if `useCurrent` is true.
      * @type {string}
      * @memberof CustomFieldContextDefaultValueDateTime
@@ -4785,6 +4566,12 @@ export interface CustomFieldContextDefaultValueDateTime {
  * @interface CustomFieldContextDefaultValueFloat
  */
 export interface CustomFieldContextDefaultValueFloat {
+    /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueFloat
+     */
+    contextId: string;
     /**
      * The default floating-point number.
      * @type {number}
@@ -4886,6 +4673,12 @@ export interface CustomFieldContextDefaultValueForgeMultiGroupField {
  */
 export interface CustomFieldContextDefaultValueForgeMultiStringField {
     /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueForgeMultiStringField
+     */
+    contextId: string;
+    /**
      * 
      * @type {string}
      * @memberof CustomFieldContextDefaultValueForgeMultiStringField
@@ -4954,6 +4747,12 @@ export interface CustomFieldContextDefaultValueForgeNumberField {
  * @interface CustomFieldContextDefaultValueForgeObjectField
  */
 export interface CustomFieldContextDefaultValueForgeObjectField {
+    /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueForgeObjectField
+     */
+    contextId: string;
     /**
      * The default JSON object.
      * @type {object}
@@ -5029,6 +4828,12 @@ export interface CustomFieldContextDefaultValueForgeUserField {
  * @interface CustomFieldContextDefaultValueLabels
  */
 export interface CustomFieldContextDefaultValueLabels {
+    /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueLabels
+     */
+    contextId: string;
     /**
      * The default labels value.
      * @type {Array<string>}
@@ -5124,6 +4929,12 @@ export interface CustomFieldContextDefaultValueMultipleOption {
  */
 export interface CustomFieldContextDefaultValueMultipleVersionPicker {
     /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueMultipleVersionPicker
+     */
+    contextId: string;
+    /**
      * 
      * @type {string}
      * @memberof CustomFieldContextDefaultValueMultipleVersionPicker
@@ -5173,6 +4984,12 @@ export interface CustomFieldContextDefaultValueProject {
  * @interface CustomFieldContextDefaultValueReadOnly
  */
 export interface CustomFieldContextDefaultValueReadOnly {
+    /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueReadOnly
+     */
+    contextId: string;
     /**
      * The default text. The maximum length is 255 characters.
      * @type {string}
@@ -5243,6 +5060,12 @@ export interface CustomFieldContextDefaultValueSingleOption {
  */
 export interface CustomFieldContextDefaultValueSingleVersionPicker {
     /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueSingleVersionPicker
+     */
+    contextId: string;
+    /**
      * 
      * @type {string}
      * @memberof CustomFieldContextDefaultValueSingleVersionPicker
@@ -5268,6 +5091,12 @@ export interface CustomFieldContextDefaultValueSingleVersionPicker {
  */
 export interface CustomFieldContextDefaultValueTextArea {
     /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueTextArea
+     */
+    contextId: string;
+    /**
      * The default text. The maximum length is 32767 characters.
      * @type {string}
      * @memberof CustomFieldContextDefaultValueTextArea
@@ -5286,6 +5115,12 @@ export interface CustomFieldContextDefaultValueTextArea {
  * @interface CustomFieldContextDefaultValueTextField
  */
 export interface CustomFieldContextDefaultValueTextField {
+    /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueTextField
+     */
+    contextId: string;
     /**
      * The default text. The maximum length is 254 characters.
      * @type {string}
@@ -5797,6 +5632,12 @@ export interface CustomTemplateOptions {
 export interface CustomTemplateRequestDTO {
     /**
      * 
+     * @type {BoardFeaturesPayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    boardFeatures?: BoardFeaturesPayload | null;
+    /**
+     * 
      * @type {BoardsPayload}
      * @memberof CustomTemplateRequestDTO
      */
@@ -6279,6 +6120,12 @@ export interface DataClassificationTagBean {
      */
     guideline?: string;
     /**
+     * The guideline in ADF (Atlassian Document Format) for rich text rendering.
+     * @type {string}
+     * @memberof DataClassificationTagBean
+     */
+    guidelineADF?: string;
+    /**
      * The ID of the data classification object.
      * @type {string}
      * @memberof DataClassificationTagBean
@@ -6457,61 +6304,6 @@ export interface DeleteFieldAssociationSchemeResponse {
      * @memberof DeleteFieldAssociationSchemeResponse
      */
     id?: string;
-}
-/**
- * Details about a workflow.
- * @export
- * @interface DeprecatedWorkflow
- */
-export interface DeprecatedWorkflow {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DeprecatedWorkflow
-     */
-    default?: boolean;
-    /**
-     * The description of the workflow.
-     * @type {string}
-     * @memberof DeprecatedWorkflow
-     */
-    readonly description?: string;
-    /**
-     * The datetime the workflow was last modified.
-     * @type {string}
-     * @memberof DeprecatedWorkflow
-     */
-    readonly lastModifiedDate?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof DeprecatedWorkflow
-     */
-    readonly lastModifiedUser?: string;
-    /**
-     * The account ID of the user that last modified the workflow.
-     * @type {string}
-     * @memberof DeprecatedWorkflow
-     */
-    readonly lastModifiedUserAccountId?: string;
-    /**
-     * The name of the workflow.
-     * @type {string}
-     * @memberof DeprecatedWorkflow
-     */
-    readonly name?: string;
-    /**
-     * The scope where this workflow applies
-     * @type {Scope}
-     * @memberof DeprecatedWorkflow
-     */
-    readonly scope?: Scope;
-    /**
-     * The number of steps included in the workflow.
-     * @type {number}
-     * @memberof DeprecatedWorkflow
-     */
-    readonly steps?: number;
 }
 /**
  * 
@@ -7055,11 +6847,66 @@ export interface Field {
      */
     stableId?: string;
     /**
+     * The translated (i18n) description of the field for the current locale. Returned for custom fields.
+     * @type {string}
+     * @memberof Field
+     */
+    translatedDescription?: string;
+    /**
+     * The translated (i18n) name of the field for the current locale. Returned for custom fields.
+     * @type {string}
+     * @memberof Field
+     */
+    translatedName?: string;
+    /**
      * The display name of the field type
      * @type {string}
      * @memberof Field
      */
     typeDisplayName?: string;
+}
+/**
+ * Defines the payload for the field association scheme.
+ * @export
+ * @interface FieldAssociationItemPayload
+ */
+export interface FieldAssociationItemPayload {
+    /**
+     * The description of the field association item
+     * @type {string}
+     * @memberof FieldAssociationItemPayload
+     */
+    description?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof FieldAssociationItemPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof FieldAssociationItemPayload
+     */
+    qualifierId?: ProjectCreateResourceIdentifier;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof FieldAssociationItemPayload
+     */
+    qualifierType?: ProjectCreateResourceIdentifier;
+    /**
+     * The renderer type of the field
+     * @type {string}
+     * @memberof FieldAssociationItemPayload
+     */
+    rendererType?: string;
+    /**
+     * Whether the field is required
+     * @type {boolean}
+     * @memberof FieldAssociationItemPayload
+     */
+    required?: boolean;
 }
 /**
  * 
@@ -7079,6 +6926,12 @@ export interface FieldAssociationParameters {
      * @memberof FieldAssociationParameters
      */
     isRequired: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldAssociationParameters
+     */
+    rendererType?: string;
 }
 /**
  * Field association scheme field search results.
@@ -7182,10 +7035,28 @@ export interface FieldAssociationSchemeMatchedFilters {
 export interface FieldAssociationSchemeProjectSearchResult {
     /**
      * 
+     * @type {{ [key: string]: string; }}
+     * @memberof FieldAssociationSchemeProjectSearchResult
+     */
+    avatarUrls?: { [key: string]: string; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FieldAssociationSchemeProjectSearchResult
+     */
+    deleted?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof FieldAssociationSchemeProjectSearchResult
      */
     id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldAssociationSchemeProjectSearchResult
+     */
+    key?: string;
     /**
      * 
      * @type {string}
@@ -7228,14 +7099,22 @@ export interface FieldCapabilityPayload {
      * 
      * @type {FieldLayoutSchemePayload}
      * @memberof FieldCapabilityPayload
+     * @deprecated
      */
     fieldLayoutScheme?: FieldLayoutSchemePayload | null;
     /**
      * The field layouts configuration.
      * @type {Array<FieldLayoutPayload>}
      * @memberof FieldCapabilityPayload
+     * @deprecated
      */
     fieldLayouts?: Array<FieldLayoutPayload> | null;
+    /**
+     * 
+     * @type {FieldSchemePayload}
+     * @memberof FieldCapabilityPayload
+     */
+    fieldScheme?: FieldSchemePayload | null;
     /**
      * The issue layouts configuration
      * @type {Array<IssueLayoutPayload>}
@@ -7767,7 +7646,9 @@ export interface FieldLayoutPayload {
     pcri?: ProjectCreateResourceIdentifier;
 }
 /**
- * Defines the payload for the field layout schemes. See "Field Configuration Scheme" - https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-field-configurations/\#api-rest-api-3-fieldconfigurationscheme-post https://support.atlassian.com/jira-cloud-administration/docs/configure-a-field-configuration-scheme/
+ * Deprecated use [fieldAssociationScheme](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-field-schemes/#api-group-field-schemes) instead Defines the payload for the field layout schemes. See [ Field configuration scheme](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-field-configurations/#api-rest-api-3-fieldconfigurationscheme-post).
+ * 
+ * [ How to configure a field configuration scheme](https://support.atlassian.com/jira-cloud-administration/docs/configure-a-field-configuration-scheme/).
  * @export
  * @interface FieldLayoutSchemePayload
  */
@@ -7869,6 +7750,19 @@ export interface FieldMetadata {
      * @memberof FieldMetadata
      */
     readonly schema: JsonTypeBean;
+}
+/**
+ * List of project associations.
+ * @export
+ * @interface FieldProjectAssociation
+ */
+export interface FieldProjectAssociation {
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldProjectAssociation
+     */
+    projectId?: string;
 }
 /**
  * Details of a field that can be used in advanced searches.
@@ -7978,6 +7872,55 @@ export const FieldReferenceDataSearchableEnum = {
     False: 'false'
 } as const;
 export type FieldReferenceDataSearchableEnum = typeof FieldReferenceDataSearchableEnum[keyof typeof FieldReferenceDataSearchableEnum];
+
+/**
+ * Defines the payload to configure the field scheme for a project. See [Field schemes](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-field-schemes/#api-group-field-schemes).
+ * @export
+ * @interface FieldSchemePayload
+ */
+export interface FieldSchemePayload {
+    /**
+     * The description of the field scheme
+     * @type {string}
+     * @memberof FieldSchemePayload
+     */
+    description?: string;
+    /**
+     * The field association items for this field scheme.
+     * @type {Array<FieldAssociationItemPayload>}
+     * @memberof FieldSchemePayload
+     */
+    items?: Array<FieldAssociationItemPayload>;
+    /**
+     * The name of the field scheme
+     * @type {string}
+     * @memberof FieldSchemePayload
+     */
+    name?: string;
+    /**
+     * The strategy to use when there is a conflict with an existing field scheme. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters
+     * @type {FieldSchemePayloadOnConflictEnum}
+     * @memberof FieldSchemePayload
+     */
+    onConflict?: FieldSchemePayloadOnConflictEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof FieldSchemePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
+
+
+/**
+ * @export
+ */
+export const FieldSchemePayloadOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type FieldSchemePayloadOnConflictEnum = typeof FieldSchemePayloadOnConflictEnum[keyof typeof FieldSchemePayloadOnConflictEnum];
 
 /**
  * Partial failure result when updating field scheme to fields associations.
@@ -8267,7 +8210,24 @@ export interface FieldsSchemeItemParameter {
      * @memberof FieldsSchemeItemParameter
      */
     isRequired?: boolean;
+    /**
+     * The renderer type for the field, null to preserve current renderer type
+     * @type {FieldsSchemeItemParameterRendererTypeEnum}
+     * @memberof FieldsSchemeItemParameter
+     */
+    rendererType?: FieldsSchemeItemParameterRendererTypeEnum;
 }
+
+
+/**
+ * @export
+ */
+export const FieldsSchemeItemParameterRendererTypeEnum = {
+    JiraTextRenderer: 'jira-text-renderer',
+    AtlassianWikiRenderer: 'atlassian-wiki-renderer'
+} as const;
+export type FieldsSchemeItemParameterRendererTypeEnum = typeof FieldsSchemeItemParameterRendererTypeEnum[keyof typeof FieldsSchemeItemParameterRendererTypeEnum];
+
 /**
  * The list of work type-specific parameter overrides, may be empty if only default parameters are being updated
  * @export
@@ -8287,12 +8247,29 @@ export interface FieldsSchemeItemWorkTypeParameter {
      */
     isRequired?: boolean;
     /**
+     * The renderer type for the field for this work type, null to use default or preserve current
+     * @type {FieldsSchemeItemWorkTypeParameterRendererTypeEnum}
+     * @memberof FieldsSchemeItemWorkTypeParameter
+     */
+    rendererType?: FieldsSchemeItemWorkTypeParameterRendererTypeEnum;
+    /**
      * The ID of the work type (issue type) for which these parameters apply
      * @type {number}
      * @memberof FieldsSchemeItemWorkTypeParameter
      */
     workTypeId?: number;
 }
+
+
+/**
+ * @export
+ */
+export const FieldsSchemeItemWorkTypeParameterRendererTypeEnum = {
+    JiraTextRenderer: 'jira-text-renderer',
+    AtlassianWikiRenderer: 'atlassian-wiki-renderer'
+} as const;
+export type FieldsSchemeItemWorkTypeParameterRendererTypeEnum = typeof FieldsSchemeItemWorkTypeParameterRendererTypeEnum[keyof typeof FieldsSchemeItemWorkTypeParameterRendererTypeEnum];
+
 /**
  * Details about a filter.
  * @export
@@ -8548,6 +8525,38 @@ export interface FilterSubscriptionsList {
      * @memberof FilterSubscriptionsList
      */
     readonly startIndex?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ForgePanelProjectPinAsyncResponse
+ */
+export interface ForgePanelProjectPinAsyncResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ForgePanelProjectPinAsyncResponse
+     */
+    taskId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ForgePanelProjectPinRequest
+ */
+export interface ForgePanelProjectPinRequest {
+    /**
+     * The moduleId of the Forge panel in the format `ari:cloud:ecosystem::extension/{app-id}/{environment-id}/static/{module-key}`
+     * @type {string}
+     * @memberof ForgePanelProjectPinRequest
+     */
+    moduleId: string;
+    /**
+     * The list of projects to pin or unpin the issue panel to or from.
+     * @type {Array<ProjectPinAction>}
+     * @memberof ForgePanelProjectPinRequest
+     */
+    projectList: Array<ProjectPinAction>;
 }
 /**
  * A group found in a search.
@@ -9004,6 +9013,12 @@ export interface GetFieldAssociationSchemeByIdResponse {
     description?: string;
     /**
      * 
+     * @type {number}
+     * @memberof GetFieldAssociationSchemeByIdResponse
+     */
+    fieldsCount?: number;
+    /**
+     * 
      * @type {string}
      * @memberof GetFieldAssociationSchemeByIdResponse
      */
@@ -9039,6 +9054,12 @@ export interface GetFieldAssociationSchemeResponse {
      * @memberof GetFieldAssociationSchemeResponse
      */
     description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetFieldAssociationSchemeResponse
+     */
+    fieldsCount?: number;
     /**
      * 
      * @type {number}
@@ -10737,6 +10758,12 @@ export type IssueLayoutPayloadIssueLayoutTypeEnum = typeof IssueLayoutPayloadIss
  */
 export interface IssueLimitReportResponseBean {
     /**
+     * For each field, the ids of the individual entities breaching the limit, grouped by the id or key of the issue they belong to. Fields that hold a single value, such as description and environment, map to an empty list because the issue itself identifies the breaching content
+     * @type {{ [key: string]: { [key: string]: Array<number>; }; }}
+     * @memberof IssueLimitReportResponseBean
+     */
+    entitiesBreachingLimit?: { [key: string]: { [key: string]: Array<number>; }; };
+    /**
      * A list of ids of issues approaching the limit and their field count
      * @type {{ [key: string]: { [key: string]: number; }; }}
      * @memberof IssueLimitReportResponseBean
@@ -11139,6 +11166,31 @@ export const IssueTypeCreateBeanTypeEnum = {
 } as const;
 export type IssueTypeCreateBeanTypeEnum = typeof IssueTypeCreateBeanTypeEnum[keyof typeof IssueTypeCreateBeanTypeEnum];
 
+/**
+ * A default value associated with an issue type within a context.
+ * @export
+ * @interface IssueTypeDefaultValue
+ */
+export interface IssueTypeDefaultValue {
+    /**
+     * True when this default value applies to every issue type covered by the context (no specific issue type). Only present when true; omitted otherwise.
+     * @type {boolean}
+     * @memberof IssueTypeDefaultValue
+     */
+    isAnyIssueType?: boolean | null;
+    /**
+     * The ID of the issue type this default value applies to. Null when isAnyIssueType is true.
+     * @type {string}
+     * @memberof IssueTypeDefaultValue
+     */
+    issueTypeId?: string | null;
+    /**
+     * 
+     * @type {CustomFieldContextDefaultValue}
+     * @memberof IssueTypeDefaultValue
+     */
+    value?: CustomFieldContextDefaultValue;
+}
 /**
  * Details about an issue type.
  * @export
@@ -14862,6 +14914,55 @@ export const LicensedApplicationPlanEnum = {
 export type LicensedApplicationPlanEnum = typeof LicensedApplicationPlanEnum[keyof typeof LicensedApplicationPlanEnum];
 
 /**
+ * 
+ * @export
+ * @interface LimitExceededResponseBean
+ */
+export interface LimitExceededResponseBean {
+    /**
+     * 
+     * @type {number}
+     * @memberof LimitExceededResponseBean
+     */
+    currentCount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof LimitExceededResponseBean
+     */
+    entityType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LimitExceededResponseBean
+     */
+    errorCode?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LimitExceededResponseBean
+     */
+    limitType?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof LimitExceededResponseBean
+     */
+    maxAllowedLimit?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof LimitExceededResponseBean
+     */
+    message?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LimitExceededResponseBean
+     */
+    scopeId?: string;
+}
+/**
  * Details a link group, which defines issue operations.
  * @export
  * @interface LinkGroup
@@ -16549,6 +16650,55 @@ export interface PageBeanContext {
 /**
  * A page of items.
  * @export
+ * @interface PageBeanContextDefaultValues
+ */
+export interface PageBeanContextDefaultValues {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanContextDefaultValues
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanContextDefaultValues
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanContextDefaultValues
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanContextDefaultValues
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanContextDefaultValues
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanContextDefaultValues
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<ContextDefaultValues>}
+     * @memberof PageBeanContextDefaultValues
+     */
+    readonly values?: Array<ContextDefaultValues>;
+}
+/**
+ * A page of items.
+ * @export
  * @interface PageBeanContextForProjectAndIssueType
  */
 export interface PageBeanContextForProjectAndIssueType {
@@ -17182,6 +17332,55 @@ export interface PageBeanFieldConfigurationSchemeProjects {
      * @memberof PageBeanFieldConfigurationSchemeProjects
      */
     readonly values?: Array<FieldConfigurationSchemeProjects>;
+}
+/**
+ * A page of items.
+ * @export
+ * @interface PageBeanFieldProjectAssociation
+ */
+export interface PageBeanFieldProjectAssociation {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanFieldProjectAssociation
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanFieldProjectAssociation
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanFieldProjectAssociation
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanFieldProjectAssociation
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanFieldProjectAssociation
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanFieldProjectAssociation
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<FieldProjectAssociation>}
+     * @memberof PageBeanFieldProjectAssociation
+     */
+    readonly values?: Array<FieldProjectAssociation>;
 }
 /**
  * A page of items.
@@ -21388,6 +21587,36 @@ export interface ProjectPermissions {
     readonly canEdit?: boolean;
 }
 /**
+ * The list of projects to pin or unpin the issue panel to or from.
+ * @export
+ * @interface ProjectPinAction
+ */
+export interface ProjectPinAction {
+    /**
+     * The action to perform: PIN or UNPIN.
+     * @type {ProjectPinActionActionEnum}
+     * @memberof ProjectPinAction
+     */
+    action: ProjectPinActionActionEnum;
+    /**
+     * The project ID or key.
+     * @type {string}
+     * @memberof ProjectPinAction
+     */
+    projectIdOrKey: string;
+}
+
+
+/**
+ * @export
+ */
+export const ProjectPinActionActionEnum = {
+    Pin: 'PIN',
+    Unpin: 'UNPIN'
+} as const;
+export type ProjectPinActionActionEnum = typeof ProjectPinActionActionEnum[keyof typeof ProjectPinActionActionEnum];
+
+/**
  * Details about the roles in a project.
  * @export
  * @interface ProjectRole
@@ -21562,7 +21791,8 @@ export interface ProjectRoleDetails {
  */
 export const ProjectRoleDetailsTypeEnum = {
     Default: 'DEFAULT',
-    GuestRole: 'GUEST_ROLE'
+    GuestRole: 'GUEST_ROLE',
+    AiAgentRole: 'AI_AGENT_ROLE'
 } as const;
 export type ProjectRoleDetailsTypeEnum = typeof ProjectRoleDetailsTypeEnum[keyof typeof ProjectRoleDetailsTypeEnum];
 
@@ -22379,6 +22609,12 @@ export interface ResolutionJsonBean {
 export interface Resource {
     /**
      * 
+     * @type {Array<string>}
+     * @memberof Resource
+     */
+    contentAsByteArray?: Array<string>;
+    /**
+     * 
      * @type {string}
      * @memberof Resource
      */
@@ -22598,7 +22834,9 @@ export type RolePayloadOnConflictEnum = typeof RolePayloadOnConflictEnum[keyof t
 export const RolePayloadTypeEnum = {
     Hidden: 'HIDDEN',
     Viewable: 'VIEWABLE',
-    Editable: 'EDITABLE'
+    AiAgent: 'AI_AGENT',
+    Editable: 'EDITABLE',
+    Guest: 'GUEST'
 } as const;
 export type RolePayloadTypeEnum = typeof RolePayloadTypeEnum[keyof typeof RolePayloadTypeEnum];
 
@@ -23260,6 +23498,12 @@ export interface SearchAndReconcileResults {
      * @memberof SearchAndReconcileResults
      */
     readonly schema?: { [key: string]: JsonTypeBean; };
+    /**
+     * Experimental. Warnings generated during the search, e.g. when a JQL clause exceeded its argument limit or when the result set was truncated due to an ingestion limit. This field is currently rolling out behind a feature flag and may be absent, empty, or change shape without notice until generally available.
+     * @type {Array<SearchWarning>}
+     * @memberof SearchAndReconcileResults
+     */
+    readonly warnings?: Array<SearchWarning>;
 }
 /**
  * Details of how to filter and list search auto complete information.
@@ -23402,6 +23646,12 @@ export interface SearchResultFieldParameters {
      * @memberof SearchResultFieldParameters
      */
     isRequired?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SearchResultFieldParameters
+     */
+    rendererType?: string;
 }
 /**
  * 
@@ -23421,6 +23671,12 @@ export interface SearchResultWorkTypeParameters {
      * @memberof SearchResultWorkTypeParameters
      */
     isRequired?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SearchResultWorkTypeParameters
+     */
+    rendererType?: string;
     /**
      * 
      * @type {string}
@@ -23482,6 +23738,62 @@ export interface SearchResults {
      * @memberof SearchResults
      */
     readonly warningMessages?: Array<string>;
+}
+/**
+ * Experimental. A warning returned alongside successful search results.
+ * @export
+ * @interface SearchWarning
+ */
+export interface SearchWarning {
+    /**
+     * Structured details about the warning, if available.
+     * @type {SearchWarningLimitDetails}
+     * @memberof SearchWarning
+     */
+    details?: SearchWarningLimitDetails;
+    /**
+     * A human-readable explanation of the warning suitable for surfacing to end users.
+     * @type {string}
+     * @memberof SearchWarning
+     */
+    readonly message?: string;
+    /**
+     * The type of warning, e.g. CLAUSE\_LIMIT\_EXCEEDED.
+     * @type {string}
+     * @memberof SearchWarning
+     */
+    readonly type?: string;
+}
+/**
+ * Experimental. Structured details about a JQL clause exceeding its argument limit.
+ * @export
+ * @interface SearchWarningLimitDetails
+ */
+export interface SearchWarningLimitDetails {
+    /**
+     * The actual number of arguments supplied that exceeded the limit.
+     * @type {number}
+     * @memberof SearchWarningLimitDetails
+     */
+    readonly actual?: number;
+    /**
+     * The arguments passed to the JQL clause.
+     * @type {string}
+     * @memberof SearchWarningLimitDetails
+     */
+    readonly arguments?: string;
+    /**
+     * The JQL clause that triggered the limit, e.g. issueHistory().
+     * @type {string}
+     * @memberof SearchWarningLimitDetails
+     */
+    readonly clause?: string;
+    /**
+     * The maximum number of arguments allowed for the clause.
+     * @type {number}
+     * @memberof SearchWarningLimitDetails
+     */
+    readonly limit?: number;
 }
 /**
  * Details of an issue level security item.
@@ -23619,6 +23931,12 @@ export interface SecurityLevelPayload {
      * @memberof SecurityLevelPayload
      */
     name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof SecurityLevelPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
     /**
      * The members of the security level
      * @type {Array<SecurityLevelMemberPayload>}
@@ -26587,7 +26905,7 @@ export interface UiModificationContextDetails {
      */
     projectId?: string;
     /**
-     * The request type ID of the context. Only required for Jira Service Management request create portal view (`JSMRequestCreate`).
+     * The request type ID of the context. Required for Jira Service Management request create portal view (`JSMRequestCreate`). Optional for Agent view types (`GICAgentView`, `IssueViewAgentView`, `IssueTransitionAgentView`): when set on an agent view context, the UI modification applies only to issues with that request type. Omitting `requestTypeId` does not create a wildcard — it means the context is not scoped to any specific request type.
      * @type {string}
      * @memberof UiModificationContextDetails
      */
@@ -26600,8 +26918,13 @@ export interface UiModificationContextDetails {
      *  *  `IssueView` \- Jira issue view
      *  *  `IssueTransition` \- Jira issue transition
      *  *  `JSMRequestCreate` \- Jira Service Management request create portal view
+     *  *  `GICAgentView` \- Agent view variant of Jira global issue create
+     *  *  `IssueViewAgentView` \- Agent view variant of Jira issue view
+     *  *  `IssueTransitionAgentView` \- Agent view variant of Jira issue transition
      * 
-     * For Jira view types (`GIC`, `IssueView`, `IssueTransition`), null is treated as a wildcard, meaning the UI modification will be applied to all view types. Each Jira context can have a maximum of one wildcard.  
+     * For Jira and Agent view types (`GIC`, `IssueView`, `IssueTransition`, `GICAgentView`, `IssueViewAgentView`, `IssueTransitionAgentView`), null is treated as a wildcard, meaning the UI modification will be applied to all view types. Each Jira or Agent context can have a maximum of one wildcard.  
+     *   
+     * Agent view contexts use `projectId` and `issueTypeId` like Jira contexts, and may optionally also set `requestTypeId`. Agent view contexts must not set `portalId`.  
      *   
      * Wildcards are not applicable for JSM contexts.
      * @type {UiModificationContextDetailsViewTypeEnum}
@@ -26618,7 +26941,10 @@ export const UiModificationContextDetailsViewTypeEnum = {
     Gic: 'GIC',
     IssueView: 'IssueView',
     IssueTransition: 'IssueTransition',
-    JsmRequestCreate: 'JSMRequestCreate'
+    JsmRequestCreate: 'JSMRequestCreate',
+    GicAgentView: 'GICAgentView',
+    IssueViewAgentView: 'IssueViewAgentView',
+    IssueTransitionAgentView: 'IssueTransitionAgentView'
 } as const;
 export type UiModificationContextDetailsViewTypeEnum = typeof UiModificationContextDetailsViewTypeEnum[keyof typeof UiModificationContextDetailsViewTypeEnum];
 
@@ -28138,11 +28464,11 @@ export interface Version {
      */
     description?: string;
     /**
-     * If the expand option `driver` is used, returns the Atlassian account ID of the driver.
+     * The Atlassian account ID of the version driver. Optional when creating or updating a version. If the expand option `driver` is used, returns the Atlassian account ID of the driver.
      * @type {string}
      * @memberof Version
      */
-    readonly driver?: string;
+    driver?: string;
     /**
      * Use [expand](em>#expansion) to include additional information about version in the response. This parameter accepts a comma-separated list. Expand options include:
      * 
@@ -28779,6 +29105,12 @@ export interface WorkTypeParameters {
     isRequired: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof WorkTypeParameters
+     */
+    rendererType?: string;
+    /**
+     * 
      * @type {number}
      * @memberof WorkTypeParameters
      */
@@ -29389,36 +29721,17 @@ export interface WorkflowHistoryReadResponseDTO {
     workflows?: Array<WorkflowDocumentDTO>;
 }
 /**
- * The classic workflow identifiers.
- * @export
- * @interface WorkflowIDs
- */
-export interface WorkflowIDs {
-    /**
-     * The entity ID of the workflow.
-     * @type {string}
-     * @memberof WorkflowIDs
-     */
-    entityId?: string;
-    /**
-     * The name of the workflow.
-     * @type {string}
-     * @memberof WorkflowIDs
-     */
-    name: string;
-}
-/**
  * Properties that identify a workflow.
  * @export
  * @interface WorkflowId
  */
 export interface WorkflowId {
     /**
-     * Whether the workflow is in the draft state.
+     * **Deprecated:** Whether the workflow is in the draft state. The 'draft' parameter will be removed from this API on [November 2, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-3147).
      * @type {boolean}
      * @memberof WorkflowId
      */
-    draft: boolean;
+    draft?: boolean;
     /**
      * The name of the workflow.
      * @type {string}
@@ -30227,12 +30540,30 @@ export interface WorkflowSchemePayload {
      */
     name?: string;
     /**
+     * The strategy to use if there is a conflict with another workflow scheme
+     * @type {WorkflowSchemePayloadOnConflictEnum}
+     * @memberof WorkflowSchemePayload
+     */
+    onConflict?: WorkflowSchemePayloadOnConflictEnum;
+    /**
      * 
      * @type {ProjectCreateResourceIdentifier}
      * @memberof WorkflowSchemePayload
      */
     pcri?: ProjectCreateResourceIdentifier;
 }
+
+
+/**
+ * @export
+ */
+export const WorkflowSchemePayloadOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type WorkflowSchemePayloadOnConflictEnum = typeof WorkflowSchemePayloadOnConflictEnum[keyof typeof WorkflowSchemePayloadOnConflictEnum];
+
 /**
  * An associated workflow scheme and project.
  * @export
@@ -30746,7 +31077,7 @@ export interface WorkflowStatusUpdate {
      */
     description?: string;
     /**
-     * The ID of the status.
+     * The ID of the status. When reusing an existing status, this field should be provided.
      * @type {string}
      * @memberof WorkflowStatusUpdate
      */
@@ -30764,7 +31095,7 @@ export interface WorkflowStatusUpdate {
      */
     statusCategory: WorkflowStatusUpdateStatusCategoryEnum;
     /**
-     * The reference of the status.
+     * The reference of the status. If adding a new status to a team-managed workflow, this must be a UUID (for company-managed a UUID is not needed).
      * @type {string}
      * @memberof WorkflowStatusUpdate
      */
@@ -30825,32 +31156,6 @@ export interface WorkflowTransitionLinks {
      * @memberof WorkflowTransitionLinks
      */
     toPort?: number | null;
-}
-/**
- * Details about the server Jira is running on.
- * @export
- * @interface WorkflowTransitionProperty
- */
-export interface WorkflowTransitionProperty {
-    [key: string]: any | any;
-    /**
-     * The ID of the transition property.
-     * @type {string}
-     * @memberof WorkflowTransitionProperty
-     */
-    readonly id?: string;
-    /**
-     * The key of the transition property. Also known as the name of the transition property.
-     * @type {string}
-     * @memberof WorkflowTransitionProperty
-     */
-    readonly key?: string;
-    /**
-     * The value of the transition property.
-     * @type {string}
-     * @memberof WorkflowTransitionProperty
-     */
-    value: string;
 }
 /**
  * A workflow transition rule.
@@ -31225,6 +31530,12 @@ export interface WorkflowUpdateValidateRequestBean {
  * @interface WorkflowValidationError
  */
 export interface WorkflowValidationError {
+    /**
+     * Additional details about the validation error.
+     * @type {string}
+     * @memberof WorkflowValidationError
+     */
+    additionalDetails?: string;
     /**
      * An error code.
      * @type {string}

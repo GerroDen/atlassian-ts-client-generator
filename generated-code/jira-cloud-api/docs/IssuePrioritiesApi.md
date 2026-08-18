@@ -21,7 +21,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 
 Create priority
 
-Creates an issue priority.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+Creates an issue priority.  **Deprecation notice:** The &#x60;iconUrl&#x60; parameter was sunset on 16th Mar 2025, and replaced with &#x60;avatarId&#x60;. See [CHANGE-1525](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
 
 ### Example
 
@@ -45,7 +45,7 @@ async function example() {
 
   const body = {
     // CreatePriorityDetails
-    createPriorityDetails: {"description":"My priority description","iconUrl":"images/icons/priorities/major.png","name":"My new priority","statusColor":"#ABCDEF"},
+    createPriorityDetails: {"description":"My priority description","iconUrl":"/images/icons/priorities/major.png","name":"My new priority","statusColor":"#ABCDEF"},
   } satisfies CreatePriorityRequest;
 
   try {
@@ -177,7 +177,7 @@ example().catch(console.error);
 
 Get priorities
 
-Returns the list of all issue priorities.  **[Permissions](#permissions) required:** Permission to access Jira.
+Returns the list of all issue priorities.  **Deprecated:** Use [Search priorities](#api-rest-api-3-priority-search-get) instead. **[Permissions](#permissions) required:** Permission to access Jira.
 
 ### Example
 
@@ -244,7 +244,7 @@ This endpoint does not need any parameter.
 
 Get priority
 
-Returns an issue priority.  **[Permissions](#permissions) required:** Permission to access Jira.
+Returns an issue priority. To fetch multiple priorities at once, use [Search priorities](#api-rest-api-3-priority-search-get) instead.  **[Permissions](#permissions) required:** Permission to access Jira.
 
 ### Example
 
@@ -398,7 +398,7 @@ example().catch(console.error);
 
 Search priorities
 
-Returns a [paginated](#pagination) list of priorities. The list can contain all priorities or a subset determined by any combination of these criteria:   *  a list of priority IDs. Any invalid priority IDs are ignored.  *  a list of project IDs. Only priorities that are available in these projects will be returned. Any invalid project IDs are ignored.  *  whether the field configuration is a default. This returns priorities from company-managed (classic) projects only, as there is no concept of default priorities in team-managed projects.  **[Permissions](#permissions) required:** Permission to access Jira.
+Returns a [paginated](#pagination) list of priorities. The list can contain all priorities or a subset determined by any combination of these criteria:   *  a list of priority IDs. Any invalid priority IDs are ignored.  *  a list of project IDs. Only priorities that are available in these projects will be returned. Any invalid project IDs are ignored.  *  whether the field configuration is a default. This returns priorities from company-managed (classic) projects only, as there is no concept of default priorities in team-managed projects.  **Deprecation notice:** The &#x60;onlyDefault&#x60; parameter is deprecated and will be removed at a later date. See [CHANGE-1655](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-1655).  **Deprecation notice:** The &#x60;isDefault&#x60; property of priorities is deprecated and will be removed at a later date. See [CHANGE-1655](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-1655).  **[Permissions](#permissions) required:** Permission to access Jira.
 
 ### Example
 
@@ -569,7 +569,7 @@ example().catch(console.error);
 
 Update priority
 
-Updates an issue priority.  At least one request body parameter must be defined.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+Updates an issue priority.  At least one request body parameter must be defined.  **Deprecation notice:** The &#x60;iconUrl&#x60; parameter was sunset on 16th Mar 2025, and replaced with &#x60;avatarId&#x60;. See [CHANGE-1525](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
 
 ### Example
 
@@ -595,7 +595,7 @@ async function example() {
     // string | The ID of the issue priority.
     id: id_example,
     // UpdatePriorityDetails
-    updatePriorityDetails: {"description":"My updated priority description","iconUrl":"images/icons/priorities/minor.png","name":"My updated priority","statusColor":"#123456"},
+    updatePriorityDetails: {"description":"My updated priority description","iconUrl":"/images/icons/priorities/minor.png","name":"My updated priority","statusColor":"#123456"},
   } satisfies UpdatePriorityRequest;
 
   try {

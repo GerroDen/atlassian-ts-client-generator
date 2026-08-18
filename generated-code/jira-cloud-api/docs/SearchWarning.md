@@ -1,15 +1,14 @@
 
-# CreateWorkflowCondition
+# SearchWarning
 
-A workflow transition condition.
+Experimental. A warning returned alongside successful search results.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`conditions` | [Array&lt;CreateWorkflowCondition&gt;](CreateWorkflowCondition.md)
-`_configuration` | { [key: string]: any; }
-`operator` | string
+`details` | [SearchWarningLimitDetails](SearchWarningLimitDetails.md)
+`message` | string
 `type` | string
 
 

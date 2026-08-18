@@ -7,6 +7,7 @@ The default text for a text custom field.
 
 Name | Type
 ------------ | -------------
+`contextId` | string
 `text` | string
 `type` | string
 

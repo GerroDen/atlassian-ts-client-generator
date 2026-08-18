@@ -10,6 +10,7 @@ Name | Type
 `description` | string
 `isDefault` | boolean
 `name` | string
+`pcri` | [ProjectCreateResourceIdentifier](ProjectCreateResourceIdentifier.md)
 `securityLevelMembers` | [Array&lt;SecurityLevelMemberPayload&gt;](SecurityLevelMemberPayload.md)
 
 

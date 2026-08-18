@@ -20,6 +20,8 @@ Name | Type
 `screensCount` | number
 `searcherKey` | string
 `stableId` | string
+`translatedDescription` | string
+`translatedName` | string
 `typeDisplayName` | string
 
 

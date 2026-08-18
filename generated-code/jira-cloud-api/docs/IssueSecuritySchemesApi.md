@@ -100,6 +100,7 @@ example().catch(console.error);
 | **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
 | **403** | Returned if the user doesn\&#39;t have the necessary permission. |  -  |
 | **404** | Returned if the security scheme isn\&#39;t found. |  -  |
+| **422** | 422 response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

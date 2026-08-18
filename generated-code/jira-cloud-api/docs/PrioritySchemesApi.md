@@ -177,7 +177,7 @@ example().catch(console.error);
 
 Get available priorities by priority scheme
 
-Returns a [paginated](#pagination) list of priorities available for adding to a priority scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+Returns a [paginated](#pagination) list of priorities available for adding to a priority scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
 
 ### Example
 
@@ -265,7 +265,7 @@ example().catch(console.error);
 
 Get priorities by priority scheme
 
-Returns a [paginated](#pagination) list of priorities by scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+Returns a [paginated](#pagination) list of priorities by scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
 
 ### Example
 
@@ -347,7 +347,7 @@ example().catch(console.error);
 
 Get priority schemes
 
-Returns a [paginated](#pagination) list of priority schemes.  **[Permissions](#permissions) required:** Permission to access Jira.
+Returns a [paginated](#pagination) list of priority schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
 
 ### Example
 
@@ -444,7 +444,7 @@ example().catch(console.error);
 
 Get projects by priority scheme
 
-Returns a [paginated](#pagination) list of projects by scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+Returns a [paginated](#pagination) list of projects by scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
 
 ### Example
 
@@ -532,7 +532,7 @@ example().catch(console.error);
 
 Suggested priorities for mappings
 
-Returns a [paginated](#pagination) list of priorities that would require mapping, given a change in priorities or projects associated with a priority scheme.  **[Permissions](#permissions) required:** Permission to access Jira.
+Returns a [paginated](#pagination) list of priorities that would require mapping, given a change in priorities or projects associated with a priority scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
 
 ### Example
 

@@ -11,6 +11,7 @@ Name | Type
 `description` | string
 `explicitMappings` | [{ [key: string]: ProjectCreateResourceIdentifier; }](ProjectCreateResourceIdentifier.md)
 `name` | string
+`onConflict` | string
 `pcri` | [ProjectCreateResourceIdentifier](ProjectCreateResourceIdentifier.md)
 
 

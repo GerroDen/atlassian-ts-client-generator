@@ -7,6 +7,7 @@ The specific request object for creating a project with template.
 
 Name | Type
 ------------ | -------------
+`boardFeatures` | [BoardFeaturesPayload](BoardFeaturesPayload.md)
 `boards` | [BoardsPayload](BoardsPayload.md)
 `field` | [FieldCapabilityPayload](FieldCapabilityPayload.md)
 `issueType` | [IssueTypeProjectCreatePayload](IssueTypeProjectCreatePayload.md)

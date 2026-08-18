@@ -7,6 +7,7 @@ The default text for a Forge collection of strings custom field.
 
 Name | Type
 ------------ | -------------
+`contextId` | string
 `type` | string
 `values` | Array&lt;string&gt;
 

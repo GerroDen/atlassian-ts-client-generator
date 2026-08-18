@@ -7,6 +7,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 | [**createCustomField**](IssueFieldsApi.md#createcustomfield) | **POST** /rest/api/3/field | Create custom field |
 | [**deleteCustomField**](IssueFieldsApi.md#deletecustomfield) | **DELETE** /rest/api/3/field/{id} | Delete custom field |
 | [**getContextsForFieldDeprecated**](IssueFieldsApi.md#getcontextsforfielddeprecated) | **GET** /rest/api/3/field/{fieldId}/contexts | Get contexts for a field |
+| [**getFieldProjectAssociations**](IssueFieldsApi.md#getfieldprojectassociations) | **GET** /rest/api/3/field/{fieldId}/association/project | Get field project associations |
 | [**getFields**](IssueFieldsApi.md#getfields) | **GET** /rest/api/3/field | Get fields |
 | [**getFieldsPaginated**](IssueFieldsApi.md#getfieldspaginated) | **GET** /rest/api/3/field/search | Get fields paginated |
 | [**getProjectFields**](IssueFieldsApi.md#getprojectfields) | **GET** /rest/api/3/projects/fields | Get fields for projects |
@@ -253,13 +254,96 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## getFieldProjectAssociations
+
+> PageBeanFieldProjectAssociation getFieldProjectAssociations(fieldId, startAt, maxResults)
+
+Get field project associations
+
+Returns a [paginated](#pagination) list of project associations for the given custom field. Each association contains the ID of a project the field is associated with.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  IssueFieldsApi,
+} from 'jira-cloud-api';
+import type { GetFieldProjectAssociationsRequest } from 'jira-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new IssueFieldsApi(config);
+
+  const body = {
+    // string | The ID of the field, for example `customfield_10000`.
+    fieldId: fieldId_example,
+    // number | The index of the first item to return in a page of results (page offset). (optional)
+    startAt: 789,
+    // number | The maximum number of items to return per page. (optional)
+    maxResults: 56,
+  } satisfies GetFieldProjectAssociationsRequest;
+
+  try {
+    const data = await api.getFieldProjectAssociations(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **fieldId** | `string` | The ID of the field, for example &#x60;customfield_10000&#x60;. | [Defaults to `undefined`] |
+| **startAt** | `number` | The index of the first item to return in a page of results (page offset). | [Optional] [Defaults to `0`] |
+| **maxResults** | `number` | The maximum number of items to return per page. | [Optional] [Defaults to `50`] |
+
+### Return type
+
+[**PageBeanFieldProjectAssociation**](PageBeanFieldProjectAssociation.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returned if the request is successful. |  -  |
+| **400** | Returned if the request is invalid. |  -  |
+| **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
+| **403** | Returned if the user does not have the necessary permission. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## getFields
 
 > Array&lt;FieldDetails&gt; getFields()
 
 Get fields
 
-Returns system and custom issue fields according to the following rules:   *  Fields that cannot be added to the issue navigator are always returned.  *  Fields that cannot be placed on an issue screen are always returned.  *  Fields that depend on global Jira settings are only returned if the setting is enabled. That is, timetracking fields, subtasks, votes, and watches.  *  For all other fields, this operation only returns the fields that the user has permission to view (that is, the field is used in at least one project that the user has *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.)  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
+Returns system and custom issue fields according to the following rules:   *  Fields that cannot be added to the issue navigator are always returned.  *  Fields that cannot be placed on an issue screen are always returned.  *  Fields that depend on global Jira settings are only returned if the setting is enabled. That is, timetracking fields, subtasks, votes, and watches.  *  Fields that are not associated to any used field configurations or screens are not returned.  *  For all other fields, this operation only returns the fields that the user has permission to view (that is, the field is used in at least one project that the user has *Browse Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.)  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
 
 ### Example
 

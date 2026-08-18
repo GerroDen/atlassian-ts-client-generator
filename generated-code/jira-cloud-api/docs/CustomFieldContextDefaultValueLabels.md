@@ -7,6 +7,7 @@ Default value for a labels custom field.
 
 Name | Type
 ------------ | -------------
+`contextId` | string
 `labels` | Array&lt;string&gt;
 `type` | string
 

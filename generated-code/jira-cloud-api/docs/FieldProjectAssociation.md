@@ -1,14 +1,13 @@
 
-# CreateWorkflowStatusDetails
+# FieldProjectAssociation
 
-The details of a transition status.
+List of project associations.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`id` | string
-`properties` | { [key: string]: string; }
+`projectId` | string
 
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

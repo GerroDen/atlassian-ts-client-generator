@@ -12,6 +12,7 @@ Name | Type
 `categoryId` | number
 `description` | string
 `fieldConfigurationScheme` | number
+`fieldScheme` | number
 `issueSecurityScheme` | number
 `issueTypeScheme` | number
 `issueTypeScreenScheme` | number

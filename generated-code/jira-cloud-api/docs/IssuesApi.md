@@ -23,6 +23,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 | [**getEditIssueMeta**](IssuesApi.md#geteditissuemeta) | **GET** /rest/api/3/issue/{issueIdOrKey}/editmeta | Get edit issue metadata |
 | [**getEvents**](IssuesApi.md#getevents) | **GET** /rest/api/3/events | Get events |
 | [**getIssue**](IssuesApi.md#getissue) | **GET** /rest/api/3/issue/{issueIdOrKey} | Get issue |
+| [**getIssueAdfLimitReport**](IssuesApi.md#getissueadflimitreport) | **GET** /rest/api/3/issue/limit/adf/report | Get issue adf limit report |
 | [**getIssueLimitReport**](IssuesApi.md#getissuelimitreport) | **GET** /rest/api/3/issue/limit/report | Get issue limit report |
 | [**getTransitions**](IssuesApi.md#gettransitions) | **GET** /rest/api/3/issue/{issueIdOrKey}/transitions | Get transitions |
 | [**notify**](IssuesApi.md#notify) | **POST** /rest/api/3/issue/{issueIdOrKey}/notify | Send notification for issue |
@@ -272,7 +273,7 @@ example().catch(console.error);
 
 Bulk fetch issues
 
-Returns the details for a set of requested issues. You can request up to 100 issues.  Each issue is identified by its ID or key, however, if the identifier doesn\&#39;t match an issue, a case-insensitive search and check for moved issues is performed. If a matching issue is found its details are returned, a 302 or other redirect is **not** returned.  Issues will be returned in ascending &#x60;id&#x60; order. If there are errors, Jira will return a list of issues which couldn\&#39;t be fetched along with error messages.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+Returns the details for a set of requested issues.  By default you can request up to 100 issues in a single call. You can request up to 1000 issues in a single call when the request is shaped so that it can be served efficiently, that is, when *all* of the following are true:   *  the &#x60;fields&#x60; parameter explicitly names at least one field to include — a request that contains only exclusions is **not** eligible, and neither are the &#x60;*all&#x60; and &#x60;*navigable&#x60; wildcards or the default navigable field set, because the number of resolved fields depends on the site\&#39;s configuration;  *  no more than 100 fields are explicitly included;  *  none of the included fields returns multiple values (for example &#x60;comment&#x60;, &#x60;worklog&#x60;, or &#x60;attachment&#x60;); and  *  the &#x60;expand&#x60; parameter does not include &#x60;changelog&#x60;, &#x60;editmeta&#x60;, &#x60;operations&#x60;, &#x60;renderedFields&#x60;, &#x60;transitions&#x60;, or &#x60;versionedRepresentations&#x60;.  Requests that do not meet all of these conditions can include at most 100 issues; larger requests are rejected with a 400 error.  Each issue is identified by its ID or key, however, if the identifier doesn\&#39;t match an issue, a case-insensitive search and check for moved issues is performed. If a matching issue is found its details are returned, a 302 or other redirect is **not** returned.  Issues will be returned in ascending &#x60;id&#x60; order. If there are errors, Jira will return a list of issues which couldn\&#39;t be fetched along with error messages.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
 
 ### Example
 
@@ -336,7 +337,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Returned if the request is successful. A response may contain both successful issues and issue errors. |  -  |
-| **400** | Returned if no issue IDs/keys were present, or more than 100 issue IDs/keys were requested. |  -  |
+| **400** | Returned if no issue IDs/keys were present, more than the maximum number of issue IDs/keys were requested (100, or up to 1000 for eligible requests), or more than 5 issue property keys were requested. |  -  |
 | **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -669,7 +670,7 @@ example().catch(console.error);
 
 Edit issue
 
-Edits an issue. Issue properties may be updated as part of the edit. Please note that issue transition is not supported and is ignored here. To transition an issue, please use [Transition issue](#api-rest-api-3-issue-issueIdOrKey-transitions-post).  The edits to the issue\&#39;s fields are defined using &#x60;update&#x60; and &#x60;fields&#x60;. The fields that can be edited are determined using [ Get edit issue metadata](#api-rest-api-3-issue-issueIdOrKey-editmeta-get).  The parent field may be set by key or ID. For standard issue types, the parent may be removed by setting &#x60;update.parent.set.none&#x60; to *true*. Note that the &#x60;description&#x60;, &#x60;environment&#x60;, and any &#x60;textarea&#x60; type custom fields (multi-line text fields) take Atlassian Document Format content. Single line custom fields (&#x60;textfield&#x60;) accept a string and don\&#39;t handle Atlassian Document Format content.  Connect apps having an app user with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), and Forge apps acting on behalf of users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), can override the screen security configuration using &#x60;overrideScreenSecurity&#x60; and &#x60;overrideEditableFlag&#x60;.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* and *Edit issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
+Edits an issue. Issue properties may be updated as part of the edit. Please note that issue transition is not supported and is ignored here. To transition an issue, please use [Transition issue](#api-rest-api-3-issue-issueIdOrKey-transitions-post).  The edits to the issue\&#39;s fields are defined using &#x60;update&#x60; and &#x60;fields&#x60;. The fields that can be edited are determined using [ Get edit issue metadata](#api-rest-api-3-issue-issueIdOrKey-editmeta-get).  **Note:** This endpoint doesn\&#39;t check screen configurations to determine if a field is editable. For more context, see the [Deprecation of override screen security](https://community.developer.atlassian.com/t/deprecation-of-override-screen-security/97153) announcement.  The parent field may be set by key or ID. For standard issue types, the parent may be removed by setting &#x60;update.parent.set.none&#x60; to *true*. Note that the &#x60;description&#x60;, &#x60;environment&#x60;, and any &#x60;textarea&#x60; type custom fields (multi-line text fields) take Atlassian Document Format content. Single line custom fields (&#x60;textfield&#x60;) accept a string and don\&#39;t handle Atlassian Document Format content.  Connect apps having an app user with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), and Forge apps acting on behalf of users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg), can override the screen security configuration using &#x60;overrideScreenSecurity&#x60; and &#x60;overrideEditableFlag&#x60;.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse projects* and *Edit issues* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
 
 ### Example
 
@@ -752,7 +753,7 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Returned if the request is successful and the &#x60;returnIssue&#x60; parameter is &#x60;true&#x60; |  -  |
 | **204** | Returned if the request is successful. |  -  |
-| **400** | Returned if:   *  the request body is missing.  *  the user does not have the necessary permission to edit one or more fields.  *  the request includes one or more fields that are not found or are not associated with the issue\&#39;s edit screen.  *  the request includes an invalid transition. |  -  |
+| **400** | Returned if:   *  the request body is missing.  *  the user does not have the necessary permission to edit one or more fields.  *  the request includes one or more fields that don\&#39;t exist or aren\&#39;t associated with the project and issue type.  *  the request includes an invalid transition. |  -  |
 | **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
 | **403** | Returned if the user uses &#x60;overrideScreenSecurity&#x60; or &#x60;overrideEditableFlag&#x60; but doesn\&#39;t have the necessary permission. |  -  |
 | **404** | Returned if the issue is not found or the user does not have permission to view it. |  -  |
@@ -1570,6 +1571,86 @@ example().catch(console.error);
 | **200** | Returned if the request is successful. |  -  |
 | **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
 | **404** | Returned if the issue is not found or the user does not have permission to view it. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getIssueAdfLimitReport
+
+> IssueLimitReportResponseBean getIssueAdfLimitReport(isReturningKeys, fieldType)
+
+Get issue adf limit report
+
+Returns all issues whose ADF (rich text) field data breaches the universal ADF size limit.  Unlike the issue limit report, which reports issues breaching per-issue entity *count* limits, this endpoint reports issues whose ADF field *byte size* exceeds that limit. The reported ADF field types are &#x60;comment_adf&#x60;, &#x60;worklog_adf&#x60;, &#x60;customfield_adf&#x60;, &#x60;description_adf&#x60; and &#x60;environment_adf&#x60;. The reported value for each issue is the number of breaching entities for that field (always 1 for the single-value description and environment fields).  **[Permissions](#permissions) required:**   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) is required for the project the issues are in. Results may be incomplete otherwise  *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  IssuesApi,
+} from 'jira-cloud-api';
+import type { GetIssueAdfLimitReportRequest } from 'jira-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new IssuesApi(config);
+
+  const body = {
+    // boolean | Return issue keys instead of issue ids in the response.  Usage: Add `?isReturningKeys=true` to the end of the path to request issue keys. (optional)
+    isReturningKeys: true,
+    // Array<string> | Restrict the report to the given ADF field types. Defaults to every ADF field type.  For sites with a high issue volume, consider requesting field types individually to avoid timeouts.  Usage: Add `?fieldType=comment_adf&fieldType=worklog_adf` to the end of the path to report on comments and worklogs only. (optional)
+    fieldType: ...,
+  } satisfies GetIssueAdfLimitReportRequest;
+
+  try {
+    const data = await api.getIssueAdfLimitReport(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **isReturningKeys** | `boolean` | Return issue keys instead of issue ids in the response.  Usage: Add &#x60;?isReturningKeys&#x3D;true&#x60; to the end of the path to request issue keys. | [Optional] [Defaults to `false`] |
+| **fieldType** | `Array<string>` | Restrict the report to the given ADF field types. Defaults to every ADF field type.  For sites with a high issue volume, consider requesting field types individually to avoid timeouts.  Usage: Add &#x60;?fieldType&#x3D;comment_adf&amp;fieldType&#x3D;worklog_adf&#x60; to the end of the path to report on comments and worklogs only. | [Optional] |
+
+### Return type
+
+[**IssueLimitReportResponseBean**](IssueLimitReportResponseBean.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returned if the request is successful. |  -  |
+| **400** | Returned if a requested field type is not a valid ADF field type. |  -  |
+| **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
+| **403** | Returned if the user does not have permission to complete this request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

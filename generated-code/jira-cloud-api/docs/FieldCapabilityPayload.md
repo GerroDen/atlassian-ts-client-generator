@@ -10,6 +10,7 @@ Name | Type
 `customFieldDefinitions` | [Array&lt;CustomFieldPayload&gt;](CustomFieldPayload.md)
 `fieldLayoutScheme` | [FieldLayoutSchemePayload](FieldLayoutSchemePayload.md)
 `fieldLayouts` | [Array&lt;FieldLayoutPayload&gt;](FieldLayoutPayload.md)
+`fieldScheme` | [FieldSchemePayload](FieldSchemePayload.md)
 `issueLayouts` | [Array&lt;IssueLayoutPayload&gt;](IssueLayoutPayload.md)
 `issueTypeScreenScheme` | [IssueTypeScreenSchemePayload](IssueTypeScreenSchemePayload.md)
 `screenScheme` | [Array&lt;ScreenSchemePayload&gt;](ScreenSchemePayload.md)

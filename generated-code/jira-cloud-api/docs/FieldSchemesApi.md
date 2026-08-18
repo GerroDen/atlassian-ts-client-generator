@@ -5,6 +5,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**associateProjectsToFieldAssociationSchemes**](FieldSchemesApi.md#associateprojectstofieldassociationschemes) | **PUT** /rest/api/3/config/fieldschemes/projects | Associate projects to field schemes |
+| [**cloneFieldAssociationScheme**](FieldSchemesApi.md#clonefieldassociationscheme) | **POST** /rest/api/3/config/fieldschemes/{id}/clone | Clone field scheme |
 | [**createFieldAssociationScheme**](FieldSchemesApi.md#createfieldassociationschemeoperation) | **POST** /rest/api/3/config/fieldschemes | Create field scheme |
 | [**deleteFieldAssociationScheme**](FieldSchemesApi.md#deletefieldassociationscheme) | **DELETE** /rest/api/3/config/fieldschemes/{id} | Delete a field scheme |
 | [**getFieldAssociationSchemeById**](FieldSchemesApi.md#getfieldassociationschemebyid) | **GET** /rest/api/3/config/fieldschemes/{id} | Get field scheme |
@@ -100,13 +101,94 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## cloneFieldAssociationScheme
+
+> CreateFieldAssociationSchemeResponse cloneFieldAssociationScheme(id, createFieldAssociationSchemeRequest)
+
+Clone field scheme
+
+Endpoint for cloning an existing field association scheme into a new one.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  FieldSchemesApi,
+} from 'jira-cloud-api';
+import type { CloneFieldAssociationSchemeRequest } from 'jira-cloud-api';
+
+async function example() {
+  console.log("🚀 Testing jira-cloud-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+  });
+  const api = new FieldSchemesApi(config);
+
+  const body = {
+    // number | The ID of the source field association scheme to clone from
+    id: 789,
+    // CreateFieldAssociationSchemeRequest | The request containing the name and description for the new scheme
+    createFieldAssociationSchemeRequest: {"description":"Field association scheme description","name":"Field association scheme name"},
+  } satisfies CloneFieldAssociationSchemeRequest;
+
+  try {
+    const data = await api.cloneFieldAssociationScheme(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `number` | The ID of the source field association scheme to clone from | [Defaults to `undefined`] |
+| **createFieldAssociationSchemeRequest** | [CreateFieldAssociationSchemeRequest](CreateFieldAssociationSchemeRequest.md) | The request containing the name and description for the new scheme | |
+
+### Return type
+
+[**CreateFieldAssociationSchemeResponse**](CreateFieldAssociationSchemeResponse.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode), [basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returned if the clone was successful. |  -  |
+| **400** | Returned if the request is invalid. If request is malformed, returns a collection of errors. |  -  |
+| **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
+| **403** | Returned if the user does not have the required permissions |  -  |
+| **404** | Returned if the feature flag is disabled or the source scheme ID is not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## createFieldAssociationScheme
 
 > CreateFieldAssociationSchemeResponse createFieldAssociationScheme(createFieldAssociationSchemeRequest)
 
 Create field scheme
 
-Endpoint for creating a new field association scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+Endpoint for creating a new field association scheme.  A new scheme is **not** copied from, or based on, any existing field association scheme. Instead, it is initialised with a minimal default set of critical fields sourced from the instance\&#39;s own *system* and *product* fields (the fields returned by the product\&#39;s field API), rather than from a scheme you specify.  To create a scheme that is based on an existing one, use the *Clone field scheme* endpoint instead.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
 
 ### Example
 
@@ -1027,7 +1109,7 @@ async function example() {
 
   const body = {
     // { [key: string]: Array<UpdateFieldSchemeParametersRequest>; } | The request containing the field association scheme id and the parameters to update.
-    requestBody: {"customfield_10000":[{"parameters":{"description":"Field description","isRequired":true},"schemeIds":[10000,10001],"workTypeParameters":[{"description":"Description for Bug","isRequired":false,"workTypeId":10002}]}],"customfield_10001":[{"schemeIds":[10001],"workTypeParameters":[{"description":"Description for Bug","isRequired":false,"workTypeId":10002},{"description":"Description for Task","isRequired":true,"workTypeId":10003}]}]},
+    requestBody: {"customfield_10000":[{"parameters":{"description":"Field description","isRequired":true,"rendererType":"atlassian-wiki-renderer"},"schemeIds":[10000,10001],"workTypeParameters":[{"description":"Description for Bug","isRequired":false,"rendererType":"jira-text-renderer","workTypeId":10002}]}],"customfield_10001":[{"schemeIds":[10001],"workTypeParameters":[{"description":"Description for Bug","isRequired":false,"workTypeId":10002},{"description":"Description for Task","isRequired":true,"rendererType":"atlassian-wiki-renderer","workTypeId":10003}]}]},
   } satisfies UpdateFieldAssociationSchemeItemParametersRequest;
 
   try {

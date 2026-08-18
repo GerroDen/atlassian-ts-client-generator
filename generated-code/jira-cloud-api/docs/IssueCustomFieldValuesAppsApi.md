@@ -11,7 +11,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 
 ## updateCustomFieldValue
 
-> any updateCustomFieldValue(fieldIdOrKey, customFieldValueUpdateDetails, generateChangelog)
+> any updateCustomFieldValue(fieldIdOrKey, customFieldValueUpdateDetails, generateChangelog, generateAppEvents)
 
 Update custom field value
 
@@ -44,6 +44,8 @@ async function example() {
     customFieldValueUpdateDetails: {"updates":[{"issueIds":[10010],"value":"new value"}]},
     // boolean | Whether to generate a changelog for this update. (optional)
     generateChangelog: true,
+    // boolean | Whether to generate app events for this update. Suppresses Forge, Connect, OAuth 2.0, and admin-configured webhooks (registered via the Jira admin UI). Note: Suppressing events means that \"issue updated\" events will not be emitted for your app or any other apps installed in Jira. This may cause other apps to retain stale data for the updated field, resulting in potentially confusing behaviour. We do not recommend using this flag in a Marketplace app as it may result in incompatibilities with other apps that depend on up-to-date issue data. (optional)
+    generateAppEvents: true,
   } satisfies UpdateCustomFieldValueRequest;
 
   try {
@@ -66,6 +68,7 @@ example().catch(console.error);
 | **fieldIdOrKey** | `string` | The ID or key of the custom field. For example, &#x60;customfield_10010&#x60;. | [Defaults to `undefined`] |
 | **customFieldValueUpdateDetails** | [CustomFieldValueUpdateDetails](CustomFieldValueUpdateDetails.md) |  | |
 | **generateChangelog** | `boolean` | Whether to generate a changelog for this update. | [Optional] [Defaults to `true`] |
+| **generateAppEvents** | `boolean` | Whether to generate app events for this update. Suppresses Forge, Connect, OAuth 2.0, and admin-configured webhooks (registered via the Jira admin UI). Note: Suppressing events means that \&quot;issue updated\&quot; events will not be emitted for your app or any other apps installed in Jira. This may cause other apps to retain stale data for the updated field, resulting in potentially confusing behaviour. We do not recommend using this flag in a Marketplace app as it may result in incompatibilities with other apps that depend on up-to-date issue data. | [Optional] [Defaults to `true`] |
 
 ### Return type
 
@@ -94,7 +97,7 @@ example().catch(console.error);
 
 ## updateMultipleCustomFieldValues
 
-> any updateMultipleCustomFieldValues(multipleCustomFieldValuesUpdateDetails, generateChangelog)
+> any updateMultipleCustomFieldValues(multipleCustomFieldValuesUpdateDetails, generateChangelog, generateAppEvents)
 
 Update custom fields
 
@@ -125,6 +128,8 @@ async function example() {
     multipleCustomFieldValuesUpdateDetails: {"updates":[{"customField":"customfield_10010","issueIds":[10010,10011],"value":"new value"},{"customField":"customfield_10011","issueIds":[10010],"value":1000}]},
     // boolean | Whether to generate a changelog for this update. (optional)
     generateChangelog: true,
+    // boolean | Whether to generate app events for this update. Suppresses Forge, Connect, OAuth 2.0, and admin-configured webhooks (registered via the Jira admin UI). Note: Suppressing events means that \"issue updated\" events will not be emitted for your app or any other apps installed in Jira. This may cause other apps to retain stale data for the updated field, resulting in potentially confusing behaviour. We do not recommend using this flag in a Marketplace app as it may result in incompatibilities with other apps that depend on up-to-date issue data. (optional)
+    generateAppEvents: true,
   } satisfies UpdateMultipleCustomFieldValuesRequest;
 
   try {
@@ -146,6 +151,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **multipleCustomFieldValuesUpdateDetails** | [MultipleCustomFieldValuesUpdateDetails](MultipleCustomFieldValuesUpdateDetails.md) |  | |
 | **generateChangelog** | `boolean` | Whether to generate a changelog for this update. | [Optional] [Defaults to `true`] |
+| **generateAppEvents** | `boolean` | Whether to generate app events for this update. Suppresses Forge, Connect, OAuth 2.0, and admin-configured webhooks (registered via the Jira admin UI). Note: Suppressing events means that \&quot;issue updated\&quot; events will not be emitted for your app or any other apps installed in Jira. This may cause other apps to retain stale data for the updated field, resulting in potentially confusing behaviour. We do not recommend using this flag in a Marketplace app as it may result in incompatibilities with other apps that depend on up-to-date issue data. | [Optional] [Defaults to `true`] |
 
 ### Return type
 

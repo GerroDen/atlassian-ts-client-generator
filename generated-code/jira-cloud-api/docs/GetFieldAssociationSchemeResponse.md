@@ -8,6 +8,7 @@ Response object for getting a field association scheme.
 Name | Type
 ------------ | -------------
 `description` | string
+`fieldsCount` | number
 `id` | number
 `isDefault` | boolean
 `links` | [FieldAssociationSchemeLinksBean](FieldAssociationSchemeLinksBean.md)

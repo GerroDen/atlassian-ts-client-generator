@@ -578,7 +578,7 @@ example().catch(console.error);
 
 ## search
 
-> PageOfStatuses search(projectId, startAt, maxResults, searchString, statusCategory)
+> PageOfStatuses search(projectId, startAt, maxResults, searchString, statusCategory, includeGlobalStatuses)
 
 Search statuses paginated
 
@@ -615,6 +615,8 @@ async function example() {
     searchString: searchString_example,
     // string | Category of the status to filter by. The supported values are: `TODO`, `IN_PROGRESS`, and `DONE`. (optional)
     statusCategory: statusCategory_example,
+    // boolean | Whether to include global statuses (scope = null, not tied to any project) in the response. Defaults to false. Only relevant for project scoped queries. (optional)
+    includeGlobalStatuses: true,
   } satisfies SearchRequest;
 
   try {
@@ -639,6 +641,7 @@ example().catch(console.error);
 | **maxResults** | `number` | The maximum number of items to return per page. | [Optional] [Defaults to `200`] |
 | **searchString** | `string` | Term to match status names against or null to search for all statuses in the search scope. | [Optional] [Defaults to `undefined`] |
 | **statusCategory** | `string` | Category of the status to filter by. The supported values are: &#x60;TODO&#x60;, &#x60;IN_PROGRESS&#x60;, and &#x60;DONE&#x60;. | [Optional] [Defaults to `undefined`] |
+| **includeGlobalStatuses** | `boolean` | Whether to include global statuses (scope &#x3D; null, not tied to any project) in the response. Defaults to false. Only relevant for project scoped queries. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

@@ -7,6 +7,7 @@ The default value for a Date custom field.
 
 Name | Type
 ------------ | -------------
+`contextId` | string
 `date` | string
 `type` | string
 `useCurrent` | boolean

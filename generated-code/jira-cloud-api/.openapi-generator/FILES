@@ -54,6 +54,7 @@ docs/Avatars.md
 docs/AvatarsApi.md
 docs/BoardColumnPayload.md
 docs/BoardFeaturePayload.md
+docs/BoardFeaturesPayload.md
 docs/BoardPayload.md
 docs/BoardsPayload.md
 docs/BulkChangeOwnerDetails.md
@@ -113,6 +114,7 @@ docs/ContainerForWebhookIDs.md
 docs/ContainerOfWorkflowSchemeAssociations.md
 docs/ContentItem.md
 docs/Context.md
+docs/ContextDefaultValues.md
 docs/ContextForProjectAndIssueType.md
 docs/ContextualConfiguration.md
 docs/ConvertedJQLQueries.md
@@ -138,13 +140,6 @@ docs/CreateResolutionDetails.md
 docs/CreateSchedulingRequest.md
 docs/CreateUiModificationDetails.md
 docs/CreateUpdateRoleRequestBean.md
-docs/CreateWorkflowCondition.md
-docs/CreateWorkflowDetails.md
-docs/CreateWorkflowStatusDetails.md
-docs/CreateWorkflowTransitionDetails.md
-docs/CreateWorkflowTransitionRule.md
-docs/CreateWorkflowTransitionRulesDetails.md
-docs/CreateWorkflowTransitionScreenDetails.md
 docs/CreatedIssue.md
 docs/CreatedIssues.md
 docs/CustomContextVariable.md
@@ -213,7 +208,6 @@ docs/DefaultWorkflow.md
 docs/DefaultWorkflowEditorResponse.md
 docs/DeleteAndReplaceVersionBean.md
 docs/DeleteFieldAssociationSchemeResponse.md
-docs/DeprecatedWorkflow.md
 docs/DetailedErrorCollection.md
 docs/DocumentVersion.md
 docs/DuplicatePlanRequest.md
@@ -231,6 +225,7 @@ docs/ExportArchivedIssuesTaskProgressResponse.md
 docs/FailedWebhook.md
 docs/FailedWebhooks.md
 docs/Field.md
+docs/FieldAssociationItemPayload.md
 docs/FieldAssociationParameters.md
 docs/FieldAssociationSchemeFieldSearchResult.md
 docs/FieldAssociationSchemeLinks.md
@@ -258,7 +253,9 @@ docs/FieldLayoutConfiguration.md
 docs/FieldLayoutPayload.md
 docs/FieldLayoutSchemePayload.md
 docs/FieldMetadata.md
+docs/FieldProjectAssociation.md
 docs/FieldReferenceData.md
+docs/FieldSchemePayload.md
 docs/FieldSchemeToFieldsPartialFailure.md
 docs/FieldSchemeToFieldsResponse.md
 docs/FieldSchemeToProjectsPartialFailure.md
@@ -277,6 +274,8 @@ docs/FilterSharingApi.md
 docs/FilterSubscription.md
 docs/FilterSubscriptionsList.md
 docs/FiltersApi.md
+docs/ForgePanelProjectPinAsyncResponse.md
+docs/ForgePanelProjectPinRequest.md
 docs/FoundGroup.md
 docs/FoundGroups.md
 docs/FoundUsers.md
@@ -372,6 +371,7 @@ docs/IssueMatches.md
 docs/IssueMatchesForJQL.md
 docs/IssueNavigatorSettingsApi.md
 docs/IssueNotificationSchemesApi.md
+docs/IssuePanelsApi.md
 docs/IssuePickerSuggestions.md
 docs/IssuePickerSuggestionsIssueType.md
 docs/IssuePrioritiesApi.md
@@ -387,6 +387,7 @@ docs/IssueSecuritySchemesApi.md
 docs/IssueTransition.md
 docs/IssueTransitionStatus.md
 docs/IssueTypeCreateBean.md
+docs/IssueTypeDefaultValue.md
 docs/IssueTypeDetails.md
 docs/IssueTypeHierarchyPayload.md
 docs/IssueTypeIds.md
@@ -530,6 +531,7 @@ docs/License.md
 docs/LicenseMetric.md
 docs/LicenseMetricsApi.md
 docs/LicensedApplication.md
+docs/LimitExceededResponseBean.md
 docs/LinkGroup.md
 docs/LinkIssueRequestJsonBean.md
 docs/LinkedIssue.md
@@ -584,6 +586,7 @@ docs/PageBeanChangelog.md
 docs/PageBeanComment.md
 docs/PageBeanComponentWithIssueCount.md
 docs/PageBeanContext.md
+docs/PageBeanContextDefaultValues.md
 docs/PageBeanContextForProjectAndIssueType.md
 docs/PageBeanContextualConfiguration.md
 docs/PageBeanCustomFieldContext.md
@@ -597,6 +600,7 @@ docs/PageBeanFieldConfigurationIssueTypeItem.md
 docs/PageBeanFieldConfigurationItem.md
 docs/PageBeanFieldConfigurationScheme.md
 docs/PageBeanFieldConfigurationSchemeProjects.md
+docs/PageBeanFieldProjectAssociation.md
 docs/PageBeanFilterDetails.md
 docs/PageBeanGroupDetails.md
 docs/PageBeanIssueFieldOption.md
@@ -713,6 +717,7 @@ docs/ProjectLandingPageInfo.md
 docs/ProjectPayload.md
 docs/ProjectPermissionSchemesApi.md
 docs/ProjectPermissions.md
+docs/ProjectPinAction.md
 docs/ProjectPropertiesApi.md
 docs/ProjectRole.md
 docs/ProjectRoleActorsApi.md
@@ -792,6 +797,8 @@ docs/SearchRequestBean.md
 docs/SearchResultFieldParameters.md
 docs/SearchResultWorkTypeParameters.md
 docs/SearchResults.md
+docs/SearchWarning.md
+docs/SearchWarningLimitDetails.md
 docs/SecurityLevel.md
 docs/SecurityLevelMember.md
 docs/SecurityLevelMemberPayload.md
@@ -970,7 +977,6 @@ docs/WorkflowHistoryListRequest.md
 docs/WorkflowHistoryListResponseDTO.md
 docs/WorkflowHistoryReadRequest.md
 docs/WorkflowHistoryReadResponseDTO.md
-docs/WorkflowIDs.md
 docs/WorkflowId.md
 docs/WorkflowLayout.md
 docs/WorkflowMetadataAndIssueTypeRestModel.md
@@ -1026,8 +1032,6 @@ docs/WorkflowStatusUpdate.md
 docs/WorkflowStatusesApi.md
 docs/WorkflowTransition.md
 docs/WorkflowTransitionLinks.md
-docs/WorkflowTransitionPropertiesApi.md
-docs/WorkflowTransitionProperty.md
 docs/WorkflowTransitionRule.md
 docs/WorkflowTransitionRules.md
 docs/WorkflowTransitionRulesApi.md
@@ -1085,6 +1089,7 @@ src/apis/IssueLinkTypesApi.ts
 src/apis/IssueLinksApi.ts
 src/apis/IssueNavigatorSettingsApi.ts
 src/apis/IssueNotificationSchemesApi.ts
+src/apis/IssuePanelsApi.ts
 src/apis/IssuePrioritiesApi.ts
 src/apis/IssuePropertiesApi.ts
 src/apis/IssueRedactionApi.ts
@@ -1149,7 +1154,6 @@ src/apis/WorkflowSchemeProjectAssociationsApi.ts
 src/apis/WorkflowSchemesApi.ts
 src/apis/WorkflowStatusCategoriesApi.ts
 src/apis/WorkflowStatusesApi.ts
-src/apis/WorkflowTransitionPropertiesApi.ts
 src/apis/WorkflowTransitionRulesApi.ts
 src/apis/WorkflowsApi.ts
 src/apis/index.ts

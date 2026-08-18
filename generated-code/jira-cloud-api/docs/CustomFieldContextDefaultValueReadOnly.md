@@ -7,6 +7,7 @@ The default text for a read only custom field.
 
 Name | Type
 ------------ | -------------
+`contextId` | string
 `text` | string
 `type` | string
 

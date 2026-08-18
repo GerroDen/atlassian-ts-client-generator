@@ -263,7 +263,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Returned if the request is successful. |  -  |
-| **400** | Returned if the request is invalid or the number of licensed users is exceeded. |  -  |
+| **400** | Returned if the request is invalid, the user already exists but does not have access to jira, or the number of licensed users is exceeded. |  -  |
 | **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
 | **403** | Returned if the user does not have the necessary permission. |  -  |
 
@@ -272,7 +272,7 @@ example().catch(console.error);
 
 ## getAllUsers
 
-> Array&lt;User&gt; getAllUsers(startAt, maxResults)
+> Array&lt;User&gt; getAllUsers(startAt, maxResults, expand)
 
 Get all users
 
@@ -303,6 +303,8 @@ async function example() {
     startAt: 56,
     // number | The maximum number of items to return (limited to 1000). (optional)
     maxResults: 56,
+    // string (optional)
+    expand: expand_example,
   } satisfies GetAllUsersRequest;
 
   try {
@@ -324,6 +326,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **startAt** | `number` | The index of the first item to return. | [Optional] [Defaults to `0`] |
 | **maxResults** | `number` | The maximum number of items to return (limited to 1000). | [Optional] [Defaults to `50`] |
+| **expand** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -352,7 +355,7 @@ example().catch(console.error);
 
 ## getAllUsersDefault
 
-> Array&lt;User&gt; getAllUsersDefault(startAt, maxResults)
+> Array&lt;User&gt; getAllUsersDefault(startAt, maxResults, expand)
 
 Get all users default
 
@@ -383,6 +386,8 @@ async function example() {
     startAt: 56,
     // number | The maximum number of items to return (limited to 1000). (optional)
     maxResults: 56,
+    // string (optional)
+    expand: expand_example,
   } satisfies GetAllUsersDefaultRequest;
 
   try {
@@ -404,6 +409,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **startAt** | `number` | The index of the first item to return. | [Optional] [Defaults to `0`] |
 | **maxResults** | `number` | The maximum number of items to return (limited to 1000). | [Optional] [Defaults to `50`] |
+| **expand** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

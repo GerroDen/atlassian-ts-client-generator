@@ -167,6 +167,7 @@ example().catch(console.error);
 | **400** | Return if the request is invalid. |  -  |
 | **401** | Returned if the authentication credentials are incorrect. |  -  |
 | **403** | Return if the user does not have the necessary permission. |  -  |
+| **409** | Returned if another bulk update on the same issues is already in progress. Retry the request later. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -322,6 +323,7 @@ example().catch(console.error);
 | **303** | Returned if the operation is successful. |  -  |
 | **400** | Return if the request is invalid or the user does not have the necessary permission. |  -  |
 | **401** | Returned if the authentication credentials are incorrect. |  -  |
+| **409** | Returned if another bulk update on the same issues is already in progress. Retry the request later. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

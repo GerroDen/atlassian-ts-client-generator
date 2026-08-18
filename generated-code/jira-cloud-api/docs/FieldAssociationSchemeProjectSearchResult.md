@@ -7,7 +7,10 @@ Project search results for field association scheme.
 
 Name | Type
 ------------ | -------------
+`avatarUrls` | { [key: string]: string; }
+`deleted` | boolean
 `id` | string
+`key` | string
 `name` | string
 
 

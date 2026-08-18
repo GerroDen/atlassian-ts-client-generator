@@ -90,6 +90,7 @@ example().catch(console.error);
 | **204** | Returned if the request is successful. |  -  |
 | **400** | Returned if the property key is longer than 127 characters. |  -  |
 | **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
+| **403** | Returned if the property key is reserved and read-only. |  -  |
 | **404** | Returned if the property is not found or doesn\&#39;t belong to the app. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -101,7 +102,7 @@ example().catch(console.error);
 
 Get app properties
 
-Gets all the properties of an app.  **[Permissions](#permissions) required:** Only a Connect app whose key matches &#x60;addonKey&#x60; can make this request. Additionally, Forge apps can access Connect app properties (stored against the same &#x60;app.connect.key&#x60;).
+Gets all the properties of an app. The reserved key &#x60;connect_client_key_019cdff3-8bfb-71fe-9628-875b700aebb8&#x60; is not returned.  **[Permissions](#permissions) required:** Only a Connect app whose key matches &#x60;addonKey&#x60; can make this request. Additionally, Forge apps can access Connect app properties (stored against the same &#x60;app.connect.key&#x60;).
 
 ### Example
 
@@ -176,7 +177,7 @@ example().catch(console.error);
 
 Get app property
 
-Returns the key and value of an app\&#39;s property.  **[Permissions](#permissions) required:** Only a Connect app whose key matches &#x60;addonKey&#x60; can make this request. Additionally, Forge apps can access Connect app properties (stored against the same &#x60;app.connect.key&#x60;).
+Returns the key and value of an app\&#39;s property. The property key &#x60;connect_client_key_019cdff3-8bfb-71fe-9628-875b700aebb8&#x60; is reserved. It returns a synthetic, read-only property containing the Connect &#x60;clientKey&#x60; for the requested tenant. This is intended for Forge apps with &#x60;app.connect.key&#x60; to retrieve the Connect client key during migration.  **[Permissions](#permissions) required:** Only a Connect app whose key matches &#x60;addonKey&#x60; can make this request. Additionally, Forge apps can access Connect app properties (stored against the same &#x60;app.connect.key&#x60;).
 
 ### Example
 
@@ -329,6 +330,7 @@ example().catch(console.error);
 | **201** | Returned is the property is created. |  -  |
 | **400** | Returned if:   * the property key is longer than 127 characters.   * the value is not valid JSON.   * the value is longer than 32768 characters. |  -  |
 | **401** | Returned if the authentication credentials are incorrect or missing. |  -  |
+| **403** | Returned if the property key is reserved and read-only. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

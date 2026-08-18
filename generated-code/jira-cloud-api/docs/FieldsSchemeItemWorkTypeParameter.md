@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `description` | string
 `isRequired` | boolean
+`rendererType` | string
 `workTypeId` | number
 
 

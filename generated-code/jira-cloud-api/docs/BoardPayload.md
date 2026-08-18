@@ -12,6 +12,7 @@ Name | Type
 `cardLayout` | [CardLayout](CardLayout.md)
 `cardLayouts` | [Array&lt;CardLayoutField&gt;](CardLayoutField.md)
 `columns` | [Array&lt;BoardColumnPayload&gt;](BoardColumnPayload.md)
+`enableCardCover` | boolean
 `features` | [Array&lt;BoardFeaturePayload&gt;](BoardFeaturePayload.md)
 `name` | string
 `pcri` | [ProjectCreateResourceIdentifier](ProjectCreateResourceIdentifier.md)
