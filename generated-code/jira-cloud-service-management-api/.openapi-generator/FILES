@@ -32,6 +32,7 @@ docs/CustomerRequestStatusDTO.md
 docs/CustomerTransitionDTO.md
 docs/CustomerTransitionExecutionDTO.md
 docs/DateDTO.md
+docs/DefaultApi.md
 docs/DurationDTO.md
 docs/EntityProperty.md
 docs/ErrorResponse.md
@@ -39,9 +40,13 @@ docs/Expandable.md
 docs/FieldMetadata.md
 docs/Form.md
 docs/FormAnswer.md
+docs/FormValidationErrorContextDTO.md
+docs/FormValidationErrorDTO.md
+docs/FormValidationErrorResponseDTO.md
 docs/HistoryMetadata.md
 docs/HistoryMetadataParticipant.md
 docs/I18nErrorMessage.md
+docs/I18nErrorMessageDTO.md
 docs/IncludedFields.md
 docs/InfoApi.md
 docs/InputStreamSource.md
@@ -88,6 +93,7 @@ docs/QueueDTO.md
 docs/RenderedValueDTO.md
 docs/RequestApi.md
 docs/RequestCreateDTO.md
+docs/RequestFieldValidationErrorDTO.md
 docs/RequestNotificationSubscriptionDTO.md
 docs/RequestParticipantUpdateDTO.md
 docs/RequestTypeCreateDTO.md
@@ -99,11 +105,13 @@ docs/RequestTypeIconDTO.md
 docs/RequestTypeIconLinkDTO.md
 docs/RequestTypePermissionCheckRequestDTO.md
 docs/RequestTypePermissionCheckResponse.md
+docs/RequestValidationResultDTO.md
 docs/RequesttypeApi.md
 docs/Resource.md
 docs/Scope.md
 docs/SelfLinkDTO.md
 docs/ServiceDeskCustomerDTO.md
+docs/ServiceDeskCustomerInviteDTO.md
 docs/ServiceDeskDTO.md
 docs/ServicedeskApi.md
 docs/SimpleLink.md
@@ -122,6 +130,7 @@ docs/UsersOrganizationUpdateDTO.md
 package.json
 src/apis/AssetsApi.ts
 src/apis/CustomerApi.ts
+src/apis/DefaultApi.ts
 src/apis/InfoApi.ts
 src/apis/KnowledgebaseApi.ts
 src/apis/OrganizationApi.ts

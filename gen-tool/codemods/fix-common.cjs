@@ -10,6 +10,12 @@ const transformer = (file, { j }) => {
       path.node.key.name = path.node.key.name.slice(1);
     });
   source
+    .find(j.MemberExpression)
+    .filter((path) => reservedKeywords.includes(path.node.property.value))
+    .forEach((path) => {
+      path.node.property = j.stringLiteral(path.node.property.value.slice(1));
+    });
+  source
     .find(j.TSTypeReference)
     .filter((path) => path.node.typeName?.name === "Set")
     .forEach((path) => {

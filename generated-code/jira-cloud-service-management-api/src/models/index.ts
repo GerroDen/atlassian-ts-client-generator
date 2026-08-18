@@ -1117,6 +1117,87 @@ export interface FormAnswer {
     users?: Array<string>;
 }
 /**
+ * 
+ * @export
+ * @interface FormValidationErrorContextDTO
+ */
+export interface FormValidationErrorContextDTO {
+    /**
+     * ID of the form entity related to the validation error.
+     * @type {string}
+     * @memberof FormValidationErrorContextDTO
+     */
+    id?: string;
+    /**
+     * Type of form entity related to the validation error.
+     * @type {string}
+     * @memberof FormValidationErrorContextDTO
+     */
+    type?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FormValidationErrorDTO
+ */
+export interface FormValidationErrorDTO {
+    /**
+     * Machine-readable validation error code.
+     * @type {string}
+     * @memberof FormValidationErrorDTO
+     */
+    code?: string;
+    /**
+     * Identifies the form entity that caused the validation error.
+     * @type {Array<FormValidationErrorContextDTO>}
+     * @memberof FormValidationErrorDTO
+     */
+    context?: Array<FormValidationErrorContextDTO>;
+    /**
+     * Detailed validation error message.
+     * @type {string}
+     * @memberof FormValidationErrorDTO
+     */
+    detail?: string;
+    /**
+     * The HTTP status code.
+     * @type {number}
+     * @memberof FormValidationErrorDTO
+     */
+    status?: number;
+    /**
+     * Short summary of the validation error.
+     * @type {string}
+     * @memberof FormValidationErrorDTO
+     */
+    title?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FormValidationErrorResponseDTO
+ */
+export interface FormValidationErrorResponseDTO {
+    /**
+     * Description of the error.
+     * @type {string}
+     * @memberof FormValidationErrorResponseDTO
+     */
+    errorMessage?: string;
+    /**
+     * A list of validation errors.
+     * @type {Array<FormValidationErrorDTO>}
+     * @memberof FormValidationErrorResponseDTO
+     */
+    errors?: Array<FormValidationErrorDTO>;
+    /**
+     * Internationalized error message details.
+     * @type {I18nErrorMessageDTO}
+     * @memberof FormValidationErrorResponseDTO
+     */
+    i18nErrorMessage?: I18nErrorMessageDTO;
+}
+/**
  * Details of issue history metadata.
  * @export
  * @interface HistoryMetadata
@@ -1250,6 +1331,25 @@ export interface I18nErrorMessage {
      * 
      * @type {Array<string>}
      * @memberof I18nErrorMessage
+     */
+    parameters?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface I18nErrorMessageDTO
+ */
+export interface I18nErrorMessageDTO {
+    /**
+     * Internationalization key for the error message.
+     * @type {string}
+     * @memberof I18nErrorMessageDTO
+     */
+    i18nKey?: string;
+    /**
+     * Parameters used to render the internationalized error message.
+     * @type {Array<string>}
+     * @memberof I18nErrorMessageDTO
      */
     parameters?: Array<string>;
 }
@@ -3023,7 +3123,7 @@ export interface RequestCreateDTO {
      */
     channel?: string;
     /**
-     * Provides answers to the form associated with a request type that is attached to the request on creation. Jira fields should be omitted from `requestFieldValues` if they are linked to form answers. Form answers in ADF format should have `isAdfRequest` set to true. Form answers are not currently validated.
+     * Provides answers to the form associated with a request type. Omit Jira fields from `requestFieldValues` if they're linked to form answers. For form answers in ADF format, set `isAdfRequest` to true.
      * @type {Form}
      * @memberof RequestCreateDTO
      */
@@ -3064,6 +3164,25 @@ export interface RequestCreateDTO {
      * @memberof RequestCreateDTO
      */
     serviceDeskId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RequestFieldValidationErrorDTO
+ */
+export interface RequestFieldValidationErrorDTO {
+    /**
+     * The id of the request field that failed validation (matches a key in 'requestFieldValues').
+     * @type {string}
+     * @memberof RequestFieldValidationErrorDTO
+     */
+    field?: string;
+    /**
+     * A human-readable explanation of why this field failed validation.
+     * @type {string}
+     * @memberof RequestFieldValidationErrorDTO
+     */
+    message?: string;
 }
 /**
  * 
@@ -3431,9 +3550,58 @@ export interface RequestTypePermissionCheckResponse {
 /**
  * 
  * @export
+ * @interface RequestValidationResultDTO
+ */
+export interface RequestValidationResultDTO {
+    /**
+     * A single, human-readable summary describing why validation failed. Null when valid.
+     * @type {string}
+     * @memberof RequestValidationResultDTO
+     */
+    errorMessage?: string;
+    /**
+     * General validation errors that are not attributable to a single field. Empty when valid.
+     * @type {Array<string>}
+     * @memberof RequestValidationResultDTO
+     */
+    errorMessages?: Array<string>;
+    /**
+     * Field-level validation errors, keyed by the failing request field id. Empty when valid.
+     * @type {Array<RequestFieldValidationErrorDTO>}
+     * @memberof RequestValidationResultDTO
+     */
+    fieldErrors?: Array<RequestFieldValidationErrorDTO>;
+    /**
+     * ProForma form validation errors, if a form was supplied. Empty when valid or no form was present.
+     * @type {Array<FormValidationErrorDTO>}
+     * @memberof RequestValidationResultDTO
+     */
+    formErrors?: Array<FormValidationErrorDTO>;
+    /**
+     * A machine-readable reason key categorising the overall failure. Null when valid.
+     * @type {string}
+     * @memberof RequestValidationResultDTO
+     */
+    reasonKey?: string;
+    /**
+     * True when the payload is both structurally and semantically valid and safe to create.
+     * @type {boolean}
+     * @memberof RequestValidationResultDTO
+     */
+    valid?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface Resource
  */
 export interface Resource {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Resource
+     */
+    contentAsByteArray?: Array<string>;
     /**
      * 
      * @type {string}
@@ -3545,6 +3713,25 @@ export interface ServiceDeskCustomerDTO {
      * @memberof ServiceDeskCustomerDTO
      */
     usernames?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceDeskCustomerInviteDTO
+ */
+export interface ServiceDeskCustomerInviteDTO {
+    /**
+     * Customer's name for display in the UI.
+     * @type {string}
+     * @memberof ServiceDeskCustomerInviteDTO
+     */
+    displayName?: string;
+    /**
+     * Customer's email address.
+     * @type {string}
+     * @memberof ServiceDeskCustomerInviteDTO
+     */
+    email?: string;
 }
 /**
  * 

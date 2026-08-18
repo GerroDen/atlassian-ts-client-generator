@@ -1,4 +1,4 @@
-# jira-cloud-service-management-api@1001.0.0-SNAPSHOT-21695d0ffb3094632d6272be3e6600848f05a23b
+# jira-cloud-service-management-api@1001.0.0-SNAPSHOT-56412dadeaf927dd37709c84cb8df7dee7ac7123
 
 A TypeScript SDK client for the your-domain.atlassian.net API.
 
@@ -60,6 +60,9 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *AssetsApi* | [**getInsightWorkspaces**](docs/AssetsApi.md#getinsightworkspaces) | **GET** /rest/servicedeskapi/insight/workspace | Get insight workspaces
 *CustomerApi* | [**createCustomer**](docs/CustomerApi.md#createcustomer) | **POST** /rest/servicedeskapi/customer | Create customer
 *CustomerApi* | [**revokePortalOnlyAccessForUser**](docs/CustomerApi.md#revokeportalonlyaccessforuser) | **PUT** /rest/servicedeskapi/customer/user/{accountId}/revoke-portal-only-access | Revoke portal only access for user
+*DefaultApi* | [**addCustomers**](docs/DefaultApi.md#addcustomers) | **POST** /rest/servicedeskapi/servicedesk/{serviceDeskId}/customer/skip-permission-check | Add customers
+*DefaultApi* | [**createCustomer**](docs/DefaultApi.md#createcustomer) | **POST** /rest/servicedeskapi/customer/skip-permission-check | Create customer
+*DefaultApi* | [**viewArticle**](docs/DefaultApi.md#viewarticle) | **GET** /rest/servicedeskapi/knowledgebase/article/view/{pageId} | View knowledge base article
 *InfoApi* | [**getInfo**](docs/InfoApi.md#getinfo) | **GET** /rest/servicedeskapi/info | Get info
 *KnowledgebaseApi* | [**getArticles**](docs/KnowledgebaseApi.md#getarticles) | **GET** /rest/servicedeskapi/knowledgebase/article | Get articles
 *OrganizationApi* | [**addOrganization**](docs/OrganizationApi.md#addorganization) | **POST** /rest/servicedeskapi/servicedesk/{serviceDeskId}/organization | Add organization
@@ -104,6 +107,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *RequestApi* | [**removeRequestParticipants**](docs/RequestApi.md#removerequestparticipants) | **DELETE** /rest/servicedeskapi/request/{issueIdOrKey}/participant | Remove request participants
 *RequestApi* | [**subscribe**](docs/RequestApi.md#subscribe) | **PUT** /rest/servicedeskapi/request/{issueIdOrKey}/notification | Subscribe
 *RequestApi* | [**unsubscribe**](docs/RequestApi.md#unsubscribe) | **DELETE** /rest/servicedeskapi/request/{issueIdOrKey}/notification | Unsubscribe
+*RequestApi* | [**validateCustomerRequest**](docs/RequestApi.md#validatecustomerrequest) | **POST** /rest/servicedeskapi/request/validate | Validate customer request
 *RequesttypeApi* | [**getAllRequestTypes**](docs/RequesttypeApi.md#getallrequesttypes) | **GET** /rest/servicedeskapi/requesttype | Get all request types
 *ServicedeskApi* | [**addCustomers**](docs/ServicedeskApi.md#addcustomers) | **POST** /rest/servicedeskapi/servicedesk/{serviceDeskId}/customer | Add customers
 *ServicedeskApi* | [**attachTemporaryFile**](docs/ServicedeskApi.md#attachtemporaryfile) | **POST** /rest/servicedeskapi/servicedesk/{serviceDeskId}/attachTemporaryFile | Attach temporary file
@@ -124,6 +128,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 *ServicedeskApi* | [**getRequestTypes**](docs/ServicedeskApi.md#getrequesttypes) | **GET** /rest/servicedeskapi/servicedesk/{serviceDeskId}/requesttype | Get request types
 *ServicedeskApi* | [**getServiceDeskById**](docs/ServicedeskApi.md#getservicedeskbyid) | **GET** /rest/servicedeskapi/servicedesk/{serviceDeskId} | Get service desk by id
 *ServicedeskApi* | [**getServiceDesks**](docs/ServicedeskApi.md#getservicedesks) | **GET** /rest/servicedeskapi/servicedesk | Get service desks
+*ServicedeskApi* | [**inviteCustomer**](docs/ServicedeskApi.md#invitecustomer) | **POST** /rest/servicedeskapi/servicedesk/{serviceDeskId}/customer/invite | Invite customer
 *ServicedeskApi* | [**removeCustomers**](docs/ServicedeskApi.md#removecustomers) | **DELETE** /rest/servicedeskapi/servicedesk/{serviceDeskId}/customer | Remove customers
 *ServicedeskApi* | [**setProperty**](docs/ServicedeskApi.md#setproperty) | **PUT** /rest/servicedeskapi/servicedesk/{serviceDeskId}/requesttype/{requestTypeId}/property/{propertyKey} | Set property
 
@@ -165,9 +170,13 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [FieldMetadata](docs/FieldMetadata.md)
 - [Form](docs/Form.md)
 - [FormAnswer](docs/FormAnswer.md)
+- [FormValidationErrorContextDTO](docs/FormValidationErrorContextDTO.md)
+- [FormValidationErrorDTO](docs/FormValidationErrorDTO.md)
+- [FormValidationErrorResponseDTO](docs/FormValidationErrorResponseDTO.md)
 - [HistoryMetadata](docs/HistoryMetadata.md)
 - [HistoryMetadataParticipant](docs/HistoryMetadataParticipant.md)
 - [I18nErrorMessage](docs/I18nErrorMessage.md)
+- [I18nErrorMessageDTO](docs/I18nErrorMessageDTO.md)
 - [IncludedFields](docs/IncludedFields.md)
 - [InputStreamSource](docs/InputStreamSource.md)
 - [InsightWorkspaceDTO](docs/InsightWorkspaceDTO.md)
@@ -210,6 +219,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [QueueDTO](docs/QueueDTO.md)
 - [RenderedValueDTO](docs/RenderedValueDTO.md)
 - [RequestCreateDTO](docs/RequestCreateDTO.md)
+- [RequestFieldValidationErrorDTO](docs/RequestFieldValidationErrorDTO.md)
 - [RequestNotificationSubscriptionDTO](docs/RequestNotificationSubscriptionDTO.md)
 - [RequestParticipantUpdateDTO](docs/RequestParticipantUpdateDTO.md)
 - [RequestTypeCreateDTO](docs/RequestTypeCreateDTO.md)
@@ -221,10 +231,12 @@ All URIs are relative to *https://your-domain.atlassian.net*
 - [RequestTypeIconLinkDTO](docs/RequestTypeIconLinkDTO.md)
 - [RequestTypePermissionCheckRequestDTO](docs/RequestTypePermissionCheckRequestDTO.md)
 - [RequestTypePermissionCheckResponse](docs/RequestTypePermissionCheckResponse.md)
+- [RequestValidationResultDTO](docs/RequestValidationResultDTO.md)
 - [Resource](docs/Resource.md)
 - [Scope](docs/Scope.md)
 - [SelfLinkDTO](docs/SelfLinkDTO.md)
 - [ServiceDeskCustomerDTO](docs/ServiceDeskCustomerDTO.md)
+- [ServiceDeskCustomerInviteDTO](docs/ServiceDeskCustomerInviteDTO.md)
 - [ServiceDeskDTO](docs/ServiceDeskDTO.md)
 - [SimpleLink](docs/SimpleLink.md)
 - [SlaInformationCompletedCycleDTO](docs/SlaInformationCompletedCycleDTO.md)
@@ -325,9 +337,9 @@ This TypeScript SDK client supports the [Fetch API](https://fetch.spec.whatwg.or
 and is automatically generated by the
 [OpenAPI Generator](https://openapi-generator.tech) project:
 
-- API version: `1001.0.0-SNAPSHOT-21695d0ffb3094632d6272be3e6600848f05a23b`
-- Package version: `1001.0.0-SNAPSHOT-21695d0ffb3094632d6272be3e6600848f05a23b`
-- Generator version: `7.21.0`
+- API version: `1001.0.0-SNAPSHOT-56412dadeaf927dd37709c84cb8df7dee7ac7123`
+- Package version: `1001.0.0-SNAPSHOT-56412dadeaf927dd37709c84cb8df7dee7ac7123`
+- Generator version: `7.24.0`
 - Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`
 
 The generated npm module supports the following:

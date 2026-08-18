@@ -61,4 +61,63 @@ export class ServicedeskApi extends runtime.BaseAPI {
   }
 }`);
   });
+
+  it("postfixes request types of DefaultApi", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        path: "foo/apis/PermissionSkippedApi.ts",
+        source: `export interface AddCustomersRequest {}
+export interface CreateCustomerRequest {}
+export interface ViewArticleRequest {}
+
+export class DefaultApi extends runtime.BaseAPI {
+    async addCustomersRequestOpts(requestParameters: AddCustomersRequest): Promise<runtime.RequestOpts> {}
+    
+    async addCustomersRaw(requestParameters: AddCustomersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {}
+    
+    async addCustomers(requestParameters: AddCustomersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {}
+    
+    async createCustomerRequestOpts(requestParameters: CreateCustomerRequest): Promise<runtime.RequestOpts> {}
+    
+    async createCustomerRaw(requestParameters: CreateCustomerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDTO>> {}
+    
+    async createCustomer(requestParameters: CreateCustomerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDTO> {}
+    
+    async viewArticleRequestOpts(requestParameters: ViewArticleRequest): Promise<runtime.RequestOpts> {}
+    
+    async viewArticleRaw(requestParameters: ViewArticleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {}
+    
+    async viewArticle(requestParameters: ViewArticleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {}
+}
+`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export interface AddCustomersPermissionSkippedRequest {}
+export interface CreateCustomerPermissionSkippedRequest {}
+export interface ViewArticlePermissionSkippedRequest {}
+
+export class PermissionSkippedApi extends runtime.BaseAPI {
+    async addCustomersRequestOpts(requestParameters: AddCustomersPermissionSkippedRequest): Promise<runtime.RequestOpts> {}
+    
+    async addCustomersRaw(requestParameters: AddCustomersPermissionSkippedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {}
+    
+    async addCustomers(requestParameters: AddCustomersPermissionSkippedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {}
+    
+    async createCustomerRequestOpts(requestParameters: CreateCustomerPermissionSkippedRequest): Promise<runtime.RequestOpts> {}
+    
+    async createCustomerRaw(requestParameters: CreateCustomerPermissionSkippedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDTO>> {}
+    
+    async createCustomer(requestParameters: CreateCustomerPermissionSkippedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDTO> {}
+    
+    async viewArticleRequestOpts(requestParameters: ViewArticlePermissionSkippedRequest): Promise<runtime.RequestOpts> {}
+    
+    async viewArticleRaw(requestParameters: ViewArticlePermissionSkippedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {}
+    
+    async viewArticle(requestParameters: ViewArticlePermissionSkippedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {}
+}`);
+  });
 });

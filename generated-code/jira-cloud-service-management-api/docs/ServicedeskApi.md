@@ -23,6 +23,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 | [**getRequestTypes**](ServicedeskApi.md#getrequesttypes) | **GET** /rest/servicedeskapi/servicedesk/{serviceDeskId}/requesttype | Get request types |
 | [**getServiceDeskById**](ServicedeskApi.md#getservicedeskbyid) | **GET** /rest/servicedeskapi/servicedesk/{serviceDeskId} | Get service desk by id |
 | [**getServiceDesks**](ServicedeskApi.md#getservicedesks) | **GET** /rest/servicedeskapi/servicedesk | Get service desks |
+| [**inviteCustomer**](ServicedeskApi.md#invitecustomer) | **POST** /rest/servicedeskapi/servicedesk/{serviceDeskId}/customer/invite | Invite customer |
 | [**removeCustomers**](ServicedeskApi.md#removecustomers) | **DELETE** /rest/servicedeskapi/servicedesk/{serviceDeskId}/customer | Remove customers |
 | [**setProperty**](ServicedeskApi.md#setproperty) | **PUT** /rest/servicedeskapi/servicedesk/{serviceDeskId}/requesttype/{requestTypeId}/property/{propertyKey} | Set property |
 
@@ -1571,6 +1572,89 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Returns the service desks, on the specified page of the results. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
+| **500** | Internal Server Error. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## inviteCustomer
+
+> inviteCustomer(serviceDeskId, serviceDeskCustomerInviteDTO, strictConflictStatusCode)
+
+Invite customer
+
+This method invites a customer to a specified service desk by sending them an email invitation, creating a new customer account if one does not already exist. The display name does not need to be unique. The record\&#39;s identifiers, &#x60;name&#x60; and &#x60;key&#x60;, are automatically generated from the request details.  **[Permissions](#permissions) required**: Jira Administrator Global permission &amp; Service desk administrator
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ServicedeskApi,
+} from 'jira-cloud-service-management-api';
+import type { InviteCustomerRequest } from 'jira-cloud-service-management-api';
+
+async function example() {
+  console.log("🚀 Testing jira-cloud-service-management-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+  });
+  const api = new ServicedeskApi(config);
+
+  const body = {
+    // string | The ID of the service desk to which the newly created customer should be added.
+    serviceDeskId: serviceDeskId_example,
+    // ServiceDeskCustomerInviteDTO
+    serviceDeskCustomerInviteDTO: {"displayName":"Fred F. User","email":"fred@example.com"},
+    // boolean | Optional boolean flag to return 409 Conflict status code when a customer with the same email already exists. (optional)
+    strictConflictStatusCode: true,
+  } satisfies InviteCustomerRequest;
+
+  try {
+    const data = await api.inviteCustomer(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **serviceDeskId** | `string` | The ID of the service desk to which the newly created customer should be added. | [Defaults to `undefined`] |
+| **serviceDeskCustomerInviteDTO** | [ServiceDeskCustomerInviteDTO](ServiceDeskCustomerInviteDTO.md) |  | |
+| **strictConflictStatusCode** | `boolean` | Optional boolean flag to return 409 Conflict status code when a customer with the same email already exists. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Returns the customer details. |  -  |
+| **400** | Returned if the request is invalid, either because the display name is empty, or email address is empty or incorrectly formed or already exists in the database if &#x60;strictConflictStatusCode&#x3D;false&#x60; or if &#x60;strictConflictStatusCode&#x3D;false&#x60; parameter is not provided. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have permission to complete this request. |  -  |
+| **404** | Returned if the servicedesk id does not exist or servicedesk does not belong to a JSM project. |  -  |
+| **409** | Returned if the request is invalid because the email address already exists in the database and &#x60;strictConflictStatusCode&#x3D;true&#x60; |  -  |
 | **500** | Internal Server Error. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

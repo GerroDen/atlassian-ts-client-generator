@@ -43,6 +43,7 @@
     "gen:jira-cloud-api:lint": "tsc -p generated-code/jira-cloud-api --ignoreConfig --noEmit",
     "gen:jira-cloud-service-management-api": "run-s 'gen:jira-cloud-service-management-api:*'",
     "gen:jira-cloud-service-management-api:gen": "gen-tool/gen-api.js jira-cloud-service-management-api",
+    "gen:jira-cloud-service-management-api:pre-fix": "gen-tool/fix-jira-cloud-service-management-gen.js generated-code/jira-cloud-service-management-api",
     "gen:jira-cloud-service-management-api:fix": "jscodeshift -t gen-tool/codemods/fix-jira-cloud-service-management-api.cjs --parser=ts --extensions=ts generated-code/jira-cloud-service-management-api/src",
     "gen:jira-cloud-service-management-api:lint": "tsc -p generated-code/jira-cloud-service-management-api --ignoreConfig --noEmit",
     "gen:jira-software-cloud-api": "run-s 'gen:jira-software-cloud-api:*'",

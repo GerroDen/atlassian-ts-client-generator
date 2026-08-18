@@ -155,9 +155,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Returned if the request is successful. |  -  |
-| **400** | Returned if the account ID is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
 | **403** | Returned if the user does not have permission to complete this request. |  -  |
+| **404** | Returned if the account ID is invalid. |  -  |
 | **500** | Internal Server Error. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

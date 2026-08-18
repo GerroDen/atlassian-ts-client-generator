@@ -2,6 +2,7 @@
 /* eslint-disable */
 export * from './AssetsApi';
 export * from './CustomerApi';
+export * from './PermissionSkippedApi';
 export * from './InfoApi';
 export * from './KnowledgebaseApi';
 export * from './OrganizationApi';

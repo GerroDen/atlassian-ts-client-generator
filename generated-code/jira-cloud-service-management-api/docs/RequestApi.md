@@ -32,6 +32,7 @@ All URIs are relative to *https://your-domain.atlassian.net*
 | [**removeRequestParticipants**](RequestApi.md#removerequestparticipants) | **DELETE** /rest/servicedeskapi/request/{issueIdOrKey}/participant | Remove request participants |
 | [**subscribe**](RequestApi.md#subscribe) | **PUT** /rest/servicedeskapi/request/{issueIdOrKey}/notification | Subscribe |
 | [**unsubscribe**](RequestApi.md#unsubscribe) | **DELETE** /rest/servicedeskapi/request/{issueIdOrKey}/notification | Unsubscribe |
+| [**validateCustomerRequest**](RequestApi.md#validatecustomerrequest) | **POST** /rest/servicedeskapi/request/validate | Validate customer request |
 
 
 
@@ -346,6 +347,7 @@ example().catch(console.error);
 | **400** | Returned if the HTTP request call is invalid. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
 | **403** | Returned if the user does not have permission to complete this request. |  -  |
+| **422** | Returned if one or more form answers fail validation rules configured by Jira admins. |  -  |
 | **500** | Internal Server Error. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1662,7 +1664,7 @@ example().catch(console.error);
 
 Get sla information
 
-This method returns all the SLA records on a customer request. A customer request can have zero or more SLAs. Each SLA can have recordings for zero or more \&quot;completed cycles\&quot; and zero or 1 \&quot;ongoing cycle\&quot;. Each cycle includes information on when it started and stopped, and whether it breached the SLA goal.  **[Permissions](#permissions) required**: Agent for the Service Desk containing the queried customer request.
+This method returns all the SLA records on a customer request. A customer request can have zero or more SLAs. Each SLA can have recordings for zero or more \&quot;completed cycles\&quot; and zero or 1 \&quot;ongoing cycle\&quot;. Each cycle includes information on when it started and stopped, and whether it breached the SLA goal.  **[Permissions](#permissions) required**:   *  Agent for the Service Desk containing the queried customer request, AND  *  Browse Projects permission on the project containing the customer request, including any restrictions imposed by issue security schemes or custom permission schemes on the specific issue.
 
 ### Example
 
@@ -1730,7 +1732,7 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Returns the SLA records on the customer request, on the specified page of the results. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not have permission to complete this request. |  -  |
+| **403** | Returned if the user does not have permission to view this customer request. This includes the case where the user is not an agent on the Service Desk, or where the user lacks Browse Projects permission on the issue (for example, due to an issue security scheme or a custom permission scheme). |  -  |
 | **404** | Returned if the customer request does not exist. |  -  |
 | **500** | Internal Server Error. |  -  |
 
@@ -1743,7 +1745,7 @@ example().catch(console.error);
 
 Get sla information by id
 
-This method returns the details for an SLA on a customer request.  **[Permissions](#permissions) required**: Agent for the Service Desk containing the queried customer request.
+This method returns the details for an SLA on a customer request.  **[Permissions](#permissions) required**:   *  Agent for the Service Desk containing the queried customer request, AND  *  Browse Projects permission on the project containing the customer request, including any restrictions imposed by issue security schemes or custom permission schemes on the specific issue.
 
 ### Example
 
@@ -1808,7 +1810,7 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Returns the SLA record, on the specified page of the results. |  -  |
 | **401** | Returned if the user is not logged in. |  -  |
-| **403** | Returned if the user does not have permission to complete this request. |  -  |
+| **403** | Returned if the user does not have permission to view this customer request. This includes the case where the user is not an agent on the Service Desk, or where the user lacks Browse Projects permission on the issue (for example, due to an issue security scheme or a custom permission scheme). |  -  |
 | **404** | Returned if the customer request does not exist. |  -  |
 | **500** | Internal Server Error. |  -  |
 
@@ -2272,6 +2274,81 @@ example().catch(console.error);
 | **401** | Returned if the user is not logged in. |  -  |
 | **403** | Returned if the user does not have permission to complete this request. |  -  |
 | **404** | Returned if the customer request does not exist. |  -  |
+| **500** | Internal Server Error. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## validateCustomerRequest
+
+> RequestValidationResultDTO validateCustomerRequest(requestCreateDTO)
+
+Validate customer request
+
+Validates a customer request payload without creating (persisting) a request.  This endpoint runs exactly the same structural and semantic validations as [Create customer request](#api-request-post) \\\\u2014 including ProForma form validation \\\\u2014 but performs **no mutation**: no issue is created and no side effects (attachments, comments, analytics) run.  The response is intentionally verbose and structured so that it can be consumed by automated agents (for example an LLM repairing an invalid payload): every failure carries a machine-readable location (field id / form entity) and a human-readable reason. A valid payload returns HTTP 200 with \\{@code valid: true\\}; an invalid payload returns HTTP 400 with \\{@code valid: false\\} together with the field, form and general validation errors.  **[Permissions](#permissions) required**: Permission to create requests in the specified service desk.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RequestApi,
+} from 'jira-cloud-service-management-api';
+import type { ValidateCustomerRequestRequest } from 'jira-cloud-service-management-api';
+
+async function example() {
+  console.log("🚀 Testing jira-cloud-service-management-api SDK...");
+  const config = new Configuration({ 
+    // To configure OAuth2 access token for authorization: OAuth2 accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+  });
+  const api = new RequestApi(config);
+
+  const body = {
+    // RequestCreateDTO
+    requestCreateDTO: ...,
+  } satisfies ValidateCustomerRequestRequest;
+
+  try {
+    const data = await api.validateCustomerRequest(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **requestCreateDTO** | [RequestCreateDTO](RequestCreateDTO.md) |  | |
+
+### Return type
+
+[**RequestValidationResultDTO**](RequestValidationResultDTO.md)
+
+### Authorization
+
+[OAuth2 accessCode](../README.md#OAuth2-accessCode)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Returned with the validation result. \\{@code valid\\} is true when the payload is valid. |  -  |
+| **400** | Returned when the payload is invalid; the body describes why validation failed. |  -  |
+| **401** | Returned if the user is not logged in. |  -  |
+| **403** | Returned if the user does not have permission to complete this request. |  -  |
 | **500** | Internal Server Error. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

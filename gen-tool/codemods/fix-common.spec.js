@@ -15,6 +15,16 @@ describe("fix-common", () => {
   readonly _configuration?: { [key: string]: any; };
   readonly _default?: { [key: string]: any; };
   readonly _public?: boolean;
+}
+
+export class RequestApi extends runtime.BaseAPI {
+    async getRequestCommentsRequestOpts(requestParameters: GetRequestCommentsRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+        
+        if (requestParameters['_public'] != null) {
+            queryParameters['public'] = requestParameters['_public'];
+        }
+    }
 }`,
       },
       options,
@@ -24,6 +34,16 @@ describe("fix-common", () => {
   readonly configuration?: { [key: string]: any; };
   readonly default?: { [key: string]: any; };
   readonly public?: boolean;
+}
+
+export class RequestApi extends runtime.BaseAPI {
+    async getRequestCommentsRequestOpts(requestParameters: GetRequestCommentsRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+        
+        if (requestParameters["public"] != null) {
+            queryParameters['public'] = requestParameters["public"];
+        }
+    }
 }`);
   });
 
