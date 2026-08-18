@@ -1,7 +1,10 @@
 #!/usr/bin/env node
-import { resolve } from "path";
+/*
+ * Some code modifications that cannot be done by code transformations, like file deletion or fixing comments to enable valid parsing.
+ */
+import { resolve } from "node:path";
 import glob from "fast-glob";
-import fs from "fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
 const rootDir = resolve(import.meta.dirname, "..");
 
@@ -15,12 +18,12 @@ try {
   const files = glob.sync(`${dir}/**/*.ts`, { absolute: true, cwd: rootDir });
   for (let file of files) {
     /** @type string */
-    let content = await fs.readFile(file, { encoding: "utf8" });
+    let content = await readFile(file, { encoding: "utf8" });
     content = content.replace(
       "return new runtime.JSONApiResponse(response));",
       "return new runtime.JSONApiResponse(response);",
     );
-    await fs.writeFile(file, content);
+    await writeFile(file, content);
   }
 } catch (e) {
   console.error(e);
