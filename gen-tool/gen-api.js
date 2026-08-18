@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { spawn, spawnSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 import { readFile, rm, writeFile } from "node:fs/promises";
 
 const [, scriptName, dir] = process.argv;
