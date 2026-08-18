@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ArchivePagesRequest,
-  Content,
-  ContentArray,
-  ContentBlueprintDraft,
-  LongTask,
+    ArchivePagesRequest,
+    Content,
+    ContentArray,
+    ContentBlueprintDraft,
+    LongTask,
 } from '../models/index';
 
 export interface ArchivePagesOperationRequest {
@@ -145,7 +144,7 @@ export class ContentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/blueprint/instance/{draftId}`;
-        urlPath = urlPath.replace(`{${"draftId"}}`, encodeURIComponent(String(requestParameters['draftId'])));
+        urlPath = urlPath.replace('{draftId}', encodeURIComponent(String(requestParameters['draftId'])));
 
         return {
             path: urlPath,
@@ -218,7 +217,7 @@ export class ContentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/blueprint/instance/{draftId}`;
-        urlPath = urlPath.replace(`{${"draftId"}}`, encodeURIComponent(String(requestParameters['draftId'])));
+        urlPath = urlPath.replace('{draftId}', encodeURIComponent(String(requestParameters['draftId'])));
 
         return {
             path: urlPath,

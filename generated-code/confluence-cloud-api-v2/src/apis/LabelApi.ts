@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  LabelSortOrder,
-  MultiEntityResultLabel,
+    LabelSortOrder,
+    MultiEntityResultLabel,
 } from '../models/index';
 
 export interface GetAttachmentLabelsRequest {
@@ -121,7 +120,7 @@ export class LabelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{id}/labels`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -192,7 +191,7 @@ export class LabelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/labels`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -263,7 +262,7 @@ export class LabelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{id}/labels`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -401,7 +400,7 @@ export class LabelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/labels`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -472,7 +471,7 @@ export class LabelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/content/labels`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -543,7 +542,7 @@ export class LabelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/labels`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

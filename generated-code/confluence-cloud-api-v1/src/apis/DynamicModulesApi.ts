@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ConnectModules,
-  DynamicModulesErrorMessage,
+    ConnectModules,
+    DynamicModulesErrorMessage,
 } from '../models/index';
 
 export interface RegisterModulesRequest {

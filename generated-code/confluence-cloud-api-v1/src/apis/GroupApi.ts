@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AccountId,
-  Group,
-  GroupArrayWithLinks,
-  GroupName,
-  UserArray,
+    AccountId,
+    Group,
+    GroupArrayWithLinks,
+    GroupName,
+    UserArray,
 } from '../models/index';
 
 export interface AddUserToGroupByGroupIdRequest {
@@ -295,7 +294,7 @@ export class GroupApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/group/{groupId}/membersByGroupId`;
-        urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
+        urlPath = urlPath.replace('{groupId}', encodeURIComponent(String(requestParameters['groupId'])));
 
         return {
             path: urlPath,

@@ -12,15 +12,14 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreateSpace201Response,
-  CreateSpaceRequest,
-  GetSpaceById200Response,
-  MultiEntityResultSpace,
-  SpaceDescriptionBodyRepresentation,
-  SpaceSortOrder,
+    CreateSpace201Response,
+    CreateSpaceRequest,
+    GetSpaceById200Response,
+    MultiEntityResultSpace,
+    SpaceDescriptionBodyRepresentation,
+    SpaceSortOrder,
 } from '../models/index';
 
 export interface CreateSpaceOperationRequest {
@@ -96,7 +95,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a Space as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
+     * Creates a Space as specified in the payload.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
      * Create space
      */
     async createSpaceRaw(requestParameters: CreateSpaceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSpace201Response>> {
@@ -107,7 +106,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a Space as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
+     * Creates a Space as specified in the payload.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
      * Create space
      */
     async createSpace(requestParameters: CreateSpaceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSpace201Response> {
@@ -168,7 +167,7 @@ export class SpaceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -313,6 +312,7 @@ export type GetSpacesTypeEnum = typeof GetSpacesTypeEnum[keyof typeof GetSpacesT
  */
 export const GetSpacesStatusEnum = {
     Current: 'current',
-    Archived: 'archived'
+    Archived: 'archived',
+    Trashed: 'trashed'
 } as const;
 export type GetSpacesStatusEnum = typeof GetSpacesStatusEnum[keyof typeof GetSpacesStatusEnum];

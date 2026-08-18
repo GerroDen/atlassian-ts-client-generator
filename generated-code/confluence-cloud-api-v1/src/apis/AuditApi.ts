@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AuditRecord,
-  AuditRecordArray,
-  AuditRecordCreate,
-  RetentionPeriod,
+    AuditRecord,
+    AuditRecordArray,
+    AuditRecordCreate,
+    RetentionPeriod,
 } from '../models/index';
 
 export interface CreateAuditRecordRequest {

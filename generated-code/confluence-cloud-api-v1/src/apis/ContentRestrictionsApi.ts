@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ContentRestriction,
-  ContentRestrictionAddOrUpdateArray,
-  ContentRestrictionArray,
-  GetRestrictionsByOperation200ResponseValue,
+    ContentRestriction,
+    ContentRestrictionAddOrUpdateArray,
+    ContentRestrictionArray,
+    GetRestrictionsByOperation200ResponseValue,
 } from '../models/index';
 
 export interface AddGroupToContentRestrictionByGroupIdRequest {
@@ -144,9 +143,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
-        urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{operationKey}', encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace('{groupId}', encodeURIComponent(String(requestParameters['groupId'])));
 
         return {
             path: urlPath,
@@ -213,7 +212,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -288,8 +287,8 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{operationKey}', encodeURIComponent(String(requestParameters['operationKey'])));
 
         return {
             path: urlPath,
@@ -347,7 +346,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -421,8 +420,8 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{operationKey}', encodeURIComponent(String(requestParameters['operationKey'])));
 
         return {
             path: urlPath,
@@ -490,9 +489,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
-        urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{operationKey}', encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace('{groupId}', encodeURIComponent(String(requestParameters['groupId'])));
 
         return {
             path: urlPath,
@@ -558,7 +557,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -617,7 +616,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -691,8 +690,8 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{operationKey}', encodeURIComponent(String(requestParameters['operationKey'])));
 
         return {
             path: urlPath,
@@ -761,9 +760,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
-        urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{operationKey}', encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace('{groupId}', encodeURIComponent(String(requestParameters['groupId'])));
 
         return {
             path: urlPath,
@@ -836,8 +835,8 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{operationKey}', encodeURIComponent(String(requestParameters['operationKey'])));
 
         return {
             path: urlPath,
@@ -904,7 +903,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/restriction`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

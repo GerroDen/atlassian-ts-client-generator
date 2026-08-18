@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `routeOverrideEnabled` | boolean
 `editor` | [SpaceSettingsEditor](SpaceSettingsEditor.md)
+`contentMode` | string
 `spaceKey` | string
 `links` | [{ [key: string]: GenericLinksValue; }](GenericLinksValue.md)
 

@@ -15,7 +15,7 @@ All URIs are relative to *http://your-domain.atlassian.net*
 
 Get space settings
 
-Returns the settings of a space. Currently only the &#x60;routeOverrideEnabled&#x60; setting can be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;View\&#39; permission for the space.
+Returns the settings of a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;View\&#39; permission for the space.
 
 ### Example
 
@@ -91,7 +91,7 @@ example().catch(console.error);
 
 Update space settings
 
-Updates the settings for a space. Currently only the &#x60;routeOverrideEnabled&#x60; setting can be updated.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Admin\&#39; permission for the space.
+Updates the settings for a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Admin\&#39; permission for the space.
 
 ### Example
 

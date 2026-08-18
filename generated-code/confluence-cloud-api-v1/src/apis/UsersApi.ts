@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AccountIdEmailRecord,
-  BulkUserLookupArray,
-  GroupArrayWithLinks,
-  User,
-  UserAnonymous,
+    AccountIdEmailRecord,
+    BulkUserLookupArray,
+    GroupArrayWithLinks,
+    User,
+    UserAnonymous,
 } from '../models/index';
 
 export interface GetAnonymousUserRequest {

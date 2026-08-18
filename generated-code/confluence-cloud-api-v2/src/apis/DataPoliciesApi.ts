@@ -12,12 +12,11 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  DataPolicyMetadata,
-  MultiEntityResultDataPolicySpace,
-  SpaceSortOrder,
+    DataPolicyMetadata,
+    MultiEntityResultDataPolicySpace,
+    SpaceSortOrder,
 } from '../models/index';
 
 export interface GetDataPolicySpacesRequest {

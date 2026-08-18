@@ -12,12 +12,11 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AsyncId,
-  ContentBody,
-  MacroInstance,
+    AsyncId,
+    ContentBody,
+    MacroInstance,
 } from '../models/index';
 
 export interface GetAndAsyncConvertMacroBodyByMacroIdRequest {
@@ -114,10 +113,10 @@ export class ContentMacroBodyApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/history/{version}/macro/id/{macroId}/convert/async/{to}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"version"}}`, encodeURIComponent(String(requestParameters['version'])));
-        urlPath = urlPath.replace(`{${"macroId"}}`, encodeURIComponent(String(requestParameters['macroId'])));
-        urlPath = urlPath.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{version}', encodeURIComponent(String(requestParameters['version'])));
+        urlPath = urlPath.replace('{macroId}', encodeURIComponent(String(requestParameters['macroId'])));
+        urlPath = urlPath.replace('{to}', encodeURIComponent(String(requestParameters['to'])));
 
         return {
             path: urlPath,
@@ -205,10 +204,10 @@ export class ContentMacroBodyApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/history/{version}/macro/id/{macroId}/convert/{to}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"version"}}`, encodeURIComponent(String(requestParameters['version'])));
-        urlPath = urlPath.replace(`{${"macroId"}}`, encodeURIComponent(String(requestParameters['macroId'])));
-        urlPath = urlPath.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{version}', encodeURIComponent(String(requestParameters['version'])));
+        urlPath = urlPath.replace('{macroId}', encodeURIComponent(String(requestParameters['macroId'])));
+        urlPath = urlPath.replace('{to}', encodeURIComponent(String(requestParameters['to'])));
 
         return {
             path: urlPath,
@@ -277,9 +276,9 @@ export class ContentMacroBodyApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/history/{version}/macro/id/{macroId}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"version"}}`, encodeURIComponent(String(requestParameters['version'])));
-        urlPath = urlPath.replace(`{${"macroId"}}`, encodeURIComponent(String(requestParameters['macroId'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{version}', encodeURIComponent(String(requestParameters['version'])));
+        urlPath = urlPath.replace('{macroId}', encodeURIComponent(String(requestParameters['macroId'])));
 
         return {
             path: urlPath,

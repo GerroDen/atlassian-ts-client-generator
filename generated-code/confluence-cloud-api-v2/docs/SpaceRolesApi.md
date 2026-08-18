@@ -21,7 +21,7 @@ All URIs are relative to *https://no-default/wiki/api/v2*
 
 Create a space role
 
-Create a space role.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
+Create a space role.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
 
 ### Example
 
@@ -98,7 +98,7 @@ example().catch(console.error);
 
 Delete a space role
 
-Delete a space role  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
+Delete a space role  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
 
 ### Example
 
@@ -175,7 +175,7 @@ example().catch(console.error);
 
 Get available space roles
 
-Retrieves the available space roles.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site; if requesting a certain space\&#39;s roles, permission to view the space.
+Retrieves the available space roles.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site; if requesting a certain space\&#39;s roles, permission to view the space.
 
 ### Example
 
@@ -267,7 +267,7 @@ example().catch(console.error);
 
 Get space role assignments
 
-Retrieves the space role assignments.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
+Retrieves the space role assignments.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
 
 ### Example
 
@@ -362,7 +362,7 @@ example().catch(console.error);
 
 Get space role mode
 
-Retrieves the space role mode.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\&#39;Can use\&#39; global permission).
+Retrieves the space role mode.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\&#39;Can use\&#39; global permission).
 
 ### Example
 
@@ -431,7 +431,7 @@ This endpoint does not need any parameter.
 
 Get space role by ID
 
-Retrieves the space role by ID.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+Retrieves the space role by ID.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
 
 ### Example
 
@@ -508,7 +508,7 @@ example().catch(console.error);
 
 Set space role assignments
 
-Sets space role assignments as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to manage roles in the space.
+Sets space role assignments as specified in the payload. For each entry, if &#x60;roleId&#x60; is provided the principal is assigned to that role. If &#x60;roleId&#x60; is omitted, the role assignment for that principal is removed, if it exists.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to manage roles in the space.
 
 ### Example
 
@@ -589,7 +589,7 @@ example().catch(console.error);
 
 Update a space role
 
-Update a space role.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
+Update a space role.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
 
 ### Example
 

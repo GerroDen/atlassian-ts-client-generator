@@ -12,10 +12,9 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  MultiEntityResultDescendantsResponse,
+    MultiEntityResultDescendantsResponse,
 } from '../models/index';
 
 export interface GetDatabaseDescendantsRequest {
@@ -95,7 +94,7 @@ export class DescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}/descendants`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -162,7 +161,7 @@ export class DescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{id}/descendants`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -229,7 +228,7 @@ export class DescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/descendants`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -296,7 +295,7 @@ export class DescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{id}/descendants`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -363,7 +362,7 @@ export class DescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}/descendants`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

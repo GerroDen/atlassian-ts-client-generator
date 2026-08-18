@@ -12,12 +12,11 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  SpacePermissionCustomContent,
-  SpacePermissionRequest,
-  SpacePermissionV2,
+    SpacePermissionCustomContent,
+    SpacePermissionRequest,
+    SpacePermissionV2,
 } from '../models/index';
 
 export interface AddCustomContentPermissionsRequest {
@@ -74,7 +73,7 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/permission/custom-content`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -138,7 +137,7 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/permission`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -201,8 +200,8 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/permission/{id}`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

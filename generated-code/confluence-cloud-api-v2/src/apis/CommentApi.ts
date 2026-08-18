@@ -12,29 +12,28 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CommentSortOrder,
-  CreateFooterComment201Response,
-  CreateFooterCommentModel,
-  CreateInlineComment201Response,
-  CreateInlineCommentModel,
-  FooterCommentModel,
-  MultiEntityResultAttachmentCommentModel,
-  MultiEntityResultBlogPostCommentModel,
-  MultiEntityResultBlogPostInlineCommentModel,
-  MultiEntityResultChildrenCommentModel,
-  MultiEntityResultCustomContentCommentModel,
-  MultiEntityResultFooterCommentModel,
-  MultiEntityResultInlineCommentChildrenModel,
-  MultiEntityResultInlineCommentModel,
-  MultiEntityResultPageCommentModel,
-  MultiEntityResultPageInlineCommentModel,
-  PrimaryBodyRepresentation,
-  PrimaryBodyRepresentationSingle,
-  UpdateFooterCommentRequest,
-  UpdateInlineCommentModel,
+    CommentSortOrder,
+    CreateFooterComment201Response,
+    CreateFooterCommentModel,
+    CreateInlineComment201Response,
+    CreateInlineCommentModel,
+    FooterCommentModel,
+    MultiEntityResultAttachmentCommentModel,
+    MultiEntityResultBlogPostCommentModel,
+    MultiEntityResultBlogPostInlineCommentModel,
+    MultiEntityResultChildrenCommentModel,
+    MultiEntityResultCustomContentCommentModel,
+    MultiEntityResultFooterCommentModel,
+    MultiEntityResultInlineCommentChildrenModel,
+    MultiEntityResultInlineCommentModel,
+    MultiEntityResultPageCommentModel,
+    MultiEntityResultPageInlineCommentModel,
+    PrimaryBodyRepresentation,
+    PrimaryBodyRepresentationSingle,
+    UpdateFooterCommentRequest,
+    UpdateInlineCommentModel,
 } from '../models/index';
 
 export interface CreateFooterCommentRequest {
@@ -314,7 +313,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/footer-comments/{comment-id}`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
 
         return {
             path: urlPath,
@@ -368,7 +367,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/inline-comments/{comment-id}`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
 
         return {
             path: urlPath,
@@ -442,7 +441,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{id}/footer-comments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -517,7 +516,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/footer-comments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -596,7 +595,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/inline-comments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -667,7 +666,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{id}/footer-comments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -750,7 +749,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/footer-comments/{comment-id}`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
 
         return {
             path: urlPath,
@@ -821,7 +820,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/footer-comments/{id}/children`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -967,7 +966,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/inline-comments/{comment-id}`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
 
         return {
             path: urlPath,
@@ -1038,7 +1037,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/inline-comments/{id}/children`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1176,7 +1175,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/footer-comments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1255,7 +1254,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/inline-comments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1319,7 +1318,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/footer-comments/{comment-id}`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
 
         return {
             path: urlPath,
@@ -1384,7 +1383,7 @@ export class CommentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/inline-comments/{comment-id}`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
 
         return {
             path: urlPath,

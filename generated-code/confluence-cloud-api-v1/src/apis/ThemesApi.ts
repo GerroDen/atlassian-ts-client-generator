@@ -12,12 +12,11 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  Theme,
-  ThemeArray,
-  ThemeUpdate,
+    Theme,
+    ThemeArray,
+    ThemeUpdate,
 } from '../models/index';
 
 export interface GetSpaceThemeRequest {
@@ -119,7 +118,7 @@ export class ThemesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/theme`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -174,7 +173,7 @@ export class ThemesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/settings/theme/{themeKey}`;
-        urlPath = urlPath.replace(`{${"themeKey"}}`, encodeURIComponent(String(requestParameters['themeKey'])));
+        urlPath = urlPath.replace('{themeKey}', encodeURIComponent(String(requestParameters['themeKey'])));
 
         return {
             path: urlPath,
@@ -284,7 +283,7 @@ export class ThemesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/theme`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -347,7 +346,7 @@ export class ThemesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/theme`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,

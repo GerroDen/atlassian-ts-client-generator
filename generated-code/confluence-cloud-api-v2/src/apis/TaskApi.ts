@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  MultiEntityResultTask,
-  PrimaryBodyRepresentation,
-  Task,
-  UpdateTaskRequest,
+    MultiEntityResultTask,
+    PrimaryBodyRepresentation,
+    Task,
+    UpdateTaskRequest,
 } from '../models/index';
 
 export interface GetTaskByIdRequest {
@@ -87,7 +86,7 @@ export class TaskApi extends runtime.BaseAPI {
 
 
         let urlPath = `/tasks/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -274,7 +273,7 @@ export class TaskApi extends runtime.BaseAPI {
 
 
         let urlPath = `/tasks/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  BlueprintTemplateArray,
-  ContentTemplate,
-  ContentTemplateArray,
-  ContentTemplateCreate,
-  ContentTemplateUpdate,
+    BlueprintTemplateArray,
+    ContentTemplate,
+    ContentTemplateArray,
+    ContentTemplateCreate,
+    ContentTemplateUpdate,
 } from '../models/index';
 
 export interface CreateContentTemplateRequest {
@@ -207,7 +206,7 @@ export class TemplateApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/template/{contentTemplateId}`;
-        urlPath = urlPath.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId'])));
+        urlPath = urlPath.replace('{contentTemplateId}', encodeURIComponent(String(requestParameters['contentTemplateId'])));
 
         return {
             path: urlPath,
@@ -325,7 +324,7 @@ export class TemplateApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/template/{contentTemplateId}`;
-        urlPath = urlPath.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId'])));
+        urlPath = urlPath.replace('{contentTemplateId}', encodeURIComponent(String(requestParameters['contentTemplateId'])));
 
         return {
             path: urlPath,

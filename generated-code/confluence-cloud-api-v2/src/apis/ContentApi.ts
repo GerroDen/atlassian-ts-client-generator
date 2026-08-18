@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ContentIdToContentTypeResponse,
-  ConvertContentIdsToContentTypesRequest,
+    ContentIdToContentTypeResponse,
+    ConvertContentIdsToContentTypesRequest,
 } from '../models/index';
 
 export interface ConvertContentIdsToContentTypesOperationRequest {

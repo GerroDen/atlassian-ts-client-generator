@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-
 export const BASE_PATH = "http://your-domain.atlassian.net".replace(/\/+$/, "");
 
 export interface ConfigurationParameters {
@@ -91,7 +90,7 @@ export const DefaultConfig = new Configuration();
  */
 export class BaseAPI {
 
-    private static readonly jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
+    private static readonly jsonRegex = /^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$/i;
     private middleware: Middleware[];
 
     constructor(protected configuration = DefaultConfig) {
@@ -364,7 +363,7 @@ export function exists(json: any, key: string) {
 
 export function canConsumeForm(consumes: Consume[]): boolean {
     for (const consume of consumes) {
-        if ('multipart/form-data' === consume.contentType) {
+        if (consume.contentType?.startsWith('multipart/form-data') == true) {
             return true;
         }
     }

@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AddLabelsToContentRequest,
-  LabelArray,
+    AddLabelsToContentRequest,
+    LabelArray,
 } from '../models/index';
 
 export interface AddLabelsToContentOperationRequest {
@@ -73,7 +72,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/label`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -136,8 +135,8 @@ export class ContentLabelsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/label/{label}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"label"}}`, encodeURIComponent(String(requestParameters['label'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{label}', encodeURIComponent(String(requestParameters['label'])));
 
         return {
             path: urlPath,
@@ -202,7 +201,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/label`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

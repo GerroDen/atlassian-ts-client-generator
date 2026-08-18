@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AsyncContentBody,
-  AsyncId,
-  BulkContentBodyConversionInput,
-  ContentBodyCreate,
+    AsyncContentBody,
+    AsyncId,
+    BulkContentBodyConversionInput,
+    ContentBodyCreate,
 } from '../models/index';
 
 export interface AsyncConvertContentBodyRequestRequest {
@@ -102,7 +101,7 @@ export class ContentBodyApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/contentbody/convert/async/{to}`;
-        urlPath = urlPath.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to'])));
+        urlPath = urlPath.replace('{to}', encodeURIComponent(String(requestParameters['to'])));
 
         return {
             path: urlPath,
@@ -158,7 +157,7 @@ export class ContentBodyApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/contentbody/convert/async/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

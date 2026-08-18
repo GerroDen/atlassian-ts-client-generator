@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  LongTask,
-  Space,
-  SpaceCreate,
-  SpaceUpdate,
+    LongTask,
+    Space,
+    SpaceCreate,
+    SpaceUpdate,
 } from '../models/index';
 
 export interface CreatePrivateSpaceRequest {
@@ -182,7 +181,7 @@ export class SpaceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -246,7 +245,7 @@ export class SpaceApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,

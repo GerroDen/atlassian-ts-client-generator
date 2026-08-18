@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  Version,
-  VersionRestore,
+    Version,
+    VersionRestore,
 } from '../models/index';
 
 export interface DeleteContentVersionRequest {
@@ -67,8 +66,8 @@ export class ContentVersionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/version/{versionNumber}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"versionNumber"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{versionNumber}', encodeURIComponent(String(requestParameters['versionNumber'])));
 
         return {
             path: urlPath,
@@ -135,7 +134,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/version`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

@@ -12,12 +12,11 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  LabelArray,
-  LabelCreate,
-  LongTask,
+    LabelArray,
+    LabelCreate,
+    LongTask,
 } from '../models/index';
 
 export interface AddLabelsToSpaceRequest {
@@ -81,7 +80,7 @@ export class ExperimentalApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/label`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -152,7 +151,7 @@ export class ExperimentalApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/label`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -206,7 +205,7 @@ export class ExperimentalApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/pageTree`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -273,7 +272,7 @@ export class ExperimentalApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/label`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,

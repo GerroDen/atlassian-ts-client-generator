@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreateFolder200Response,
-  CreateFolderRequest,
+    CreateFolder200Response,
+    CreateFolderRequest,
 } from '../models/index';
 
 export interface CreateFolderOperationRequest {
@@ -122,7 +121,7 @@ export class FolderApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -192,7 +191,7 @@ export class FolderApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

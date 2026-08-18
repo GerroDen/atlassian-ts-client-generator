@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  Relation,
-  RelationArray,
+    Relation,
+    RelationArray,
 } from '../models/index';
 
 export interface CreateRelationshipRequest {
@@ -158,11 +157,11 @@ export class RelationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`;
-        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
-        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
-        urlPath = urlPath.replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey'])));
-        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
-        urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
+        urlPath = urlPath.replace('{relationName}', encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace('{sourceType}', encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace('{sourceKey}', encodeURIComponent(String(requestParameters['sourceKey'])));
+        urlPath = urlPath.replace('{targetType}', encodeURIComponent(String(requestParameters['targetType'])));
+        urlPath = urlPath.replace('{targetKey}', encodeURIComponent(String(requestParameters['targetKey'])));
 
         return {
             path: urlPath,
@@ -261,11 +260,11 @@ export class RelationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`;
-        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
-        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
-        urlPath = urlPath.replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey'])));
-        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
-        urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
+        urlPath = urlPath.replace('{relationName}', encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace('{sourceType}', encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace('{sourceKey}', encodeURIComponent(String(requestParameters['sourceKey'])));
+        urlPath = urlPath.replace('{targetType}', encodeURIComponent(String(requestParameters['targetType'])));
+        urlPath = urlPath.replace('{targetKey}', encodeURIComponent(String(requestParameters['targetKey'])));
 
         return {
             path: urlPath,
@@ -368,10 +367,10 @@ export class RelationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/relation/{relationName}/to/{targetType}/{targetKey}/from/{sourceType}`;
-        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
-        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
-        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
-        urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
+        urlPath = urlPath.replace('{relationName}', encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace('{sourceType}', encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace('{targetType}', encodeURIComponent(String(requestParameters['targetType'])));
+        urlPath = urlPath.replace('{targetKey}', encodeURIComponent(String(requestParameters['targetKey'])));
 
         return {
             path: urlPath,
@@ -475,10 +474,10 @@ export class RelationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}`;
-        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
-        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
-        urlPath = urlPath.replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey'])));
-        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
+        urlPath = urlPath.replace('{relationName}', encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace('{sourceType}', encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace('{sourceKey}', encodeURIComponent(String(requestParameters['sourceKey'])));
+        urlPath = urlPath.replace('{targetType}', encodeURIComponent(String(requestParameters['targetType'])));
 
         return {
             path: urlPath,
@@ -581,11 +580,11 @@ export class RelationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`;
-        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
-        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
-        urlPath = urlPath.replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey'])));
-        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
-        urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
+        urlPath = urlPath.replace('{relationName}', encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace('{sourceType}', encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace('{sourceKey}', encodeURIComponent(String(requestParameters['sourceKey'])));
+        urlPath = urlPath.replace('{targetType}', encodeURIComponent(String(requestParameters['targetType'])));
+        urlPath = urlPath.replace('{targetKey}', encodeURIComponent(String(requestParameters['targetKey'])));
 
         return {
             path: urlPath,

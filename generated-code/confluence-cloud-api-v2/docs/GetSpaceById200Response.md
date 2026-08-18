@@ -12,6 +12,7 @@ Name | Type
 `type` | [SpaceType](SpaceType.md)
 `status` | [SpaceStatus](SpaceStatus.md)
 `authorId` | string
+`spaceOwnerId` | string
 `createdAt` | string
 `homepageId` | string
 `description` | [SpaceDescription](SpaceDescription.md)

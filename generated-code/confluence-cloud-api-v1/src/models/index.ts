@@ -7743,6 +7743,15 @@ export interface SpaceSettings {
      */
     editor?: SpaceSettingsEditor;
     /**
+     * The content rendering mode for the space. Controls spacing and typography
+     * in the editor and renderer. Valid values are "standard" and "compact".
+     * When set to "compact", content is rendered more densely with smaller
+     * spacing and typography.
+     * @type {SpaceSettingsContentModeEnum}
+     * @memberof SpaceSettings
+     */
+    contentMode?: SpaceSettingsContentModeEnum | null;
+    /**
      * 
      * @type {string}
      * @memberof SpaceSettings
@@ -7755,6 +7764,17 @@ export interface SpaceSettings {
      */
     _links: { [key: string]: GenericLinksValue; };
 }
+
+
+/**
+ * @export
+ */
+export const SpaceSettingsContentModeEnum = {
+    Standard: 'standard',
+    Compact: 'compact'
+} as const;
+export type SpaceSettingsContentModeEnum = typeof SpaceSettingsContentModeEnum[keyof typeof SpaceSettingsContentModeEnum];
+
 /**
  * 
  * @export
@@ -7797,7 +7817,27 @@ export interface SpaceSettingsUpdate {
      * @memberof SpaceSettingsUpdate
      */
     routeOverrideEnabled?: boolean;
+    /**
+     * The content rendering mode for the space. Controls spacing and typography
+     * in the editor and renderer. Valid values are "standard" and "compact".
+     * When set to "compact", content is rendered more densely with smaller
+     * spacing and typography.
+     * @type {SpaceSettingsUpdateContentModeEnum}
+     * @memberof SpaceSettingsUpdate
+     */
+    contentMode?: SpaceSettingsUpdateContentModeEnum | null;
 }
+
+
+/**
+ * @export
+ */
+export const SpaceSettingsUpdateContentModeEnum = {
+    Standard: 'standard',
+    Compact: 'compact'
+} as const;
+export type SpaceSettingsUpdateContentModeEnum = typeof SpaceSettingsUpdateContentModeEnum[keyof typeof SpaceSettingsUpdateContentModeEnum];
+
 /**
  * The properties of a space that can be updated.
  * @export

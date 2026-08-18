@@ -59,6 +59,7 @@ All URIs are relative to *https://no-default/wiki/api/v2*
 *AppPropertiesApi* | [**putForgeAppProperty**](docs/AppPropertiesApi.md#putforgeappproperty) | **PUT** /app/properties/{propertyKey} | Create or update a Forge app property.
 *AttachmentApi* | [**deleteAttachment**](docs/AttachmentApi.md#deleteattachment) | **DELETE** /attachments/{id} | Delete attachment
 *AttachmentApi* | [**getAttachmentById**](docs/AttachmentApi.md#getattachmentbyid) | **GET** /attachments/{id} | Get attachment by id
+*AttachmentApi* | [**getAttachmentThumbnailById**](docs/AttachmentApi.md#getattachmentthumbnailbyid) | **GET** /attachments/{id}/thumbnail/download | Download attachment thumbnail by id
 *AttachmentApi* | [**getAttachments**](docs/AttachmentApi.md#getattachments) | **GET** /attachments | Get attachments
 *AttachmentApi* | [**getBlogpostAttachments**](docs/AttachmentApi.md#getblogpostattachments) | **GET** /blogposts/{id}/attachments | Get attachments for blog post
 *AttachmentApi* | [**getCustomContentAttachments**](docs/AttachmentApi.md#getcustomcontentattachments) | **GET** /custom-content/{id}/attachments | Get attachments for custom content
@@ -176,12 +177,6 @@ All URIs are relative to *https://no-default/wiki/api/v2*
 *DescendantsApi* | [**getPageDescendants**](docs/DescendantsApi.md#getpagedescendants) | **GET** /pages/{id}/descendants | Get descendants of page
 *DescendantsApi* | [**getSmartLinkDescendants**](docs/DescendantsApi.md#getsmartlinkdescendants) | **GET** /embeds/{id}/descendants | Get descendants of a smart link
 *DescendantsApi* | [**getWhiteboardDescendants**](docs/DescendantsApi.md#getwhiteboarddescendants) | **GET** /whiteboards/{id}/descendants | Get descendants of a whiteboard
-*EAPApi* | [**createSpace**](docs/EAPApi.md#createspaceoperation) | **POST** /spaces | Create space
-*EAPApi* | [**getAvailableSpacePermissions**](docs/EAPApi.md#getavailablespacepermissions) | **GET** /space-permissions | Get available space permissions
-*EAPApi* | [**getAvailableSpaceRoles**](docs/EAPApi.md#getavailablespaceroles) | **GET** /space-roles | Get available space roles
-*EAPApi* | [**getSpaceRoleAssignments**](docs/EAPApi.md#getspaceroleassignments) | **GET** /spaces/{id}/role-assignments | Get space role assignments
-*EAPApi* | [**getSpaceRolesById**](docs/EAPApi.md#getspacerolesbyid) | **GET** /space-roles/{id} | Get space role by ID
-*EAPApi* | [**setSpaceRoleAssignments**](docs/EAPApi.md#setspaceroleassignments) | **POST** /spaces/{id}/role-assignments | Set space role assignments
 *FolderApi* | [**createFolder**](docs/FolderApi.md#createfolderoperation) | **POST** /folders | Create folder
 *FolderApi* | [**deleteFolder**](docs/FolderApi.md#deletefolder) | **DELETE** /folders/{id} | Delete folder
 *FolderApi* | [**getFolderById**](docs/FolderApi.md#getfolderbyid) | **GET** /folders/{id} | Get folder by id
@@ -227,6 +222,11 @@ All URIs are relative to *https://no-default/wiki/api/v2*
 *SpaceApi* | [**createSpace**](docs/SpaceApi.md#createspaceoperation) | **POST** /spaces | Create space
 *SpaceApi* | [**getSpaceById**](docs/SpaceApi.md#getspacebyid) | **GET** /spaces/{id} | Get space by id
 *SpaceApi* | [**getSpaces**](docs/SpaceApi.md#getspaces) | **GET** /spaces | Get spaces
+*SpacePermissionTransitionApi* | [**bulkAssignSpacePermissionRoles**](docs/SpacePermissionTransitionApi.md#bulkassignspacepermissionroles) | **POST** /space-permissions/transition/role-assignments | Bulk assign space permission roles
+*SpacePermissionTransitionApi* | [**bulkRemoveSpacePermissionAccess**](docs/SpacePermissionTransitionApi.md#bulkremovespacepermissionaccess) | **POST** /space-permissions/transition/access-removals | Bulk remove space permission access
+*SpacePermissionTransitionApi* | [**generateSpacePermissionCombinations**](docs/SpacePermissionTransitionApi.md#generatespacepermissioncombinations) | **POST** /space-permissions/transition/combinations | Generate space permission combinations
+*SpacePermissionTransitionApi* | [**getSpacePermissionTransitionTaskStatus**](docs/SpacePermissionTransitionApi.md#getspacepermissiontransitiontaskstatus) | **GET** /space-permissions/transition/tasks/{taskId} | Get space permission transition task status
+*SpacePermissionTransitionApi* | [**listSpacePermissionCombinations**](docs/SpacePermissionTransitionApi.md#listspacepermissioncombinations) | **GET** /space-permissions/transition/combinations | List unassigned space permission combinations
 *SpacePermissionsApi* | [**getAvailableSpacePermissions**](docs/SpacePermissionsApi.md#getavailablespacepermissions) | **GET** /space-permissions | Get available space permissions
 *SpacePermissionsApi* | [**getSpacePermissionsAssignments**](docs/SpacePermissionsApi.md#getspacepermissionsassignments) | **GET** /spaces/{id}/permissions | Get space permissions assignments
 *SpacePropertiesApi* | [**createSpaceProperty**](docs/SpacePropertiesApi.md#createspaceproperty) | **POST** /spaces/{space-id}/properties | Create space property in space
@@ -296,6 +296,16 @@ All URIs are relative to *https://no-default/wiki/api/v2*
 - [BodyBulk](docs/BodyBulk.md)
 - [BodySingle](docs/BodySingle.md)
 - [BodyType](docs/BodyType.md)
+- [BulkAssignRolesRequest](docs/BulkAssignRolesRequest.md)
+- [BulkRemoveAccessRequest](docs/BulkRemoveAccessRequest.md)
+- [BulkTransitionCombinationEntry](docs/BulkTransitionCombinationEntry.md)
+- [BulkTransitionDecodedPermission](docs/BulkTransitionDecodedPermission.md)
+- [BulkTransitionPrincipalTypeAssignment](docs/BulkTransitionPrincipalTypeAssignment.md)
+- [BulkTransitionRoleAssignment](docs/BulkTransitionRoleAssignment.md)
+- [BulkTransitionSpaceSelection](docs/BulkTransitionSpaceSelection.md)
+- [BulkTransitionSpaceTarget](docs/BulkTransitionSpaceTarget.md)
+- [BulkTransitionTaskResponse](docs/BulkTransitionTaskResponse.md)
+- [BulkTransitionTaskStatusResponse](docs/BulkTransitionTaskStatusResponse.md)
 - [CheckAccessByEmail200Response](docs/CheckAccessByEmail200Response.md)
 - [CheckAccessByEmailRequest](docs/CheckAccessByEmailRequest.md)
 - [ChildCustomContent](docs/ChildCustomContent.md)
@@ -391,6 +401,7 @@ All URIs are relative to *https://no-default/wiki/api/v2*
 - [Label](docs/Label.md)
 - [LabelSortOrder](docs/LabelSortOrder.md)
 - [Like](docs/Like.md)
+- [ListSpacePermissionCombinationsResponse](docs/ListSpacePermissionCombinationsResponse.md)
 - [ModelInteger](docs/ModelInteger.md)
 - [MultiEntityLinks](docs/MultiEntityLinks.md)
 - [MultiEntityResultAncestor](docs/MultiEntityResultAncestor.md)
@@ -563,7 +574,7 @@ and is automatically generated by the
 
 - API version: `2.0.0`
 - Package version: `2.0.0`
-- Generator version: `7.21.0`
+- Generator version: `7.24.0`
 - Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`
 
 The generated npm module supports the following:

@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  MultiEntityResultSpaceProperty,
-  SpaceProperty,
-  SpacePropertyCreateRequest,
-  SpacePropertyUpdateRequest,
+    MultiEntityResultSpaceProperty,
+    SpaceProperty,
+    SpacePropertyCreateRequest,
+    SpacePropertyUpdateRequest,
 } from '../models/index';
 
 export interface CreateSpacePropertyRequest {
@@ -88,7 +87,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{space-id}/properties`;
-        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
+        urlPath = urlPath.replace('{space-id}', encodeURIComponent(String(requestParameters['spaceId'])));
 
         return {
             path: urlPath,
@@ -151,8 +150,8 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{space-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{space-id}', encodeURIComponent(String(requestParameters['spaceId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -218,7 +217,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{space-id}/properties`;
-        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
+        urlPath = urlPath.replace('{space-id}', encodeURIComponent(String(requestParameters['spaceId'])));
 
         return {
             path: urlPath,
@@ -280,8 +279,8 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{space-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{space-id}', encodeURIComponent(String(requestParameters['spaceId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -352,8 +351,8 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{space-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{space-id}', encodeURIComponent(String(requestParameters['spaceId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,

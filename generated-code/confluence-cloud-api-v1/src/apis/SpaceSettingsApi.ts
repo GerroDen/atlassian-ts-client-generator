@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  SpaceSettings,
-  SpaceSettingsUpdate,
+    SpaceSettings,
+    SpaceSettingsUpdate,
 } from '../models/index';
 
 export interface GetSpaceSettingsRequest {
@@ -58,7 +57,7 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/settings`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -69,7 +68,7 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the settings of a space. Currently only the `routeOverrideEnabled` setting can be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
+     * Returns the settings of a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
      * Get space settings
      */
     async getSpaceSettingsRaw(requestParameters: GetSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceSettings>> {
@@ -80,7 +79,7 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the settings of a space. Currently only the `routeOverrideEnabled` setting can be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
+     * Returns the settings of a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
      * Get space settings
      */
     async getSpaceSettings(requestParameters: GetSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceSettings> {
@@ -122,7 +121,7 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/settings`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -134,7 +133,7 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the settings for a space. Currently only the `routeOverrideEnabled` setting can be updated.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Updates the settings for a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
      * Update space settings
      */
     async updateSpaceSettingsRaw(requestParameters: UpdateSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceSettings>> {
@@ -145,7 +144,7 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the settings for a space. Currently only the `routeOverrideEnabled` setting can be updated.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Updates the settings for a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
      * Update space settings
      */
     async updateSpaceSettings(requestParameters: UpdateSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceSettings> {

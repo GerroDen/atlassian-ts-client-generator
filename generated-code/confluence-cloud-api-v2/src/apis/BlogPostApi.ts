@@ -12,16 +12,15 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  BlogPostSortOrder,
-  CreateBlogPost200Response,
-  CreateBlogPostRequest,
-  MultiEntityResultBlogPost,
-  PrimaryBodyRepresentation,
-  PrimaryBodyRepresentationSingle,
-  UpdateBlogPostRequest,
+    BlogPostSortOrder,
+    CreateBlogPost200Response,
+    CreateBlogPostRequest,
+    MultiEntityResultBlogPost,
+    PrimaryBodyRepresentation,
+    PrimaryBodyRepresentationSingle,
+    UpdateBlogPostRequest,
 } from '../models/index';
 
 export interface CreateBlogPostOperationRequest {
@@ -186,7 +185,7 @@ export class BlogPostApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -292,7 +291,7 @@ export class BlogPostApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -450,7 +449,7 @@ export class BlogPostApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/blogposts`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -525,7 +524,7 @@ export class BlogPostApi extends runtime.BaseAPI {
 
 
         let urlPath = `/labels/{id}/blogposts`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -589,7 +588,7 @@ export class BlogPostApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

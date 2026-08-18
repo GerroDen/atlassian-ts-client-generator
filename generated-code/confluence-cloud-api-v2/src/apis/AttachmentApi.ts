@@ -12,12 +12,11 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AttachmentSortOrder,
-  GetAttachmentById200Response,
-  MultiEntityResultAttachment,
+    AttachmentSortOrder,
+    GetAttachmentById200Response,
+    MultiEntityResultAttachment,
 } from '../models/index';
 
 export interface DeleteAttachmentRequest {
@@ -34,6 +33,13 @@ export interface GetAttachmentByIdRequest {
     includeVersions?: boolean;
     includeVersion?: boolean;
     includeCollaborators?: boolean;
+}
+
+export interface GetAttachmentThumbnailByIdRequest {
+    id: string;
+    version?: number;
+    height?: number;
+    width?: number;
 }
 
 export interface GetAttachmentsRequest {
@@ -116,7 +122,7 @@ export class AttachmentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -198,7 +204,7 @@ export class AttachmentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -226,6 +232,72 @@ export class AttachmentApi extends runtime.BaseAPI {
     async getAttachmentById(requestParameters: GetAttachmentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAttachmentById200Response> {
         const response = await this.getAttachmentByIdRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for getAttachmentThumbnailById without sending the request
+     */
+    async getAttachmentThumbnailByIdRequestOpts(requestParameters: GetAttachmentThumbnailByIdRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAttachmentThumbnailById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
+        }
+
+        if (requestParameters['height'] != null) {
+            queryParameters['height'] = requestParameters['height'];
+        }
+
+        if (requestParameters['width'] != null) {
+            queryParameters['width'] = requestParameters['width'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
+        }
+
+
+        let urlPath = `/attachments/{id}/thumbnail/download`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Redirects the client to a URL that serves an attachment thumbnail\'s binary data.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment\'s container.
+     * Download attachment thumbnail by id
+     */
+    async getAttachmentThumbnailByIdRaw(requestParameters: GetAttachmentThumbnailByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getAttachmentThumbnailByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Redirects the client to a URL that serves an attachment thumbnail\'s binary data.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment\'s container.
+     * Download attachment thumbnail by id
+     */
+    async getAttachmentThumbnailById(requestParameters: GetAttachmentThumbnailByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.getAttachmentThumbnailByIdRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -348,7 +420,7 @@ export class AttachmentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/attachments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -427,7 +499,7 @@ export class AttachmentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{id}/attachments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -494,7 +566,7 @@ export class AttachmentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/labels/{id}/attachments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -573,7 +645,7 @@ export class AttachmentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/attachments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

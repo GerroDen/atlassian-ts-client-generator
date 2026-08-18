@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ModelInteger,
-  MultiEntityResultString,
+    ModelInteger,
+    MultiEntityResultString,
 } from '../models/index';
 
 export interface GetBlogPostLikeCountRequest {
@@ -89,7 +88,7 @@ export class LikeApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/likes/count`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -152,7 +151,7 @@ export class LikeApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/likes/users`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -207,7 +206,7 @@ export class LikeApi extends runtime.BaseAPI {
 
 
         let urlPath = `/footer-comments/{id}/likes/count`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -270,7 +269,7 @@ export class LikeApi extends runtime.BaseAPI {
 
 
         let urlPath = `/footer-comments/{id}/likes/users`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -325,7 +324,7 @@ export class LikeApi extends runtime.BaseAPI {
 
 
         let urlPath = `/inline-comments/{id}/likes/count`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -388,7 +387,7 @@ export class LikeApi extends runtime.BaseAPI {
 
 
         let urlPath = `/inline-comments/{id}/likes/users`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -443,7 +442,7 @@ export class LikeApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/likes/count`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -506,7 +505,7 @@ export class LikeApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/likes/users`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

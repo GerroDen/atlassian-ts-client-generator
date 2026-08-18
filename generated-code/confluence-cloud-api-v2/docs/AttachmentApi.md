@@ -6,6 +6,7 @@ All URIs are relative to *https://no-default/wiki/api/v2*
 |------------- | ------------- | -------------|
 | [**deleteAttachment**](AttachmentApi.md#deleteattachment) | **DELETE** /attachments/{id} | Delete attachment |
 | [**getAttachmentById**](AttachmentApi.md#getattachmentbyid) | **GET** /attachments/{id} | Get attachment by id |
+| [**getAttachmentThumbnailById**](AttachmentApi.md#getattachmentthumbnailbyid) | **GET** /attachments/{id}/thumbnail/download | Download attachment thumbnail by id |
 | [**getAttachments**](AttachmentApi.md#getattachments) | **GET** /attachments | Get attachments |
 | [**getBlogpostAttachments**](AttachmentApi.md#getblogpostattachments) | **GET** /blogposts/{id}/attachments | Get attachments for blog post |
 | [**getCustomContentAttachments**](AttachmentApi.md#getcustomcontentattachments) | **GET** /custom-content/{id}/attachments | Get attachments for custom content |
@@ -185,6 +186,92 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Returned if the requested attachment is returned. |  -  |
+| **400** | Returned if an invalid request is provided. |  -  |
+| **401** | Returned if the authentication credentials are incorrect or missing from the request. |  -  |
+| **404** | Returned if the calling user does not have permission to view the requested attachment or the attachment was not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getAttachmentThumbnailById
+
+> getAttachmentThumbnailById(id, version, height, width)
+
+Download attachment thumbnail by id
+
+Redirects the client to a URL that serves an attachment thumbnail\&#39;s binary data.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment\&#39;s container.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AttachmentApi,
+} from 'confluence-cloud-api-v2';
+import type { GetAttachmentThumbnailByIdRequest } from 'confluence-cloud-api-v2';
+
+async function example() {
+  console.log("🚀 Testing confluence-cloud-api-v2 SDK...");
+  const config = new Configuration({ 
+    // To configure HTTP basic authorization: basicAuth
+    username: "YOUR USERNAME",
+    password: "YOUR PASSWORD",
+    // To configure OAuth2 access token for authorization: oAuthDefinitions accessCode
+    accessToken: "YOUR ACCESS TOKEN",
+  });
+  const api = new AttachmentApi(config);
+
+  const body = {
+    // string | The ID of the attachment to be returned. If you don\'t know the attachment\'s ID, use Get attachments for page/blogpost/custom content.
+    id: id_example,
+    // number | Allows you to retrieve a previously published version. Specify the previous version\'s number to retrieve its details. (optional)
+    version: 56,
+    // number | Allows you to define the thumbnail height. (optional)
+    height: 56,
+    // number | Allows you to define the thumbnail width. (optional)
+    width: 56,
+  } satisfies GetAttachmentThumbnailByIdRequest;
+
+  try {
+    const data = await api.getAttachmentThumbnailById(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` | The ID of the attachment to be returned. If you don\&#39;t know the attachment\&#39;s ID, use Get attachments for page/blogpost/custom content. | [Defaults to `undefined`] |
+| **version** | `number` | Allows you to retrieve a previously published version. Specify the previous version\&#39;s number to retrieve its details. | [Optional] [Defaults to `undefined`] |
+| **height** | `number` | Allows you to define the thumbnail height. | [Optional] [Defaults to `undefined`] |
+| **width** | `number` | Allows you to define the thumbnail width. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [oAuthDefinitions accessCode](../README.md#oAuthDefinitions-accessCode)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **302** | Returned if download URL is found. |  -  |
 | **400** | Returned if an invalid request is provided. |  -  |
 | **401** | Returned if the authentication credentials are incorrect or missing from the request. |  -  |
 | **404** | Returned if the calling user does not have permission to view the requested attachment or the attachment was not found. |  -  |

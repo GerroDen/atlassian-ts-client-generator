@@ -12,15 +12,14 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ClassificationLevel,
-  PostPageClassificationLevelRequest,
-  PostWhiteboardClassificationLevelRequest,
-  PutPageClassificationLevelRequest,
-  PutSpaceDefaultClassificationLevelRequest,
-  PutWhiteboardClassificationLevelRequest,
+    ClassificationLevel,
+    PostPageClassificationLevelRequest,
+    PostWhiteboardClassificationLevelRequest,
+    PutPageClassificationLevelRequest,
+    PutSpaceDefaultClassificationLevelRequest,
+    PutWhiteboardClassificationLevelRequest,
 } from '../models/index';
 
 export interface DeleteSpaceDefaultClassificationLevelRequest {
@@ -124,7 +123,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/classification-level/default`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -182,7 +181,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/classification-level`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -284,7 +283,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}/classification-level`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -343,7 +342,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/classification-level`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -398,7 +397,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/classification-level/default`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -453,7 +452,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}/classification-level`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -517,7 +516,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/classification-level/reset`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -581,7 +580,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}/classification-level/reset`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -645,7 +644,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/classification-level/reset`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -709,7 +708,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}/classification-level/reset`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -773,7 +772,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/classification-level`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -837,7 +836,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}/classification-level`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -901,7 +900,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/classification-level`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -965,7 +964,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/classification-level/default`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -1029,7 +1028,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}/classification-level`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

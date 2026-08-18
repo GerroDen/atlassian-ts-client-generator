@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ContentProperty,
-  ContentPropertyCreateRequest,
-  ContentPropertySortOrder,
-  ContentPropertyUpdateRequest,
-  MultiEntityResultContentProperty,
+    ContentProperty,
+    ContentPropertyCreateRequest,
+    ContentPropertySortOrder,
+    ContentPropertyUpdateRequest,
+    MultiEntityResultContentProperty,
 } from '../models/index';
 
 export interface CreateAttachmentPropertyRequest {
@@ -322,7 +321,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{attachment-id}/properties`;
-        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace('{attachment-id}', encodeURIComponent(String(requestParameters['attachmentId'])));
 
         return {
             path: urlPath,
@@ -387,7 +386,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{blogpost-id}/properties`;
-        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace('{blogpost-id}', encodeURIComponent(String(requestParameters['blogpostId'])));
 
         return {
             path: urlPath,
@@ -452,7 +451,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/comments/{comment-id}/properties`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
 
         return {
             path: urlPath,
@@ -517,7 +516,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{custom-content-id}/properties`;
-        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace('{custom-content-id}', encodeURIComponent(String(requestParameters['customContentId'])));
 
         return {
             path: urlPath,
@@ -582,7 +581,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}/properties`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -647,7 +646,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{id}/properties`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -712,7 +711,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{page-id}/properties`;
-        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace('{page-id}', encodeURIComponent(String(requestParameters['pageId'])));
 
         return {
             path: urlPath,
@@ -777,7 +776,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{id}/properties`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -842,7 +841,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}/properties`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -905,8 +904,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{attachment-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{attachment-id}', encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -967,8 +966,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{blogpost-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{blogpost-id}', encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1029,8 +1028,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/comments/{comment-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1091,8 +1090,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{custom-content-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{custom-content-id}', encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1153,8 +1152,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{database-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{database-id}', encodeURIComponent(String(requestParameters['databaseId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1215,8 +1214,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{folder-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{folder-id}', encodeURIComponent(String(requestParameters['folderId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1277,8 +1276,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{page-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{page-id}', encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1339,8 +1338,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{embed-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{embed-id}', encodeURIComponent(String(requestParameters['embedId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1401,8 +1400,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{whiteboard-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{whiteboard-id}', encodeURIComponent(String(requestParameters['whiteboardId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1472,7 +1471,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{attachment-id}/properties`;
-        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace('{attachment-id}', encodeURIComponent(String(requestParameters['attachmentId'])));
 
         return {
             path: urlPath,
@@ -1534,8 +1533,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{attachment-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{attachment-id}', encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1606,7 +1605,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{blogpost-id}/properties`;
-        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace('{blogpost-id}', encodeURIComponent(String(requestParameters['blogpostId'])));
 
         return {
             path: urlPath,
@@ -1668,8 +1667,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{blogpost-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{blogpost-id}', encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1740,7 +1739,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/comments/{comment-id}/properties`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
 
         return {
             path: urlPath,
@@ -1802,8 +1801,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/comments/{comment-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -1874,7 +1873,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{custom-content-id}/properties`;
-        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace('{custom-content-id}', encodeURIComponent(String(requestParameters['customContentId'])));
 
         return {
             path: urlPath,
@@ -1936,8 +1935,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{custom-content-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{custom-content-id}', encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2008,7 +2007,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}/properties`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -2070,8 +2069,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{database-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{database-id}', encodeURIComponent(String(requestParameters['databaseId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2142,7 +2141,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{id}/properties`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -2204,8 +2203,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{folder-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{folder-id}', encodeURIComponent(String(requestParameters['folderId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2276,7 +2275,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{page-id}/properties`;
-        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace('{page-id}', encodeURIComponent(String(requestParameters['pageId'])));
 
         return {
             path: urlPath,
@@ -2338,8 +2337,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{page-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{page-id}', encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2410,7 +2409,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{id}/properties`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -2472,8 +2471,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{embed-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{embed-id}', encodeURIComponent(String(requestParameters['embedId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2544,7 +2543,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}/properties`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -2606,8 +2605,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{whiteboard-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{whiteboard-id}', encodeURIComponent(String(requestParameters['whiteboardId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2678,8 +2677,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{attachment-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{attachment-id}', encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2751,8 +2750,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{blogpost-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{blogpost-id}', encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2824,8 +2823,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/comments/{comment-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{comment-id}', encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2897,8 +2896,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{custom-content-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{custom-content-id}', encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -2970,8 +2969,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{database-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{database-id}', encodeURIComponent(String(requestParameters['databaseId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -3043,8 +3042,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{folder-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{folder-id}', encodeURIComponent(String(requestParameters['folderId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -3116,8 +3115,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{page-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{page-id}', encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -3189,8 +3188,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{embed-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{embed-id}', encodeURIComponent(String(requestParameters['embedId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,
@@ -3262,8 +3261,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{whiteboard-id}/properties/{property-id}`;
-        urlPath = urlPath.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId'])));
-        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+        urlPath = urlPath.replace('{whiteboard-id}', encodeURIComponent(String(requestParameters['whiteboardId'])));
+        urlPath = urlPath.replace('{property-id}', encodeURIComponent(String(requestParameters['propertyId'])));
 
         return {
             path: urlPath,

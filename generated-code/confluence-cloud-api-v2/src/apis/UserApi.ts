@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CheckAccessByEmail200Response,
-  CheckAccessByEmailRequest,
-  CreateBulkUserLookupRequest,
-  MultiEntityResultUser,
+    CheckAccessByEmail200Response,
+    CheckAccessByEmailRequest,
+    CreateBulkUserLookupRequest,
+    MultiEntityResultUser,
 } from '../models/index';
 
 export interface CheckAccessByEmailOperationRequest {

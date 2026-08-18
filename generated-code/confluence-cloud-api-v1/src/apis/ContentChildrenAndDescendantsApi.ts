@@ -12,16 +12,15 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  Content,
-  ContentArray,
-  ContentChildren,
-  CopyPageHierarchyRequest,
-  CopyPageRequest,
-  LongTask,
-  MovePage200Response,
+    Content,
+    ContentArray,
+    ContentChildren,
+    CopyPageHierarchyRequest,
+    CopyPageRequest,
+    LongTask,
+    MovePage200Response,
 } from '../models/index';
 
 export interface CopyPageOperationRequest {
@@ -98,7 +97,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/copy`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -163,7 +162,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/pagehierarchy/copy`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -224,7 +223,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/descendant`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -305,8 +304,8 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/descendant/{type}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{type}', encodeURIComponent(String(requestParameters['type'])));
 
         return {
             path: urlPath,
@@ -377,9 +376,9 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{pageId}/move/{position}/{targetId}`;
-        urlPath = urlPath.replace(`{${"pageId"}}`, encodeURIComponent(String(requestParameters['pageId'])));
-        urlPath = urlPath.replace(`{${"position"}}`, encodeURIComponent(String(requestParameters['position'])));
-        urlPath = urlPath.replace(`{${"targetId"}}`, encodeURIComponent(String(requestParameters['targetId'])));
+        urlPath = urlPath.replace('{pageId}', encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace('{position}', encodeURIComponent(String(requestParameters['position'])));
+        urlPath = urlPath.replace('{targetId}', encodeURIComponent(String(requestParameters['targetId'])));
 
         return {
             path: urlPath,

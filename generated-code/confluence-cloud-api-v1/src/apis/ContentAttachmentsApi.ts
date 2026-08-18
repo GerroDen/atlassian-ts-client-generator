@@ -12,12 +12,11 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AttachmentPropertiesUpdateBody,
-  Content,
-  ContentArray,
+    AttachmentPropertiesUpdateBody,
+    Content,
+    ContentArray,
 } from '../models/index';
 
 export interface CreateAttachmentRequest {
@@ -137,7 +136,7 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/child/attachment`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -243,7 +242,7 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/child/attachment`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -314,8 +313,8 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/child/attachment/{attachmentId}/download`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{attachmentId}', encodeURIComponent(String(requestParameters['attachmentId'])));
 
         return {
             path: urlPath,
@@ -422,8 +421,8 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/child/attachment/{attachmentId}/data`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{attachmentId}', encodeURIComponent(String(requestParameters['attachmentId'])));
 
         return {
             path: urlPath,
@@ -495,8 +494,8 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/child/attachment/{attachmentId}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{attachmentId}', encodeURIComponent(String(requestParameters['attachmentId'])));
 
         return {
             path: urlPath,

@@ -16,7 +16,7 @@ All URIs are relative to *https://no-default/wiki/api/v2*
 
 Create space
 
-Creates a Space as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
+Creates a Space as specified in the payload.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
 
 ### Example
 
@@ -221,7 +221,7 @@ async function example() {
     keys: ...,
     // 'global' | 'collaboration' | 'knowledge_base' | 'personal' | 'system' | 'onboarding' | 'xflow_sample_space' | Filter the results to spaces based on their type. (optional)
     type: type_example,
-    // 'current' | 'archived' | Filter the results to spaces based on their status. (optional)
+    // 'current' | 'archived' | 'trashed' | Filter the results to spaces based on their status. (optional)
     status: status_example,
     // Array<string> | Filter the results to spaces based on their labels. Multiple labels can be specified as a comma-separated list. (optional)
     labels: ...,
@@ -261,7 +261,7 @@ example().catch(console.error);
 | **ids** | `Array<number>` | Filter the results to spaces based on their IDs. Multiple IDs can be specified as a comma-separated list. | [Optional] |
 | **keys** | `Array<string>` | Filter the results to spaces based on their keys. Multiple keys can be specified as a comma-separated list. | [Optional] |
 | **type** | `global`, `collaboration`, `knowledge_base`, `personal`, `system`, `onboarding`, `xflow_sample_space` | Filter the results to spaces based on their type. | [Optional] [Defaults to `undefined`] [Enum: global, collaboration, knowledge_base, personal, system, onboarding, xflow_sample_space] |
-| **status** | `current`, `archived` | Filter the results to spaces based on their status. | [Optional] [Defaults to `undefined`] [Enum: current, archived] |
+| **status** | `current`, `archived`, `trashed` | Filter the results to spaces based on their status. | [Optional] [Defaults to `undefined`] [Enum: current, archived, trashed] |
 | **labels** | `Array<string>` | Filter the results to spaces based on their labels. Multiple labels can be specified as a comma-separated list. | [Optional] |
 | **favoritedBy** | `string` | Filter the results to spaces favorited by the user with the specified account ID. | [Optional] [Defaults to `undefined`] |
 | **notFavoritedBy** | `string` | Filter the results to spaces NOT favorited by the user with the specified account ID. | [Optional] [Defaults to `undefined`] |

@@ -12,14 +12,13 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  LookAndFeel,
-  LookAndFeelSelection,
-  LookAndFeelSettings,
-  LookAndFeelWithLinks,
-  SystemInfoEntity,
+    LookAndFeel,
+    LookAndFeelSelection,
+    LookAndFeelSettings,
+    LookAndFeelWithLinks,
+    SystemInfoEntity,
 } from '../models/index';
 
 export interface GetLookAndFeelSettingsRequest {

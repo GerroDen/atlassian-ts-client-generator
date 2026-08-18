@@ -12,15 +12,14 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ChildCustomContentSortOrder,
-  ChildPageSortOrder,
-  ContentSortOrder,
-  MultiEntityResultChildCustomContent,
-  MultiEntityResultChildPage,
-  MultiEntityResultChildrenResponse,
+    ChildCustomContentSortOrder,
+    ChildPageSortOrder,
+    ContentSortOrder,
+    MultiEntityResultChildCustomContent,
+    MultiEntityResultChildPage,
+    MultiEntityResultChildrenResponse,
 } from '../models/index';
 
 export interface GetChildCustomContentRequest {
@@ -114,7 +113,7 @@ export class ChildrenApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{id}/children`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -182,7 +181,7 @@ export class ChildrenApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/children`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -251,7 +250,7 @@ export class ChildrenApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}/direct-children`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -318,7 +317,7 @@ export class ChildrenApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{id}/direct-children`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -385,7 +384,7 @@ export class ChildrenApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/direct-children`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -452,7 +451,7 @@ export class ChildrenApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{id}/direct-children`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -519,7 +518,7 @@ export class ChildrenApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}/direct-children`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

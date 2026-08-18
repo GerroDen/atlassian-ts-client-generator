@@ -12,18 +12,17 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CustomContentBodyRepresentation,
-  DetailedVersion,
-  MultiEntityResultVersion,
-  MultiEntityResultVersion1,
-  MultiEntityResultVersion2,
-  MultiEntityResultVersion3,
-  MultiEntityResultVersion4,
-  PrimaryBodyRepresentation,
-  VersionSortOrder,
+    CustomContentBodyRepresentation,
+    DetailedVersion,
+    MultiEntityResultVersion,
+    MultiEntityResultVersion1,
+    MultiEntityResultVersion2,
+    MultiEntityResultVersion3,
+    MultiEntityResultVersion4,
+    PrimaryBodyRepresentation,
+    VersionSortOrder,
 } from '../models/index';
 
 export interface GetAttachmentVersionDetailsRequest {
@@ -140,8 +139,8 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{attachment-id}/versions/{version-number}`;
-        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
-        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+        urlPath = urlPath.replace('{attachment-id}', encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace('{version-number}', encodeURIComponent(String(requestParameters['versionNumber'])));
 
         return {
             path: urlPath,
@@ -208,7 +207,7 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{id}/versions`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -270,8 +269,8 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{blogpost-id}/versions/{version-number}`;
-        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
-        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+        urlPath = urlPath.replace('{blogpost-id}', encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace('{version-number}', encodeURIComponent(String(requestParameters['versionNumber'])));
 
         return {
             path: urlPath,
@@ -342,7 +341,7 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/versions`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -404,8 +403,8 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{custom-content-id}/versions/{version-number}`;
-        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
-        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+        urlPath = urlPath.replace('{custom-content-id}', encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace('{version-number}', encodeURIComponent(String(requestParameters['versionNumber'])));
 
         return {
             path: urlPath,
@@ -476,7 +475,7 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{custom-content-id}/versions`;
-        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace('{custom-content-id}', encodeURIComponent(String(requestParameters['customContentId'])));
 
         return {
             path: urlPath,
@@ -538,8 +537,8 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/footer-comments/{id}/versions/{version-number}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{version-number}', encodeURIComponent(String(requestParameters['versionNumber'])));
 
         return {
             path: urlPath,
@@ -610,7 +609,7 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/footer-comments/{id}/versions`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -672,8 +671,8 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/inline-comments/{id}/versions/{version-number}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
-        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{version-number}', encodeURIComponent(String(requestParameters['versionNumber'])));
 
         return {
             path: urlPath,
@@ -744,7 +743,7 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/inline-comments/{id}/versions`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -806,8 +805,8 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{page-id}/versions/{version-number}`;
-        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
-        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+        urlPath = urlPath.replace('{page-id}', encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace('{version-number}', encodeURIComponent(String(requestParameters['versionNumber'])));
 
         return {
             path: urlPath,
@@ -878,7 +877,7 @@ export class VersionApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/versions`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  LongTaskStatusArray,
-  LongTaskStatusWithLinks,
+    LongTaskStatusArray,
+    LongTaskStatusWithLinks,
 } from '../models/index';
 
 export interface GetTaskRequest {
@@ -59,7 +58,7 @@ export class LongRunningTaskApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/longtask/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

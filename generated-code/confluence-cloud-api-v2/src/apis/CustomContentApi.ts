@@ -12,16 +12,15 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreateCustomContent201Response,
-  CreateCustomContentRequest,
-  CustomContentBodyRepresentation,
-  CustomContentBodyRepresentationSingle,
-  CustomContentSortOrder,
-  MultiEntityResultCustomContent,
-  UpdateCustomContentRequest,
+    CreateCustomContent201Response,
+    CreateCustomContentRequest,
+    CustomContentBodyRepresentation,
+    CustomContentBodyRepresentationSingle,
+    CustomContentSortOrder,
+    MultiEntityResultCustomContent,
+    UpdateCustomContentRequest,
 } from '../models/index';
 
 export interface CreateCustomContentOperationRequest {
@@ -177,7 +176,7 @@ export class CustomContentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -263,7 +262,7 @@ export class CustomContentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -427,7 +426,7 @@ export class CustomContentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/custom-content`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -509,7 +508,7 @@ export class CustomContentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/custom-content`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -587,7 +586,7 @@ export class CustomContentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/custom-content`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -651,7 +650,7 @@ export class CustomContentApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

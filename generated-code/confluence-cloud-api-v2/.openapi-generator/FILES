@@ -36,6 +36,16 @@ docs/BlogPostVersion.md
 docs/BodyBulk.md
 docs/BodySingle.md
 docs/BodyType.md
+docs/BulkAssignRolesRequest.md
+docs/BulkRemoveAccessRequest.md
+docs/BulkTransitionCombinationEntry.md
+docs/BulkTransitionDecodedPermission.md
+docs/BulkTransitionPrincipalTypeAssignment.md
+docs/BulkTransitionRoleAssignment.md
+docs/BulkTransitionSpaceSelection.md
+docs/BulkTransitionSpaceTarget.md
+docs/BulkTransitionTaskResponse.md
+docs/BulkTransitionTaskStatusResponse.md
 docs/CheckAccessByEmail200Response.md
 docs/CheckAccessByEmailRequest.md
 docs/ChildCustomContent.md
@@ -121,7 +131,6 @@ docs/DeleteSpaceRoleResponse.md
 docs/DescendantsApi.md
 docs/DescendantsResponse.md
 docs/DetailedVersion.md
-docs/EAPApi.md
 docs/EnableAdminKeyRequest.md
 docs/FolderApi.md
 docs/FolderLinks.md
@@ -144,6 +153,7 @@ docs/LabelApi.md
 docs/LabelSortOrder.md
 docs/Like.md
 docs/LikeApi.md
+docs/ListSpacePermissionCombinationsResponse.md
 docs/ModelInteger.md
 docs/MultiEntityLinks.md
 docs/MultiEntityResultAncestor.md
@@ -233,6 +243,7 @@ docs/SpacePermission.md
 docs/SpacePermissionAssignment.md
 docs/SpacePermissionAssignmentOperation.md
 docs/SpacePermissionAssignmentPrincipal.md
+docs/SpacePermissionTransitionApi.md
 docs/SpacePermissionsApi.md
 docs/SpacePropertiesApi.md
 docs/SpaceProperty.md
@@ -289,7 +300,6 @@ src/apis/CustomContentApi.ts
 src/apis/DataPoliciesApi.ts
 src/apis/DatabaseApi.ts
 src/apis/DescendantsApi.ts
-src/apis/EAPApi.ts
 src/apis/FolderApi.ts
 src/apis/LabelApi.ts
 src/apis/LikeApi.ts
@@ -298,6 +308,7 @@ src/apis/PageApi.ts
 src/apis/RedactionsApi.ts
 src/apis/SmartLinkApi.ts
 src/apis/SpaceApi.ts
+src/apis/SpacePermissionTransitionApi.ts
 src/apis/SpacePermissionsApi.ts
 src/apis/SpacePropertiesApi.ts
 src/apis/SpaceRolesApi.ts

@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  MultiEntityResultSpacePermission,
-  MultiEntityResultSpacePermissionAssignment,
+    MultiEntityResultSpacePermission,
+    MultiEntityResultSpacePermissionAssignment,
 } from '../models/index';
 
 export interface GetAvailableSpacePermissionsRequest {
@@ -71,7 +70,7 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the available space permissions.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+     * Retrieves the available space permissions.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
      * Get available space permissions
      */
     async getAvailableSpacePermissionsRaw(requestParameters: GetAvailableSpacePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermission>> {
@@ -82,7 +81,7 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the available space permissions.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+     * Retrieves the available space permissions.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
      * Get available space permissions
      */
     async getAvailableSpacePermissions(requestParameters: GetAvailableSpacePermissionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultSpacePermission> {
@@ -123,7 +122,7 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/permissions`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

@@ -12,10 +12,9 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  PermittedOperationsResponse,
+    PermittedOperationsResponse,
 } from '../models/index';
 
 export interface GetAttachmentOperationsRequest {
@@ -92,7 +91,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/attachments/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -147,7 +146,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/blogposts/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -202,7 +201,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/custom-content/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -257,7 +256,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -312,7 +311,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/folders/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -367,7 +366,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/footer-comments/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -422,7 +421,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/inline-comments/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -477,7 +476,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -532,7 +531,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -587,7 +586,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -642,7 +641,7 @@ export class OperationApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}/operations`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

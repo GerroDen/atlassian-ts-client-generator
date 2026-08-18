@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AdminKeyResponse,
-  EnableAdminKeyRequest,
+    AdminKeyResponse,
+    EnableAdminKeyRequest,
 } from '../models/index';
 
 export interface EnableAdminKeyOperationRequest {

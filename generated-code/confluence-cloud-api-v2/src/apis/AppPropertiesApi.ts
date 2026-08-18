@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  GetForgeAppProperty200Response,
-  MultiEntityResultAppProperty,
+    GetForgeAppProperty200Response,
+    MultiEntityResultAppProperty,
 } from '../models/index';
 
 export interface DeleteForgeAppPropertyRequest {
@@ -64,7 +63,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/properties/{propertyKey}`;
-        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+        urlPath = urlPath.replace('{propertyKey}', encodeURIComponent(String(requestParameters['propertyKey'])));
 
         return {
             path: urlPath,
@@ -167,7 +166,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/properties/{propertyKey}`;
-        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+        urlPath = urlPath.replace('{propertyKey}', encodeURIComponent(String(requestParameters['propertyKey'])));
 
         return {
             path: urlPath,
@@ -228,7 +227,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/app/properties/{propertyKey}`;
-        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+        urlPath = urlPath.replace('{propertyKey}', encodeURIComponent(String(requestParameters['propertyKey'])));
 
         return {
             path: urlPath,

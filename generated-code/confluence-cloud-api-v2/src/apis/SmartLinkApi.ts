@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreateSmartLink200Response,
-  CreateSmartLinkRequest,
+    CreateSmartLink200Response,
+    CreateSmartLinkRequest,
 } from '../models/index';
 
 export interface CreateSmartLinkOperationRequest {
@@ -122,7 +121,7 @@ export class SmartLinkApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -192,7 +191,7 @@ export class SmartLinkApi extends runtime.BaseAPI {
 
 
         let urlPath = `/embeds/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  GetViewers200Response,
-  GetViews200Response,
+    GetViewers200Response,
+    GetViews200Response,
 } from '../models/index';
 
 export interface GetViewersRequest {
@@ -63,7 +62,7 @@ export class AnalyticsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/analytics/content/{contentId}/viewers`;
-        urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
+        urlPath = urlPath.replace('{contentId}', encodeURIComponent(String(requestParameters['contentId'])));
 
         return {
             path: urlPath,
@@ -122,7 +121,7 @@ export class AnalyticsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/analytics/content/{contentId}/views`;
-        urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
+        urlPath = urlPath.replace('{contentId}', encodeURIComponent(String(requestParameters['contentId'])));
 
         return {
             path: urlPath,

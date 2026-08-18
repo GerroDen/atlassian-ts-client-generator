@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreateWhiteboard200Response,
-  CreateWhiteboardRequest,
+    CreateWhiteboard200Response,
+    CreateWhiteboardRequest,
 } from '../models/index';
 
 export interface CreateWhiteboardOperationRequest {
@@ -127,7 +126,7 @@ export class WhiteboardApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -197,7 +196,7 @@ export class WhiteboardApi extends runtime.BaseAPI {
 
 
         let urlPath = `/whiteboards/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

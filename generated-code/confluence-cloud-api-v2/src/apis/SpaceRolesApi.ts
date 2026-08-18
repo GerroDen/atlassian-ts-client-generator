@@ -12,20 +12,19 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreateSpaceRoleRequest,
-  DeleteSpaceRoleResponse,
-  GetSpaceRoleMode200Response,
-  GetSpaceRolesById200Response,
-  MultiEntityResultSpaceRole,
-  MultiEntityResultSpaceRoleAssignment,
-  PrincipalType,
-  SetSpaceRoleAssignmentsRequestInner,
-  SpaceRole,
-  UpdateSpaceRoleRequest,
-  UpdateSpaceRoleResponse,
+    CreateSpaceRoleRequest,
+    DeleteSpaceRoleResponse,
+    GetSpaceRoleMode200Response,
+    GetSpaceRolesById200Response,
+    MultiEntityResultSpaceRole,
+    MultiEntityResultSpaceRoleAssignment,
+    PrincipalType,
+    SetSpaceRoleAssignmentsRequestInner,
+    SpaceRole,
+    UpdateSpaceRoleRequest,
+    UpdateSpaceRoleResponse,
 } from '../models/index';
 
 export interface CreateSpaceRoleOperationRequest {
@@ -112,7 +111,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a space role.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
+     * Create a space role.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
      * Create a space role
      */
     async createSpaceRoleRaw(requestParameters: CreateSpaceRoleOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceRole>> {
@@ -123,7 +122,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a space role.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
+     * Create a space role.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
      * Create a space role
      */
     async createSpaceRole(requestParameters: CreateSpaceRoleOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceRole> {
@@ -156,7 +155,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/space-roles/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -167,7 +166,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a space role  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
+     * Delete a space role  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
      * Delete a space role
      */
     async deleteSpaceRoleRaw(requestParameters: DeleteSpaceRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeleteSpaceRoleResponse>> {
@@ -178,7 +177,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a space role  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
+     * Delete a space role  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
      * Delete a space role
      */
     async deleteSpaceRole(requestParameters: DeleteSpaceRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeleteSpaceRoleResponse> {
@@ -238,7 +237,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the available space roles.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site; if requesting a certain space\'s roles, permission to view the space.
+     * Retrieves the available space roles.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site; if requesting a certain space\'s roles, permission to view the space.
      * Get available space roles
      */
     async getAvailableSpaceRolesRaw(requestParameters: GetAvailableSpaceRolesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceRole>> {
@@ -249,7 +248,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the available space roles.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site; if requesting a certain space\'s roles, permission to view the space.
+     * Retrieves the available space roles.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site; if requesting a certain space\'s roles, permission to view the space.
      * Get available space roles
      */
     async getAvailableSpaceRoles(requestParameters: GetAvailableSpaceRolesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultSpaceRole> {
@@ -306,7 +305,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/role-assignments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -317,7 +316,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the space role assignments.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
+     * Retrieves the space role assignments.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
      * Get space role assignments
      */
     async getSpaceRoleAssignmentsRaw(requestParameters: GetSpaceRoleAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceRoleAssignment>> {
@@ -328,7 +327,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the space role assignments.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
+     * Retrieves the space role assignments.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
      * Get space role assignments
      */
     async getSpaceRoleAssignments(requestParameters: GetSpaceRoleAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultSpaceRoleAssignment> {
@@ -364,7 +363,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the space role mode.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Retrieves the space role mode.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
      * Get space role mode
      */
     async getSpaceRoleModeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSpaceRoleMode200Response>> {
@@ -375,7 +374,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the space role mode.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Retrieves the space role mode.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
      * Get space role mode
      */
     async getSpaceRoleMode(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSpaceRoleMode200Response> {
@@ -408,7 +407,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/space-roles/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -419,7 +418,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the space role by ID.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+     * Retrieves the space role by ID.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
      * Get space role by ID
      */
     async getSpaceRolesByIdRaw(requestParameters: GetSpaceRolesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSpaceRolesById200Response>> {
@@ -430,7 +429,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the space role by ID.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+     * Retrieves the space role by ID.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
      * Get space role by ID
      */
     async getSpaceRolesById(requestParameters: GetSpaceRolesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSpaceRolesById200Response> {
@@ -472,7 +471,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/role-assignments`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -484,7 +483,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets space role assignments as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to manage roles in the space.
+     * Sets space role assignments as specified in the payload. For each entry, if `roleId` is provided the principal is assigned to that role. If `roleId` is omitted, the role assignment for that principal is removed, if it exists.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to manage roles in the space.
      * Set space role assignments
      */
     async setSpaceRoleAssignmentsRaw(requestParameters: SetSpaceRoleAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceRoleAssignment>> {
@@ -495,7 +494,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets space role assignments as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to manage roles in the space.
+     * Sets space role assignments as specified in the payload. For each entry, if `roleId` is provided the principal is assigned to that role. If `roleId` is omitted, the role assignment for that principal is removed, if it exists.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to manage roles in the space.
      * Set space role assignments
      */
     async setSpaceRoleAssignments(requestParameters: SetSpaceRoleAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultSpaceRoleAssignment> {
@@ -537,7 +536,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/space-roles/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -549,7 +548,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a space role.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
+     * Update a space role.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
      * Update a space role
      */
     async updateSpaceRoleRaw(requestParameters: UpdateSpaceRoleOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateSpaceRoleResponse>> {
@@ -560,7 +559,7 @@ export class SpaceRolesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a space role.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
+     * Update a space role.  Available on tenants with [Role-Based Access Control](https://support.atlassian.com/confluence-cloud/docs/manage-user-roles/).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be an organization or site admin. Connect and Forge app users are not authorized to access this resource.
      * Update a space role
      */
     async updateSpaceRole(requestParameters: UpdateSpaceRoleOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UpdateSpaceRoleResponse> {

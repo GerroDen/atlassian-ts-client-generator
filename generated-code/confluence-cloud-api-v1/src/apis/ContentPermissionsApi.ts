@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  ContentPermissionRequest,
-  PermissionCheckResponse,
+    ContentPermissionRequest,
+    PermissionCheckResponse,
 } from '../models/index';
 
 export interface CheckContentPermissionRequest {
@@ -63,7 +62,7 @@ export class ContentPermissionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/permission/check`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

@@ -12,15 +12,14 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  AvailableContentStates,
-  ContentArray,
-  ContentState,
-  ContentStateResponse,
-  ContentStateRestInput,
-  ContentStateSettings,
+    AvailableContentStates,
+    ContentArray,
+    ContentState,
+    ContentStateResponse,
+    ContentStateRestInput,
+    ContentStateSettings,
 } from '../models/index';
 
 export interface GetAvailableContentStatesRequest {
@@ -89,7 +88,7 @@ export class ContentStatesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/state/available`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -148,7 +147,7 @@ export class ContentStatesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/state`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -203,7 +202,7 @@ export class ContentStatesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/state/settings`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -281,7 +280,7 @@ export class ContentStatesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/state/content`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -383,7 +382,7 @@ export class ContentStatesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/space/{spaceKey}/state`;
-        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace('{spaceKey}', encodeURIComponent(String(requestParameters['spaceKey'])));
 
         return {
             path: urlPath,
@@ -442,7 +441,7 @@ export class ContentStatesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/state`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -517,7 +516,7 @@ export class ContentStatesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/content/{id}/state`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

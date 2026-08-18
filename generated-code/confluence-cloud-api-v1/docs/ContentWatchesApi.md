@@ -25,7 +25,7 @@ All URIs are relative to *http://your-domain.atlassian.net*
 
 Add content watcher
 
-Adds a user as a watcher to a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the &#x60;X-Atlassian-Token: no-check&#x60; header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
+Adds a user as a watcher to a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the &#x60;X-Atlassian-Token: no-check&#x60; header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission or \&#39;Space Administrator\&#39; permission for the relevant space if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
 
 ### Example
 
@@ -98,7 +98,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Returned if the watcher was successfully created. No response body is returned. |  -  |
-| **403** | Returned if;  - The &#x60;X-Atlassian-Token: no-check&#x60; header is not specified. - The calling user does not have permission to view the content. - A user is specified via a query parameter and the calling user is not a Confluence administrator. - No content exists for the specified &#x60;contentId&#x60;. |  -  |
+| **403** | Returned if;  - The &#x60;X-Atlassian-Token: no-check&#x60; header is not specified. - The calling user does not have permission to view the content. - A user is specified via a query parameter and the calling user is not a Confluence administrator or space administrator. - No content exists for the specified &#x60;contentId&#x60;. |  -  |
 | **404** | Returned if no &#x60;contentId&#x60; is specified. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -198,7 +198,7 @@ example().catch(console.error);
 
 Add space watcher
 
-Adds a user as a watcher to a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the &#x60;X-Atlassian-Token: no-check&#x60; header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
+Adds a user as a watcher to a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the &#x60;X-Atlassian-Token: no-check&#x60; header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission or \&#39;Space Administrator\&#39; permission for the relevant space if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
 
 ### Example
 
@@ -274,7 +274,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Returned if the watcher was successfully created. No response body is returned. |  -  |
-| **403** | Returned if;  - The &#x60;X-Atlassian-Token: no-check&#x60; header is not specified. - The calling user does not have permission to view the space. - A user is specified via a query parameter and the calling user is not a Confluence administrator. - No space exists for the specified &#x60;spaceKey&#x60;. |  -  |
+| **403** | Returned if;  - The &#x60;X-Atlassian-Token: no-check&#x60; header is not specified. - The calling user does not have permission to view the space. - A user is specified via a query parameter and the calling user is not a Confluence administrator or space administrator. - No space exists for the specified &#x60;spaceKey&#x60;. |  -  |
 | **404** | Returned if no &#x60;spaceKey&#x60; is specified. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -286,7 +286,7 @@ example().catch(console.error);
 
 Get content watch status
 
-Returns whether a user is watching a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
+Returns whether a user is watching a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission or \&#39;Space Administrator\&#39; permission for the relevant space if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
 
 ### Example
 
@@ -359,7 +359,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Returned if the requested watch status is returned. |  -  |
-| **403** | Returned if;  - The calling user does not have permission to view the content. - A user is specified via a query parameter and the calling user is not a Confluence administrator. - No content exists for the specified &#x60;contentId&#x60;. |  -  |
+| **403** | Returned if;  - The calling user does not have permission to view the content. - A user is specified via a query parameter and the calling user is not a Confluence administrator or space administrator. - No content exists for the specified &#x60;contentId&#x60;. |  -  |
 | **404** | Returned if no &#x60;contentId&#x60; is specified. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -699,7 +699,7 @@ example().catch(console.error);
 
 Get space watch status
 
-Returns whether a user is watching a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
+Returns whether a user is watching a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission or \&#39;Space Administrator\&#39; permission for the relevant space if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
 
 ### Example
 
@@ -772,7 +772,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Returned if the requested watch status is returned. |  -  |
-| **403** | Returned if;  - The calling user does not have permission to view the space. - A user is specified via a query parameter and the calling user is not a Confluence administrator. - No space exists for the specified &#x60;spaceKey&#x60;. |  -  |
+| **403** | Returned if;  - The calling user does not have permission to view the space. - A user is specified via a query parameter and the calling user is not a Confluence administrator or space administrator. - No space exists for the specified &#x60;spaceKey&#x60;. |  -  |
 | **404** | Returned if no &#x60;spaceKey&#x60; is specified. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -784,7 +784,7 @@ example().catch(console.error);
 
 Remove content watcher
 
-Removes a user as a watcher from a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
+Removes a user as a watcher from a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission or \&#39;Space Administrator\&#39; permission for the relevant space if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
 
 ### Example
 
@@ -860,7 +860,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Returned if the watcher was successfully deleted. No response body is returned. |  -  |
-| **403** | Returned if;  - The &#x60;X-Atlassian-Token: no-check&#x60; header is not specified. - The calling user does not have permission to view the content. - A user is specified via a query parameter and the calling user is not a Confluence administrator. - No content exists for the specified &#x60;contentId&#x60;. |  -  |
+| **403** | Returned if;  - The &#x60;X-Atlassian-Token: no-check&#x60; header is not specified. - The calling user does not have permission to view the content. - A user is specified via a query parameter and the calling user is not a Confluence administrator or space administrator. - No content exists for the specified &#x60;contentId&#x60;. |  -  |
 | **404** | Returned if no &#x60;contentId&#x60; is specified. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -957,7 +957,7 @@ example().catch(console.error);
 
 Remove space watch
 
-Removes a user as a watcher from a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
+Removes a user as a watcher from a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the &#x60;accountId&#x60; to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \&#39;Confluence Administrator\&#39; global permission or \&#39;Space Administrator\&#39; permission for the relevant space if specifying a user, otherwise permission to access the Confluence site (\&#39;Can use\&#39; global permission).
 
 ### Example
 
@@ -1030,7 +1030,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Returned if the watcher was successfully deleted. No response body is returned. |  -  |
-| **403** | Returned if;  - The &#x60;X-Atlassian-Token: no-check&#x60; header is not specified. - The calling user does not have permission to view the space. - A user is specified via a query parameter and the calling user is not a Confluence administrator. - No space exists for the specified &#x60;spaceKey&#x60;. |  -  |
+| **403** | Returned if;  - The &#x60;X-Atlassian-Token: no-check&#x60; header is not specified. - The calling user does not have permission to view the space. - A user is specified via a query parameter and the calling user is not a Confluence administrator or space administrator. - No space exists for the specified &#x60;spaceKey&#x60;. |  -  |
 | **404** | Returned if no &#x60;spaceKey&#x60; is specified. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

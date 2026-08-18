@@ -12,13 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  UserProperty,
-  UserPropertyCreate,
-  UserPropertyKeyArray,
-  UserPropertyUpdate,
+    UserProperty,
+    UserPropertyCreate,
+    UserPropertyKeyArray,
+    UserPropertyUpdate,
 } from '../models/index';
 
 export interface CreateUserPropertyRequest {
@@ -95,8 +94,8 @@ export class UserPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/user/{userId}/property/{key}`;
-        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
-        urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
+        urlPath = urlPath.replace('{key}', encodeURIComponent(String(requestParameters['key'])));
 
         return {
             path: urlPath,
@@ -158,8 +157,8 @@ export class UserPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/user/{userId}/property/{key}`;
-        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
-        urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
+        urlPath = urlPath.replace('{key}', encodeURIComponent(String(requestParameters['key'])));
 
         return {
             path: urlPath,
@@ -221,7 +220,7 @@ export class UserPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/user/{userId}/property`;
-        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
 
         return {
             path: urlPath,
@@ -283,8 +282,8 @@ export class UserPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/user/{userId}/property/{key}`;
-        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
-        urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
+        urlPath = urlPath.replace('{key}', encodeURIComponent(String(requestParameters['key'])));
 
         return {
             path: urlPath,
@@ -355,8 +354,8 @@ export class UserPropertiesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/wiki/rest/api/user/{userId}/property/{key}`;
-        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
-        urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
+        urlPath = urlPath.replace('{key}', encodeURIComponent(String(requestParameters['key'])));
 
         return {
             path: urlPath,

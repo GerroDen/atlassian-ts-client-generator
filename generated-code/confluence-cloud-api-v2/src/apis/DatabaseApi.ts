@@ -12,11 +12,10 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreateDatabase200Response,
-  CreateDatabaseRequest,
+    CreateDatabase200Response,
+    CreateDatabaseRequest,
 } from '../models/index';
 
 export interface CreateDatabaseOperationRequest {
@@ -127,7 +126,7 @@ export class DatabaseApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -197,7 +196,7 @@ export class DatabaseApi extends runtime.BaseAPI {
 
 
         let urlPath = `/databases/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

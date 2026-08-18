@@ -1074,6 +1074,305 @@ export interface BodyType {
 /**
  * 
  * @export
+ * @interface BulkAssignRolesRequest
+ */
+export interface BulkAssignRolesRequest {
+    /**
+     * List of role assignments to apply.
+     * @type {Array<BulkTransitionRoleAssignment>}
+     * @memberof BulkAssignRolesRequest
+     */
+    assignments: Array<BulkTransitionRoleAssignment>;
+    /**
+     * 
+     * @type {BulkTransitionSpaceSelection}
+     * @memberof BulkAssignRolesRequest
+     */
+    spaceSelection: BulkTransitionSpaceSelection;
+}
+/**
+ * 
+ * @export
+ * @interface BulkRemoveAccessRequest
+ */
+export interface BulkRemoveAccessRequest {
+    /**
+     * List of permission combination IDs to remove access for.
+     * @type {Array<string>}
+     * @memberof BulkRemoveAccessRequest
+     */
+    permissionCombinationIds: Array<string>;
+    /**
+     * 
+     * @type {BulkTransitionSpaceSelection}
+     * @memberof BulkRemoveAccessRequest
+     */
+    spaceSelection: BulkTransitionSpaceSelection;
+}
+/**
+ * 
+ * @export
+ * @interface BulkTransitionCombinationEntry
+ */
+export interface BulkTransitionCombinationEntry {
+    /**
+     * The opaque id identifying this unique combination of space permissions. Pass directly to the bulk role-assignments or access-removals endpoints.
+     * @type {string}
+     * @memberof BulkTransitionCombinationEntry
+     */
+    combinationId: string;
+    /**
+     * Number of spaces that currently have this combination.
+     * @type {number}
+     * @memberof BulkTransitionCombinationEntry
+     */
+    spaceCount: number;
+    /**
+     * Number of principals (users / groups / etc.) that currently have this combination.
+     * @type {number}
+     * @memberof BulkTransitionCombinationEntry
+     */
+    principalCount: number;
+    /**
+     * The decoded space permissions that make up this combination.
+     * @type {Array<BulkTransitionDecodedPermission>}
+     * @memberof BulkTransitionCombinationEntry
+     */
+    permissions: Array<BulkTransitionDecodedPermission>;
+    /**
+     * The principal types that currently hold this combination and can be reassigned via the
+     * bulk role-assignments endpoint. Use this to know which `principalType` entries are valid
+     * to include in the bulk-assign request for this combination.
+     * @type {Array<BulkTransitionCombinationEntryPrincipalTypesEnum>}
+     * @memberof BulkTransitionCombinationEntry
+     */
+    principalTypes: Array<BulkTransitionCombinationEntryPrincipalTypesEnum>;
+}
+
+
+/**
+ * @export
+ */
+export const BulkTransitionCombinationEntryPrincipalTypesEnum = {
+    User: 'USER',
+    Group: 'GROUP',
+    Guest: 'GUEST',
+    Anonymous: 'ANONYMOUS',
+    AllLicensedUsersUserClass: 'ALL_LICENSED_USERS_USER_CLASS',
+    AllProductAdminsUserClass: 'ALL_PRODUCT_ADMINS_USER_CLASS',
+    App: 'APP',
+    Team: 'TEAM'
+} as const;
+export type BulkTransitionCombinationEntryPrincipalTypesEnum = typeof BulkTransitionCombinationEntryPrincipalTypesEnum[keyof typeof BulkTransitionCombinationEntryPrincipalTypesEnum];
+
+/**
+ * 
+ * @export
+ * @interface BulkTransitionDecodedPermission
+ */
+export interface BulkTransitionDecodedPermission {
+    /**
+     * The platform id of the permission (e.g. `VIEW_CONTENT`).
+     * @type {string}
+     * @memberof BulkTransitionDecodedPermission
+     */
+    id: string;
+    /**
+     * Human-readable name of the permission.
+     * @type {string}
+     * @memberof BulkTransitionDecodedPermission
+     */
+    displayName: string;
+}
+/**
+ * 
+ * @export
+ * @interface BulkTransitionPrincipalTypeAssignment
+ */
+export interface BulkTransitionPrincipalTypeAssignment {
+    /**
+     * The type of principal.
+     * @type {BulkTransitionPrincipalTypeAssignmentPrincipalTypeEnum}
+     * @memberof BulkTransitionPrincipalTypeAssignment
+     */
+    principalType: BulkTransitionPrincipalTypeAssignmentPrincipalTypeEnum;
+    /**
+     * Whether to remove access for this principal type instead of assigning a role.
+     * @type {boolean}
+     * @memberof BulkTransitionPrincipalTypeAssignment
+     */
+    removeAccess: boolean;
+    /**
+     * The UUID of the space role to assign. Required when removeAccess is false.
+     * @type {string}
+     * @memberof BulkTransitionPrincipalTypeAssignment
+     */
+    roleId?: string | null;
+}
+
+
+/**
+ * @export
+ */
+export const BulkTransitionPrincipalTypeAssignmentPrincipalTypeEnum = {
+    User: 'USER',
+    Group: 'GROUP',
+    Guest: 'GUEST',
+    Anonymous: 'ANONYMOUS',
+    AllLicensedUsersUserClass: 'ALL_LICENSED_USERS_USER_CLASS',
+    AllProductAdminsUserClass: 'ALL_PRODUCT_ADMINS_USER_CLASS',
+    App: 'APP'
+} as const;
+export type BulkTransitionPrincipalTypeAssignmentPrincipalTypeEnum = typeof BulkTransitionPrincipalTypeAssignmentPrincipalTypeEnum[keyof typeof BulkTransitionPrincipalTypeAssignmentPrincipalTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BulkTransitionRoleAssignment
+ */
+export interface BulkTransitionRoleAssignment {
+    /**
+     * The ID of the permission combination.
+     * @type {string}
+     * @memberof BulkTransitionRoleAssignment
+     */
+    permissionCombinationId: string;
+    /**
+     * List of principal type assignments.
+     * @type {Array<BulkTransitionPrincipalTypeAssignment>}
+     * @memberof BulkTransitionRoleAssignment
+     */
+    principalTypeAssignments: Array<BulkTransitionPrincipalTypeAssignment>;
+}
+/**
+ * 
+ * @export
+ * @interface BulkTransitionSpaceSelection
+ */
+export interface BulkTransitionSpaceSelection {
+    /**
+     * The space selection type.
+     * @type {BulkTransitionSpaceSelectionSpaceTypeEnum}
+     * @memberof BulkTransitionSpaceSelection
+     */
+    spaceType: BulkTransitionSpaceSelectionSpaceTypeEnum;
+    /**
+     * List of specific spaces. Required when spaceType is SPECIFIC or ALL_EXCEPT_SPECIFIC.
+     * @type {Array<BulkTransitionSpaceTarget>}
+     * @memberof BulkTransitionSpaceSelection
+     */
+    selectedSpaces?: Array<BulkTransitionSpaceTarget>;
+}
+
+
+/**
+ * @export
+ */
+export const BulkTransitionSpaceSelectionSpaceTypeEnum = {
+    All: 'ALL',
+    AllExceptPersonal: 'ALL_EXCEPT_PERSONAL',
+    AllExceptSpecific: 'ALL_EXCEPT_SPECIFIC',
+    Personal: 'PERSONAL',
+    Specific: 'SPECIFIC'
+} as const;
+export type BulkTransitionSpaceSelectionSpaceTypeEnum = typeof BulkTransitionSpaceSelectionSpaceTypeEnum[keyof typeof BulkTransitionSpaceSelectionSpaceTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BulkTransitionSpaceTarget
+ */
+export interface BulkTransitionSpaceTarget {
+    /**
+     * The space ID.
+     * @type {string}
+     * @memberof BulkTransitionSpaceTarget
+     */
+    id: string;
+    /**
+     * The space key.
+     * @type {string}
+     * @memberof BulkTransitionSpaceTarget
+     */
+    key: string;
+}
+/**
+ * 
+ * @export
+ * @interface BulkTransitionTaskResponse
+ */
+export interface BulkTransitionTaskResponse {
+    /**
+     * The ID of the async task.
+     * @type {string}
+     * @memberof BulkTransitionTaskResponse
+     */
+    taskId: string;
+    /**
+     * The current status of the task.
+     * @type {BulkTransitionTaskResponseStatusEnum}
+     * @memberof BulkTransitionTaskResponse
+     */
+    status: BulkTransitionTaskResponseStatusEnum;
+    /**
+     * URL to poll for task progress.
+     * @type {string}
+     * @memberof BulkTransitionTaskResponse
+     */
+    statusUrl: string;
+}
+
+
+/**
+ * @export
+ */
+export const BulkTransitionTaskResponseStatusEnum = {
+    InProgress: 'IN_PROGRESS',
+    Completed: 'COMPLETED',
+    Failed: 'FAILED'
+} as const;
+export type BulkTransitionTaskResponseStatusEnum = typeof BulkTransitionTaskResponseStatusEnum[keyof typeof BulkTransitionTaskResponseStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface BulkTransitionTaskStatusResponse
+ */
+export interface BulkTransitionTaskStatusResponse {
+    /**
+     * The ID of the task.
+     * @type {string}
+     * @memberof BulkTransitionTaskStatusResponse
+     */
+    taskId: string;
+    /**
+     * The current status of the task.
+     * @type {BulkTransitionTaskStatusResponseStatusEnum}
+     * @memberof BulkTransitionTaskStatusResponse
+     */
+    status: BulkTransitionTaskStatusResponseStatusEnum;
+    /**
+     * Human-readable error message describing why the task failed. Only present when status is FAILED.
+     * @type {string}
+     * @memberof BulkTransitionTaskStatusResponse
+     */
+    errorMessage?: string | null;
+}
+
+
+/**
+ * @export
+ */
+export const BulkTransitionTaskStatusResponseStatusEnum = {
+    InProgress: 'IN_PROGRESS',
+    Completed: 'COMPLETED',
+    Failed: 'FAILED'
+} as const;
+export type BulkTransitionTaskStatusResponseStatusEnum = typeof BulkTransitionTaskStatusResponseStatusEnum[keyof typeof BulkTransitionTaskStatusResponseStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface CheckAccessByEmail200Response
  */
 export interface CheckAccessByEmail200Response {
@@ -2965,6 +3264,12 @@ export interface CreateSpace201Response {
      */
     authorId?: string;
     /**
+     * The account ID of the user who owns this space.
+     * @type {string}
+     * @memberof CreateSpace201Response
+     */
+    spaceOwnerId?: string;
+    /**
      * Currently active alias for a Confluence space.
      * @type {string}
      * @memberof CreateSpace201Response
@@ -4536,6 +4841,12 @@ export interface GetSpaceById200Response {
      */
     authorId?: string;
     /**
+     * The account ID of the user who owns this space.
+     * @type {string}
+     * @memberof GetSpaceById200Response
+     */
+    spaceOwnerId?: string;
+    /**
      * Date and time when the space was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
      * @type {string}
      * @memberof GetSpaceById200Response
@@ -4970,6 +5281,32 @@ export interface Like {
      * @memberof Like
      */
     accountId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ListSpacePermissionCombinationsResponse
+ */
+export interface ListSpacePermissionCombinationsResponse {
+    /**
+     * One page of unassigned permission combinations, sorted by principalCount descending.
+     * @type {Array<BulkTransitionCombinationEntry>}
+     * @memberof ListSpacePermissionCombinationsResponse
+     */
+    results: Array<BulkTransitionCombinationEntry>;
+    /**
+     * ISO-8601 timestamp of the last audit run that populated the combinations table.
+     * Absent if the audit task has never run on this tenant.
+     * @type {string}
+     * @memberof ListSpacePermissionCombinationsResponse
+     */
+    generatedAt?: string | null;
+    /**
+     * Opaque cursor for the next page. Absent when no further results exist.
+     * @type {string}
+     * @memberof ListSpacePermissionCombinationsResponse
+     */
+    cursor?: string | null;
 }
 /**
  * 
@@ -6824,6 +7161,12 @@ export interface SpaceBulk {
      */
     authorId?: string;
     /**
+     * The account ID of the user who owns this space.
+     * @type {string}
+     * @memberof SpaceBulk
+     */
+    spaceOwnerId?: string;
+    /**
      * Currently active alias for a Confluence space.
      * @type {string}
      * @memberof SpaceBulk
@@ -7295,6 +7638,12 @@ export interface SpaceSingle {
      */
     authorId?: string;
     /**
+     * The account ID of the user who owns this space.
+     * @type {string}
+     * @memberof SpaceSingle
+     */
+    spaceOwnerId?: string;
+    /**
      * Date and time when the space was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
      * @type {string}
      * @memberof SpaceSingle
@@ -7423,7 +7772,8 @@ export type SpaceSortOrder = typeof SpaceSortOrder[keyof typeof SpaceSortOrder];
  */
 export const SpaceStatus = {
     Current: 'current',
-    Archived: 'archived'
+    Archived: 'archived',
+    Trashed: 'trashed'
 } as const;
 export type SpaceStatus = typeof SpaceStatus[keyof typeof SpaceStatus];
 

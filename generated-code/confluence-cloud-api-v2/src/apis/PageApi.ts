@@ -12,17 +12,16 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
 import type {
-  CreatePage200Response,
-  CreatePageRequest,
-  MultiEntityResultPage,
-  PageSortOrder,
-  PrimaryBodyRepresentation,
-  PrimaryBodyRepresentationSingle,
-  UpdatePageRequest,
-  UpdatePageTitleRequest,
+    CreatePage200Response,
+    CreatePageRequest,
+    MultiEntityResultPage,
+    PageSortOrder,
+    PrimaryBodyRepresentation,
+    PrimaryBodyRepresentationSingle,
+    UpdatePageRequest,
+    UpdatePageTitleRequest,
 } from '../models/index';
 
 export interface CreatePageOperationRequest {
@@ -205,7 +204,7 @@ export class PageApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -279,7 +278,7 @@ export class PageApi extends runtime.BaseAPI {
 
 
         let urlPath = `/labels/{id}/pages`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -390,7 +389,7 @@ export class PageApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -556,7 +555,7 @@ export class PageApi extends runtime.BaseAPI {
 
 
         let urlPath = `/spaces/{id}/pages`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -620,7 +619,7 @@ export class PageApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -685,7 +684,7 @@ export class PageApi extends runtime.BaseAPI {
 
 
         let urlPath = `/pages/{id}/title`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
