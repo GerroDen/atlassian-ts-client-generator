@@ -98,7 +98,7 @@ export type GetAllUserDataClassificationLevelsStatusEnum = typeof GetAllUserData
  */
 export const GetAllUserDataClassificationLevelsOrderByEnum = {
     Rank: 'rank',
-    Rank2Desc: '-rank',
-    Rank3Asc: '+rank'
+    RankDesc: '-rank',
+    RankAsc: '+rank'
 } as const;
 export type GetAllUserDataClassificationLevelsOrderByEnum = typeof GetAllUserDataClassificationLevelsOrderByEnum[keyof typeof GetAllUserDataClassificationLevelsOrderByEnum];

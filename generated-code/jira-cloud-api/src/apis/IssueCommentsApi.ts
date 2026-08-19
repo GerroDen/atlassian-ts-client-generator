@@ -486,7 +486,7 @@ export class IssueCommentsApi extends runtime.BaseAPI {
  */
 export const GetCommentsOrderByEnum = {
     Created: 'created',
-    Created2Desc: '-created',
-    Created3Asc: '+created'
+    CreatedDesc: '-created',
+    CreatedAsc: '+created'
 } as const;
 export type GetCommentsOrderByEnum = typeof GetCommentsOrderByEnum[keyof typeof GetCommentsOrderByEnum];

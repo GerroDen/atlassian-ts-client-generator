@@ -1054,19 +1054,19 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
  */
 export const GetProjectVersionsPaginatedOrderByEnum = {
     Description: 'description',
-    Description2Desc: '-description',
-    Description3Asc: '+description',
+    DescriptionDesc: '-description',
+    DescriptionAsc: '+description',
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     ReleaseDate: 'releaseDate',
-    ReleaseDate2Desc: '-releaseDate',
-    ReleaseDate3Asc: '+releaseDate',
+    ReleaseDateDesc: '-releaseDate',
+    ReleaseDateAsc: '+releaseDate',
     Sequence: 'sequence',
-    Sequence2Desc: '-sequence',
-    Sequence3Asc: '+sequence',
+    SequenceDesc: '-sequence',
+    SequenceAsc: '+sequence',
     StartDate: 'startDate',
-    StartDate2Desc: '-startDate',
-    StartDate3Asc: '+startDate'
+    StartDateDesc: '-startDate',
+    StartDateAsc: '+startDate'
 } as const;
 export type GetProjectVersionsPaginatedOrderByEnum = typeof GetProjectVersionsPaginatedOrderByEnum[keyof typeof GetProjectVersionsPaginatedOrderByEnum];

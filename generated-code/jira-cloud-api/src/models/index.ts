@@ -24907,7 +24907,7 @@ export interface StatusCategory {
      * @type {string}
      * @memberof StatusCategory
      */
-    readonly key?: string;
+    readonly key?: "new" | "indeterminate" | "done";
     /**
      * The name of the status category.
      * @type {string}

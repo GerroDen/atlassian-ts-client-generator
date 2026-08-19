@@ -611,7 +611,7 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
  */
 export const GetPrioritySchemesOrderByEnum = {
     Name: 'name',
-    Name2Asc: '+name',
-    Name3Desc: '-name'
+    NameAsc: '+name',
+    NameDesc: '-name'
 } as const;
 export type GetPrioritySchemesOrderByEnum = typeof GetPrioritySchemesOrderByEnum[keyof typeof GetPrioritySchemesOrderByEnum];

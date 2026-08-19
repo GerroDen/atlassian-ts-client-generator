@@ -811,20 +811,20 @@ export type GetFieldsPaginatedTypeEnum = typeof GetFieldsPaginatedTypeEnum[keyof
  */
 export const GetFieldsPaginatedOrderByEnum = {
     ContextsCount: 'contextsCount',
-    ContextsCount2Desc: '-contextsCount',
-    ContextsCount3Asc: '+contextsCount',
+    ContextsCountDesc: '-contextsCount',
+    ContextsCountAsc: '+contextsCount',
     LastUsed: 'lastUsed',
-    LastUsed2Desc: '-lastUsed',
-    LastUsed3Asc: '+lastUsed',
+    LastUsedDesc: '-lastUsed',
+    LastUsedAsc: '+lastUsed',
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     ScreensCount: 'screensCount',
-    ScreensCount2Desc: '-screensCount',
-    ScreensCount3Asc: '+screensCount',
+    ScreensCountDesc: '-screensCount',
+    ScreensCountAsc: '+screensCount',
     ProjectsCount: 'projectsCount',
-    ProjectsCount2Desc: '-projectsCount',
-    ProjectsCount3Asc: '+projectsCount'
+    ProjectsCountDesc: '-projectsCount',
+    ProjectsCountAsc: '+projectsCount'
 } as const;
 export type GetFieldsPaginatedOrderByEnum = typeof GetFieldsPaginatedOrderByEnum[keyof typeof GetFieldsPaginatedOrderByEnum];
 /**
@@ -832,16 +832,16 @@ export type GetFieldsPaginatedOrderByEnum = typeof GetFieldsPaginatedOrderByEnum
  */
 export const GetTrashedFieldsPaginatedExpandEnum = {
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     TrashDate: 'trashDate',
-    TrashDate2Desc: '-trashDate',
-    TrashDate3Asc: '+trashDate',
+    TrashDateDesc: '-trashDate',
+    TrashDateAsc: '+trashDate',
     PlannedDeletionDate: 'plannedDeletionDate',
-    PlannedDeletionDate2Desc: '-plannedDeletionDate',
-    PlannedDeletionDate3Asc: '+plannedDeletionDate',
+    PlannedDeletionDateDesc: '-plannedDeletionDate',
+    PlannedDeletionDateAsc: '+plannedDeletionDate',
     ProjectsCount: 'projectsCount',
-    ProjectsCount2Desc: '-projectsCount',
-    ProjectsCount3Asc: '+projectsCount'
+    ProjectsCountDesc: '-projectsCount',
+    ProjectsCountAsc: '+projectsCount'
 } as const;
 export type GetTrashedFieldsPaginatedExpandEnum = typeof GetTrashedFieldsPaginatedExpandEnum[keyof typeof GetTrashedFieldsPaginatedExpandEnum];

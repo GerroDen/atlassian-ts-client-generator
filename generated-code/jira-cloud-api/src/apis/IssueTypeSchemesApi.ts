@@ -737,10 +737,10 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
  */
 export const GetAllIssueTypeSchemesOrderByEnum = {
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Id: 'id',
-    Id2Desc: '-id',
-    Id3Asc: '+id'
+    IdDesc: '-id',
+    IdAsc: '+id'
 } as const;
 export type GetAllIssueTypeSchemesOrderByEnum = typeof GetAllIssueTypeSchemesOrderByEnum[keyof typeof GetAllIssueTypeSchemesOrderByEnum];

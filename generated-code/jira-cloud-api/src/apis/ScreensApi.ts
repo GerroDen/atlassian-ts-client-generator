@@ -508,10 +508,10 @@ export type GetScreensScopeEnum = typeof GetScreensScopeEnum[keyof typeof GetScr
  */
 export const GetScreensOrderByEnum = {
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Id: 'id',
-    Id2Desc: '-id',
-    Id3Asc: '+id'
+    IdDesc: '-id',
+    IdAsc: '+id'
 } as const;
 export type GetScreensOrderByEnum = typeof GetScreensOrderByEnum[keyof typeof GetScreensOrderByEnum];
