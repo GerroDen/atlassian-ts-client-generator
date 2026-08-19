@@ -8,14 +8,16 @@ const transformer = (file, api) => {
     .filter((path) => path.node.value?.value?.startsWith("+"))
     .filter((path) => !path.node.key.name.endsWith("Asc"))
     .forEach((path) => {
-      path.node.key.name += "Asc";
+      const name = path.node.key.name.replace(/\d$/, "");
+      path.node.key.name = `${name}Asc`;
     });
   source
     .find(j.ObjectProperty)
     .filter((path) => path.node.value?.value?.startsWith?.("-"))
     .filter((path) => !path.node.key.name.endsWith("Desc"))
     .forEach((path) => {
-      path.node.key.name += "Desc";
+      const name = path.node.key.name.replace(/\d$/, "");
+      path.node.key.name = `${name}Desc`;
     });
   source
     .find(j.TSPropertySignature)

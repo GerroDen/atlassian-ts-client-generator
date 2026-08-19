@@ -13,8 +13,8 @@ describe("fix-jira-cloud-common-api", () => {
       {
         source: `export const GetCommentsOrderByEnum = {
   Created: 'created',
-  Created: '-created',
-  Created: '+created'
+  Created2: '-created',
+  Created3: '+created'
 } as const;`,
       },
       options,
