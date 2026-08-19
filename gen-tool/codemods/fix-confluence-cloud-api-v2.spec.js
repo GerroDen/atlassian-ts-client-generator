@@ -18,7 +18,7 @@ describe("fix-confluence-cloud-api-v2", () => {
   ModifiedDate: '-modified-date'
 } as const;`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export const AttachmentSortOrder = {
@@ -63,7 +63,7 @@ describe("fix-confluence-cloud-api-v2", () => {
   inlineOriginalSelection?: string;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface InlineCommentModelProperties {

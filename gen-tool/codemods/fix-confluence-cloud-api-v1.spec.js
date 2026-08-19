@@ -16,7 +16,7 @@ describe("fix-confluence-cloud-api-v1", () => {
   links?: { [key: string]: GenericLinksValue; };
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface GetRestrictionsByOperation200ResponseValue {
@@ -35,7 +35,7 @@ describe("fix-confluence-cloud-api-v1", () => {
     bulkRemoveContentStatesRequest?: BulkRemoveContentStatesRequest;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface BulkRemoveContentStatesOperationRequest {

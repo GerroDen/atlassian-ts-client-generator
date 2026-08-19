@@ -6,10 +6,7 @@ const transformer = (file, api) => {
   source
     .find(j.ClassMethod)
     .filter((path) => path.node.key?.name === "streamRaw")
-    .filter(
-      (path) =>
-        path.node.body?.body[0]?.expression?.argument?.callee?.property?.name !== "streamRawRaw",
-    )
+    .filter((path) => path.node.body?.body[0]?.expression?.argument?.callee?.property?.name !== "streamRawRaw")
     .forEach((path) => {
       path.node.key.name = "_streamRaw";
     });

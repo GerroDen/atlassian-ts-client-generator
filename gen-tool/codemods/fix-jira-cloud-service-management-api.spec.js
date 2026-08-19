@@ -35,7 +35,7 @@ export class ServicedeskApi extends runtime.BaseAPI {
   }
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface GetArticlesServicedeskRequest {}
@@ -93,7 +93,7 @@ export class DefaultApi extends runtime.BaseAPI {
 }
 `,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface AddCustomersPermissionSkippedRequest {}

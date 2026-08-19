@@ -26,7 +26,7 @@ const transformer = (file, api) => {
         j.tsLiteralType(j.stringLiteral("business")),
         j.tsLiteralType(j.stringLiteral("service_desk")),
         j.tsLiteralType(j.stringLiteral("software")),
-      ]),
+      ])
     );
   source
     .find(j.TSInterfaceDeclaration, { id: { name: "StatusCategory" } })
@@ -34,25 +34,17 @@ const transformer = (file, api) => {
     .find(j.TSTypeAnnotation)
     .find(j.TSStringKeyword)
     .replaceWith(
-      j.tsUnionType([
-        j.tsLiteralType(j.stringLiteral("new")),
-        j.tsLiteralType(j.stringLiteral("indeterminate")),
-        j.tsLiteralType(j.stringLiteral("done")),
-      ]),
+      j.tsUnionType([j.tsLiteralType(j.stringLiteral("new")), j.tsLiteralType(j.stringLiteral("indeterminate")), j.tsLiteralType(j.stringLiteral("done"))])
     );
   source
     .find(j.TSInterfaceDeclaration)
-    .filter((path) =>
-      ["FieldIdentifierObject", "AssociationContextObject"].includes(path.node.id.name),
-    )
+    .filter((path) => ["FieldIdentifierObject", "AssociationContextObject"].includes(path.node.id.name))
     .find(j.TSPropertySignature, { key: { name: "identifier" } })
     .find(j.TSTypeAnnotation)
     .find(j.TSObjectKeyword)
     .replaceWith(j.tsUnknownKeyword());
   if (file.path?.endsWith("apis/IssueFieldsApi.ts")) {
-    source
-      .find(j.Identifier, { name: "CreateCustomFieldRequest" })
-      .replaceWith(j.identifier("ICreateCustomFieldRequest"));
+    source.find(j.Identifier, { name: "CreateCustomFieldRequest" }).replaceWith(j.identifier("ICreateCustomFieldRequest"));
   }
   return source.toSource();
 };

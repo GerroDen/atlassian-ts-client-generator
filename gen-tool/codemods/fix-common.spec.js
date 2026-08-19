@@ -27,7 +27,7 @@ export class RequestApi extends runtime.BaseAPI {
     }
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface FieldDetailsSchema {
@@ -56,7 +56,7 @@ export class RequestApi extends runtime.BaseAPI {
   restRepositorySelector?: Set<RestRepositorySelector>;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`interface BulkAddExemptRepositoriesRequest {
@@ -71,11 +71,10 @@ export class RequestApi extends runtime.BaseAPI {
       {
         source: `export type FetchAPI = WindowOrWorkerGlobalScope['fetch'];`,
       },
-      options,
+      options
     );
 
-    expect(result)
-      .toBe(`export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
+    expect(result).toBe(`export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
 export type RequestCredentials = "omit" | "include" | "same-origin";`);
   });
 
@@ -87,11 +86,10 @@ export type RequestCredentials = "omit" | "include" | "same-origin";`);
         source: `export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
 export type RequestCredentials = "omit" | "include" | "same-origin";`,
       },
-      options,
+      options
     );
 
-    expect(result)
-      .toBe(`export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
+    expect(result).toBe(`export type FetchAPI = (url: string, init?: RequestInit) => Promise<Response>;
 export type RequestCredentials = "omit" | "include" | "same-origin";`);
   });
 
@@ -105,7 +103,7 @@ export type RequestCredentials = "omit" | "include" | "same-origin";`);
     }
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export class BaseAPI {
@@ -131,7 +129,7 @@ export interface ErrorContext {
     init: RequestInit;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface RequestContext {

@@ -16,7 +16,7 @@ describe("fix-jira-cloud-api", () => {
   properties?: Array<object>;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface GetRecentRequest {
@@ -34,7 +34,7 @@ describe("fix-jira-cloud-api", () => {
   properties?: { [key: string]: JsonNode; };
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface IssueEntityProperties {
@@ -51,7 +51,7 @@ describe("fix-jira-cloud-api", () => {
   typeKey?: string;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface SearchProjectsRequest {
@@ -73,7 +73,7 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface ICreateCustomFieldRequest {
@@ -95,7 +95,7 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     type: string;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface FieldIdentifierObject {
@@ -114,7 +114,7 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     type: string;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface AssociationContextObject {
@@ -132,7 +132,7 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     readonly key?: string;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface StatusCategory {

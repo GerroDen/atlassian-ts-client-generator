@@ -23,7 +23,7 @@ await rm(`generated-code/${dir}`, { recursive: true, force: true });
 try {
   spawnSync(
     `npx @openapitools/openapi-generator-cli generate -i ${dir}/swagger.json -g ${generator} -o generated-code/${dir} -p ${generatorParameter} --skip-validate-spec`,
-    { stdio: "inherit", shell: true },
+    { stdio: "inherit", shell: true }
   );
   const fileContent = await readFile(`generated-code/${dir}/package.json`, { encoding: "utf8" });
   const { name, version, description, author } = JSON.parse(fileContent.toString());
@@ -35,10 +35,7 @@ try {
     private: true,
     main: "src/index.ts",
   };
-  await writeFile(
-    `generated-code/${dir}/package.json`,
-    JSON.stringify(packageJson, null, 2) + "\n",
-  );
+  await writeFile(`generated-code/${dir}/package.json`, JSON.stringify(packageJson, null, 2) + "\n");
 } catch (e) {
   console.error("=======================");
   console.error("Error during run for", dir);

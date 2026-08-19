@@ -17,7 +17,7 @@ describe("fix-bitbucket-api", () => {
   }
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export class RepositoryApi extends runtime.BaseAPI {
@@ -39,7 +39,7 @@ describe("fix-bitbucket-api", () => {
   }
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export class RepositoryApi extends runtime.BaseAPI {
@@ -61,7 +61,7 @@ describe("fix-bitbucket-api", () => {
   }
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export class RepositoryApi extends runtime.BaseAPI {
@@ -81,7 +81,7 @@ describe("fix-bitbucket-api", () => {
     restSshAccessKey?: RestSshAccessKey;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`interface AddForProjectRequest {
@@ -105,7 +105,7 @@ describe("fix-bitbucket-api", () => {
     id?: string;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`interface SetDefaultBranchRequest {

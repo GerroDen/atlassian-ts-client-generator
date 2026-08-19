@@ -1,10 +1,4 @@
-const duplicateTypes = [
-  "GetArticlesRequest",
-  "DeletePropertyRequest",
-  "GetPropertiesKeysRequest",
-  "GetPropertyRequest",
-  "SetPropertyRequest",
-];
+const duplicateTypes = ["GetArticlesRequest", "DeletePropertyRequest", "GetPropertiesKeysRequest", "GetPropertyRequest", "SetPropertyRequest"];
 
 /** @type {import("jscodeshift").Transform} */
 const transformer = (file, api) => {
@@ -38,9 +32,7 @@ const transformer = (file, api) => {
         if (!j.ClassMethod.predicate(path.parent?.parent?.parent?.parent?.node)) {
           return false;
         }
-        return (
-          path.parent?.parent?.parent?.parent?.parent?.parent?.node.id.name === "ServicedeskApi"
-        );
+        return path.parent?.parent?.parent?.parent?.parent?.parent?.node.id.name === "ServicedeskApi";
       })
       .forEach((path) => {
         path.node.name = path.node.name.replace(/(.+)Request$/, "$1ServicedeskRequest");

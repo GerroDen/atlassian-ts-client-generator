@@ -15,16 +15,10 @@ if (!dir) {
 }
 
 try {
-  await rename(
-    resolve(rootDir, dir, "src/apis/DefaultApi.ts"),
-    resolve(rootDir, dir, "src/apis/PermissionSkippedApi.ts"),
-  );
+  await rename(resolve(rootDir, dir, "src/apis/DefaultApi.ts"), resolve(rootDir, dir, "src/apis/PermissionSkippedApi.ts"));
   const indexFilePath = resolve(rootDir, dir, "src/apis/index.ts");
   let content = await readFile(indexFilePath, { encoding: "utf8" });
-  content = content.replace(
-    "export * from './DefaultApi';",
-    "export * from './PermissionSkippedApi';",
-  );
+  content = content.replace("export * from './DefaultApi';", "export * from './PermissionSkippedApi';");
   await writeFile(indexFilePath, content);
 } catch (e) {
   console.error(e);

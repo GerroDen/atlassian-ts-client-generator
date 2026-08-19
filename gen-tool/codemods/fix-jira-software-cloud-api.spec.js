@@ -15,7 +15,7 @@ describe("fix-jira-software-cloud-api", () => {
   type?: object;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface GetAllBoardsRequest {
@@ -32,7 +32,7 @@ describe("fix-jira-software-cloud-api", () => {
   state?: object;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface GetAllSprintsRequest {
@@ -53,7 +53,7 @@ export interface GetBoardIssuesForEpicJSISRequest {
   fields?: Array<object>;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface GetBoardIssuesForEpicRequest {

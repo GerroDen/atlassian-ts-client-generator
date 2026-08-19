@@ -17,7 +17,7 @@ describe("fix-jira-cloud-common-api", () => {
   Created3: '+created'
 } as const;`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export const GetCommentsOrderByEnum = {
@@ -38,7 +38,7 @@ describe("fix-jira-cloud-common-api", () => {
   CreatedAsc: '+created'
 } as const;`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export const GetCommentsOrderByEnum = {
@@ -60,7 +60,7 @@ describe("fix-jira-cloud-common-api", () => {
   _48x48?: string;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface AvatarUrlsBean {

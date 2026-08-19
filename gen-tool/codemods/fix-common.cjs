@@ -21,9 +21,7 @@ const transformer = (file, { j }) => {
     .forEach((path) => {
       path.node.typeName = j.identifier("Array");
     });
-  const fetchApiDeclarations = source
-    .find(j.ExportNamedDeclaration)
-    .filter((path) => path.node.declaration.id?.name === "FetchAPI");
+  const fetchApiDeclarations = source.find(j.ExportNamedDeclaration).filter((path) => path.node.declaration.id?.name === "FetchAPI");
   fetchApiDeclarations.replaceWith(
     j.exportNamedDeclaration(
       j.tsTypeAliasDeclaration(
@@ -41,18 +39,13 @@ const transformer = (file, { j }) => {
             }),
           ],
           typeAnnotation: j.tsTypeAnnotation(
-            j.tsTypeReference(
-              j.identifier("Promise"),
-              j.tsTypeParameterInstantiation([j.tsTypeReference(j.identifier("Response"))]),
-            ),
+            j.tsTypeReference(j.identifier("Promise"), j.tsTypeParameterInstantiation([j.tsTypeReference(j.identifier("Response"))]))
           ),
-        }),
-      ),
-    ),
+        })
+      )
+    )
   );
-  const requestCredentialsDeclarations = source
-    .find(j.ExportNamedDeclaration)
-    .filter((path) => path.node.declaration.id?.name === "RequestCredentials");
+  const requestCredentialsDeclarations = source.find(j.ExportNamedDeclaration).filter((path) => path.node.declaration.id?.name === "RequestCredentials");
   if (!requestCredentialsDeclarations.length) {
     fetchApiDeclarations.insertAfter(
       j.exportNamedDeclaration(
@@ -62,9 +55,9 @@ const transformer = (file, { j }) => {
             j.tsLiteralType(j.stringLiteral("omit")),
             j.tsLiteralType(j.stringLiteral("include")),
             j.tsLiteralType(j.stringLiteral("same-origin")),
-          ]),
-        ),
-      ),
+          ])
+        )
+      )
     );
   }
   source
@@ -78,9 +71,7 @@ const transformer = (file, { j }) => {
     });
   source
     .find(j.TSInterfaceDeclaration)
-    .filter((path) =>
-      ["RequestContext", "ResponseContext", "ErrorContext"].includes(path.node.id.name),
-    )
+    .filter((path) => ["RequestContext", "ResponseContext", "ErrorContext"].includes(path.node.id.name))
     .find(j.TSPropertySignature)
     .filter((path) => path.node.key.name === "init")
     .forEach((path) => {

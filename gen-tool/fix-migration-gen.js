@@ -19,10 +19,7 @@ try {
   for (let file of files) {
     /** @type string */
     let content = await readFile(file, { encoding: "utf8" });
-    content = content.replace(
-      "return new runtime.JSONApiResponse(response));",
-      "return new runtime.JSONApiResponse(response);",
-    );
+    content = content.replace("return new runtime.JSONApiResponse(response));", "return new runtime.JSONApiResponse(response);");
     await writeFile(file, content);
   }
 } catch (e) {
