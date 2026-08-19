@@ -122,4 +122,21 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     type: string;
 }`);
   });
+
+  it("updates possible values for StatusCategory.key", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export interface StatusCategory {
+    readonly key?: string;
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export interface StatusCategory {
+    readonly key?: "new" | "indeterminate" | "done";
+}`);
+  });
 });

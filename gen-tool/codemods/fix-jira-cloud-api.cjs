@@ -19,13 +19,27 @@ const transformer = (file, api) => {
   source
     .find(j.TSInterfaceDeclaration, { id: { name: "SearchProjectsRequest" } })
     .find(j.TSPropertySignature, { key: { name: "typeKey" } })
-    .forEach((path) => {
-      path.node.typeAnnotation.typeAnnotation = j.tsUnionType([
+    .find(j.TSTypeAnnotation)
+    .find(j.TSStringKeyword)
+    .replaceWith(
+      j.tsUnionType([
         j.tsLiteralType(j.stringLiteral("business")),
         j.tsLiteralType(j.stringLiteral("service_desk")),
         j.tsLiteralType(j.stringLiteral("software")),
-      ]);
-    });
+      ]),
+    );
+  source
+    .find(j.TSInterfaceDeclaration, { id: { name: "StatusCategory" } })
+    .find(j.TSPropertySignature, { key: { name: "key" } })
+    .find(j.TSTypeAnnotation)
+    .find(j.TSStringKeyword)
+    .replaceWith(
+      j.tsUnionType([
+        j.tsLiteralType(j.stringLiteral("new")),
+        j.tsLiteralType(j.stringLiteral("indeterminate")),
+        j.tsLiteralType(j.stringLiteral("done")),
+      ]),
+    );
   source
     .find(j.TSInterfaceDeclaration)
     .filter((path) =>
