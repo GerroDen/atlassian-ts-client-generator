@@ -47,7 +47,7 @@ export interface DeleteBoardPropertyRequest {
 export interface GetAllBoardsRequest {
     startAt?: number;
     maxResults?: number;
-    type?: object;
+    type?: "scrum" | "kanban" | "simple";
     name?: string;
     projectKeyOrId?: string;
     accountIdLocation?: string;
@@ -70,7 +70,7 @@ export interface GetAllSprintsRequest {
     boardId: number;
     startAt?: number;
     maxResults?: number;
-    state?: object;
+    state?: "closed" | "active" | "future";
 }
 
 export interface GetAllVersionsRequest {
@@ -107,7 +107,7 @@ export interface GetBoardIssuesForEpicRequest {
     maxResults?: number;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -116,10 +116,10 @@ export interface GetBoardIssuesForEpicJSISRequest {
     epicId: number;
     nextPageToken?: string;
     maxResults?: number;
-    reconcileIssues?: Set<number>;
+    reconcileIssues?: Array<number>;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -130,7 +130,7 @@ export interface GetBoardIssuesForSprintRequest {
     maxResults?: number;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -139,10 +139,10 @@ export interface GetBoardIssuesForSprintJSISRequest {
     sprintId: number;
     nextPageToken?: string;
     maxResults?: number;
-    reconcileIssues?: Set<number>;
+    reconcileIssues?: Array<number>;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -176,7 +176,7 @@ export interface GetIssuesForBacklogRequest {
     maxResults?: number;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -184,10 +184,10 @@ export interface GetIssuesForBacklogJSISRequest {
     boardId: number;
     nextPageToken?: string;
     maxResults?: number;
-    reconcileIssues?: Set<number>;
+    reconcileIssues?: Array<number>;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -197,7 +197,7 @@ export interface GetIssuesForBoardRequest {
     maxResults?: number;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -205,10 +205,10 @@ export interface GetIssuesForBoardJSISRequest {
     boardId: number;
     nextPageToken?: string;
     maxResults?: number;
-    reconcileIssues?: Set<number>;
+    reconcileIssues?: Array<number>;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -218,7 +218,7 @@ export interface GetIssuesWithoutEpicForBoardRequest {
     maxResults?: number;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -226,10 +226,10 @@ export interface GetIssuesWithoutEpicForBoardJSISRequest {
     boardId: number;
     nextPageToken?: string;
     maxResults?: number;
-    reconcileIssues?: Set<number>;
+    reconcileIssues?: Array<number>;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -2569,7 +2569,7 @@ export class BoardApi extends runtime.BaseAPI {
  */
 export const GetAllBoardsOrderByEnum = {
     Name: 'name',
-    Name2: '-name',
-    Name3: '+name'
+    NameDesc: '-name',
+    NameAsc: '+name'
 } as const;
 export type GetAllBoardsOrderByEnum = typeof GetAllBoardsOrderByEnum[keyof typeof GetAllBoardsOrderByEnum];

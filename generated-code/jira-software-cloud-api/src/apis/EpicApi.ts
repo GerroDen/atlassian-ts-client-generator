@@ -30,7 +30,7 @@ export interface GetIssuesForEpicRequest {
     maxResults?: number;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -38,10 +38,10 @@ export interface GetIssuesForEpicJSISRequest {
     epicIdOrKey: string;
     nextPageToken?: string;
     maxResults?: number;
-    reconcileIssues?: Set<number>;
+    reconcileIssues?: Array<number>;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -50,17 +50,17 @@ export interface GetIssuesWithoutEpicRequest {
     maxResults?: number;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
 export interface GetIssuesWithoutEpicJSISRequest {
     nextPageToken?: string;
     maxResults?: number;
-    reconcileIssues?: Set<number>;
+    reconcileIssues?: Array<number>;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 

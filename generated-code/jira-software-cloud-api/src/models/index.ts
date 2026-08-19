@@ -79,25 +79,25 @@ export interface AvatarUrlsBean {
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    _16x16?: string;
+    ["16x16"]?: string;
     /**
      * The URL of the item's 24x24 pixel avatar.
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    _24x24?: string;
+    ["24x24"]?: string;
     /**
      * The URL of the item's 32x32 pixel avatar.
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    _32x32?: string;
+    ["32x32"]?: string;
     /**
      * The URL of the item's 48x48 pixel avatar.
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    _48x48?: string;
+    ["48x48"]?: string;
 }
 /**
  * Details about a board.
@@ -860,25 +860,25 @@ export interface ChangelogAuthorAllOfAvatarUrls {
      * @type {string}
      * @memberof ChangelogAuthorAllOfAvatarUrls
      */
-    _16x16?: string;
+    ["16x16"]?: string;
     /**
      * The URL of the item's 24x24 pixel avatar.
      * @type {string}
      * @memberof ChangelogAuthorAllOfAvatarUrls
      */
-    _24x24?: string;
+    ["24x24"]?: string;
     /**
      * The URL of the item's 32x32 pixel avatar.
      * @type {string}
      * @memberof ChangelogAuthorAllOfAvatarUrls
      */
-    _32x32?: string;
+    ["32x32"]?: string;
     /**
      * The URL of the item's 48x48 pixel avatar.
      * @type {string}
      * @memberof ChangelogAuthorAllOfAvatarUrls
      */
-    _48x48?: string;
+    ["48x48"]?: string;
 }
 /**
  * The history metadata associated with the changed.
@@ -1275,7 +1275,7 @@ export interface Commit {
      * @type {Set<CommitFlagsEnum>}
      * @memberof Commit
      */
-    flags?: Set<CommitFlagsEnum>;
+    flags?: Array<CommitFlagsEnum>;
     /**
      * The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.
      * @type {string}
@@ -1364,7 +1364,7 @@ export interface Commit1 {
      * @type {Set<Commit1FlagsEnum>}
      * @memberof Commit1
      */
-    flags?: Set<Commit1FlagsEnum>;
+    flags?: Array<Commit1FlagsEnum>;
     /**
      * The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.
      * @type {string}
@@ -2784,7 +2784,7 @@ export interface FieldMetadata {
      * @type {{ [key: string]: any; }}
      * @memberof FieldMetadata
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * The default value of the field.
      * @type {any}
@@ -2839,7 +2839,7 @@ export interface FieldMetadataSchema {
      * @type {{ [key: string]: any; }}
      * @memberof FieldMetadataSchema
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -3069,25 +3069,25 @@ export interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUr
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
      */
-    _16x16?: string;
+    ["16x16"]?: string;
     /**
      * The URL of the user's 24x24 pixel avatar.
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
      */
-    _24x24?: string;
+    ["24x24"]?: string;
     /**
      * The URL of the user's 32x32 pixel avatar.
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
      */
-    _32x32?: string;
+    ["32x32"]?: string;
     /**
      * The URL of the user's 48x48 pixel avatar.
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
      */
-    _48x48?: string;
+    ["48x48"]?: string;
 }
 /**
  * The container that the board is located in.
@@ -4390,19 +4390,19 @@ export interface IncludedFields {
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    actuallyIncluded?: Set<string>;
+    actuallyIncluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    excluded?: Set<string>;
+    excluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    included?: Set<string>;
+    included?: Array<string>;
 }
 /**
  * 
@@ -4415,7 +4415,7 @@ export interface IssueAssignRequestBean {
      * @type {Set<string>}
      * @memberof IssueAssignRequestBean
      */
-    issues?: Set<string>;
+    issues?: Array<string>;
 }
 /**
  * Details about an issue.
@@ -4618,7 +4618,7 @@ export interface IssueBeanEditmetaAllOfFieldsValue {
      * @type {{ [key: string]: any; }}
      * @memberof IssueBeanEditmetaAllOfFieldsValue
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * The default value of the field.
      * @type {any}
@@ -4673,19 +4673,19 @@ export interface IssueBeanFieldsToInclude {
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    actuallyIncluded?: Set<string>;
+    actuallyIncluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    excluded?: Set<string>;
+    excluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    included?: Set<string>;
+    included?: Array<string>;
 }
 /**
  * The schema of a field.
@@ -4698,7 +4698,7 @@ export interface IssueBeanSchemaValue {
      * @type {{ [key: string]: any; }}
      * @memberof IssueBeanSchemaValue
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -4961,25 +4961,25 @@ export interface IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrl
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
      */
-    _16x16?: string;
+    ["16x16"]?: string;
     /**
      * The URL of the item's 24x24 pixel avatar.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
      */
-    _24x24?: string;
+    ["24x24"]?: string;
     /**
      * The URL of the item's 32x32 pixel avatar.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
      */
-    _32x32?: string;
+    ["32x32"]?: string;
     /**
      * The URL of the item's 48x48 pixel avatar.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
      */
-    _48x48?: string;
+    ["48x48"]?: string;
 }
 /**
  * The category the project belongs to.
@@ -5260,7 +5260,7 @@ export interface JsonTypeBean {
      * @type {{ [key: string]: any; }}
      * @memberof JsonTypeBean
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -5508,7 +5508,7 @@ export interface MoveIssuesToBacklogRequest {
      * @type {Set<string>}
      * @memberof MoveIssuesToBacklogRequest
      */
-    issues?: Set<string>;
+    issues?: Array<string>;
 }
 /**
  * 
@@ -8217,25 +8217,25 @@ export interface UserBeanAvatarUrls {
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
-    _16x16?: string;
+    ["16x16"]?: string;
     /**
      * The URL of the user's 24x24 pixel avatar.
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
-    _24x24?: string;
+    ["24x24"]?: string;
     /**
      * The URL of the user's 32x32 pixel avatar.
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
-    _32x32?: string;
+    ["32x32"]?: string;
     /**
      * The URL of the user's 48x48 pixel avatar.
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
-    _48x48?: string;
+    ["48x48"]?: string;
 }
 /**
  * User details permitted by the user's Atlassian Account privacy settings. However, be aware of these exceptions:

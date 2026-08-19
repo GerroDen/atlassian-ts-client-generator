@@ -26,7 +26,7 @@ export interface EstimateIssueForBoardOperationRequest {
 
 export interface GetIssueRequest {
     issueIdOrKey: string;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
     updateHistory?: boolean;
 }

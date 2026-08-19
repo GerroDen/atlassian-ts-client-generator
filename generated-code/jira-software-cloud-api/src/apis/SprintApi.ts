@@ -40,7 +40,7 @@ export interface GetIssuesForSprintRequest {
     maxResults?: number;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
@@ -48,10 +48,10 @@ export interface GetIssuesForSprintJSISRequest {
     sprintId: number;
     nextPageToken?: string;
     maxResults?: number;
-    reconcileIssues?: Set<number>;
+    reconcileIssues?: Array<number>;
     jql?: string;
     validateQuery?: boolean;
-    fields?: Array<object>;
+    fields?: Array<string>;
     expand?: string;
 }
 
