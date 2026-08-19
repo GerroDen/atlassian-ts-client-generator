@@ -4,32 +4,21 @@ const transformer = (file, api) => {
   file.source = require("./fix-jira-cloud-common-api.cjs")(file, api);
   const source = j(file.source);
   source
-    .find(j.TSPropertySignature)
-    .filter((path) => path.node.key?.name?.match("properties"))
-    .filter((path) => path.parent?.parent.node?.id?.name?.endsWith("Request"))
-    .forEach((path) => {
-      path.node.typeAnnotation.typeAnnotation.typeParameters.params[0] = j.tsStringKeyword();
-    });
+    .find(j.TSInterfaceDeclaration)
+    .filter((path) => path.node?.id?.name?.endsWith("Request"))
+    .find(j.TSPropertySignature, { key: { name: "properties" } })
+    .find(j.TSTypeReference, { typeName: { name: "Array" } })
+    .find(j.TSTypeParameterInstantiation)
+    .find(j.TSObjectKeyword)
+    .replaceWith(j.tsStringKeyword());
   source
-    .find(j.TSPropertySignature)
-    .filter((path) => path.node.key?.name?.match("properties"))
-    .filter((path) => {
-      const member = path.node.typeAnnotation?.typeAnnotation?.members?.[0];
-      const parameter = member?.parameters?.[0];
-      return (
-        parameter?.name === "key" &&
-        parameter?.typeAnnotation?.typeAnnotation?.type === "TSStringKeyword" &&
-        member?.typeAnnotation?.typeAnnotation?.typeName?.name === "JsonNode"
-      );
-    })
-    .forEach((path) => {
-      path.node.typeAnnotation.typeAnnotation.members[0].typeAnnotation.typeAnnotation =
-        j.tsAnyKeyword();
-    });
+    .find(j.TSPropertySignature, { key: { name: "properties" } })
+    .find(j.TSIndexSignature, { parameters: { 0: { name: "key" } } })
+    .find(j.TSTypeReference, { typeName: { name: "JsonNode" } })
+    .replaceWith(j.tsAnyKeyword());
   source
-    .find(j.TSPropertySignature)
-    .filter((path) => path.parent?.parent?.node?.id?.name === "SearchProjectsRequest")
-    .filter((path) => path.node.key?.name === "typeKey")
+    .find(j.TSInterfaceDeclaration, { id: { name: "SearchProjectsRequest" } })
+    .find(j.TSPropertySignature, { key: { name: "typeKey" } })
     .forEach((path) => {
       path.node.typeAnnotation.typeAnnotation = j.tsUnionType([
         j.tsLiteralType(j.stringLiteral("business")),
@@ -42,14 +31,13 @@ const transformer = (file, api) => {
     .filter((path) =>
       ["FieldIdentifierObject", "AssociationContextObject"].includes(path.node.id.name),
     )
-    .find(j.TSPropertySignature)
-    .filter((path) => path.node.key.name === "identifier")
+    .find(j.TSPropertySignature, { key: { name: "identifier" } })
     .find(j.TSTypeAnnotation)
-    .replaceWith(j.tsTypeAnnotation(j.tsUnknownKeyword()));
+    .find(j.TSObjectKeyword)
+    .replaceWith(j.tsUnknownKeyword());
   if (file.path?.endsWith("apis/IssueFieldsApi.ts")) {
     source
-      .find(j.Identifier)
-      .filter((node) => node.value.name === "CreateCustomFieldRequest")
+      .find(j.Identifier, { name: "CreateCustomFieldRequest" })
       .replaceWith(j.identifier("ICreateCustomFieldRequest"));
   }
   return source.toSource();
