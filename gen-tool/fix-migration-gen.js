@@ -3,8 +3,7 @@
  * Some code modifications that cannot be done by code transformations, like file deletion or fixing comments to enable valid parsing.
  */
 import { resolve } from "node:path";
-import glob from "fast-glob";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile, glob } from "node:fs/promises";
 
 const rootDir = resolve(import.meta.dirname, "..");
 
@@ -15,10 +14,10 @@ if (!dir) {
 }
 
 try {
-  const files = glob.sync(`${dir}/**/*.ts`, { absolute: true, cwd: rootDir });
-  for (let file of files) {
+  const files = glob(`${dir}/**/*.ts`, { cwd: rootDir });
+  for await (let file of files) {
     /** @type string */
-    let content = await readFile(file, { encoding: "utf8" });
+    let content = await readFile(resolve(rootDir, file), { encoding: "utf8" });
     content = content.replace("return new runtime.JSONApiResponse(response));", "return new runtime.JSONApiResponse(response);");
     await writeFile(file, content);
   }
