@@ -539,9 +539,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:11.1.28":
-  version: 11.1.28
-  resolution: "@nestjs/common@npm:11.1.28"
+"@nestjs/common@npm:11.2.1":
+  version: 11.2.1
+  resolution: "@nestjs/common@npm:11.2.1"
   dependencies:
     file-type: "npm:21.3.4"
     iterare: "npm:1.2.1"
@@ -558,13 +558,13 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 10c0/aaf9a773fd8523972c5f971e77b9809ebd6fab682a4b791599927b546501e17909947e68a2f97cf6d7a28ebef409765c8453f9ce45a61410e0fbdba58d3733bb
+  checksum: 10c0/3d3d45e420468ab80247a05db7607a0558f4d4d97c3a41d8b97630d3ad3b99f9e4bc34ec24955500de62e8d36da2c4ce22401be445db72fe48c754f4b87c80ba
   languageName: node
   linkType: hard
 
-"@nestjs/core@npm:11.1.28":
-  version: 11.1.28
-  resolution: "@nestjs/core@npm:11.1.28"
+"@nestjs/core@npm:11.2.1":
+  version: 11.2.1
+  resolution: "@nestjs/core@npm:11.2.1"
   dependencies:
     fast-safe-stringify: "npm:2.1.1"
     iterare: "npm:1.2.1"
@@ -585,7 +585,7 @@ __metadata:
       optional: true
     "@nestjs/websockets":
       optional: true
-  checksum: 10c0/691e4328fc7b428beb1cfe47fe5342f2abbf6cfb2bfb3fd76b0430cf7732b59f520c7599bbab2186c734f8be7b4abcdd805c0c846a337a65f822f547d5714fda
+  checksum: 10c0/f38952f931c71347b6658f2718639451567291c22ebea25a4b232a244a5e36b2457dc5bd37eab277dd98df1c0e120d9e9d21589c94294e666532687d85472e57
   languageName: node
   linkType: hard
 
@@ -624,20 +624,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openapitools/openapi-generator-cli@npm:^2.40.1":
-  version: 2.40.1
-  resolution: "@openapitools/openapi-generator-cli@npm:2.40.1"
+"@openapitools/openapi-generator-cli@npm:^2.41.0":
+  version: 2.41.0
+  resolution: "@openapitools/openapi-generator-cli@npm:2.41.0"
   dependencies:
     "@inquirer/select": "npm:1.3.3"
     "@nestjs/axios": "npm:4.0.1"
-    "@nestjs/common": "npm:11.1.28"
-    "@nestjs/core": "npm:11.1.28"
+    "@nestjs/common": "npm:11.2.1"
+    "@nestjs/core": "npm:11.2.1"
     "@nuxtjs/opencollective": "npm:0.3.2"
-    axios: "npm:^1.18.1"
+    axios: "npm:^1.19.0"
     chalk: "npm:4.1.2"
     commander: "npm:8.3.0"
     compare-versions: "npm:6.1.1"
-    concurrently: "npm:^10.0.3"
+    concurrently: "npm:^10.0.5"
     console.table: "npm:0.10.0"
     fs-extra: "npm:11.4.0"
     glob: "npm:13.0.6"
@@ -647,7 +647,7 @@ __metadata:
     tslib: "npm:2.8.1"
   bin:
     openapi-generator-cli: main.js
-  checksum: 10c0/a753cdb9043e94cd8a42336aadf23396a71d73c6f7f924f34569cefc1e73c1596be6ff0878d4c7f287b6e6d55e0e6f3f006c47afcadffdfdc82b9986ee08b11d
+  checksum: 10c0/f94f5dd49350dfb92d865adf85fde74741cd87b20a792525c81a0b5191017696f79114f64a1f0f1ca8a4a2ce77ddfbfa5e89a84e5cc582dd7cf62092bbff4040
   languageName: node
   linkType: hard
 
@@ -1510,7 +1510,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "atlassian-js-client-generator@workspace:."
   dependencies:
-    "@openapitools/openapi-generator-cli": "npm:^2.40.1"
+    "@openapitools/openapi-generator-cli": "npm:^2.41.0"
     "@types/jscodeshift": "npm:^17.3.0"
     "@types/node": "npm:^24.13.3"
     jscodeshift: "npm:^17.4.0"
@@ -1531,15 +1531,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.18.1":
-  version: 1.19.0
-  resolution: "axios@npm:1.19.0"
+"axios@npm:^1.19.0":
+  version: 1.20.0
+  resolution: "axios@npm:1.20.0"
   dependencies:
     follow-redirects: "npm:^1.16.0"
     form-data: "npm:^4.0.6"
     https-proxy-agent: "npm:^5.0.1"
     proxy-from-env: "npm:^2.1.0"
-  checksum: 10c0/559fe7d51291787def61566a3db78b87510c8faf9c8a8c006d9d8b933808628ff0d8eca7756b40ae25e07da96d946c68c1ffba3da9075ed0b5d3661801d76869
+  checksum: 10c0/976088acf532286356f4c2e65df1ef47ba7da3936d83e928d0d64357bbf5370456abd3eb5826c15df322335fcb1fe200d4a84b4fcf20ffccdd63b40d80fa495c
   languageName: node
   linkType: hard
 
@@ -1787,7 +1787,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:^10.0.3":
+"concurrently@npm:^10.0.5":
   version: 10.0.5
   resolution: "concurrently@npm:10.0.5"
   dependencies:
