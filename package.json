@@ -81,8 +81,11 @@
     "vitest": "^5.0.3"
   },
   "resolutions": {
+    "basic-ftp": "> 6.2.0",
+    "brace-expansion": "> 5.0.10",
     "ip-address": "> 10.3.0",
-    "minimatch": "> 10.2.2"
+    "minimatch": "> 10.2.2",
+    "shell-quote": ">= 1.11.0"
   },
   "packageManager": "yarn@4.18.0"
 }
